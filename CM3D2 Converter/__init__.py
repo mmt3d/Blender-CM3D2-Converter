@@ -358,18 +358,12 @@ def register():
     bpy.types.VIEW3D_PT_tools_weightpaint_options.append(misc_VIEW3D_PT_tools_weightpaint.menu_func)
 
     # context menu
-    if bpy.app.version < (3,0):
-        bpy.types.DATA_PT_vertex_colors.append(misc_MESH_MT_attribute_context_menu.menu_func)
-    else:
-        bpy.types.MESH_MT_attribute_context_menu.append(misc_MESH_MT_attribute_context_menu.menu_func)
-        bpy.types.MESH_MT_color_attribute_context_menu.append(misc_MESH_MT_attribute_context_menu.menu_func)
+    bpy.types.MESH_MT_attribute_context_menu.append(misc_MESH_MT_attribute_context_menu.menu_func)
+    bpy.types.MESH_MT_color_attribute_context_menu.append(misc_MESH_MT_attribute_context_menu.menu_func)
     bpy.types.MESH_MT_shape_key_context_menu.append(misc_MESH_MT_shape_key_specials.menu_func)
     bpy.types.MESH_MT_vertex_group_context_menu.append(misc_MESH_MT_vertex_group_specials.menu_func)
     bpy.types.VIEW3D_MT_edit_mesh_context_menu.append(misc_VIEW3D_MT_edit_mesh_specials.menu_func)
-    if bpy.app.version < (2,90):
-        bpy.types.VIEW3D_MT_edit_mesh.append(misc_VIEW3D_MT_edit_mesh_split.menu_func)
-    else:
-        bpy.types.VIEW3D_MT_edit_mesh_split.append(misc_VIEW3D_MT_edit_mesh_split.menu_func)
+    bpy.types.VIEW3D_MT_edit_mesh_split.append(misc_VIEW3D_MT_edit_mesh_split.menu_func)
 
     bpy.types.IMAGE_MT_image.append(tex_import.menu_func)
     bpy.types.IMAGE_MT_image.append(tex_export.menu_func)
@@ -425,18 +419,12 @@ def unregister():
 
     bpy.types.VIEW3D_PT_tools_weightpaint_options.remove(misc_VIEW3D_PT_tools_weightpaint.menu_func)
     # menu
-    if bpy.app.version < (3,0):
-        bpy.types.DATA_PT_vertex_colors.remove(misc_MESH_MT_attribute_context_menu.menu_func)
-    else:
-        bpy.types.MESH_MT_attribute_context_menu.remove(misc_MESH_MT_attribute_context_menu.menu_func)
-        bpy.types.MESH_MT_color_attribute_context_menu.remove(misc_MESH_MT_attribute_context_menu.menu_func)
+    bpy.types.MESH_MT_attribute_context_menu.remove(misc_MESH_MT_attribute_context_menu.menu_func)
+    bpy.types.MESH_MT_color_attribute_context_menu.remove(misc_MESH_MT_attribute_context_menu.menu_func)
     bpy.types.MESH_MT_shape_key_context_menu.remove(misc_MESH_MT_shape_key_specials.menu_func)
     bpy.types.MESH_MT_vertex_group_context_menu.remove(misc_MESH_MT_vertex_group_specials.menu_func)
     bpy.types.VIEW3D_MT_edit_mesh_context_menu.remove(misc_VIEW3D_MT_edit_mesh_specials.menu_func)
-    if bpy.app.version < (2,90):
-        bpy.types.VIEW3D_MT_edit_mesh.remove(misc_VIEW3D_MT_edit_mesh_split.menu_func)
-    else:
-        bpy.types.VIEW3D_MT_edit_mesh_split.remove(misc_VIEW3D_MT_edit_mesh_split.menu_func)
+    bpy.types.VIEW3D_MT_edit_mesh_split.remove(misc_VIEW3D_MT_edit_mesh_split.menu_func)
 
     bpy.types.IMAGE_MT_image.remove(tex_import.menu_func)
     bpy.types.IMAGE_MT_image.remove(tex_export.menu_func)

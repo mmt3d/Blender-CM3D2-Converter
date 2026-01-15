@@ -231,8 +231,8 @@ class CM3D2MENU_PG_AttachPointCommand(bpy.types.PropertyGroup):
       └ rotation.z（軸回転角度）[範囲:0±180°]
     '''
     point_name: bpy.props.StringProperty(name="Point Name", default="Attach Point", description="Name of the slot to define the attatchment point for", options=PROP_OPTS)
-    location: bpy.props.FloatVectorProperty(name="Location", default=(0, 0, 0), description="Location of the attatchment relative to the base bone", options=PROP_OPTS, subtype=compat.subtype('TRANSLATION'))
-    rotation: bpy.props.FloatVectorProperty(name="Rotation", default=(0, 0, 0), description="Rotation of the attatchment relative to the base bone", options=PROP_OPTS, subtype=compat.subtype('EULER'))
+    location: bpy.props.FloatVectorProperty(name="Location", default=(0, 0, 0), description="Location of the attatchment relative to the base bone", options=PROP_OPTS, subtype='TRANSLATION')
+    rotation: bpy.props.FloatVectorProperty(name="Rotation", default=(0, 0, 0), description="Rotation of the attatchment relative to the base bone", options=PROP_OPTS, subtype='EULER')
 
     def parse_list(self, string_list):
         self.command = string_list[0]

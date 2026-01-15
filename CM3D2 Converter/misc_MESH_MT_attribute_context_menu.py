@@ -57,11 +57,7 @@ class CNV_OT_attribute_from_custom_normals(bpy.types.Operator):
 
         me.calc_normals_split()
 
-        if bpy.app.version < (2, 91):
-            return {'ERROR'}
-        else:
-            attribute = me.attributes.new('custom_normals', self.data_type, 'CORNER')
-            attribute_data = attribute.data
+        attribute = me.attributes.new('custom_normals', self.data_type, 'CORNER')
 
         for key in attribute.data.keys():
             print(repr(key))
@@ -125,9 +121,6 @@ class CNV_OT_attribute_convert_normals(bpy.types.Operator):
 
         pre_mode = ob.mode
         bpy.ops.object.mode_set(mode='OBJECT')
-
-        if bpy.app.version < (3,1):
-            return {'ERROR'}
 
         old_attribute = me.attributes.active
         name = old_attribute.name

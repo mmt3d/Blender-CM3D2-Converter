@@ -65,8 +65,6 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             self.filepath = common.default_cm3d2_dir(prefs.model_import_path, None, "model")
         self.scale = prefs.scale
         self.is_convert_bone_weight_names = prefs.is_convert_bone_weight_names
-        if bpy.app.version < (2, 91):
-            self.is_sharp = False
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
 
@@ -82,8 +80,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         sub_box.label(text="メッシュ")
         sub_box.prop(self, 'is_remove_doubles', icon='STICKY_UVS_VERT')
         sub_box.prop(self, 'is_seam' , icon=compat.icon('UV_EDGESEL'))
-        if bpy.app.version >= (2, 91):
-            sub_box.prop(self, 'is_sharp', icon=compat.icon('EDGESEL'))
+        sub_box.prop(self, 'is_sharp', icon=compat.icon('EDGESEL'))
 
         sub_box = box.box()
         sub_box.enabled = self.is_mesh
@@ -705,25 +702,10 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             # メッシュ整頓
             pre_mesh_select_mode = context.tool_settings.mesh_select_mode[:]
             
-            # Too buggy on versions before 2.91 so just disable it outright
-            #if self.is_sharp and bpy.app.version < (2, 91):
-            #    context.tool_settings.mesh_select_mode = (False, True, False)
-            #    bpy.ops.object.mode_set(mode='EDIT')
-            #    
-            #    bpy.ops.mesh.select_non_manifold(extend=False, use_wire=True, use_boundary=True, use_multi_face=False, use_non_contiguous=False, use_verts=False)
-            #    for is_comparison, vert in zip(comparison_data, me.vertices):
-            #        if is_comparison:
-            #            vert.select = False
-            #    bpy.ops.mesh.mark_sharp(use_verts=False)
-            #
-            #    bpy.ops.object.mode_set(mode='OBJECT')
-
-            can_mark_sharp = bpy.app.version >= (2, 91)
-
             if self.is_remove_doubles:
                 context.tool_settings.mesh_select_mode = (True, False, False)
                 bpy.ops.object.mode_set(mode='EDIT')
-                if not self.is_sharp or not can_mark_sharp:
+                if not self.is_sharp:
                     bpy.ops.mesh.select_all(action='DESELECT')
                     bpy.ops.object.mode_set(mode='OBJECT')
                     for is_comparison, vert in zip(comparison_data, me.vertices):
@@ -733,10 +715,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                 else:
                     bpy.ops.mesh.select_all(action='SELECT')
                 
-                if not can_mark_sharp:
-                    bpy.ops.mesh.remove_doubles(threshold=0.000001/5 * self.scale)
-                else:
-                    bpy.ops.mesh.remove_doubles(threshold=0.000001/5 * self.scale, use_sharp_edge_from_normals=self.is_sharp)
+                bpy.ops.mesh.remove_doubles(threshold=0.000001/5 * self.scale, use_sharp_edge_from_normals=self.is_sharp)
                 bpy.ops.object.mode_set(mode='OBJECT')
             
             context.tool_settings.mesh_select_mode = pre_mesh_select_mode
@@ -987,13 +966,6 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         # モーフ追加
         me: bpy.types.Mesh = ob.data
 
-        is_use_attributes = bpy.app.version >= (2,92)
-        is_fast_create = bpy.app.version >= (3,2)
-
-        #if not is_fast_create:
-        #    bpy.ops.object.mode_set(mode='VERTEX_PAINT')
-        #    prev_brush_color = context.tool_settings.vertex_paint.brush.color
-        
         vert_loops = {vertex_index: list() for vertex_index in range(len(me.vertices))}
         for loop_index, loop in enumerate(me.loops):
             vert_loops[loop.vertex_index].append(loop_index)
@@ -1019,10 +991,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             #    bpy.ops.geometry.color_attribute_add(name=name, domain='CORNER', data_type='FLOAT_COLOR', color=default_color)
             #    return me.attributes.active
             
-            if is_use_attributes:
-                normals_color = me.attributes.new(name, 'FLOAT_COLOR', 'CORNER')
-            else:
-                normals_color = me.vertex_colors.new(name=name, do_init=False) or me.vertex_colors[-1]
+            normals_color = me.attributes.new(name, 'FLOAT_COLOR', 'CORNER')
 
             fill_color_layer(normals_color, default_color)
             
@@ -1031,10 +1000,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         def create_unknown_color(data):
             unknown_color = None
             if len(data['data']) and data['data'][0]['color']:
-                if is_use_attributes:
-                    unknown_color = me.attributes.new(f"{data['name']}_unknown", 'FLOAT_COLOR', 'CORNER')
-                else:
-                    unknown_color = me.vertex_colors.new(name=f"{data['name']}_unknown", do_init=False) or me.vertex_colors[-1]
+                unknown_color = me.attributes.new(f"{data['name']}_unknown", 'FLOAT_COLOR', 'CORNER')
             return unknown_color
 
         def set_shape_key_data(shape_key, normals_color, unknown_color):

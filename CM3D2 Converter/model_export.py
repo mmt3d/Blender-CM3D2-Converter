@@ -689,18 +689,12 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         me = ob.data
         prefs = common.preferences()
         
-        is_use_attributes = bpy.app.version >= (2,92)
-
         loops_vert_index = np.empty((len(me.loops)), dtype=int)
         me.loops.foreach_get('vertex_index', loops_vert_index.ravel())
 
         def find_normals_attribute(name) -> (bpy.types.Attribute, bool):
-            if is_use_attributes:
-                normals_color = me.attributes[name] if name in me.attributes.keys() else None
-                attribute_is_color = (not normals_color is None) and normals_color.data_type in {'BYTE_COLOR', 'FLOAT_COLOR'}
-            else:
-                normals_color = me.vertex_colors[name] if name in me.vertex_colors.keys() else None
-                attribute_is_color = True
+            normals_color = me.attributes[name] if name in me.attributes.keys() else None
+            attribute_is_color = (not normals_color is None) and normals_color.data_type in {'BYTE_COLOR', 'FLOAT_COLOR'}
             return normals_color, attribute_is_color
 
         if self.use_shapekey_colors:
