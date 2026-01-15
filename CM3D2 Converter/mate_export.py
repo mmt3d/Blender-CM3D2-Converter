@@ -64,10 +64,7 @@ class CNV_OT_export_cm3d2_mate(bpy.types.Operator):
         try:
             with writer:
                 mate = context.material
-                if compat.IS_LEGACY:
-                    mat_data = cm3d2_data.MaterialHandler.parse_mate_old(mate, remove_serial=True)
-                else:
-                    mat_data = cm3d2_data.MaterialHandler.parse_mate(mate, remove_serial=True)
+                mat_data = cm3d2_data.MaterialHandler.parse_mate(mate, remove_serial=True)
 
                 mat_data.version = self.version
                 mat_data.name1 = self.name1

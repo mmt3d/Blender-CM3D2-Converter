@@ -689,7 +689,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         me = ob.data
         prefs = common.preferences()
         
-        is_use_attributes = (not compat.IS_LEGACY and bpy.app.version >= (2,92))
+        is_use_attributes = bpy.app.version >= (2,92)
 
         loops_vert_index = np.empty((len(me.loops)), dtype=int)
         me.loops.foreach_get('vertex_index', loops_vert_index.ravel())

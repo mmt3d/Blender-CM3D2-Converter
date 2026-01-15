@@ -949,7 +949,7 @@ class CNV_PG_cm3d2_bone_morph(bpy.types.PropertyGroup):
             
             driver_target = parent_length_var.targets[0]
             driver_target.id_type = 'ARMATURE'
-            driver_target.id = bone.parent.bone.id_data if not compat.IS_LEGACY else bone.parent.bone.id_data.data
+            driver_target.id = bone.parent.bone.id_data
             driver_target.data_path = bone.parent.bone.path_from_id("length")
 
             head_var = driver.variables.new()
@@ -1626,12 +1626,9 @@ class DATA_PT_cm3d2_sliders(bpy.types.Panel):
 
         morph = ob.cm3d2_bone_morph
         self.layout.alignment = 'RIGHT'
-        if compat.IS_LEGACY:
-            flow = self.layout.column_flow(align=True)
-        else:
-            flow = self.layout.grid_flow(row_major=True, columns=2, align=True)
-            flow.use_property_split    = True
-            flow.use_property_decorate = False
+        flow = self.layout.grid_flow(row_major=True, columns=2, align=True)
+        flow.use_property_split    = True
+        flow.use_property_decorate = False
         flow.prop(morph, 'height', text="Height", emboss=False)
         flow.prop(morph, 'weight', text="Weight", emboss=False)
         flow.prop(morph, 'bust'  , text="Bust"  , emboss=False)
@@ -1668,11 +1665,8 @@ class DATA_PT_cm3d2_body_sliders(bpy.types.Panel):
         morph = context.object.cm3d2_bone_morph
         self.layout.operator('object.save_cm3d2_body_sliders_to_menu', icon=compat.icon('COPYDOWN'))
 
-        if compat.IS_LEGACY:
-            flow = self.layout.column_flow(columns=1)
-        else:
-            self.layout.use_property_split = True
-            flow = self.layout.column_flow()
+        self.layout.use_property_split = True
+        flow = self.layout.column_flow()
         flow.scale_x = 0.5
         col = flow.column(align=True); col.prop(morph, 'HeadX'     , text="Face Width"  , slider=True)
         pass;                          col.prop(morph, 'HeadY'     , text="Face Height" , slider=True)
@@ -1710,18 +1704,13 @@ class DATA_PT_cm3d2_wide_sliders(bpy.types.Panel):
     def draw(self, context):
         sliders = context.object.cm3d2_wide_slider
         
-        if not compat.IS_LEGACY:
-            self.layout.use_property_split = True
+        self.layout.use_property_split = True
 
         row = self.layout.row()
-        if not compat.IS_LEGACY:
-            row.use_property_decorate = False
+        row.use_property_decorate = False
         row.prop(sliders, "enable_all", text="Enable All Sliders")
 
-        if compat.IS_LEGACY:
-            flow = self.layout.column_flow(columns=2)
-        else:
-            flow = self.layout.grid_flow(row_major=True)
+        flow = self.layout.grid_flow(row_major=True)
         flow.scale_x = 0.5
 
         def _transform_prop(name, pos_prop=None, scl_prop=None, pos_enabled=(True, True, True), scl_enabled=(True, True, True)):
@@ -1749,21 +1738,12 @@ class DATA_PT_cm3d2_wide_sliders(bpy.types.Panel):
                     is_enabled  = enabled_axes[i] or sliders.enable_all
                     is_disabled = enabled_axes[i] == None
 
-                    if i == 0 and compat.IS_LEGACY:
-                        if not used_name:
-                            col.label(text=name)
-                            used_name = True
-                            
-
                     row = col.row(align=True)
                     row.enabled = not is_disabled and is_enabled
                     
                     axis_name = axis_names[i]
                     if i == 0:
-                        if compat.IS_LEGACY:
-                            axis_name = axis_name + " " + type_name
-                        else:
-                            axis_name = type_name + " " + axis_name
+                        axis_name = type_name + " " + axis_name
                         if not used_name:
                             axis_name = name + " " + axis_name
                             used_name = True

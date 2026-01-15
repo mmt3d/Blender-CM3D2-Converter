@@ -129,214 +129,9 @@ def decode_bone_name(name, enable=True):
 
 
 # CM3D2用マテリアルを設定に合わせて装飾
-def decorate_material_old(mate, enable=True, me=None, mate_index=-1):
-    if not compat.IS_LEGACY or not enable or 'shader1' not in mate:
-        return
-
-    shader = mate['shader1']
-    if 'CM3D2/Man' == shader:
-        mate.use_shadeless = True
-        mate.diffuse_color = (0, 1, 1)
-    elif 'CM3D2/Mosaic' == shader:
-        mate.use_transparency = True
-        mate.transparency_method = 'RAYTRACE'
-        mate.alpha = 0.25
-        mate.raytrace_transparency.ior = 2
-    elif 'CM3D2_Debug/Debug_CM3D2_Normal2Color' == shader:
-        mate.use_tangent_shading = True
-        mate.diffuse_color = (0.5, 0.5, 1)
-
-    else:
-        if '/Toony_' in shader:
-            mate.diffuse_shader = 'TOON'
-            mate.diffuse_toon_smooth = 0.01
-            mate.diffuse_toon_size = 1.2
-        if 'Trans' in shader:
-            mate.use_transparency = True
-            mate.alpha = 0.0
-            mate.texture_slots[0].use_map_alpha = True
-        if 'Unlit/' in shader:
-            mate.emit = 0.5
-        if '_NoZ' in shader:
-            mate.offset_z = 9999
-
-    is_colored = False
-    is_textured = [False, False, False, False]
-    rimcolor, rimpower, rimshift = mathutils.Color((1, 1, 1)), 0.0, 0.0
-    for slot in mate.texture_slots:
-        if not slot or not slot.texture:
-            continue
-
-        tex = slot.texture
-        tex_name = remove_serial_number(tex.name)
-        slot.use_map_color_diffuse = False
-
-        if tex_name == '_MainTex':
-            slot.use_map_color_diffuse = True
-            img = getattr(tex, 'image')
-            if img and len(img.pixels):
-                if me:
-                    color = mathutils.Color(get_image_average_color_uv(img, me, mate_index)[:3])
-                else:
-                    color = mathutils.Color(get_image_average_color(img)[:3])
-                mate.diffuse_color = color
-                is_colored = True
-
-        elif tex_name == '_RimColor':
-            rimcolor = slot.color[:]
-            if not is_colored:
-                mate.diffuse_color = slot.color[:]
-                mate.diffuse_color.v += 0.5
-
-        elif tex_name == '_Shininess':
-            mate.specular_intensity = slot.diffuse_color_factor
-
-        elif tex_name == '_RimPower':
-            rimpower = slot.diffuse_color_factor
-
-        elif tex_name == '_RimShift':
-            rimshift = slot.diffuse_color_factor
-
-        for index, name in enumerate(['_MainTex', '_ToonRamp', '_ShadowTex', '_ShadowRateToon']):
-            if tex_name == name:
-                img = getattr(tex, 'image')
-                if img and len(tex.image.pixels):
-                    is_textured[index] = tex
-
-        set_texture_color(slot)
-
-    # よりオリジナルに近く描画するノード作成
-    if all(is_textured):
-        mate.use_nodes = True
-        mate.use_shadeless = True
-
-        node_tree = mate.node_tree
-        for node in node_tree.nodes[:]:
-            node_tree.nodes.remove(node)
-
-        mate_node = node_tree.nodes.new('ShaderNodeExtendedMaterial')
-        mate_node.location = (0, 0)
-        mate_node.material = mate
-
-        if "CM3D2 Shade" in bpy.context.blend_data.materials:
-            shade_mate = bpy.context.blend_data.materials["CM3D2 Shade"]
-        else:
-            shade_mate = bpy.context.blend_data.materials.new("CM3D2 Shade")
-        shade_mate.diffuse_color = (1, 1, 1)
-        shade_mate.diffuse_intensity = 1
-        shade_mate.specular_intensity = 1
-        shade_mate_node = node_tree.nodes.new('ShaderNodeExtendedMaterial')
-        shade_mate_node.location = (234.7785, -131.8243)
-        shade_mate_node.material = shade_mate
-
-        toon_node = node_tree.nodes.new('ShaderNodeValToRGB')
-        toon_node.location = (571.3662, -381.0965)
-        toon_img = is_textured[1].image
-        toon_w, toon_h = toon_img.size[0], toon_img.size[1]
-        for i in range(32 - 2):
-            toon_node.color_ramp.elements.new(0.0)
-        for i in range(32):
-            pos = i / (32 - 1)
-            toon_node.color_ramp.elements[i].position = pos
-            x = int((toon_w / (32 - 1)) * i)
-            pixel_index = x * toon_img.channels
-            toon_node.color_ramp.elements[i].color = toon_img.pixels[pixel_index: pixel_index + 4]
-        toon_node.color_ramp.interpolation = 'EASE'
-
-        shadow_rate_node = node_tree.nodes.new('ShaderNodeValToRGB')
-        shadow_rate_node.location = (488.2785, 7.8446)
-        shadow_rate_img = is_textured[3].image
-        shadow_rate_w, shadow_rate_h = shadow_rate_img.size[0], shadow_rate_img.size[1]
-        for i in range(32 - 2):
-            shadow_rate_node.color_ramp.elements.new(0.0)
-        for i in range(32):
-            pos = i / (32 - 1)
-            shadow_rate_node.color_ramp.elements[i].position = pos
-            x = int((shadow_rate_w / (32)) * i)
-            pixel_index = x * shadow_rate_img.channels
-            shadow_rate_node.color_ramp.elements[i].color = shadow_rate_img.pixels[pixel_index: pixel_index + 4]
-        shadow_rate_node.color_ramp.interpolation = 'EASE'
-
-        geometry_node = node_tree.nodes.new('ShaderNodeGeometry')
-        geometry_node.location = (323.4597, -810.8045)
-
-        shadow_texture_node = node_tree.nodes.new('ShaderNodeTexture')
-        shadow_texture_node.location = (626.0117, -666.0227)
-        shadow_texture_node.texture = is_textured[2]
-
-        invert_node = node_tree.nodes.new('ShaderNodeInvert')
-        invert_node.location = (805.6814, -132.9144)
-
-        shadow_mix_node = node_tree.nodes.new('ShaderNodeMixRGB')
-        shadow_mix_node.location = (1031.2714, -201.5598)
-
-        toon_mix_node = node_tree.nodes.new('ShaderNodeMixRGB')
-        toon_mix_node.location = (1257.5538, -308.8037)
-        toon_mix_node.blend_type = 'MULTIPLY'
-        toon_mix_node.inputs[0].default_value = 1.0
-
-        specular_mix_node = node_tree.nodes.new('ShaderNodeMixRGB')
-        specular_mix_node.location = (1473.2079, -382.7421)
-        specular_mix_node.blend_type = 'SCREEN'
-        specular_mix_node.inputs[0].default_value = mate.specular_intensity
-
-        normal_node = node_tree.nodes.new('ShaderNodeNormal')
-        normal_node.location = (912.1372, -590.8748)
-
-        rim_ramp_node = node_tree.nodes.new('ShaderNodeValToRGB')
-        rim_ramp_node.location = (1119.0664, -570.0284)
-        rim_ramp_node.color_ramp.elements[0].color = list(rimcolor[:]) + [1.0]
-        rim_ramp_node.color_ramp.elements[0].position = rimshift
-        rim_ramp_node.color_ramp.elements[1].color = (0, 0, 0, 1)
-        rim_ramp_node.color_ramp.elements[1].position = (rimshift) + ((1.0 - (rimpower * 0.03333)) * 0.5)
-
-        rim_power_node = node_tree.nodes.new('ShaderNodeHueSaturation')
-        rim_power_node.location = (1426.6332, -575.6142)
-        # rim_power_node.inputs[2].default_value = rimpower * 0.1
-
-        rim_mix_node = node_tree.nodes.new('ShaderNodeMixRGB')
-        rim_mix_node.location = (1724.7024, -451.9624)
-        rim_mix_node.blend_type = 'ADD'
-
-        out_node = node_tree.nodes.new('ShaderNodeOutput')
-        out_node.location = (1957.4023, -480.5365)
-
-        node_tree.links.new(shadow_mix_node.inputs[1], mate_node.outputs[0])
-        node_tree.links.new(shadow_rate_node.inputs[0], shade_mate_node.outputs[3])
-        node_tree.links.new(invert_node.inputs[1], shadow_rate_node.outputs[0])
-        node_tree.links.new(shadow_mix_node.inputs[0], invert_node.outputs[0])
-        node_tree.links.new(toon_node.inputs[0], shade_mate_node.outputs[3])
-        node_tree.links.new(shadow_texture_node.inputs[0], geometry_node.outputs[4])
-        node_tree.links.new(shadow_mix_node.inputs[2], shadow_texture_node.outputs[1])
-        node_tree.links.new(toon_node.inputs[0], shade_mate_node.outputs[3])
-        node_tree.links.new(toon_mix_node.inputs[1], shadow_mix_node.outputs[0])
-        node_tree.links.new(toon_mix_node.inputs[2], toon_node.outputs[0])
-        node_tree.links.new(specular_mix_node.inputs[1], toon_mix_node.outputs[0])
-        node_tree.links.new(specular_mix_node.inputs[2], shade_mate_node.outputs[4])
-        node_tree.links.new(normal_node.inputs[0], mate_node.outputs[2])
-        node_tree.links.new(rim_ramp_node.inputs[0], normal_node.outputs[1])
-        node_tree.links.new(rim_power_node.inputs[4], rim_ramp_node.outputs[0])
-        node_tree.links.new(rim_mix_node.inputs[2], rim_power_node.outputs[0])
-        node_tree.links.new(rim_mix_node.inputs[0], shadow_rate_node.outputs[0])
-        node_tree.links.new(rim_mix_node.inputs[1], specular_mix_node.outputs[0])
-        node_tree.links.new(out_node.inputs[0], rim_mix_node.outputs[0])
-        node_tree.links.new(out_node.inputs[1], mate_node.outputs[1])
-
-        for node in node_tree.nodes[:]:
-            compat.set_select(node, False)
-        node_tree.nodes.active = mate_node
-        node_tree.nodes.active.select = True
-
-    else:
-        mate.use_nodes = False
-        mate.use_shadeless = False
-
-# CM3D2用マテリアルを設定に合わせて装飾
 def decorate_material(mate, enable=True, me=None, mate_index=-1):
     if not enable or 'shader1' not in mate:
         return
-    if compat.IS_LEGACY:
-        return decorate_material_old(mate, enable=enable, me=me, mate_index=mate_index)
 
     # luvoid : set properties of the mate
     shader = mate['shader1']
@@ -346,20 +141,19 @@ def decorate_material(mate, enable=True, me=None, mate_index=-1):
 
     # luvoid : create cm3d2 shader node group and material output node
     cmnode = None
-    if not compat.IS_LEGACY:
-        mate.use_nodes = True
-        #cm3d2_data.clear_nodes(mate.node_tree.nodes)
-        cmtree = bpy.data.node_groups.get('CM3D2 Shader')
-        if not cmtree:
-            blend_path = os.path.join(os.path.dirname(__file__), "append_data.blend")
-            with bpy.data.libraries.load(blend_path) as (data_from, data_to):
-                data_to.node_groups = ['CM3D2 Shader']
-            cmtree = data_to.node_groups[0]
-        cmnode = mate.node_tree.nodes.new('ShaderNodeGroup')
-        cmnode.node_tree = cmtree
-        matout = mate.node_tree.nodes.new('ShaderNodeOutputMaterial')
-        matout.location = (300,0)
-        mate.node_tree.links.new(matout.inputs.get('Surface'), cmnode.outputs.get('Surface'))
+    mate.use_nodes = True
+    #cm3d2_data.clear_nodes(mate.node_tree.nodes)
+    cmtree = bpy.data.node_groups.get('CM3D2 Shader')
+    if not cmtree:
+        blend_path = os.path.join(os.path.dirname(__file__), "append_data.blend")
+        with bpy.data.libraries.load(blend_path) as (data_from, data_to):
+            data_to.node_groups = ['CM3D2 Shader']
+        cmtree = data_to.node_groups[0]
+    cmnode = mate.node_tree.nodes.new('ShaderNodeGroup')
+    cmnode.node_tree = cmtree
+    matout = mate.node_tree.nodes.new('ShaderNodeOutputMaterial')
+    matout.location = (300,0)
+    mate.node_tree.links.new(matout.inputs.get('Surface'), cmnode.outputs.get('Surface'))
 
     for key, node in mate.node_tree.nodes.items():
         if not key.startswith('_'):
@@ -676,78 +470,47 @@ def create_tex(context, mate, node_name, tex_name=None, filepath=None, cm3d2path
     if isinstance(context, bpy.types.Context):
         context = context.copy()
 
-    if compat.IS_LEGACY:
-        slot = mate.texture_slots.create(slot_index)
-        tex = context['blend_data'].textures.new(node_name, 'IMAGE')
-        slot.texture = tex
+    # if mate.use_nodes is False:
+    # 	mate.use_nodes = True
+    nodes = mate.node_tree.nodes
+    tex = nodes.get(node_name)
+    if tex is None:
+        tex = mate.node_tree.nodes.new(type='ShaderNodeTexImage')
+        tex.name = tex.label = node_name
+        tex.show_texture = True
 
-        if tex_name:
-            slot.offset[0] = tex_map_data[0]
-            slot.offset[1] = tex_map_data[1]
-            slot.scale[0] = tex_map_data[2]
-            slot.scale[1] = tex_map_data[3]
-
+    if tex_name:
+        if tex.image is None:
             if os.path.exists(filepath):
                 img = bpy.data.images.load(filepath)
                 img.name = tex_name
             else:
                 img = context['blend_data'].images.new(tex_name, 128, 128)
                 img.filepath = filepath
-            img['cm3d2_path'] = cm3d2path
             img.source = 'FILE'
             tex.image = img
-
-            if replace_tex:
-                replaced = replace_cm3d2_tex(tex.image, reload_path=False)
-                if replaced and node_name == '_MainTex':
-                    ob = context['active_object']
-                    me = ob.data
-                    for face in me.polygons:
-                        if face.material_index == ob.active_material_index:
-                            me.uv_textures.active.data[face.index].image = tex.image
-
-    else:
-        # if mate.use_nodes is False:
-        # 	mate.use_nodes = True
-        nodes = mate.node_tree.nodes
-        tex = nodes.get(node_name)
-        if tex is None:
-            tex = mate.node_tree.nodes.new(type='ShaderNodeTexImage')
-            tex.name = tex.label = node_name
-            tex.show_texture = True
-
-        if tex_name:
-            if tex.image is None:
-                if os.path.exists(filepath):
-                    img = bpy.data.images.load(filepath)
-                    img.name = tex_name
-                else:
-                    img = context['blend_data'].images.new(tex_name, 128, 128)
-                    img.filepath = filepath
-                img.source = 'FILE'
-                tex.image = img
+            img['cm3d2_path'] = cm3d2path
+        else:
+            img = tex.image
+            path = img.get('cm3d2_path')
+            if path != cm3d2path:
                 img['cm3d2_path'] = cm3d2path
-            else:
-                img = tex.image
-                path = img.get('cm3d2_path')
-                if path != cm3d2path:
-                    img['cm3d2_path'] = cm3d2path
-                    img.filepath = filepath
+                img.filepath = filepath
 
-            tex_map = tex.texture_mapping
-            tex_map.translation[0] = tex_map_data[0]
-            tex_map.translation[1] = tex_map_data[1]
-            tex_map.scale[0] = tex_map_data[2]
-            tex_map.scale[1] = tex_map_data[3]
+        tex_map = tex.texture_mapping
+        tex_map.translation[0] = tex_map_data[0]
+        tex_map.translation[1] = tex_map_data[1]
+        tex_map.scale[0] = tex_map_data[2]
+        tex_map.scale[1] = tex_map_data[3]
 
-        # tex.color = tex_data['color'][:3]
-        # tex.outputs['Color'].default_value = tex_data['color'][:]
-        # tex.outputs['ALpha'].default_value = tex_data['color'][3]
+    # tex.color = tex_data['color'][:3]
+    # tex.outputs['Color'].default_value = tex_data['color'][:]
+    # tex.outputs['ALpha'].default_value = tex_data['color'][3]
 
-            # tex探し
-            if replace_tex:
-                replaced = replace_cm3d2_tex(tex.image, reload_path=False)
-                # TODO 2.8での実施方法を調査. shader editorで十分？
+        # tex探し
+        if replace_tex:
+            replaced = replace_cm3d2_tex(tex.image, reload_path=False)
+            # TODO 2.8での実施方法を調査. shader editorで十分？
 
     return tex
 
@@ -756,22 +519,11 @@ def create_col(context, mate, node_name, color, slot_index=-1):
     if isinstance(context, bpy.types.Context):
         context = context.copy()
 
-    if compat.IS_LEGACY:
-        if slot_index >= 0:
-            mate.use_textures[slot_index] = False
-        node = mate.texture_slots.create(slot_index)
-        node.color = color[:3]
-        node.diffuse_color_factor = color[3]
-        node.use_rgb_to_intensity = True
-        tex = context['blend_data'].textures.new(node_name, 'BLEND')
-        node.texture = tex
-        node.use = False
-    else:
-        node = mate.node_tree.nodes.get(node_name)
-        if node is None:
-            node = mate.node_tree.nodes.new(type='ShaderNodeRGB')
-            node.name = node.label = node_name
-        node.outputs[0].default_value = color
+    node = mate.node_tree.nodes.get(node_name)
+    if node is None:
+        node = mate.node_tree.nodes.new(type='ShaderNodeRGB')
+        node.name = node.label = node_name
+    node.outputs[0].default_value = color
 
     return node
 
@@ -780,21 +532,11 @@ def create_float(context, mate, node_name, value, slot_index=-1):
     if isinstance(context, bpy.types.Context):
         context = context.copy()
 
-    if compat.IS_LEGACY:
-        if slot_index >= 0:
-            mate.use_textures[slot_index] = False
-        node = mate.texture_slots.create(slot_index)
-        node.diffuse_color_factor = value
-        node.use_rgb_to_intensity = False
-        tex = context['blend_data'].textures.new(node_name, 'BLEND')
-        node.texture = tex
-        node.use = False
-    else:
-        node = mate.node_tree.nodes.get(node_name)
-        if node is None:
-            node = mate.node_tree.nodes.new(type='ShaderNodeValue')
-            node.name = node.label = node_name
-        node.outputs[0].default_value = value
+    node = mate.node_tree.nodes.get(node_name)
+    if node is None:
+        node = mate.node_tree.nodes.new(type='ShaderNodeValue')
+        node.name = node.label = node_name
+    node.outputs[0].default_value = value
 
     return node
 
@@ -804,8 +546,7 @@ def setup_material(mate):
         if 'CM3D2 Texture Expand' not in mate:
             mate['CM3D2 Texture Expand'] = True
 
-        if not compat.IS_LEGACY:
-            mate.use_nodes = True
+        mate.use_nodes = True
 
 
 def setup_image_name(img):
@@ -900,16 +641,10 @@ def remove_data(target_data):
     except:
         target_data = [target_data]
 
-    if compat.IS_LEGACY:
-        for data in target_data:
-            if data.__class__.__name__ == 'Object':
-                if data.name in bpy.context.scene.objects:
-                    bpy.context.scene.objects.unlink(data)
-    else:
-        for data in target_data:
-            if data.__class__.__name__ == 'Object':
-                if data.name in bpy.context.scene.collection.objects:
-                    bpy.context.scene.collection.objects.unlink(data)
+    for data in target_data:
+        if data.__class__.__name__ == 'Object':
+            if data.name in bpy.context.scene.collection.objects:
+                bpy.context.scene.collection.objects.unlink(data)
 
     # https://developer.blender.org/T49837
     # によると、xxx.remove(data, do_unlink=True)で十分
@@ -1000,25 +735,15 @@ class hide_render_restore:
                 ob.hide_render = False
 
         self.hide_rendered_objects = []
-        if compat.IS_LEGACY:
-            for ob in bpy.data.objects:
-                for layer_index, is_used in enumerate(bpy.context.scene.layers):
-                    if not is_used:
-                        continue
-                    if ob.layers[layer_index] and is_used and ob.name not in self.render_object_names and not ob.hide_render:
+        clct_children = bpy.context.scene.collection.children
+        for ob in bpy.data.objects:
+            if ob.name not in self.render_object_names and not ob.hide_render:
+                # ble-2.8ではlayerではなく、collectionからのリンクで判断
+                for clct in bpy.context.window.view_layer.layer_collection.children:
+                    if clct.exclude is False and ob.name in clct_children[clct.name].objects.keys():
                         self.hide_rendered_objects.append(ob)
                         ob.hide_render = True
                         break
-        else:
-            clct_children = bpy.context.scene.collection.children
-            for ob in bpy.data.objects:
-                if ob.name not in self.render_object_names and not ob.hide_render:
-                    # ble-2.8ではlayerではなく、collectionからのリンクで判断
-                    for clct in bpy.context.window.view_layer.layer_collection.children:
-                        if clct.exclude is False and ob.name in clct_children[clct.name].objects.keys():
-                            self.hide_rendered_objects.append(ob)
-                            ob.hide_render = True
-                            break
 
     def restore(self):
         for ob in self.rendered_objects:

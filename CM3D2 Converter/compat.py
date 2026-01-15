@@ -13,9 +13,6 @@ from types import FunctionType
 import functools
 
 
-# LEGAY: version less than 2.80
-IS_LEGACY = not hasattr(bpy.app, 'version') or bpy.app.version < (2, 80)
-
 UILayoutDrawer = bpy.types.Header | bpy.types.Menu | bpy.types.Panel
 
 
@@ -23,14 +20,11 @@ class BlRegister:
     classes: list[type] = []
     functions: dict[type[UILayoutDrawer], list[FunctionType]] = {}
     
-    def __init__(self, append_to: type[UILayoutDrawer] = None, only_legacy: bool = False, **kwargs):
+    def __init__(self, append_to: type[UILayoutDrawer] = None):
         self.append_to = append_to
-        self.only_legacy = only_legacy
 
     def __call__(self, obj: type | FunctionType) -> object:
         """This method is invoked when using the decorator @BlRegister()"""
-        if self.only_legacy:
-            return obj
         if inspect.isclass(obj):
             BlRegister.classes.append(obj)
         elif inspect.isfunction(obj):
@@ -120,133 +114,79 @@ def deprecated(target_or_reason: str | type | FunctionType):
 
 
 def layout_split(layout, factor=0.0, align=False):
-    if IS_LEGACY:
-        return layout.split(percentage=factor, align=align)
-
     return layout.split(factor=factor, align=align)
 
 
 def get_active():
-    if IS_LEGACY:
-        return bpy.context.scene.objects.active
-
     return bpy.context.view_layer.objects.active
 
 def get_active(context):
-    if IS_LEGACY:
-        return context.scene.objects.active
-
     return context.view_layer.objects.active
 
 
 def set_active(context, obj):
-    if IS_LEGACY:
-        context.scene.objects.active = obj
-    else:
-        context.view_layer.objects.active = obj
+    context.view_layer.objects.active = obj
 
 
 def get_active_uv(me):
-    if IS_LEGACY:
-        uvs = me.uv_textures
-    else:
-        uvs = me.uv_layers
+    uvs = me.uv_layers
     return uvs.active
 
 
 def set_display_type(ob, disp_type):
-    if IS_LEGACY:
-        ob.draw_type = disp_type
-    else:
-        ob.display_type = disp_type
+    ob.display_type = disp_type
 
 
 def get_select(obj: bpy.types.Object) -> bool:
-    if IS_LEGACY:
-        return obj.select
-
     return obj.select_get()
 
 
 def set_select(obj: bpy.types.Object, select: bool) -> None:
-    if IS_LEGACY:
-        obj.select = select
-    else:
-        obj.select_set(select)
+    obj.select_set(select)
 
 
 def is_select(*args) -> bool:
     """すべてが選択状態であるかを判定する."""
-    if IS_LEGACY:
-        return all(arg.select for arg in args)
-
     return all(arg.select_get() for arg in args)
 
 
 def get_hide(obj: bpy.types.Object) -> bool:
-    if IS_LEGACY:
-        return obj.hide
-
     return obj.hide_viewport
 
 
 def set_hide(obj: bpy.types.Object, hide: bool):
-    if IS_LEGACY:
-        obj.hide = hide
-
-    else:
-        obj.hide_viewport = hide
+    obj.hide_viewport = hide
 
 
 def link(scene: bpy.types.Scene, obj: bpy.types.Object):
-    if IS_LEGACY:
-        scene.objects.link(obj)
-    elif bpy.context.collection:
+    if bpy.context.collection:
         bpy.context.collection.objects.link(obj)
     else:
         scene.collection.objects.link(obj)
 
 
 def unlink(scene: bpy.types.Scene, obj: bpy.types.Object):
-    if IS_LEGACY:
-        scene.objects.unlink(obj)
-    else:
-        for collection in obj.users_collection:
-            collection.objects.unlink(obj)
+    for collection in obj.users_collection:
+        collection.objects.unlink(obj)
 
 
 def get_cursor_loc(context):
-    if IS_LEGACY:
-        return context.space_data.cursor_location
-    else:
-        return context.scene.cursor.location
+    return context.scene.cursor.location
 
 
 def get_lights(blend_data):
-    if IS_LEGACY:
-        return blend_data.iamps
-    else:
-        return blend_data.lights
+    return blend_data.lights
 
 
 def mul(x, y):
-    if IS_LEGACY:
-        return x * y
-
     return x @ y
 
 
 def mul3(x, y, z):
-    if IS_LEGACY:
-        return x * y * z
-
     return x @ y @ z
 
 
 def mul4(w, x, y, z):
-    if IS_LEGACY:
-        return w * x * y * z
-
     return w @ x @ y @ z
 
 def transform_inverse(m: mathutils.Matrix) -> mathutils.Matrix:
@@ -371,7 +311,7 @@ def set_bone_matrix(bone, mat):
     bone.matrix = mat.copy()
     #axis, angle = mat.to_quaternion().to_axis_angle()
     #bone.roll = angle
-    if not IS_LEGACY and isinstance(bone, bpy.types.EditBone):
+    if isinstance(bone, bpy.types.EditBone):
         #print("Bone align_roll: ", (mat[0][0],mat[1][0],mat[2][0]))
         bone.align_roll((mat[0][2],mat[1][2],mat[2][2]))
     #print("bone: ", bone.matrix)
@@ -578,55 +518,32 @@ LEGACY_TO_BL28_ICON = {
 }                                                          
 
 def icon(key):
-    if IS_LEGACY:
-        # 対応アイコンがdictにない場合はNONEとする
-        return BL28_TO_LEGACY_ICON.get(key, key) or 'NONE'
-    else:
-        return LEGACY_TO_BL28_ICON.get(key, key) or 'NONE'
-        
-    return key
+    # 対応アイコンがdictにない場合はNONEとする
+    return LEGACY_TO_BL28_ICON.get(key, key) or 'NONE'
 
 
 def region_type():
-    if IS_LEGACY:
-        return 'TOOLS'
-
     return 'UI'
 
 
 def pref_type():
-    if IS_LEGACY:
-        return 'USER_PREFERENCES'
-
     return 'PREFERENCES'
 
 
 def get_prefs(context):
-    if IS_LEGACY:
-        return context.user_preferences
-
     return context.preferences
 
 
 def get_system(context):
-    if IS_LEGACY:
-        return get_prefs(context).system
-
     return get_prefs(context).view
 
 
 def get_tex_image(context, node_name=None):
-    if IS_LEGACY:
-        if hasattr(context, 'texture'):
-            tex = context.texture
-            if tex:
-                return tex.image
-    else:
-        mate = context.material
-        if mate and mate.use_nodes:
-            node = mate.node_tree.nodes.get(node_name)
-            if node and node.type == 'TEX_IMAGE':
-                return node.image
+    mate = context.material
+    if mate and mate.use_nodes:
+        node = mate.node_tree.nodes.get(node_name)
+        if node and node.type == 'TEX_IMAGE':
+            return node.image
 
     return None
 
@@ -693,8 +610,6 @@ BL29_TO_BL28_UNIT = {
 }
 
 def unit(key):
-    if IS_LEGACY:
-        return BL29_TO_LEGACY_UNIT.get(key, key) or 'NONE'
-    elif bpy.app.version < (2, 91):
+    if bpy.app.version < (2, 91):
         return BL29_TO_BL28_UNIT.get(key, key) or 'NONE'
     return key

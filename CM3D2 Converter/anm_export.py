@@ -560,11 +560,8 @@ class AnmBuilder:
                 frame = (self.frame_end - self.frame_start) / (key_frame_count - 1) * key_frame_index + self.frame_start
             if not self.no_set_frame:
                 context.scene.frame_set(frame=int(frame), subframe=frame - int(frame))
-                if compat.IS_LEGACY:
-                    context.scene.update()
-                else:
-                    layer = context.view_layer
-                    layer.update()
+                layer = context.view_layer
+                layer.update()
 
             time = (frame - self.frame_start) / fps * (1.0 / self.time_scale)
             

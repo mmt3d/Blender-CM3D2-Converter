@@ -65,7 +65,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             self.filepath = common.default_cm3d2_dir(prefs.model_import_path, None, "model")
         self.scale = prefs.scale
         self.is_convert_bone_weight_names = prefs.is_convert_bone_weight_names
-        if compat.IS_LEGACY or bpy.app.version < (2, 91):
+        if bpy.app.version < (2, 91):
             self.is_sharp = False
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
@@ -82,7 +82,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         sub_box.label(text="メッシュ")
         sub_box.prop(self, 'is_remove_doubles', icon='STICKY_UVS_VERT')
         sub_box.prop(self, 'is_seam' , icon=compat.icon('UV_EDGESEL'))
-        if not compat.IS_LEGACY and bpy.app.version >= (2, 91):
+        if bpy.app.version >= (2, 91):
             sub_box.prop(self, 'is_sharp', icon=compat.icon('EDGESEL'))
 
         sub_box = box.box()
@@ -97,8 +97,6 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         sub_box.label(text="マテリアル")
         sub_box.prop(prefs, 'is_replace_cm3d2_tex', icon='BORDERMOVE')
         sub_box.prop(self, 'reload_tex_cache', icon='FILE_REFRESH')
-        if compat.IS_LEGACY:
-            sub_box.prop(self, 'is_decorate', icon=compat.icon('SHADING_TEXTURE'))
         sub_box.prop(self, 'is_mate_data_text', icon='TEXT')
 
         box = self.layout.box()
@@ -378,10 +376,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             arm.show_axes               = prefs.show_bone_axes         
             arm.show_bone_custom_shapes = prefs.show_bone_custom_shapes
             arm.show_group_colors       = prefs.show_bone_group_colors
-            if compat.IS_LEGACY:
-                arm_ob.show_x_ray = prefs.show_bone_in_front
-            else:
-                arm_ob.show_in_front = prefs.show_bone_in_front     
+            arm_ob.show_in_front        = prefs.show_bone_in_front
 
             bpy.ops.object.mode_set(mode='EDIT')
 
@@ -699,14 +694,9 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                 face_seek += len(face_data[index])
 
                 # テクスチャ追加
-                if compat.IS_LEGACY:
-                    #self.create_mateprop_old(context, me, texes_set, mate, index, data)
-                    cm3d2_data.MaterialHandler.apply_to_old(override, mate, data)
-                    common.decorate_material(mate, self.is_decorate, me, index)
-                else:
-                    #self.create_mateprop(context, me, texes_set, mate, index, data)
-                    cm3d2_data.MaterialHandler.apply_to(override, mate, data)
-                    common.decorate_material(mate, self.is_decorate, me, index)
+                #self.create_mateprop(context, me, texes_set, mate, index, data)
+                cm3d2_data.MaterialHandler.apply_to(override, mate, data)
+                common.decorate_material(mate, self.is_decorate, me, index)
                 common.setup_material(mate)
 
             ob.active_material_index = 0
@@ -716,7 +706,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             pre_mesh_select_mode = context.tool_settings.mesh_select_mode[:]
             
             # Too buggy on versions before 2.91 so just disable it outright
-            #if self.is_sharp and (compat.IS_LEGACY or bpy.app.version < (2, 91)):
+            #if self.is_sharp and bpy.app.version < (2, 91):
             #    context.tool_settings.mesh_select_mode = (False, True, False)
             #    bpy.ops.object.mode_set(mode='EDIT')
             #    
@@ -728,7 +718,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             #
             #    bpy.ops.object.mode_set(mode='OBJECT')
 
-            can_mark_sharp = not compat.IS_LEGACY and bpy.app.version >= (2, 91)
+            can_mark_sharp = bpy.app.version >= (2, 91)
 
             if self.is_remove_doubles:
                 context.tool_settings.mesh_select_mode = (True, False, False)
@@ -997,8 +987,8 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         # モーフ追加
         me: bpy.types.Mesh = ob.data
 
-        is_use_attributes = (not compat.IS_LEGACY and bpy.app.version >= (2,92))
-        is_fast_create = (not compat.IS_LEGACY and bpy.app.version >= (3,2))
+        is_use_attributes = bpy.app.version >= (2,92)
+        is_fast_create = bpy.app.version >= (3,2)
 
         #if not is_fast_create:
         #    bpy.ops.object.mode_set(mode='VERTEX_PAINT')
@@ -1149,16 +1139,6 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                         tex_map.scale[0] = mapping[2]
                         tex_map.scale[1] = mapping[3]
 
-                        # ファイルの実体を割り当て
-                        if prefs.is_replace_cm3d2_tex:
-                            img = tex.image
-                            # col = mate.node_tree.nodes.new(type='ShaderNodeAttribute')
-                            # tex.image = bpy.data.images.load("C:\\path\\to\\im.jpg")
-                            replaced = common.replace_cm3d2_tex(img, self.texpath_dict, reload_path=False)
-                            if compat.IS_LEGACY and replaced and prop_name == '_MainTex':
-                                for face in me.polygons:
-                                    if face.material_index == mate_idx:
-                                        me.uv_textures.active.data[face.index].image = img
                 else:
                     common.create_tex(context, mate, prop_name)
 

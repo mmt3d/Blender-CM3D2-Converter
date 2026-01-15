@@ -57,7 +57,7 @@ class CNV_OT_attribute_from_custom_normals(bpy.types.Operator):
 
         me.calc_normals_split()
 
-        if (compat.IS_LEGACY or bpy.app.version < (2, 91)):
+        if bpy.app.version < (2, 91):
             return {'ERROR'}
         else:
             attribute = me.attributes.new('custom_normals', self.data_type, 'CORNER')
@@ -126,7 +126,7 @@ class CNV_OT_attribute_convert_normals(bpy.types.Operator):
         pre_mode = ob.mode
         bpy.ops.object.mode_set(mode='OBJECT')
 
-        if (compat.IS_LEGACY or bpy.app.version < (3,1)):
+        if bpy.app.version < (3,1):
             return {'ERROR'}
 
         old_attribute = me.attributes.active

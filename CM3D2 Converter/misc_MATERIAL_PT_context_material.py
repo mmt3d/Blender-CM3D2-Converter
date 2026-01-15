@@ -14,8 +14,7 @@ from .translations.pgettext_functions import *
 
 # メニュー等に項目追加 (for 2.7x or less)
 def menu_func(self, context):
-    if compat.IS_LEGACY is False:
-        return
+    return
 
     # ModelVersionでCOM3D2のmodelか判断
     model_ver = bpy.context.active_object.get("ModelVersion")
@@ -68,43 +67,6 @@ def menu_func(self, context):
                 op = row.operator('wm.context_set_int', icon='DOWNARROW_HLT', text="", emboss=False)
                 op.data_path, op.value, op.relative = 'material["CM3D2 Texture Expand"]', 0, False
                 row.label(text="簡易テクスチャ情報", icon_value=common.kiss_icon())
-
-                if compat.IS_LEGACY:
-                    for slot in mate.texture_slots:
-                        if not slot or not slot.texture:
-                            continue
-                        tex = slot.texture
-                        name = common.remove_serial_number(tex.name).replace("_", "") + " "
-
-                        if slot.use:
-                            node_type = 'tex'
-                        else:
-                            node_type = 'col' if slot.use_rgb_to_intensity else 'f'
-
-                        if node_type == 'tex':
-                            row = box.row(align=True)
-                            sub_row = compat.layout_split(row, factor=0.333333333333333333333, align=True)
-                            sub_row.label(text=name, icon_value=sub_row.icon(tex))
-                            img = getattr(text, 'image')
-                            if img:
-                                sub_row.template_ID(tex, 'image')
-                            row.operator('material.quick_texture_show', text="", icon='RIGHTARROW').texture_name = tex.name
-                        elif node_type == 'col':
-                            row = box.row(align=True)
-                            sub_row = compat.layout_split(row, factor=0.333333333333333333333, align=True)
-                            sub_row.label(text=name, icon_value=sub_row.icon(tex))
-                            sub_row.prop(slot, 'color', text="")
-                            sub_row.prop(slot, 'diffuse_color_factor', icon='IMAGE_RGB_ALPHA', text="透明度", slider=True)
-                            row.operator('material.quick_texture_show', text="", icon='RIGHTARROW').texture_name = tex.name
-                        elif node_type == 'f':
-                            row = box.row(align=True)
-                            sub_row = compat.layout_split(row, factor=0.333333333333333333333, align=True)
-                            sub_row.label(text=name, icon_value=sub_row.icon(tex))
-                            sub_row.prop(slot, 'diffuse_color_factor', icon='ARROW_LEFTRIGHT', text="値")
-                            row.operator('material.quick_texture_show', text="", icon='RIGHTARROW').texture_name = tex.name
-
-                    box.operator('texture.sync_tex_color_ramps', icon='LINKED')
-
             else:
                 row = box.row()
                 row.alignment = 'LEFT'
@@ -120,7 +82,7 @@ def menu_func(self, context):
                 self.layout.operator('material.new_cm3d2', text="CM3D2用に変更", icon_value=common.kiss_icon())
 
 
-@compat.BlRegister(only_latest=True)
+@compat.BlRegister()
 class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
@@ -177,8 +139,6 @@ class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
                 box.prop(mate, '["shader1"]', icon='MATERIAL', text="シェーダー1")
                 box.prop(mate, '["shader2"]', icon=compat.icon('SHADING_RENDERED'), text="シェーダー2")
 
-                # For LEGACY
-                # box.operator('material.decorate_material', icon=compat.icon('SHADING_TEXTURE'))
                 if 'CM3D2 Texture Expand' not in mate:
                     box.operator('material.setup_mate_expand', text="フラグセットアップ")
                     return
@@ -268,8 +228,6 @@ class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
                         sub_row.prop(mate, '["_ALPHAPREMULTIPLY_ON"]', icon=compat.icon('SHADING_RENDERED'), text="Value", toggle=1)
                         row.label(text="", icon='BLANK1')
 
-                    # if compat.IS_LEGACY:
-                    # 	box.operator('texture.sync_tex_color_ramps', icon='LINKED')
                 else:
                     row = box.row()
                     row.alignment = 'LEFT'
@@ -300,8 +258,6 @@ class new_mate_opr():
     def draw(self, context):
         self.layout.separator()
         self.layout.prop(self, 'shader_type', icon='MATERIAL')
-        if compat.IS_LEGACY:
-            self.layout.prop(self, 'is_decorate', icon=compat.icon('SHADING_TEXTURE'))
         prefs = common.preferences()
 
         self.layout.prop(prefs, 'is_replace_cm3d2_tex', icon='BORDERMOVE')
@@ -314,12 +270,8 @@ class new_mate_opr():
 
         if context.material:
             mate = context.material
-            if compat.IS_LEGACY:
-                for index, slot in enumerate(mate.texture_slots):
-                    mate.texture_slots.clear(index)
-            else:
-                if mate.use_nodes:
-                    cm3d2_data.clear_nodes(mate.node_tree.nodes)
+            if mate.use_nodes:
+                cm3d2_data.clear_nodes(mate.node_tree.nodes)
 
         else:
             if not context.material_slot:
@@ -601,28 +553,15 @@ class new_mate_opr():
             # tex探し
             if prefs.is_replace_cm3d2_tex:
                 replaced = common.replace_cm3d2_tex(tex.image, texpath_dict=texpath_dict, reload_path=False)
-                if compat.IS_LEGACY and replaced and key == '_MainTex':
-                    for face in me.polygons:
-                        if face.material_index == ob.active_material_index:
-                            me.uv_textures.active.data[face.index].image = tex.image
-            if compat.IS_LEGACY:
-                slot_index += 1
 
         for data in col_list:
             node = common.create_col(context, mate, data[0], data[1][:4], slot_index)
-            if compat.IS_LEGACY:
-                slot_index += 1
 
         for data in f_list:
             node = common.create_float(context, mate, data[0], data[1], slot_index)
-            if compat.IS_LEGACY:
-                slot_index += 1
 
-        if compat.IS_LEGACY:
-            common.decorate_material(mate, self.is_decorate, me, ob.active_material_index)
-        else:
-            cm3d2_data.align_nodes(mate)
-            common.decorate_material(mate, self.is_decorate, me, ob.active_material_index)
+        cm3d2_data.align_nodes(mate)
+        common.decorate_material(mate, self.is_decorate, me, ob.active_material_index)
 
         return {'FINISHED'}
 
@@ -684,8 +623,6 @@ class CNV_OT_paste_material(bpy.types.Operator):
 
     def draw(self, context):
         self.layout.prop(self, 'override_name')
-        if compat.IS_LEGACY:
-            self.layout.prop(self, 'is_decorate')
         prefs = common.preferences()
         self.layout.prop(prefs, 'is_replace_cm3d2_tex', icon='BORDERMOVE')
 
@@ -715,10 +652,7 @@ class CNV_OT_paste_material(bpy.types.Operator):
                     mate.name = mate_name
 
         prefs = common.preferences()
-        if compat.IS_LEGACY:
-            cm3d2_data.MaterialHandler.apply_to_old(context, mate, mat_data, prefs.is_replace_cm3d2_tex, self.is_decorate)
-        else:
-            cm3d2_data.MaterialHandler.apply_to(context, mate, mat_data, prefs.is_replace_cm3d2_tex)
+        cm3d2_data.MaterialHandler.apply_to(context, mate, mat_data, prefs.is_replace_cm3d2_tex)
 
         self.report(type={'INFO'}, message="クリップボードからマテリアルを貼付けました")
         return {'FINISHED'}
@@ -741,10 +675,7 @@ class CNV_OT_copy_material(bpy.types.Operator):
     def execute(self, context):
         mate = context.material
         try:
-            if compat.IS_LEGACY:
-                mat_data = cm3d2_data.MaterialHandler.parse_mate_old(mate)
-            else:
-                mat_data = cm3d2_data.MaterialHandler.parse_mate(mate)
+            mat_data = cm3d2_data.MaterialHandler.parse_mate(mate)
         except Exception as e:
             self.report(type={'ERROR'}, message="クリップボードへのコピーを中止します。:" + str(e))
             return {'CANCELLED'}

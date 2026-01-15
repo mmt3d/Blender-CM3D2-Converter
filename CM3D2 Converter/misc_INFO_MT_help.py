@@ -142,7 +142,7 @@ class CNV_OT_update_cm3d2_converter(bpy.types.Operator):
     bl_description = "GitHubから最新版のCM3D2 Converterアドオンをダウンロードし上書き更新します"
     bl_options = {'REGISTER'}
 
-    is_restart: bpy.props.BoolProperty(name="更新後にBlenderを再起動", default=compat.IS_LEGACY)
+    is_restart: bpy.props.BoolProperty(name="更新後にBlenderを再起動", default=False)
     is_toggle_console: bpy.props.BoolProperty(name="再起動後にコンソールを閉じる", default=True)
 
     items = [
@@ -233,12 +233,9 @@ class CNV_OT_update_cm3d2_converter(bpy.types.Operator):
             subprocess.Popen(command_line)
             bpy.ops.wm.quit_blender()
         else:
-            if compat.IS_LEGACY:
-                self.report(type={'INFO'}, message="Blender-CM3D2-Converterを更新しました、再起動して下さい")
-            else:
-                bpy.ops.preferences.addon_refresh()
-                bpy.ops.wm.call_menu(name=INFO_MT_help_cm3d2_converter_reload_notice.bl_idname)
-                self.report(type={'INFO'}, message="Blender-CM3D2-Converter updated successfully. Reload scripts to apply changes.")
+            bpy.ops.preferences.addon_refresh()
+            bpy.ops.wm.call_menu(name=INFO_MT_help_cm3d2_converter_reload_notice.bl_idname)
+            self.report(type={'INFO'}, message="Blender-CM3D2-Converter updated successfully. Reload scripts to apply changes.")
         return {'FINISHED'}
 
 
@@ -265,10 +262,7 @@ class CNV_OT_show_cm3d2_converter_preference(bpy.types.Operator):
             if 'COMMUNITY' not in context.window_manager.addon_support:
                 context.window_manager.addon_support = {'OFFICIAL', 'COMMUNITY'}
             if not my_info['show_expanded']:
-                if compat.IS_LEGACY:
-                    bpy.ops.wm.addon_expand(module=__package__)
-                else:
-                    bpy.ops.preferences.addon_expand(module=__package__)
+                bpy.ops.preferences.addon_expand(module=__package__)
         else:
             self.report(type={'ERROR'}, message="表示できるエリアが見つかりませんでした")
             return {'CANCELLED'}

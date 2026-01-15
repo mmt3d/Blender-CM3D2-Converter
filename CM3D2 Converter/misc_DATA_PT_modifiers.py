@@ -219,9 +219,6 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self)
 
     def draw(self, context):
-        prefs = common.preferences()
-        if compat.IS_LEGACY:
-            self.layout.prop(prefs, 'custom_normal_blend'         , icon=compat.icon('SNAP_NORMAL'  ), slider=True)
         self.layout.prop(self , 'is_preserve_shape_key_values', icon=compat.icon('SHAPEKEY_DATA'), slider=True)
         self.layout.label(text="適用するモディファイア")
         ob = context.active_object
@@ -284,10 +281,6 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
         pre_mode = ob.mode
 
         arm_ob = None
-        if compat.IS_LEGACY:
-            for mod in ob.modifiers:
-                if mod.type == "ARMATURE":
-                    arm_ob = mod.object
 
         progress = 0
         progress_count = 1
@@ -356,7 +349,7 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
         for index, mod in enumerate(copy_modifiers):
             #if index >= 32: # luvoid : can only apply 32 modifiers at once.
             #    break
-            if self.is_applies[index].value and (mod.type != 'ARMATURE' or not compat.IS_LEGACY):
+            if self.is_applies[index].value:
                 if mod.type == 'MIRROR' and mod.use_mirror_vertex_groups:
                     if bpy.ops.object.decode_cm3d2_vertex_group_names.poll():
                         self.report(type={'WARNING'}, message="Vertex groups are not in blender naming style. Mirror modifier results may not be as expected")
@@ -373,7 +366,7 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
                     self.report(type={'ERROR', 'WARNING'}, message=f_tip_("Could not apply '{type}' modifier \"{name}\"", type=mod.type, name=mod.name))
                     print(f_("Error applying '{type}' modifier \"{name}\":\n\t", type=mod.type, name=mod.name), e)
             
-            mod_progress += 1 if (mod.type != 'ARMATURE' or not compat.IS_LEGACY) else 0
+            mod_progress += 1
             context.window_manager.progress_update( progress_start + (progress + mod_progress / mod_count) / progress_count )
 
         # Calculate custom normals for armature modifiers in legacy blender
@@ -428,7 +421,7 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
         for index, mod in enumerate(copy_modifiers):
             #if index >= 32: # luvoid : can only apply 32 modifiers at once.
             #    break
-            if self.is_applies[index].value and (mod.type == 'ARMATURE' and compat.IS_LEGACY):
+            if self.is_applies[index].value:
                 try:
                     bpy.ops.object.modifier_apply(override, modifier=mod.name)
                 except Exception as e:
@@ -436,7 +429,6 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
                     self.report(type={'ERROR', 'WARNING'}, message=f_tip_("Could not apply '{mod_type}' modifier \"{mod_name}\"", mod_type=mod.type, mod_name=mod.name) )
                     print(f_("Could not apply '{mod_type}' modifier \"{mod_name}\":\n\t", mod_type=mod.type, mod_name=mod.name), e)
             
-            mod_progress += 1 if (mod.type == 'ARMATURE' and compat.IS_LEGACY) else 0
             context.window_manager.progress_update( progress_start + (progress + mod_progress / mod_count) / progress_count )
 
         progress += 1

@@ -362,8 +362,7 @@ class CM3D2MENU_PG_MiscCommand(bpy.types.PropertyGroup):
             layout.label(text=enum_info[1], icon=enum_info[3])
 
         row = layout.row(align=True)
-        if not compat.IS_LEGACY:
-            row.use_property_split = False
+        row.use_property_split = False
         if self.search:
             search_data = bpy.ops.cm3d2menu.command_add.get_rna_type().properties.get('type')
             row.prop_search(self, 'command', search_data, 'enum_items', text="", translate=True, icon='VIEWZOOM')

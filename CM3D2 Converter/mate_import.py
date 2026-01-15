@@ -41,8 +41,6 @@ class CNV_OT_import_cm3d2_mate(bpy.types.Operator):
 
     def draw(self, context):
         prefs = common.preferences()
-        if compat.IS_LEGACY:
-            self.layout.prop(self, 'is_decorate', icon=compat.icon('SHADING_TEXTURE'))
         self.layout.prop(prefs, 'is_replace_cm3d2_tex', icon='BORDERMOVE')
 
     def execute(self, context):
@@ -70,10 +68,7 @@ class CNV_OT_import_cm3d2_mate(bpy.types.Operator):
         context.material_slot.material = mate
         common.setup_material(mate)
 
-        if compat.IS_LEGACY:
-            cm3d2_data.MaterialHandler.apply_to_old(context, mate, mat_data, prefs.is_replace_cm3d2_tex, self.is_decorate, prefs.mate_unread_same_value)
-        else:
-            cm3d2_data.MaterialHandler.apply_to(context, mate, mat_data, prefs.is_replace_cm3d2_tex)
+        cm3d2_data.MaterialHandler.apply_to(context, mate, mat_data, prefs.is_replace_cm3d2_tex)
 
         return {'FINISHED'}
 
@@ -140,10 +135,7 @@ class CNV_OT_import_cm3d2_mate_text(bpy.types.Operator):
         context.material_slot.material = mate
         common.setup_material(mate)
 
-        if compat.IS_LEGACY:
-            cm3d2_data.MaterialHandler.apply_to_old(context, mate, mat_data, prefs.is_replace_cm3d2_tex, self.is_decorate, prefs.mate_unread_same_value)
-        else:
-            cm3d2_data.MaterialHandler.apply_to(context, mate, mat_data, prefs.is_replace_cm3d2_tex)
+        cm3d2_data.MaterialHandler.apply_to(context, mate, mat_data, prefs.is_replace_cm3d2_tex)
 
         if not edit_text:
             edit_text = context.blend_data.texts.new(os.path.basename(mat_data.name))

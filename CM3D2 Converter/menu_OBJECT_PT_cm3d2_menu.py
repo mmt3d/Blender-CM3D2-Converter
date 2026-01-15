@@ -97,8 +97,7 @@ class OBJECT_PT_cm3d2_menu(bpy.types.Panel):
         
         if active_command:
             box = self.layout.box()
-            if not compat.IS_LEGACY:
-                box.use_property_split = True
+            box.use_property_split = True
             cm3d2_menu.get_active_command().draw(context, box)
 
 

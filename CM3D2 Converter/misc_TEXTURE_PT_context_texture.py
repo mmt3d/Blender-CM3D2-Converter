@@ -13,9 +13,8 @@ LAYOUT_FACTOR = 0.3
 
 # メニュー等に項目追加
 def menu_func(self, context):
+    return
     ob = context.active_object
-    if ob is None or compat.IS_LEGACY is False:
-        return
     try:
         tex_slot = context.texture_slot
         tex = context.texture
@@ -198,48 +197,6 @@ def menu_func(self, context):
             col.label(text=line)
 
 
-# _ToonRamp設定メニュー
-@compat.BlRegister(only_legacy=True)
-class TEXTURE_MT_context_texture_ToonRamp(bpy.types.Menu):
-    bl_idname = 'TEXTURE_MT_context_texture_ToonRamp'
-    bl_label = "_ToonRamp 設定"
-
-    def draw(self, context):
-        l = self.layout
-        cmd = 'texture.set_default_toon_textures'
-        for toon_tex in cm3d2_data.TOON_TEXES:
-            icon = 'LAYER_ACTIVE' if 'Shadow' not in toon_tex else 'LAYER_USED'
-            l.operator(cmd, text=toon_tex, icon=icon).name = toon_tex
-
-
-# _ShadowRateToon設定メニュー
-@compat.BlRegister(only_legacy=True)
-class TEXTURE_MT_context_texture_ShadowRateToon(bpy.types.Menu):
-    bl_idname = 'TEXTURE_MT_context_texture_ShadowRateToon'
-    bl_label = "_ShadowRateToon 設定"
-
-    def draw(self, context):
-        l = self.layout
-        cmd = 'texture.set_default_toon_textures'
-        for toon_tex in cm3d2_data.TOON_TEXES:
-            icon = 'LAYER_ACTIVE' if 'Shadow' not in toon_tex else 'LAYER_USED'
-            l.operator(cmd, text=toon_tex, icon=icon).name = toon_tex
-
-
-# _OutlineToonRamp設定メニュー
-@compat.BlRegister(only_legacy=True)
-class TEXTURE_MT_context_texture_OutlineToonRamp(bpy.types.Menu):
-    bl_idname = 'TEXTURE_MT_context_texture_OutlineToonRamp'
-    bl_label = "_OutlineToonRamp 設定"
-
-    def draw(self, context):
-        l = self.layout
-        cmd = 'texture.set_default_toon_textures'
-        for toon_tex in cm3d2_data.TOON_TEXES:
-            icon = 'LAYER_ACTIVE' if 'Shadow' not in toon_tex else 'LAYER_USED'
-            l.operator(cmd, text=toon_tex, icon=icon).name = toon_tex
-
-
 # 0.0～1.0までの値設定メニュー
 @compat.BlRegister()
 class TEXTURE_MT_context_texture_values_normal(bpy.types.Menu):
@@ -285,20 +242,7 @@ class TEXTURE_MT_context_texture_values_RimPower(bpy.types.Menu):
 
 
 # _ZTest用の値設定メニュー
-@compat.BlRegister(only_legacy=True)
-class TEXTURE_MT_context_texture_values_ZTest_old(bpy.types.Menu):
-    bl_idname = 'TEXTURE_MT_context_texture_values_ZTest'
-    bl_label = "値リスト"
-
-    def draw(self, context):
-        tex_slot = context.texture_slot
-        for i in range(9):
-            value = round(i, 0)
-            self.layout.operator('texture.set_color_value_old', text=str(value)).color = list(tex_slot.color) + [value]
-
-
-# _ZTest用の値設定メニュー
-@compat.BlRegister(only_latest=True)
+@compat.BlRegister()
 class TEXTURE_MT_context_texture_values_ZTest(bpy.types.Menu):
     bl_idname = 'TEXTURE_MT_context_texture_values_ZTest'
     bl_label = "値リスト"
@@ -323,7 +267,7 @@ class TEXTURE_MT_context_texture_values_ZTest(bpy.types.Menu):
         for i in range(9):
             value = round(i, 0)
             opr = self.layout.operator('texture.set_value', text=str(value))
-            opr.node_name, opr.color = node_name, list(tex_slot.color) + [value]
+            opr.node_name, opr.color = self.node_name, list(tex_slot.color) + [value]
 
 
 @compat.BlRegister()
@@ -351,31 +295,7 @@ class CNV_OT_show_image(bpy.types.Operator):
         return {'FINISHED'}
 
 
-@compat.BlRegister(only_legacy=True)
-class CNV_OT_replace_cm3d2_tex_old(bpy.types.Operator):
-    bl_idname = 'image.replace_cm3d2_tex'
-    bl_label = "テクスチャを探す"
-    bl_description = "CM3D2本体のインストールフォルダからtexファイルを探して開きます"
-    bl_options = {'REGISTER', 'UNDO'}
-
-    @classmethod
-    def poll(cls, context):
-        tex = getattr(context, 'texture')
-        if tex:
-            return hasattr(tex, 'image')
-        return False
-
-    def execute(self, context):
-        tex = context.texture
-        img = tex.image
-        if not common.replace_cm3d2_tex(img, reload_path=True):
-            self.report(type={'ERROR'}, message="見つかりませんでした")
-            return {'CANCELLED'}
-        tex.image_user.use_auto_refresh = True
-        return {'FINISHED'}
-
-
-@compat.BlRegister(only_latest=True)
+@compat.BlRegister()
 class CNV_OT_replace_cm3d2_tex(bpy.types.Operator, common.NodeHandler):
     bl_idname = 'image.replace_cm3d2_tex'
     bl_label = "テクスチャを探す"
@@ -432,50 +352,7 @@ class CNV_OT_sync_tex_color_ramps(bpy.types.Operator):
         return {'FINISHED'}
 
 
-@compat.BlRegister(only_legacy=True)
-class CNV_OT_set_default_toon_textures_old(bpy.types.Operator):
-    bl_idname = 'texture.set_default_toon_textures'
-    bl_label = "トゥーンを選択"
-    bl_description = "CM3D2にデフォルトで入っているトゥーンテクスチャを選択できます"
-    bl_options = {'REGISTER', 'UNDO'}
-
-    name: bpy.props.StringProperty(name="テクスチャ名")
-    # dir: bpy.props.StringProperty(name="パス", default="Assets\\texture\\texture\\toon\\")
-
-    @classmethod
-    def poll(cls, context):
-        tex = getattr(context, 'texture')
-        if hasattr(context, 'texture_slot') and tex:
-            name = common.remove_serial_number(tex.name)
-            return name in ["_ToonRamp", "_ShadowRateToon", "_OutlineToonRamp"]
-        return False
-
-    def execute(self, context):
-        img = context.texture.image
-        img.name = self.name
-
-        dirname = os.path.dirname(bpy.path.abspath(img.filepath))
-        png_path = os.path.join(dirname, self.name + ".png")
-        tex_path = os.path.join(dirname, self.name + ".tex")
-        if not os.path.exists(png_path):
-            if os.path.exists(tex_path):
-                tex_data = common.load_cm3d2tex(tex_path)
-                if tex_data is None:
-                    return {'CANCELLED'}
-                tex_format = tex_data[1]
-                if not (tex_format == 3 or tex_format == 5):
-                    return {'CANCELLED'}
-                with open(png_path, 'wb') as png_file:
-                    png_file.write(tex_data[-1])
-        img.filepath = png_path
-        img.reload()
-
-        if 'cm3d2_path' not in img:
-            img['cm3d2_path'] = common.get_tex_cm3d2path(img.filepath)
-        return {'FINISHED'}
-
-
-@compat.BlRegister(only_latest=True)
+@compat.BlRegister()
 class CNV_OT_set_default_toon_textures(bpy.types.Operator, common.NodeHandler):
     bl_idname = 'texture.set_default_toon_textures'
     bl_label = "トゥーンを選択"
@@ -523,7 +400,7 @@ class CNV_OT_set_default_toon_textures(bpy.types.Operator, common.NodeHandler):
         return {'FINISHED'}
 
 
-@compat.BlRegister(only_latest=True)
+@compat.BlRegister()
 class CNV_OT_reload_textures(bpy.types.Operator):
     bl_idname = 'texture.reload_textures'
     bl_label = "イメージの再読込み"
@@ -546,128 +423,7 @@ class CNV_OT_reload_textures(bpy.types.Operator):
         return {'CANCELLED'}
 
 
-@compat.BlRegister(only_legacy=True)
-class CNV_OT_auto_set_color_value_old(bpy.types.Operator):
-    bl_idname = 'texture.auto_set_color_value'
-    bl_label = "色設定値を自動設定"
-    bl_description = "色関係の設定値をテクスチャの色情報から自動で設定します"
-    bl_options = {'REGISTER', 'UNDO'}
-
-    is_all: bpy.props.BoolProperty(name="全てが対象", default=True)
-    saturation_multi: bpy.props.FloatProperty(name="彩度の乗算値", default=2.2, min=0, max=5, soft_min=0, soft_max=5, step=10, precision=2)
-    value_multi: bpy.props.FloatProperty(name="明度の乗算値", default=0.3, min=0, max=5, soft_min=0, soft_max=5, step=10, precision=2)
-
-    @classmethod
-    def poll(cls, context):
-        ob = context.active_object
-        if not ob or ob.type != 'MESH':
-            return False
-
-        mate = ob.active_material
-        if not mate:
-            return False
-
-        me = ob.data
-        for slot in mate.texture_slots:
-            if not slot:
-                continue
-            tex = slot.texture
-            name = common.remove_serial_number(tex.name)
-            if name == '_MainTex':
-                img = tex.image
-                if img and len(img.pixels):
-                    break
-                if me.uv_textures.active:
-                    if me.uv_textures.active.data[0].image:
-                        if len(me.uv_textures.active.data[0].image.pixels):
-                            break
-        else:
-            return False
-
-        tex = getattr(context, 'texture')
-        slot = getattr(context, 'texture_slot')
-        if slot and tex:
-            name = common.remove_serial_number(tex.name)
-            if name in ['_ShadowColor', '_RimColor', '_OutlineColor']:
-                return True
-        return False
-
-    def invoke(self, context, event):
-        return context.window_manager.invoke_props_dialog(self)
-
-    def draw(self, context):
-        self.layout.prop(self, 'is_all', icon='ACTION')
-        row = self.layout.row()
-        row.label(text="", icon=compat.icon('SHADING_RENDERED'))
-        row.prop(self, 'saturation_multi')
-        row = self.layout.row()
-        row.label(text="", icon='SOLID')
-        row.prop(self, 'value_multi')
-
-    def execute(self, context):
-        ob = context.active_object
-        me = ob.data
-        mate = ob.active_material
-        active_slot = context.texture_slot
-        active_tex = context.texture
-        tex_name = common.remove_serial_number(active_tex.name)
-
-        target_slots = []
-        if self.is_all:
-            for slot in mate.texture_slots:
-                if not slot:
-                    continue
-                name = common.remove_serial_number(slot.texture.name)
-                if name in ['_ShadowColor', '_RimColor', '_OutlineColor']:
-                    target_slots.append(slot)
-        else:
-            target_slots.append(active_slot)
-
-        for slot in mate.texture_slots:
-            if not slot:
-                continue
-            name = common.remove_serial_number(slot.texture.name)
-            if name == '_MainTex':
-                img = slot.texture.image
-                if img:
-                    if len(img.pixels):
-                        break
-        else:
-            img = me.uv_textures.active.data[0].image
-
-        sample_count = 10
-        img_width, img_height, img_channel = img.size[0], img.size[1], img.channels
-
-        bm = bmesh.new()
-        bm.from_mesh(me)
-        uv_lay = bm.loops.layers.uv.active
-        uvs = [l[uv_lay].uv[:] for f in bm.faces if f.material_index == ob.active_material_index for l in f.loops]
-        bm.free()
-
-        average_color = mathutils.Color([0, 0, 0])
-        seek_interval = len(uvs) / sample_count
-        for sample_index in range(sample_count):
-
-            uv_index = int(seek_interval * sample_index)
-            x, y = uvs[uv_index]
-            x, y = int(x * img_width), int(y * img_height)
-
-            pixel_index = ((y * img_width) + x) * img_channel
-            color = mathutils.Color(img.pixels[pixel_index: pixel_index + 3])
-
-            average_color += color
-        average_color /= sample_count
-        average_color.s *= self.saturation_multi
-        average_color.v *= self.value_multi
-
-        for slot in target_slots:
-            slot.color = average_color[:3]
-            common.set_texture_color(slot)
-
-        return {'FINISHED'}
-
-
-@compat.BlRegister(only_latest=True)
+@compat.BlRegister()
 class CNV_OT_auto_set_color_value(bpy.types.Operator):
     bl_idname = 'texture.auto_set_color_value'
     bl_label = "色設定値を自動設定"
@@ -836,30 +592,7 @@ class CNV_OT_quick_export_cm3d2_tex(bpy.types.Operator):
         return {'FINISHED'}
 
 
-@compat.BlRegister(only_legacy=True)
-class CNV_OT_set_color_value_old(bpy.types.Operator):
-    bl_idname = 'texture.set_color_value_old'
-    bl_label = "色設定値を設定"
-    bl_description = "色タイプの設定値を設定します"
-    bl_options = {'REGISTER', 'UNDO'}
-
-    color: bpy.props.FloatVectorProperty(name="色", default=(0, 0, 0, 0), subtype='COLOR', size=4)
-
-    @classmethod
-    def poll(cls, context):
-        if hasattr(context, 'texture_slot') and hasattr(context, 'texture'):
-            return True
-        return False
-
-    def execute(self, context):
-        slot = context.texture_slot
-        slot.color = self.color[:3]
-        slot.diffuse_color_factor = self.color[3]
-        common.set_texture_color(slot)
-        return {'FINISHED'}
-
-
-@compat.BlRegister(only_latest=True)
+@compat.BlRegister()
 class CNV_OT_set_color_value(bpy.types.Operator, common.NodeHandler):
     bl_idname = 'texture.set_color_value'
     bl_label = "色設定値を設定"
@@ -893,30 +626,19 @@ class CNV_OT_set_value(bpy.types.Operator, common.NodeHandler):
 
     @classmethod
     def poll(cls, context):
-        if compat.IS_LEGACY:
-            if getattr(context, 'texture_slot') and getattr(context, 'texture'):
-                return True
-        else:
-            mate = context.material
-            return mate and mate.use_nodes
-        return False
+        mate = context.material
+        return mate and mate.use_nodes
 
     def execute(self, context):
-        if compat.IS_LEGACY:
-            slot = context.texture_slot
-            slot.color = self.color[:3]
-            slot.diffuse_color_factor = self.color[3]
-            common.set_texture_color(slot)
-        else:
-            node = self.get_node(context)
-            if node is None:  # or node.type != 'VALUE':
-                return {'CANCELLED'}
-            node.outputs[0].default_value = self.value
+        node = self.get_node(context)
+        if node is None:  # or node.type != 'VALUE':
+            return {'CANCELLED'}
+        node.outputs[0].default_value = self.value
 
         return {'FINISHED'}
 
 
-@compat.BlRegister(only_latest=True)
+@compat.BlRegister()
 class CNV_OT_texture_reset_offset(bpy.types.Operator, common.NodeHandler):
     bl_idname = 'texture.reset_offset'
     bl_label = "テクスチャのオフセットをリセット"
@@ -933,7 +655,7 @@ class CNV_OT_texture_reset_offset(bpy.types.Operator, common.NodeHandler):
         return {'CANCELLED'}
 
 
-@compat.BlRegister(only_latest=True)
+@compat.BlRegister()
 class CNV_OT_texture_reset_scale(bpy.types.Operator, common.NodeHandler):
     bl_idname = 'texture.reset_scale'
     bl_label = "テクスチャのスケールをリセット"
@@ -950,7 +672,7 @@ class CNV_OT_texture_reset_scale(bpy.types.Operator, common.NodeHandler):
         return {'CANCELLED'}
 
 
-@compat.BlRegister(only_latest=True)
+@compat.BlRegister()
 class CNV_OT_set_cm3d2path(bpy.types.Operator, common.NodeHandler):
     bl_idname = 'texture.set_cm3d2path'
     bl_label = "CM3D2パスを設定"
@@ -966,7 +688,7 @@ class CNV_OT_set_cm3d2path(bpy.types.Operator, common.NodeHandler):
         return {'CANCELLED'}
 
 
-@compat.BlRegister(only_latest=True)
+@compat.BlRegister()
 class CNV_OT_setup_image_name(bpy.types.Operator, common.NodeHandler):
     bl_idname = 'texture.setup_image_name'
     bl_label = "イメージ名から拡張子を除外"
@@ -983,7 +705,7 @@ class CNV_OT_setup_image_name(bpy.types.Operator, common.NodeHandler):
 
 
 # Toon設定メニュー
-class ToonSelectMenuBase():
+class ToonSelectMenuBase:
     bl_label = "toon tex 選択"
 
     def draw(self, context):
@@ -998,7 +720,7 @@ class ToonSelectMenuBase():
         pass
 
 
-@compat.BlRegister(only_latest=True)
+@compat.BlRegister()
 class TEXTURE_MT_texture_ToonRamp(bpy.types.Menu, ToonSelectMenuBase):
     bl_idname = 'TEXTURE_MT_texture_ToonRamp'
 
@@ -1006,7 +728,7 @@ class TEXTURE_MT_texture_ToonRamp(bpy.types.Menu, ToonSelectMenuBase):
         return '_ToonRamp'
 
 
-@compat.BlRegister(only_latest=True)
+@compat.BlRegister()
 class TEXTURE_MT_texture_ShadowRateToon(bpy.types.Menu, ToonSelectMenuBase):
     bl_idname = 'TEXTURE_MT_texture_ShadowRateToon'
 
@@ -1014,7 +736,7 @@ class TEXTURE_MT_texture_ShadowRateToon(bpy.types.Menu, ToonSelectMenuBase):
         return '_ShadowRateToon'
 
 
-@compat.BlRegister(only_latest=True)
+@compat.BlRegister()
 class TEXTURE_MT_texture_OutlineToonRamp(bpy.types.Menu, ToonSelectMenuBase):
     bl_idname = 'TEXTURE_MT_texture_OutlineToonRamp'
 

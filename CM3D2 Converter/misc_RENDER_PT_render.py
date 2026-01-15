@@ -128,51 +128,21 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
                 if len(ob.material_slots) > 0:
                     temp_mate = context.blend_data.materials.new("temp")
                     ob.material_slots[0].material = temp_mate
-                    if compat.IS_LEGACY:
-                        temp_mate.use_shadeless = True
-                        temp_mate.use_face_texture = True
-                        temp_mate.use_transparency = True
-                        temp_mate.alpha = 0.0
-                        temp_mate.use_face_texture_alpha = True
                     temp_mates.append(temp_mate)
 
-        elif self.mode == 'NOW_MATERIAL':
-            if compat.IS_LEGACY:
-                pre_mate_settings = []
-                for ob in obs:
-                    setting = []
-                    for slot in ob.material_slots:
-                        if not slot.material:
-                            continue
-                        mate = slot.material
-                        setting.append([mate, mate.use_shadeless])
-                        mate.use_shadeless = True
-                    pre_mate_settings.append(setting)
-
         xs, ys, zs = [], [], []
-        if compat.IS_LEGACY:
-            for ob in obs:
-                if ob.type == 'MESH':
-                    temp_me = ob.to_mesh(context.scene, apply_modifiers=True, settings='PREVIEW')
-                    for vert in temp_me.vertices:
-                        co = ob.matrix_world * vert.co
-                        xs.append(co.x)
-                        ys.append(co.y)
-                        zs.append(co.z)
-                    common.remove_data(temp_me)
-        else:
-            depsgraph = context.evaluated_depsgraph_get()
-            for ob in obs:
-                if ob.type == 'MESH':
-                    # depsgraphから取得されたob_eval: すべてのmodifierを考慮
-                    ob_eval = ob.evaluated_get(depsgraph)
-                    temp_me = ob_eval.to_mesh()
-                    for vert in temp_me.vertices:
-                        co = ob.matrix_world @ vert.co
-                        xs.append(co.x)
-                        ys.append(co.y)
-                        zs.append(co.z)
-                    ob_eval.to_mesh_clear()
+        depsgraph = context.evaluated_depsgraph_get()
+        for ob in obs:
+            if ob.type == 'MESH':
+                # depsgraphから取得されたob_eval: すべてのmodifierを考慮
+                ob_eval = ob.evaluated_get(depsgraph)
+                temp_me = ob_eval.to_mesh()
+                for vert in temp_me.vertices:
+                    co = ob.matrix_world @ vert.co
+                    xs.append(co.x)
+                    ys.append(co.y)
+                    zs.append(co.z)
+                ob_eval.to_mesh_clear()
 
         center_co = mathutils.Vector((0, 0, 0))
         center_co.x = (min(xs) + max(xs)) / 2.0
@@ -221,32 +191,27 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
             context.scene.render.resolution_percentage = 100
 
             context.scene.world.light_settings.use_ambient_occlusion = False
-            if compat.IS_LEGACY:
-                context.scene.world.light_settings.ao_blend_type = 'ADD'
-                context.scene.world.light_settings.gather_method = 'RAYTRACE'
-                context.scene.world.light_settings.samples = 10
+            #if compat.IS_LEGACY:
+            #    context.scene.world.light_settings.ao_blend_type = 'ADD'
+            #    context.scene.world.light_settings.gather_method = 'RAYTRACE'
+            #    context.scene.world.light_settings.samples = 10
 
-                context.scene.render.alpha_mode = 'SKY' if self.use_background_color else 'TRANSPARENT'
-                context.scene.world.horizon_color = self.background_color
-            else:
-                # TODO 代替処理
-                pass
+            #    context.scene.render.alpha_mode = 'SKY' if self.use_background_color else 'TRANSPARENT'
+            #    context.scene.world.horizon_color = self.background_color
+            #else:
+            #    # TODO 代替処理
+            #    pass
 
             if self.use_freestyle:
                 pre_use_freestyle = context.scene.render.use_freestyle
                 pre_line_thickness = context.scene.render.line_thickness
                 context.scene.render.use_freestyle = True
                 context.scene.render.line_thickness = self.line_thickness
-                if compat.IS_LEGACY:
-                    context.scene.render.layers.active.freestyle_settings.crease_angle = 1.58825
-                    temp_lineset = context.scene.render.layers.active.freestyle_settings.linesets.new("temp")
-                    temp_lineset.linestyle.color = self.line_color
-                else:
-                    # TODO view_layersのactive取得方法
-                    layer = context.scene.view_layers[0]
-                    layer.freestyle_settings.crease_angle = 1.58825
-                    temp_lineset = layer.freestyle_settings.linesets.new("temp")
-                    temp_lineset.linestyle.color = self.line_color
+                # TODO view_layersのactive取得方法
+                layer = context.scene.view_layers[0]
+                layer.freestyle_settings.crease_angle = 1.58825
+                temp_lineset = layer.freestyle_settings.linesets.new("temp")
+                temp_lineset.linestyle.color = self.line_color
 
             # コンポジットノード #
             pre_use_nodes = context.scene.use_nodes
@@ -322,11 +287,8 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
                 context.scene.render.use_freestyle = pre_use_freestyle
                 context.scene.render.line_thickness = pre_line_thickness
                 common.remove_data([temp_lineset.linestyle])
-                if compat.IS_LEGACY:
-                    context.scene.render.layers.active.freestyle_settings.linesets.remove(temp_lineset)
-                else:
-                    layer = context.scene.view_layers[0]
-                    layer.freestyle_settings.linesets.remove(temp_lineset)
+                layer = context.scene.view_layers[0]
+                layer.freestyle_settings.linesets.remove(temp_lineset)
 
             img = context.blend_data.images["Render Result"]
             tex_basename = common.remove_serial_number(context.active_object.name.split('.')[0])
