@@ -20,15 +20,15 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
     bl_description = "カスタムメイド3D2のmodelファイルを書き出します"
     bl_options = {'REGISTER'}
 
-    filepath = bpy.props.StringProperty(subtype='FILE_PATH')
+    filepath: bpy.props.StringProperty(subtype='FILE_PATH')
     filename_ext = ".model"
-    filter_glob = bpy.props.StringProperty(default="*.model", options={'HIDDEN'})
+    filter_glob: bpy.props.StringProperty(default="*.model", options={'HIDDEN'})
 
-    scale = bpy.props.FloatProperty(name="倍率", default=0.2, min=0.01, max=100, soft_min=0.01, soft_max=100, step=10, precision=2, description="エクスポート時のメッシュ等の拡大率です")
+    scale: bpy.props.FloatProperty(name="倍率", default=0.2, min=0.01, max=100, soft_min=0.01, soft_max=100, step=10, precision=2, description="エクスポート時のメッシュ等の拡大率です")
 
-    is_backup = bpy.props.BoolProperty(name="ファイルをバックアップ", default=True, description="ファイルに上書きする場合にバックアップファイルを複製します")
+    is_backup: bpy.props.BoolProperty(name="ファイルをバックアップ", default=True, description="ファイルに上書きする場合にバックアップファイルを複製します")
 
-    version = bpy.props.EnumProperty(
+    version: bpy.props.EnumProperty(
         name="ファイルバージョン",
         items=[
             ('AUTO', 'Auto', 'determine model version from object properties', 'NONE', 0),
@@ -36,8 +36,8 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
             ('2000', '2000', 'model version 2000 (com3d2 version)', 'NONE', 2000),
             ('2001', '2001', 'model version 2001 (available only for com3d2)', 'NONE', 2001),
         ], default='AUTO')
-    model_name = bpy.props.StringProperty(name="model名", default="*")
-    base_bone_name = bpy.props.StringProperty(name="基点ボーン名", default="*")
+    model_name: bpy.props.StringProperty(name="model名", default="*")
+    base_bone_name: bpy.props.StringProperty(name="基点ボーン名", default="*")
 
     items = [
         ('ARMATURE'         , "アーマチュア", "", 'OUTLINER_OB_ARMATURE', 1),
@@ -45,32 +45,31 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         ('OBJECT_PROPERTY'  , "オブジェクト内プロパティ", "", 'OBJECT_DATAMODE', 3),
         ('ARMATURE_PROPERTY', "アーマチュア内プロパティ", "", 'ARMATURE_DATA', 4),
     ]
-    bone_info_mode = bpy.props.EnumProperty(items=items, name="ボーン情報元", default='OBJECT_PROPERTY', description="modelファイルに必要なボーン情報をどこから引っ張ってくるか選びます")
+    bone_info_mode: bpy.props.EnumProperty(items=items, name="ボーン情報元", default='OBJECT_PROPERTY', description="modelファイルに必要なボーン情報をどこから引っ張ってくるか選びます")
 
-    items = [
+    items_2 = [
         ('TEXT', "テキスト", "", 'FILE_TEXT', 1),
         ('MATERIAL', "マテリアル", "", 'MATERIAL', 2),
     ]
-    mate_info_mode = bpy.props.EnumProperty(items=items, name="マテリアル情報元", default='MATERIAL', description="modelファイルに必要なマテリアル情報をどこから引っ張ってくるか選びます")
+    mate_info_mode: bpy.props.EnumProperty(items=items_2, name="マテリアル情報元", default='MATERIAL', description="modelファイルに必要なマテリアル情報をどこから引っ張ってくるか選びます")
 
-    is_arrange_name = bpy.props.BoolProperty(name="データ名の連番を削除", default=True, description="「○○.001」のような連番が付属したデータ名からこれらを削除します")
+    is_arrange_name: bpy.props.BoolProperty(name="データ名の連番を削除", default=True, description="「○○.001」のような連番が付属したデータ名からこれらを削除します")
 
-    is_align_to_base_bone = bpy.props.BoolProperty(name="Align to Base Bone", default=True, description="Align the object to it's base bone")
-    is_convert_tris = bpy.props.BoolProperty(name="四角面を三角面に", default=True, description="四角ポリゴンを三角ポリゴンに変換してから出力します、元のメッシュには影響ありません")
-    is_split_sharp = bpy.props.BoolProperty(name="Split Sharp Edges", default=True, description="Split all edges marked as sharp.")
-    is_normalize_weight = bpy.props.BoolProperty(name="ウェイトの合計を1.0に", default=True, description="4つのウェイトの合計値が1.0になるように正規化します")
-    is_convert_bone_weight_names = bpy.props.BoolProperty(name="頂点グループ名をCM3D2用に変換", default=True, description="全ての頂点グループ名をCM3D2で使える名前にしてからエクスポートします")
-    is_clean_vertex_groups = bpy.props.BoolProperty(name="クリーンな頂点グループ", default=True, description="重みがゼロの場合、頂点グループから頂点を削除します")
+    is_align_to_base_bone: bpy.props.BoolProperty(name="Align to Base Bone", default=True, description="Align the object to it's base bone")
+    is_convert_tris: bpy.props.BoolProperty(name="四角面を三角面に", default=True, description="四角ポリゴンを三角ポリゴンに変換してから出力します、元のメッシュには影響ありません")
+    is_split_sharp: bpy.props.BoolProperty(name="Split Sharp Edges", default=True, description="Split all edges marked as sharp.")
+    is_normalize_weight: bpy.props.BoolProperty(name="ウェイトの合計を1.0に", default=True, description="4つのウェイトの合計値が1.0になるように正規化します")
+    is_convert_bone_weight_names: bpy.props.BoolProperty(name="頂点グループ名をCM3D2用に変換", default=True, description="全ての頂点グループ名をCM3D2で使える名前にしてからエクスポートします")
+    is_clean_vertex_groups: bpy.props.BoolProperty(name="クリーンな頂点グループ", default=True, description="重みがゼロの場合、頂点グループから頂点を削除します")
     
-    is_batch = bpy.props.BoolProperty(name="バッチモード", default=False, description="モードの切替やエラー個所の選択を行いません")
+    is_batch: bpy.props.BoolProperty(name="バッチモード", default=False, description="モードの切替やエラー個所の選択を行いません")
 
-    export_tangent = bpy.props.BoolProperty(name="接空間情報出力", default=False, description="接空間情報(binormals, tangents)を出力する")
+    export_tangent: bpy.props.BoolProperty(name="接空間情報出力", default=False, description="接空間情報(binormals, tangents)を出力する")
 
-    
-    shapekey_threshold = bpy.props.FloatProperty(name="Shape Key Threshold", default=0.00100, min=0, soft_min=0.0005, max=0.01, soft_max=0.002, precision=5, description="Lower values increase accuracy and file size. Higher values truncate small changes and reduce file size.")
-    export_shapekey_normals = bpy.props.BoolProperty(name="Export Shape Key Normals", default=True, description="Export custom normals for each shape key on export.")
-    shapekey_normals_blend = bpy.props.FloatProperty(name="Shape Key Normals Blend", default=0.6, min=0, max=1, precision=3, description="Adjust the influence of shape keys on custom normals")
-    use_shapekey_colors = bpy.props.BoolProperty(name="Use Shape Key Colors", default=True, description="Use the shape key normals stored in the vertex colors instead of calculating the normals on export. (Recommend disabling if geometry was customized)")
+    shapekey_threshold: bpy.props.FloatProperty(name="Shape Key Threshold", default=0.00100, min=0, soft_min=0.0005, max=0.01, soft_max=0.002, precision=5, description="Lower values increase accuracy and file size. Higher values truncate small changes and reduce file size.")
+    export_shapekey_normals: bpy.props.BoolProperty(name="Export Shape Key Normals", default=True, description="Export custom normals for each shape key on export.")
+    shapekey_normals_blend: bpy.props.FloatProperty(name="Shape Key Normals Blend", default=0.6, min=0, max=1, precision=3, description="Adjust the influence of shape keys on custom normals")
+    use_shapekey_colors: bpy.props.BoolProperty(name="Use Shape Key Colors", default=True, description="Use the shape key normals stored in the vertex colors instead of calculating the normals on export. (Recommend disabling if geometry was customized)")
     
 
     @classmethod

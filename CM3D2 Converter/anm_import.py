@@ -25,24 +25,24 @@ class CNV_OT_import_cm3d2_anm(bpy.types.Operator):
     bl_description = "カスタムメイド3D2のanmファイルを読み込みます"
     bl_options = {'REGISTER'}
 
-    filepath = bpy.props.StringProperty(subtype='FILE_PATH')
+    filepath: bpy.props.StringProperty(subtype='FILE_PATH')
     filename_ext = ".anm"
-    filter_glob = bpy.props.StringProperty(default="*.anm", options={'HIDDEN'})
+    filter_glob: bpy.props.StringProperty(default="*.anm", options={'HIDDEN'})
 
-    scale = bpy.props.FloatProperty(name="倍率", default=5, min=0.1, max=100, soft_min=0.1, soft_max=100, step=100, precision=1, description="インポート時のメッシュ等の拡大率です")
-    set_frame_rate = bpy.props.BoolProperty(name="Set Framerate", default=True, description="Change the scene's render settings to 60 fps")                                     
-    is_loop = bpy.props.BoolProperty(name="Loop", default=True)
+    scale: bpy.props.FloatProperty(name="倍率", default=5, min=0.1, max=100, soft_min=0.1, soft_max=100, step=100, precision=1, description="インポート時のメッシュ等の拡大率です")
+    set_frame_rate: bpy.props.BoolProperty(name="Set Framerate", default=True, description="Change the scene's render settings to 60 fps")
+    is_loop: bpy.props.BoolProperty(name="Loop", default=True)
 
-    is_anm_data_text = bpy.props.BoolProperty(name="Anm Text (SLOW)", default=False, description="Output Data to a JSON file")
+    is_anm_data_text: bpy.props.BoolProperty(name="Anm Text (SLOW)", default=False, description="Output Data to a JSON file")
     
-    remove_pre_animation = bpy.props.BoolProperty(name="既にあるアニメーションを削除", default=True)
-    set_frame = bpy.props.BoolProperty(name="フレーム開始・終了位置を調整", default=True)
-    ignore_automatic_bone = bpy.props.BoolProperty(name="Twisterボーンを除外", default=True)
+    remove_pre_animation: bpy.props.BoolProperty(name="既にあるアニメーションを削除", default=True)
+    set_frame: bpy.props.BoolProperty(name="フレーム開始・終了位置を調整", default=True)
+    ignore_automatic_bone: bpy.props.BoolProperty(name="Twisterボーンを除外", default=True)
 
-    is_location = bpy.props.BoolProperty(name="位置", default=True)
-    is_rotation = bpy.props.BoolProperty(name="回転", default=True)
-    is_scale    = bpy.props.BoolProperty(name="拡縮", default=True)
-    is_tangents = bpy.props.BoolProperty(name="Tangents", default=False)
+    is_location: bpy.props.BoolProperty(name="位置", default=True)
+    is_rotation: bpy.props.BoolProperty(name="回転", default=True)
+    is_scale: bpy.props.BoolProperty(name="拡縮", default=True)
+    is_tangents: bpy.props.BoolProperty(name="Tangents", default=False)
 
     @classmethod
     def poll(cls, context):

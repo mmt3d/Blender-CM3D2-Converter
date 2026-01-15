@@ -63,12 +63,12 @@ if TYPE_CHECKING:
 
 @compat.BlRegister()
 class COM3D2LiveLinkSettings(bpy.types.PropertyGroup):
-    send_animation_max_frames = bpy.props.IntProperty(name="Max Frames to Send", default=500, min=1, soft_max=10000)
-    anm_is_remove_unkeyed_bone = bpy.props.BoolProperty(name="Remove Unkeyed Bones", default=False)
+    send_animation_max_frames: bpy.props.IntProperty(name="Max Frames to Send", default=500, min=1, soft_max=10000)
+    anm_is_remove_unkeyed_bone: bpy.props.BoolProperty(name="Remove Unkeyed Bones", default=False)
 
 @compat.BlRegister()
 class COM3D2LiveLinkState(bpy.types.PropertyGroup):
-    is_link_pose = bpy.props.BoolProperty("Link Pose is Active", default=False, options={'SKIP_SAVE'})
+    is_link_pose: bpy.props.BoolProperty("Link Pose is Active", default=False, options={'SKIP_SAVE'})
 
     #_active_livelink_core: LiveLinkCore = None
 
@@ -164,8 +164,8 @@ class COM3D2LIVELINK_OT_start_server(bpy.types.Operator):
     bl_label = "Start LiveLink"
     bl_options = {'REGISTER'}
 
-    address = bpy.props.StringProperty("Address", default='com3d2.livelink')
-    wait_for_connection = bpy.props.BoolProperty("Wait For Connection", default=False)
+    address: bpy.props.StringProperty("Address", default='com3d2.livelink')
+    wait_for_connection: bpy.props.BoolProperty("Wait For Connection", default=False)
     
     @classmethod
     def poll(cls, context):
@@ -256,8 +256,8 @@ class COM3D2LIVELINK_OT_send_animation(bpy.types.Operator):
     bl_label = "Send Animation"
     bl_options = {'REGISTER'}
     
-    max_frames = bpy.props.IntProperty(name="Maximum Frames to Send", default=1000, min=1, soft_max=10000)
-    is_remove_unkeyed_bone = bpy.props.BoolProperty(name="Remove Unkeyed Bones", default=False)
+    max_frames: bpy.props.IntProperty(name="Maximum Frames to Send", default=1000, min=1, soft_max=10000)
+    is_remove_unkeyed_bone: bpy.props.BoolProperty(name="Remove Unkeyed Bones", default=False)
 
     @classmethod
     def poll(cls, context):

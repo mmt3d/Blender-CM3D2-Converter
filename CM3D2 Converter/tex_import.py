@@ -12,15 +12,15 @@ class CNV_OT_import_cm3d2_tex(bpy.types.Operator):
     bl_description = "CM3D2で使用されるテクスチャファイル(.tex)を読み込みます"
     bl_options = {'REGISTER'}
 
-    filepath = bpy.props.StringProperty(subtype='FILE_PATH')
+    filepath: bpy.props.StringProperty(subtype='FILE_PATH')
     filename_ext = ".tex;.png"
-    filter_glob = bpy.props.StringProperty(default="*.tex;*.png", options={'HIDDEN'})
+    filter_glob: bpy.props.StringProperty(default="*.tex;*.png", options={'HIDDEN'})
 
     items = [
         ('PACK', "内部にパックする", "", 'PACKAGE', 1),
         ('PNG', "PNGに変換してPNGを開く", "", 'IMAGE_DATA', 2),
     ]
-    mode = bpy.props.EnumProperty(items=items, name="展開方法", default='PNG')
+    mode: bpy.props.EnumProperty(items=items, name="展開方法", default='PNG')
 
     def invoke(self, context, event):
         prefs = common.preferences()

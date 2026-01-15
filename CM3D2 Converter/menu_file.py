@@ -111,8 +111,8 @@ def get_command_enum_name(enum_string, enum_items=COMMAND_ENUMS):
 class CM3D2MENU_PG_CommandPointer(bpy.types.PropertyGroup):
     bl_idname = 'CM3D2MenuCommandPointer'
 
-    collection_name  = bpy.props.StringProperty(options={'HIDDEN'})
-    prop_index       = bpy.props.IntProperty   (options={'HIDDEN'})
+    collection_name: bpy.props.StringProperty(options={'HIDDEN'})
+    prop_index: bpy.props.IntProperty(options={'HIDDEN'})
 
     def dereference(self, data):
         return getattr(data, self.collection_name)[self.prop_index]
@@ -126,9 +126,9 @@ class MISCCOMMAND_PG_Param(bpy.types.PropertyGroup):
     def _s(self, value):
         self.name = value
 
-    #name = bpy.props.StringProperty(name="Name", options=PROP_OPTS, get=lambda self : self.value)
-    name   = bpy.props.StringProperty(name="Name", default="param", options={'HIDDEN'})
-    value  = bpy.props.StringProperty(name="Slot Name", options={'SKIP_SAVE'}, default="param", set=_s, get=lambda self: self.name)
+    #name: bpy.props.StringProperty(name="Name", options=PROP_OPTS, get=lambda self : self.value)
+    name: bpy.props.StringProperty(name="Name", default="param", options={'HIDDEN'})
+    value: bpy.props.StringProperty(name="Slot Name", options={'SKIP_SAVE'}, default="param", set=_s, get=lambda self: self.name)
 
 
 
@@ -154,7 +154,7 @@ class CM3D2MenuCommand():
 
         # define command property
         if len(cls.command_enums) > 0:
-            cls.command = bpy.props.EnumProperty(
+            cls.command: bpy.props.EnumProperty(
                 items   = cls.command_enums,
                 name    = "Command",
                 options = PROP_OPTS,
@@ -162,15 +162,15 @@ class CM3D2MenuCommand():
                 description = "The command of this menu file command-chunk"
             )
         else:
-            cls.command = bpy.props.StringProperty(
+            cls.command: bpy.props.StringProperty(
                 name    = "Command",
                 options = PROP_OPTS,
                 default = "command",
                 description = "The command of this menu file command-chunk"
             )
 
-        cls.index = bpy.props.IntProperty(name="Index", options=PROP_OPTS)
-        #cls.initalized = bpy.props.BoolProperty(name="Index", options={'SKIP_SAVE'}, default=False)
+        cls.index: bpy.props.IntProperty(name="Index", options=PROP_OPTS)
+        #cls.initalized: bpy.props.BoolProperty(name="Index", options={'SKIP_SAVE'}, default=False)
 
         attributes = dir(cls)
         cls.name_format_attributes = set()
@@ -189,7 +189,7 @@ class CM3D2MenuCommand():
         cls.format_name = format_name
         
         # define name property
-        cls.name = bpy.props.StringProperty(
+        cls.name: bpy.props.StringProperty(
             name    = "Name"                 ,
             options = {'HIDDEN', 'SKIP_SAVE'},
             get     = cls.format_name
@@ -230,9 +230,9 @@ class CM3D2MENU_PG_AttachPointCommand(bpy.types.PropertyGroup):
       ├ rotation.y（軸回転角度）[範囲:0±180°]
       └ rotation.z（軸回転角度）[範囲:0±180°]
     '''
-    point_name = bpy.props.StringProperty     (name="Point Name", default="Attach Point", description="Name of the slot to define the attatchment point for" , options=PROP_OPTS)
-    location   = bpy.props.FloatVectorProperty(name="Location"  , default=(0, 0, 0)     , description="Location of the attatchment relative to the base bone", options=PROP_OPTS, subtype=compat.subtype('TRANSLATION'))
-    rotation   = bpy.props.FloatVectorProperty(name="Rotation"  , default=(0, 0, 0)     , description="Rotation of the attatchment relative to the base bone", options=PROP_OPTS, subtype=compat.subtype('EULER'      ))
+    point_name: bpy.props.StringProperty(name="Point Name", default="Attach Point", description="Name of the slot to define the attatchment point for", options=PROP_OPTS)
+    location: bpy.props.FloatVectorProperty(name="Location", default=(0, 0, 0), description="Location of the attatchment relative to the base bone", options=PROP_OPTS, subtype=compat.subtype('TRANSLATION'))
+    rotation: bpy.props.FloatVectorProperty(name="Rotation", default=(0, 0, 0), description="Rotation of the attatchment relative to the base bone", options=PROP_OPTS, subtype=compat.subtype('EULER'))
 
     def parse_list(self, string_list):
         self.command = string_list[0]
@@ -284,8 +284,8 @@ class CM3D2MENU_PG_PropertyCommand(bpy.types.PropertyGroup):
       ├ prop_name
       └ value
     '''
-    prop_name = bpy.props.StringProperty(name="Property Name" , default="prop name", description="Name of the property to set on load" , options=PROP_OPTS)
-    value     = bpy.props.FloatProperty (name="Property Value", default=50         , description="Value of the property to set on load", options=PROP_OPTS)
+    prop_name: bpy.props.StringProperty(name="Property Name" , default="prop name", description="Name of the property to set on load" , options=PROP_OPTS)
+    value: bpy.props.FloatProperty(name="Property Value", default=50, description="Value of the property to set on load", options=PROP_OPTS)
     
     def parse_list(self, string_list):
         self.command    = string_list[0]
@@ -325,11 +325,11 @@ class CM3D2MENU_PG_MiscCommand(bpy.types.PropertyGroup):
       ├ child_n-1
       └ child_n
     '''
-    params = bpy.props.CollectionProperty(name="Parameters", options=PROP_OPTS, type=MISCCOMMAND_PG_Param)
+    params: bpy.props.CollectionProperty(name="Parameters", options=PROP_OPTS, type=MISCCOMMAND_PG_Param)
     
-    active_index = bpy.props.IntProperty(options={'HIDDEN'})
+    active_index: bpy.props.IntProperty(options={'HIDDEN'})
 
-    search = bpy.props.BoolProperty(name="Search", default=False, description="Search for suggestions", options=PROP_OPTS)
+    search: bpy.props.BoolProperty(name="Search", default=False, description="Search for suggestions", options=PROP_OPTS)
 
     def new_param(self):
         new_param = self.params.add()
@@ -435,18 +435,18 @@ def generate_command_type_collections(cls):
 class OBJECT_PG_CM3D2Menu(bpy.types.PropertyGroup):
     bl_idname = 'CM3D2Menu'
 
-    version     = bpy.props.IntProperty   (name="Version"    , options=PROP_OPTS, min=0, step=100    )
-    path        = bpy.props.StringProperty(name="Path"       , options=PROP_OPTS, subtype='FILE_PATH')
-    name        = bpy.props.StringProperty(name="Name"       , options=PROP_OPTS)
-    category    = bpy.props.StringProperty(name="Category"   , options=PROP_OPTS)
-    description = bpy.props.StringProperty(name="Description", options=PROP_OPTS)
+    version: bpy.props.IntProperty(name="Version", options=PROP_OPTS, min=0, step=100)
+    path: bpy.props.StringProperty(name="Path", options=PROP_OPTS, subtype='FILE_PATH')
+    name: bpy.props.StringProperty(name="Name", options=PROP_OPTS)
+    category: bpy.props.StringProperty(name="Category", options=PROP_OPTS)
+    description: bpy.props.StringProperty(name="Description", options=PROP_OPTS)
                                                                        
-    attach_point_commands = bpy.props.CollectionProperty(type=CM3D2MENU_PG_AttachPointCommand, options={'HIDDEN'})
-    property_commands     = bpy.props.CollectionProperty(type=CM3D2MENU_PG_PropertyCommand   , options={'HIDDEN'})
-    misc_commands         = bpy.props.CollectionProperty(type=CM3D2MENU_PG_MiscCommand       , options={'HIDDEN'})
+    attach_point_commands: bpy.props.CollectionProperty(type=CM3D2MENU_PG_AttachPointCommand, options={'HIDDEN'})
+    property_commands: bpy.props.CollectionProperty(type=CM3D2MENU_PG_PropertyCommand, options={'HIDDEN'})
+    misc_commands: bpy.props.CollectionProperty(type=CM3D2MENU_PG_MiscCommand, options={'HIDDEN'})
 
-    commands = bpy.props.CollectionProperty(name="Commands", type=CM3D2MENU_PG_CommandPointer, options=PROP_OPTS)
-    active_index = bpy.props.IntProperty(name="Active Command Index", options=PROP_OPTS, default=0)
+    commands: bpy.props.CollectionProperty(name="Commands", type=CM3D2MENU_PG_CommandPointer, options=PROP_OPTS)
+    active_index: bpy.props.IntProperty(name="Active Command Index", options=PROP_OPTS, default=0)
     
     # NOTE : This dictionary is generated by @generate_command_type_collections
     #command_type_collections = {
@@ -456,7 +456,8 @@ class OBJECT_PG_CM3D2Menu(bpy.types.PropertyGroup):
     #    for all Collection Properties (except 'commands')
     #}
 
-    updated = bpy.props.BoolProperty(options={'HIDDEN', 'SKIP_SAVE'}, default=False)
+    updated: bpy.props.BoolProperty(options={'HIDDEN', 'SKIP_SAVE'}, default=False)
+
     def update(self):
         for index, command_pointer in enumerate(self.commands):
             command = command_pointer.dereference(self)

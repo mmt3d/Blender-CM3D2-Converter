@@ -28,8 +28,8 @@ class CNV_OT_FCURVE_convert_to_cm3d2_interpolation(bpy.types.Operator):
     bl_description = "Convert keyframes to be compatible with CM3D2 Interpolation"
     bl_options = {'REGISTER', 'UNDO'}
 
-    only_selected = bpy.props.BoolProperty(name="Only Selected", default=True)
-    keep_reports  = bpy.props.BoolProperty(name="Keep Reports",  default=False, options={'HIDDEN'})
+    only_selected: bpy.props.BoolProperty(name="Only Selected", default=True)
+    keep_reports: bpy.props.BoolProperty(name="Keep Reports", default=False, options={'HIDDEN'})
 
     @classmethod
     def poll(cls, context):
@@ -241,12 +241,12 @@ class CNV_OT_ANIM_convert_to_cm3d2_interpolation(bpy.types.Operator):
     bl_description = "Convert keyframes to be compatible with CM3D2 Interpolation"
     bl_options = {'REGISTER', 'UNDO'}
 
-    only_selected = bpy.props.BoolProperty(name="Only Selected", default=True)
+    only_selected: bpy.props.BoolProperty(name="Only Selected", default=True)
     items = [
         ('FCURVES'  , "FCurves"  , "", 'FCURVE'  , 1),
         ('KEYFRAMES', "KeyFrames", "", 'KEYFRAME', 2),
     ]
-    selection_type = bpy.props.EnumProperty(items=items, name="Selection Type", default='FCURVES')
+    selection_type: bpy.props.EnumProperty(items=items, name="Selection Type", default='FCURVES')
 
     @classmethod
     def poll(cls, context):

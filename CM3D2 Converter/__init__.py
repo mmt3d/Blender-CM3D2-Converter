@@ -82,7 +82,7 @@ if True:
     from . import misc_MESH_MT_vertex_group_specials
     from . import misc_OBJECT_PT_context_object
     from . import misc_OBJECT_PT_transform
-    from . import misc_RENDER_PT_bake
+    #from . import misc_RENDER_PT_bake
     from . import misc_RENDER_PT_render
     from . import misc_TEXTURE_PT_context_texture
     from . import misc_TEXT_HT_header
@@ -123,74 +123,74 @@ import bpy, os.path, bpy.utils.previews  # type: ignore
 # アドオン設定
 @compat.BlRegister()
 class AddonPreferences(bpy.types.AddonPreferences):
-    bl_idname = __name__
+    bl_idname = __package__
 
-    cm3d2_path = bpy.props.StringProperty(name="CM3D2インストールフォルダ", subtype='DIR_PATH', description="変更している場合は設定しておくと役立つかもしれません")
-    backup_ext = bpy.props.StringProperty(name="バックアップの拡張子 (空欄で無効)", description="エクスポート時にバックアップを作成時この拡張子で複製します、空欄でバックアップを無効", default='bak')
+    cm3d2_path: bpy.props.StringProperty(name="CM3D2インストールフォルダ", subtype='DIR_PATH', description="変更している場合は設定しておくと役立つかもしれません")
+    backup_ext: bpy.props.StringProperty(name="バックアップの拡張子 (空欄で無効)", description="エクスポート時にバックアップを作成時この拡張子で複製します、空欄でバックアップを無効", default='bak')
 
-    scale = bpy.props.FloatProperty(name="倍率", description="Blenderでモデルを扱うときの拡大率", default=5, min=0.01, max=100, soft_min=0.01, soft_max=100, step=10, precision=2)
-    is_convert_bone_weight_names = bpy.props.BoolProperty(name="基本的にボーン名/ウェイト名をBlender用に変換", default=False, description="modelインポート時にボーン名/ウェイト名を変換するかどうかのオプションのデフォルトを設定します")
-    model_default_path = bpy.props.StringProperty(name="modelファイル置き場", subtype='DIR_PATH', description="設定すれば、modelを扱う時は必ずここからファイル選択を始めます")
-    model_import_path = bpy.props.StringProperty(name="modelインポート時のデフォルトパス", subtype='FILE_PATH', description="modelインポート時に最初はここが表示されます、インポート毎に保存されます")
-    model_export_path = bpy.props.StringProperty(name="modelエクスポート時のデフォルトパス", subtype='FILE_PATH', description="modelエクスポート時に最初はここが表示されます、エクスポート毎に保存されます")
+    scale: bpy.props.FloatProperty(name="倍率", description="Blenderでモデルを扱うときの拡大率", default=5, min=0.01, max=100, soft_min=0.01, soft_max=100, step=10, precision=2)
+    is_convert_bone_weight_names: bpy.props.BoolProperty(name="基本的にボーン名/ウェイト名をBlender用に変換", default=False, description="modelインポート時にボーン名/ウェイト名を変換するかどうかのオプションのデフォルトを設定します")
+    model_default_path: bpy.props.StringProperty(name="modelファイル置き場", subtype='DIR_PATH', description="設定すれば、modelを扱う時は必ずここからファイル選択を始めます")
+    model_import_path: bpy.props.StringProperty(name="modelインポート時のデフォルトパス", subtype='FILE_PATH', description="modelインポート時に最初はここが表示されます、インポート毎に保存されます")
+    model_export_path: bpy.props.StringProperty(name="modelエクスポート時のデフォルトパス", subtype='FILE_PATH', description="modelエクスポート時に最初はここが表示されます、エクスポート毎に保存されます")
 
-    anm_default_path = bpy.props.StringProperty(name="anmファイル置き場", subtype='DIR_PATH', description="設定すれば、anmを扱う時は必ずここからファイル選択を始めます")
-    anm_import_path = bpy.props.StringProperty(name="anmインポート時のデフォルトパス", subtype='FILE_PATH', description="anmインポート時に最初はここが表示されます、インポート毎に保存されます")
-    anm_export_path = bpy.props.StringProperty(name="anmエクスポート時のデフォルトパス", subtype='FILE_PATH', description="anmエクスポート時に最初はここが表示されます、エクスポート毎に保存されます")
+    anm_default_path: bpy.props.StringProperty(name="anmファイル置き場", subtype='DIR_PATH', description="設定すれば、anmを扱う時は必ずここからファイル選択を始めます")
+    anm_import_path: bpy.props.StringProperty(name="anmインポート時のデフォルトパス", subtype='FILE_PATH', description="anmインポート時に最初はここが表示されます、インポート毎に保存されます")
+    anm_export_path: bpy.props.StringProperty(name="anmエクスポート時のデフォルトパス", subtype='FILE_PATH', description="anmエクスポート時に最初はここが表示されます、エクスポート毎に保存されます")
 
-    tex_default_path = bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="設定すれば、texを扱う時は必ずここからファイル選択を始めます")
-    tex_import_path = bpy.props.StringProperty(name="texインポート時のデフォルトパス", subtype='FILE_PATH', description="texインポート時に最初はここが表示されます、インポート毎に保存されます")
-    tex_export_path = bpy.props.StringProperty(name="texエクスポート時のデフォルトパス", subtype='FILE_PATH', description="texエクスポート時に最初はここが表示されます、エクスポート毎に保存されます")
+    tex_default_path: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="設定すれば、texを扱う時は必ずここからファイル選択を始めます")
+    tex_import_path: bpy.props.StringProperty(name="texインポート時のデフォルトパス", subtype='FILE_PATH', description="texインポート時に最初はここが表示されます、インポート毎に保存されます")
+    tex_export_path: bpy.props.StringProperty(name="texエクスポート時のデフォルトパス", subtype='FILE_PATH', description="texエクスポート時に最初はここが表示されます、エクスポート毎に保存されます")
 
-    mate_default_path = bpy.props.StringProperty(name="mateファイル置き場", subtype='DIR_PATH', description="設定すれば、mateを扱う時は必ずここからファイル選択を始めます")
-    mate_unread_same_value = bpy.props.BoolProperty(name="同じ設定値が2つ以上ある場合削除", default=True, description="_ShadowColor など")
-    mate_import_path = bpy.props.StringProperty(name="mateインポート時のデフォルトパス", subtype='FILE_PATH', description="mateインポート時に最初はここが表示されます、インポート毎に保存されます")
-    mate_export_path = bpy.props.StringProperty(name="mateエクスポート時のデフォルトパス", subtype='FILE_PATH', description="mateエクスポート時に最初はここが表示されます、エクスポート毎に保存されます")
+    mate_default_path: bpy.props.StringProperty(name="mateファイル置き場", subtype='DIR_PATH', description="設定すれば、mateを扱う時は必ずここからファイル選択を始めます")
+    mate_unread_same_value: bpy.props.BoolProperty(name="同じ設定値が2つ以上ある場合削除", default=True, description="_ShadowColor など")
+    mate_import_path: bpy.props.StringProperty(name="mateインポート時のデフォルトパス", subtype='FILE_PATH', description="mateインポート時に最初はここが表示されます、インポート毎に保存されます")
+    mate_export_path: bpy.props.StringProperty(name="mateエクスポート時のデフォルトパス", subtype='FILE_PATH', description="mateエクスポート時に最初はここが表示されます、エクスポート毎に保存されます")
     
-    menu_default_path = bpy.props.StringProperty(name=".menu Default Path"       , subtype='DIR_PATH' , description="If set. The file selection will open here.")
-    menu_import_path  = bpy.props.StringProperty(name=".menu Default Import Path", subtype='FILE_PATH', description="When importing a .menu file. The file selection prompt will begin here.")
-    menu_export_path  = bpy.props.StringProperty(name=".menu Default Export Path", subtype='FILE_PATH', description="When exporting a .menu file. The file selection prompt will begin here.")
+    menu_default_path: bpy.props.StringProperty(name=".menu Default Path"       , subtype='DIR_PATH' , description="If set. The file selection will open here.")
+    menu_import_path: bpy.props.StringProperty(name=".menu Default Import Path", subtype='FILE_PATH', description="When importing a .menu file. The file selection prompt will begin here.")
+    menu_export_path: bpy.props.StringProperty(name=".menu Default Export Path", subtype='FILE_PATH', description="When exporting a .menu file. The file selection prompt will begin here.")
     
-    is_replace_cm3d2_tex = bpy.props.BoolProperty(name="基本的にtexファイルを探す", default=True, description="texファイルを探すかどうかのオプションのデフォルト値を設定します")
-    default_tex_path0 = bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します")
-    default_tex_path1 = bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します")
-    default_tex_path2 = bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します")
-    default_tex_path3 = bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します")
+    is_replace_cm3d2_tex: bpy.props.BoolProperty(name="基本的にtexファイルを探す", default=True, description="texファイルを探すかどうかのオプションのデフォルト値を設定します")
+    default_tex_path0: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します")
+    default_tex_path1: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します")
+    default_tex_path2: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します")
+    default_tex_path3: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します")
 
-    custom_normal_blend = bpy.props.FloatProperty(name="CM3D2用法線のブレンド率", default=0.5, min=0, max=1, soft_min=0, soft_max=1, step=3, precision=3)
-    skip_shapekey = bpy.props.BoolProperty(name="無変更シェイプキーをスキップ", default=True, description="ベースと同じシェイプキーを出力しない")
-    is_apply_modifiers = bpy.props.BoolProperty(name="モディファイアを適用", default=False)
+    custom_normal_blend: bpy.props.FloatProperty(name="CM3D2用法線のブレンド率", default=0.5, min=0, max=1, soft_min=0, soft_max=1, step=3, precision=3)
+    skip_shapekey: bpy.props.BoolProperty(name="無変更シェイプキーをスキップ", default=True, description="ベースと同じシェイプキーを出力しない")
+    is_apply_modifiers: bpy.props.BoolProperty(name="モディファイアを適用", default=False)
 
-    new_mate_tex_offset = bpy.props.FloatVectorProperty(name="テクスチャのオフセット", default=(0, 0), min=-1, max=1, soft_min=-1, soft_max=1, step=10, precision=3, size=2)
-    new_mate_tex_scale = bpy.props.FloatVectorProperty(name="テクスチャのスケール", default=(1, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=3, size=2)
+    new_mate_tex_offset: bpy.props.FloatVectorProperty(name="テクスチャのオフセット", default=(0, 0), min=-1, max=1, soft_min=-1, soft_max=1, step=10, precision=3, size=2)
+    new_mate_tex_scale: bpy.props.FloatVectorProperty(name="テクスチャのスケール", default=(1, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=3, size=2)
 
-    new_mate_toonramp_name = bpy.props.StringProperty(name="_ToonRamp 名前", default="toonGrayA1")
-    new_mate_toonramp_path = bpy.props.StringProperty(name="_ToonRamp パス", default=common.BASE_PATH_TEX + "toon/toonGrayA1.png")
+    new_mate_toonramp_name: bpy.props.StringProperty(name="_ToonRamp 名前", default="toonGrayA1")
+    new_mate_toonramp_path: bpy.props.StringProperty(name="_ToonRamp パス", default=common.BASE_PATH_TEX + "toon/toonGrayA1.png")
 
-    new_mate_shadowratetoon_name = bpy.props.StringProperty(name="_ShadowRateToon 名前", default="toonDress_shadow")
-    new_mate_shadowratetoon_path = bpy.props.StringProperty(name="_ShadowRateToon パス", default=common.BASE_PATH_TEX + "toon/toonDress_shadow.png")
+    new_mate_shadowratetoon_name: bpy.props.StringProperty(name="_ShadowRateToon 名前", default="toonDress_shadow")
+    new_mate_shadowratetoon_path: bpy.props.StringProperty(name="_ShadowRateToon パス", default=common.BASE_PATH_TEX + "toon/toonDress_shadow.png")
 
-    new_mate_linetoonramp_name = bpy.props.StringProperty(name="_OutlineToonRamp 名前", default="toonGrayA1")
-    new_mate_linetoonramp_path = bpy.props.StringProperty(name="_OutlineToonRamp パス", default=common.BASE_PATH_TEX + "toon/toonGrayA1.png")
+    new_mate_linetoonramp_name: bpy.props.StringProperty(name="_OutlineToonRamp 名前", default="toonGrayA1")
+    new_mate_linetoonramp_path: bpy.props.StringProperty(name="_OutlineToonRamp パス", default=common.BASE_PATH_TEX + "toon/toonGrayA1.png")
 
-    new_mate_color = bpy.props.FloatVectorProperty(name="_Color", default=(1, 1, 1, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
-    new_mate_shadowcolor = bpy.props.FloatVectorProperty(name="_ShadowColor", default=(0, 0, 0, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
-    new_mate_rimcolor = bpy.props.FloatVectorProperty(name="_RimColor", default=(0.5, 0.5, 0.5, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
-    new_mate_outlinecolor = bpy.props.FloatVectorProperty(name="_OutlineColor", default=(0, 0, 0, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
+    new_mate_color: bpy.props.FloatVectorProperty(name="_Color", default=(1, 1, 1, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
+    new_mate_shadowcolor: bpy.props.FloatVectorProperty(name="_ShadowColor", default=(0, 0, 0, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
+    new_mate_rimcolor: bpy.props.FloatVectorProperty(name="_RimColor", default=(0.5, 0.5, 0.5, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
+    new_mate_outlinecolor: bpy.props.FloatVectorProperty(name="_OutlineColor", default=(0, 0, 0, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
 
-    new_mate_shininess  = bpy.props.FloatProperty(name="_Shininess", default=0, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
-    new_mate_outlinewidth = bpy.props.FloatProperty(name="_OutlineWidth", default=0.0015, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
-    new_mate_rimpower = bpy.props.FloatProperty(name="_RimPower", default=25, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
-    new_mate_rimshift = bpy.props.FloatProperty(name="_RimShift", default=0, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
-    new_mate_hirate = bpy.props.FloatProperty(name="_HiRate", default=0.5, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
-    new_mate_hipow = bpy.props.FloatProperty(name="_HiPow", default=0.001, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
-    new_mate_cutoff = bpy.props.FloatProperty(name="_Cutoff", default=0.5, min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2)
-    new_mate_cutout = bpy.props.FloatProperty(name="_Cutout", default=0.482143, min=0, max=1, soft_min=0, soft_max=1, step=10, precision=6)
-    new_mate_ztest = bpy.props.FloatProperty(name="_ZTest", default=4, min=0, max=8, soft_min=0, soft_max=8, step=1)
-    new_mate_ztest2 = bpy.props.FloatProperty(name="_ZTest2", default=1, min=0, max=1, soft_min=0, soft_max=1, step=1)
-    new_mate_ztest2alpha = bpy.props.FloatProperty(name="_ZTest2Alpha", default=0.8, min=0, max=1, soft_min=0, soft_max=1, step=1, precision=2)
+    new_mate_shininess: bpy.props.FloatProperty(name="_Shininess", default=0, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
+    new_mate_outlinewidth: bpy.props.FloatProperty(name="_OutlineWidth", default=0.0015, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
+    new_mate_rimpower: bpy.props.FloatProperty(name="_RimPower", default=25, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
+    new_mate_rimshift: bpy.props.FloatProperty(name="_RimShift", default=0, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
+    new_mate_hirate: bpy.props.FloatProperty(name="_HiRate", default=0.5, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
+    new_mate_hipow: bpy.props.FloatProperty(name="_HiPow", default=0.001, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
+    new_mate_cutoff: bpy.props.FloatProperty(name="_Cutoff", default=0.5, min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2)
+    new_mate_cutout: bpy.props.FloatProperty(name="_Cutout", default=0.482143, min=0, max=1, soft_min=0, soft_max=1, step=10, precision=6)
+    new_mate_ztest: bpy.props.FloatProperty(name="_ZTest", default=4, min=0, max=8, soft_min=0, soft_max=8, step=1)
+    new_mate_ztest2: bpy.props.FloatProperty(name="_ZTest2", default=1, min=0, max=1, soft_min=0, soft_max=1, step=1)
+    new_mate_ztest2alpha: bpy.props.FloatProperty(name="_ZTest2Alpha", default=0.8, min=0, max=1, soft_min=0, soft_max=1, step=1, precision=2)
 
-    bone_display_type = bpy.props.EnumProperty(
+    bone_display_type: bpy.props.EnumProperty(
         items=[
             ('OCTAHEDRAL', "Octahedral", "Display bones as octahedral shape (default)."                            ),
             ('STICK'     , "Stick"     , "Display bones as simple 2D lines with dots."                             ),
@@ -201,11 +201,11 @@ class AddonPreferences(bpy.types.AddonPreferences):
         name="Display Type",
         default='STICK',
     )
-    show_bone_names         = bpy.props.BoolProperty(name="Show Bone Names"       , default=False, description="Display bone names"                     )
-    show_bone_axes          = bpy.props.BoolProperty(name="Show Bone Axes"        , default=False, description="Display bone axes"                      )
-    show_bone_custom_shapes = bpy.props.BoolProperty(name="Show Bone Shapes"      , default=True , description="Display bones with their custom shapes" )
-    show_bone_group_colors  = bpy.props.BoolProperty(name="Show Bone Group Colors", default=True , description="Display bone group colors"              )
-    show_bone_in_front      = bpy.props.BoolProperty(name="Show Bones in Front"   , default=True , description="Make the object draw in front of others")
+    show_bone_names: bpy.props.BoolProperty(name="Show Bone Names"       , default=False, description="Display bone names"                     )
+    show_bone_axes: bpy.props.BoolProperty(name="Show Bone Axes"        , default=False, description="Display bone axes"                      )
+    show_bone_custom_shapes: bpy.props.BoolProperty(name="Show Bone Shapes"      , default=True , description="Display bones with their custom shapes" )
+    show_bone_group_colors: bpy.props.BoolProperty(name="Show Bone Group Colors", default=True , description="Display bone group colors"              )
+    show_bone_in_front: bpy.props.BoolProperty(name="Show Bones in Front"   , default=True , description="Make the object draw in front of others")
 
     def draw(self, context):
         if compat.IS_LEGACY:

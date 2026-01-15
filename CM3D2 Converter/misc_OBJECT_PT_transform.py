@@ -75,8 +75,8 @@ class CNV_OT_align_to_cm3d2_base_bone(bpy.types.Operator):
     bl_description = "Align the object to it's armature's base bone"
     bl_options = {'REGISTER', 'UNDO'}
 
-    scale            = bpy.props.FloatProperty(name="Scale"        , default=   5, min=0.1, max=100, soft_min=0.1, soft_max=100, step=100, precision=1, description="The amount by which the mesh is scaled when imported. Recommended that you use the same when at the time of export.")
-    is_preserve_mesh = bpy.props.BoolProperty (name="Preserve Mesh", default=True, description="Align object transform, then fix mesh transform so it remains in place.")
+    scale: bpy.props.FloatProperty(name="Scale", default=5, min=0.1, max=100, soft_min=0.1, soft_max=100, step=100, precision=1, description="The amount by which the mesh is scaled when imported. Recommended that you use the same when at the time of export.")
+    is_preserve_mesh: bpy.props.BoolProperty (name="Preserve Mesh", default=True, description="Align object transform, then fix mesh transform so it remains in place.")
 
     items = [
         ('ARMATURE'         , "Armature"     , "", 'OUTLINER_OB_ARMATURE', 1),
@@ -84,7 +84,7 @@ class CNV_OT_align_to_cm3d2_base_bone(bpy.types.Operator):
         ('OBJECT_PROPERTY'  , "Object Data"  , "", 'OBJECT_DATAMODE'     , 3),
         ('ARMATURE_PROPERTY', "Armature Data", "", 'ARMATURE_DATA'       , 4),
     ]
-    bone_info_mode = bpy.props.EnumProperty(items=items, name="Bone Data Source", default='OBJECT_PROPERTY', description="This will decide from where the Bone Data is gathered from.")
+    bone_info_mode: bpy.props.EnumProperty(items=items, name="Bone Data Source", default='OBJECT_PROPERTY', description="This will decide from where the Bone Data is gathered from.")
 
 
     @staticmethod

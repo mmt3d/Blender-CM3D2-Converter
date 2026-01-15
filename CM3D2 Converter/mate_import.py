@@ -16,12 +16,12 @@ class CNV_OT_import_cm3d2_mate(bpy.types.Operator):
     bl_description = "mateファイルをマテリアルとして開きます"
     bl_options = {'REGISTER', 'UNDO'}
 
-    filepath = bpy.props.StringProperty(subtype='FILE_PATH')
+    filepath: bpy.props.StringProperty(subtype='FILE_PATH')
     filename_ext = ".mate"
-    filter_glob = bpy.props.StringProperty(default="*.mate", options={'HIDDEN'})
+    filter_glob: bpy.props.StringProperty(default="*.mate", options={'HIDDEN'})
 
-    is_decorate = bpy.props.BoolProperty(name="種類に合わせてマテリアルを装飾", default=True)
-    is_replace_cm3d2_tex = bpy.props.BoolProperty(name="テクスチャを探す", default=True, description="CM3D2本体のインストールフォルダからtexファイルを探して開きます")
+    is_decorate: bpy.props.BoolProperty(name="種類に合わせてマテリアルを装飾", default=True)
+    is_replace_cm3d2_tex: bpy.props.BoolProperty(name="テクスチャを探す", default=True, description="CM3D2本体のインストールフォルダからtexファイルを探して開きます")
 
     @classmethod
     def poll(cls, context):
@@ -85,11 +85,11 @@ class CNV_OT_import_cm3d2_mate_text(bpy.types.Operator):
     bl_description = "mateファイルをテキストとして開きます"
     bl_options = {'REGISTER', 'UNDO'}
 
-    filepath = bpy.props.StringProperty(subtype='FILE_PATH')
+    filepath: bpy.props.StringProperty(subtype='FILE_PATH')
     filename_ext = ".mate"
-    filter_glob = bpy.props.StringProperty(default="*.mate", options={'HIDDEN'})
+    filter_glob: bpy.props.StringProperty(default="*.mate", options={'HIDDEN'})
 
-    is_overwrite = bpy.props.BoolProperty(name="現在のテキストに上書き", default=False)
+    is_overwrite: bpy.props.BoolProperty(name="現在のテキストに上書き", default=False)
 
     @classmethod
     def poll(cls, context):

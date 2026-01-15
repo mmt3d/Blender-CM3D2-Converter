@@ -30,46 +30,46 @@ class CNV_OT_export_cm3d2_anm(bpy.types.Operator):
     bl_description = "カスタムメイド3D2のanmファイルを保存します"
     bl_options = {'REGISTER'}
 
-    filepath = bpy.props.StringProperty(subtype='FILE_PATH')
+    filepath: bpy.props.StringProperty(subtype='FILE_PATH')
     filename_ext = '.anm'
-    filter_glob = bpy.props.StringProperty(default='*.anm', options={'HIDDEN'})
+    filter_glob: bpy.props.StringProperty(default='*.anm', options={'HIDDEN'})
 
-    scale = bpy.props.FloatProperty(name="倍率", default=0.2, min=0.1, max=100, soft_min=0.1, soft_max=100, step=100, precision=1, description="エクスポート時のメッシュ等の拡大率です")
-    is_backup = bpy.props.BoolProperty(name="ファイルをバックアップ", default=True, description="ファイルに上書きする場合にバックアップファイルを複製します")
-    version = bpy.props.IntProperty(name="ファイルバージョン", default=1000, min=1000, max=1111, soft_min=1000, soft_max=1111, step=1)
+    scale: bpy.props.FloatProperty(name="倍率", default=0.2, min=0.1, max=100, soft_min=0.1, soft_max=100, step=100, precision=1, description="エクスポート時のメッシュ等の拡大率です")
+    is_backup: bpy.props.BoolProperty(name="ファイルをバックアップ", default=True, description="ファイルに上書きする場合にバックアップファイルを複製します")
+    version: bpy.props.IntProperty(name="ファイルバージョン", default=1000, min=1000, max=1111, soft_min=1000, soft_max=1111, step=1)
     
-    #is_anm_data_text = bpy.props.BoolProperty(name="From Anm Text", default=False, description="Input data from JSON file")
+    #is_anm_data_text: bpy.props.BoolProperty(name="From Anm Text", default=False, description="Input data from JSON file")
     items = [
         ('ALL'  , "Bake All Frames"      , "Export every frame as a keyframe (legacy behavior, large file sizes)", 'SEQUENCE' , 1),
         ('KEYED', "Only Export Keyframes", "Only export keyframes and their tangents (for more advance users)"   , 'KEYINGSET', 2),
         ('TEXT' , "From Anm Text JSON"   , "Export data from the JSON in the 'AnmData' text file"                , 'TEXT'     , 3)
     ]
-    export_method = bpy.props.EnumProperty(items=items, name="Export Method", default='ALL')
+    export_method: bpy.props.EnumProperty(items=items, name="Export Method", default='ALL')
 
 
-    frame_start = bpy.props.IntProperty(name="開始フレーム", default=0, min=0, max=99999, soft_min=0, soft_max=99999, step=1)
-    frame_end = bpy.props.IntProperty(name="最終フレーム", default=0, min=0, max=99999, soft_min=0, soft_max=99999, step=1)
-    key_frame_count = bpy.props.IntProperty(name="キーフレーム数", default=-1, min=-1, max=99999, soft_min=1, soft_max=99999, step=1)
-    time_scale = bpy.props.FloatProperty(name="再生速度", default=1.0, min=0.1, max=10.0, soft_min=0.1, soft_max=10.0, step=10, precision=1)
-    is_keyframe_clean = bpy.props.BoolProperty(name="同じ変形のキーフレームを掃除", default=True)
-    is_visual_transform = bpy.props.BoolProperty(name="Use Visual Transforms", default=True )
-    is_smooth_handle = bpy.props.BoolProperty(name="キーフレーム間の変形をスムーズに", default=True)
+    frame_start: bpy.props.IntProperty(name="開始フレーム", default=0, min=0, max=99999, soft_min=0, soft_max=99999, step=1)
+    frame_end: bpy.props.IntProperty(name="最終フレーム", default=0, min=0, max=99999, soft_min=0, soft_max=99999, step=1)
+    key_frame_count: bpy.props.IntProperty(name="キーフレーム数", default=-1, min=-1, max=99999, soft_min=1, soft_max=99999, step=1)
+    time_scale: bpy.props.FloatProperty(name="再生速度", default=1.0, min=0.1, max=10.0, soft_min=0.1, soft_max=10.0, step=10, precision=1)
+    is_keyframe_clean: bpy.props.BoolProperty(name="同じ変形のキーフレームを掃除", default=True)
+    is_visual_transform: bpy.props.BoolProperty(name="Use Visual Transforms", default=True )
+    is_smooth_handle: bpy.props.BoolProperty(name="キーフレーム間の変形をスムーズに", default=True)
 
-    items = [
+    items_2 = [
         ('ARMATURE', "アーマチュア", "", 'OUTLINER_OB_ARMATURE', 1),
         ('ARMATURE_PROPERTY', "アーマチュア内プロパティ", "", 'ARMATURE_DATA', 2),
     ]
-    bone_parent_from = bpy.props.EnumProperty(items=items, name="ボーン親情報の参照先", default='ARMATURE_PROPERTY')
+    bone_parent_from: bpy.props.EnumProperty(items=items_2, name="ボーン親情報の参照先", default='ARMATURE_PROPERTY')
     
-    is_location = bpy.props.BoolProperty(name="Export Location"  , default=True )
-    is_rotation = bpy.props.BoolProperty(name="Export Rotation"  , default=True )
-    is_scale    = bpy.props.BoolProperty(name="Export Scale (Ex)", default=False)
+    is_location: bpy.props.BoolProperty(name="Export Location"  , default=True )
+    is_rotation: bpy.props.BoolProperty(name="Export Rotation"  , default=True )
+    is_scale: bpy.props.BoolProperty(name="Export Scale (Ex)", default=False)
 
-    is_remove_unkeyed_bone       = bpy.props.BoolProperty(name="Remove Unkeyed Bones", default=False)
-    is_remove_alone_bone         = bpy.props.BoolProperty(name="親も子も存在しない", default=True)
-    is_remove_ik_bone            = bpy.props.BoolProperty(name="名前がIK/Nubっぽい", default=True)
-    is_remove_serial_number_bone = bpy.props.BoolProperty(name="名前が連番付き", default=True)
-    is_remove_japanese_bone      = bpy.props.BoolProperty(name="名前に日本語が含まれる", default=True)
+    is_remove_unkeyed_bone: bpy.props.BoolProperty(name="Remove Unkeyed Bones", default=False)
+    is_remove_alone_bone: bpy.props.BoolProperty(name="親も子も存在しない", default=True)
+    is_remove_ik_bone: bpy.props.BoolProperty(name="名前がIK/Nubっぽい", default=True)
+    is_remove_serial_number_bone: bpy.props.BoolProperty(name="名前が連番付き", default=True)
+    is_remove_japanese_bone: bpy.props.BoolProperty(name="名前に日本語が含まれる", default=True)
 
     @classmethod
     def poll(cls, context):

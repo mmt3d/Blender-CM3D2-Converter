@@ -37,7 +37,7 @@ class CNV_OT_append_cm3d2_figure(bpy.types.Operator):
     bl_description = "CM3D2関係の素体を現在のシーンにインポートします"
     bl_options = {'REGISTER', 'UNDO'}
 
-    object_name = bpy.props.StringProperty(name="素体名")
+    object_name: bpy.props.StringProperty(name="素体名")
 
     def execute(self, context):
         if bpy.ops.object.mode_set.poll():

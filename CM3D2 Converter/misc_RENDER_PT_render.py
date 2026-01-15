@@ -27,22 +27,22 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
         ('FACE_TEXTURE', "面のテクスチャで", "", 'FACESEL_HLT', 1),
         ('NOW_MATERIAL', "今のマテリアルで", "", 'MATERIAL', 2),
     ]
-    mode = bpy.props.EnumProperty(items=items, name="モード", default='FACE_TEXTURE')
+    mode: bpy.props.EnumProperty(items=items, name="モード", default='FACE_TEXTURE')
 
-    use_freestyle = bpy.props.BoolProperty(name="輪郭線を描画", default=True)
-    line_thickness = bpy.props.FloatProperty(name="線の太さ", default=0.2, min=0, max=0.5, soft_min=0, soft_max=0.5, step=10, precision=2, subtype='PIXEL')
-    line_color = bpy.props.FloatVectorProperty(name="線の色", default=(0, 0, 0), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=3)
+    use_freestyle: bpy.props.BoolProperty(name="輪郭線を描画", default=True)
+    line_thickness: bpy.props.FloatProperty(name="線の太さ", default=0.2, min=0, max=0.5, soft_min=0, soft_max=0.5, step=10, precision=2, subtype='PIXEL')
+    line_color: bpy.props.FloatVectorProperty(name="線の色", default=(0, 0, 0), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=3)
 
-    resolution = bpy.props.IntProperty(name="解像度", default=80, min=10, max=800, soft_min=10, soft_max=800, subtype='PIXEL')
-    camera_angle = bpy.props.FloatVectorProperty(name="カメラ角度", default=(0.576667, 0.576667, 0.578715), min=-10, max=10, soft_min=-10, soft_max=10, step=1, precision=2, subtype='DIRECTION', size=3)
-    camera_move = bpy.props.FloatVectorProperty(name="カメラ移動", default=(0, 0), min=-10, max=10, soft_min=-10, soft_max=10, step=10, precision=2, subtype='XYZ', size=2)
-    zoom_multi = bpy.props.IntProperty(name="ズーム倍率", default=100, min=10, max=190, soft_min=10, soft_max=190, step=10, subtype='PERCENTAGE')
+    resolution: bpy.props.IntProperty(name="解像度", default=80, min=10, max=800, soft_min=10, soft_max=800, subtype='PIXEL')
+    camera_angle: bpy.props.FloatVectorProperty(name="カメラ角度", default=(0.576667, 0.576667, 0.578715), min=-10, max=10, soft_min=-10, soft_max=10, step=1, precision=2, subtype='DIRECTION', size=3)
+    camera_move: bpy.props.FloatVectorProperty(name="カメラ移動", default=(0, 0), min=-10, max=10, soft_min=-10, soft_max=10, step=10, precision=2, subtype='XYZ', size=2)
+    zoom_multi: bpy.props.IntProperty(name="ズーム倍率", default=100, min=10, max=190, soft_min=10, soft_max=190, step=10, subtype='PERCENTAGE')
 
-    use_background_color = bpy.props.BoolProperty(name="背景を使用", default=True)
-    background_color = bpy.props.FloatVectorProperty(name="背景色", default=(1, 1, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=3)
-    is_round_background = bpy.props.BoolProperty(name="隅を丸める", default=True)
+    use_background_color: bpy.props.BoolProperty(name="背景を使用", default=True)
+    background_color: bpy.props.FloatVectorProperty(name="背景色", default=(1, 1, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=3)
+    is_round_background: bpy.props.BoolProperty(name="隅を丸める", default=True)
 
-    layer_image = bpy.props.StringProperty(name="重ねる画像", default="")
+    layer_image: bpy.props.StringProperty(name="重ねる画像", default="")
 
     @classmethod
     def poll(cls, context):

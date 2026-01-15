@@ -31,7 +31,7 @@ class CNV_OT_attribute_from_custom_normals(bpy.types.Operator):
         ('BYTE_COLOR'  , "Byte Color" , "RGBA color with 8-bit precision"          , 'NONE', 3),
     ]
 
-    data_type = bpy.props.EnumProperty(items=items, name="Data Type", default='FLOAT_COLOR')
+    data_type: bpy.props.EnumProperty(items=items, name="Data Type", default='FLOAT_COLOR')
 
     @classmethod
     def poll(cls, context):
@@ -95,7 +95,7 @@ class CNV_OT_attribute_convert_normals(bpy.types.Operator):
         ('BYTE_COLOR'  , "Byte Color" , "RGBA color with 8-bit precision"          , 'NONE', 3),
     ]
 
-    data_type = bpy.props.EnumProperty(items=items, name="Data Type", default='FLOAT_COLOR')
+    data_type: bpy.props.EnumProperty(items=items, name="Data Type", default='FLOAT_COLOR')
 
     @classmethod
     def poll(cls, context):

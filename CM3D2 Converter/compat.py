@@ -19,89 +19,26 @@ IS_LEGACY = not hasattr(bpy.app, 'version') or bpy.app.version < (2, 80)
 UILayoutDrawer = bpy.types.Header | bpy.types.Menu | bpy.types.Panel
 
 
-class BlRegister():
-    idnames: set[str] = set()
+class BlRegister:
     classes: list[type] = []
     functions: dict[type[UILayoutDrawer], list[FunctionType]] = {}
     
-    def __init__(self, *, 
-                 make_annotation: bool = True,
-                 use_bl_attr: bool = True,
-                 only_legacy: bool = False,
-                 only_latest: bool = False,
-                 append_to: type[UILayoutDrawer] = None):
-        self.make_annotation = make_annotation
-        self.use_bl_attr = use_bl_attr
-        self.only_legacy = only_legacy
-        self.only_latest = only_latest
+    def __init__(self, append_to: type[UILayoutDrawer] = None, only_legacy: bool = False, **kwargs):
         self.append_to = append_to
+        self.only_legacy = only_legacy
 
     def __call__(self, obj: type | FunctionType) -> object:
         """This method is invoked when using the decorator @BlRegister()"""
+        if self.only_legacy:
+            return obj
         if inspect.isclass(obj):
-            self._add_class(obj)
+            BlRegister.classes.append(obj)
         elif inspect.isfunction(obj):
-            self._add_func(obj)
+            if self.append_to not in BlRegister.functions:
+                BlRegister.functions[self.append_to] = []
+            BlRegister.functions[self.append_to].append(obj)
         return obj
     
-    def _add_class(self, cls: type):
-        """Handle a class decorated with @BlRegister()"""
-        if hasattr(cls, 'bl_idname'):
-            bl_idname = cls.bl_idname
-        else:
-            use_bl_attr = self.use_bl_attr \
-                          and hasattr(cls, 'bl_space_type' ) \
-                          and hasattr(cls, 'bl_region_type') \
-                          and hasattr(cls, 'bl_label'      )
-            if use_bl_attr:
-                bl_ctx = getattr(cls, 'bl_context', '')
-                bl_idname = f'{cls.bl_space_type}{cls.bl_region_type}{bl_ctx}{cls.bl_label}'
-            else:
-                bl_idname = cls.__qualname__
-
-        if self.only_legacy:
-            if IS_LEGACY:
-                BlRegister.add_class(bl_idname, cls)
-        elif self.only_latest:
-            if IS_LEGACY is False:
-                BlRegister.add_class(bl_idname, cls)
-        else:
-            BlRegister.add_class(bl_idname, cls)
-
-        if self.make_annotation:
-            cls = make_annotations(cls)
-
-        if not IS_LEGACY and bpy.app.version >= (2, 93):
-            cls = make_prop_annotations(cls)
-    
-    def _add_func(self, func: FunctionType):
-        """Handle a function decorated with @BlRegister()"""
-        if self.append_to is None:
-            raise ValueError("BlRegister keyword argument 'append_to' is required when decorating a function.")
-        BlRegister.add_function(self.append_to, func)
-
-    @classmethod
-    def add_class(cls, bl_idname: str, op_class: type) -> None:
-        """Add a class to be be registered when BlRegister.register() is called"""
-        if bl_idname in cls.idnames:
-            raise RuntimeError("Duplicate bl_idname: %s" % bl_idname)
-
-        cls.idnames.add(bl_idname)
-        cls.classes.append(op_class)
-    
-    @classmethod
-    def add_function(cls, append_to: type[UILayoutDrawer], func: FunctionType):
-        """Add a function to be be registered when BlRegister.register() is called"""
-        if (not hasattr(append_to, 'draw')
-            or not hasattr(append_to, 'append')
-            or not hasattr(append_to, 'remove')):
-            raise TypeError(f"BlRegister 'append_to' must be a type of UI layout drawer (e.g. {UILayoutDrawer})")
-        if append_to not in cls.functions:
-            cls.functions[append_to] = []
-        if func in cls.functions[append_to]:
-            raise RuntimeError(f"Duplicate register of function {func} to {append_to}")
-        cls.functions[append_to].append(func)
-
     @classmethod
     def register(cls):
         for cls1 in cls.classes:
@@ -121,53 +58,7 @@ class BlRegister():
     @classmethod
     def cleanup(cls):
         cls.classes.clear()
-        cls.idnames.clear()
-
-
-def make_prop_annotations(cls):
-    if IS_LEGACY:
-        return cls
-
-    prop_type = bpy.props._PropertyDeferred
-    annotations = cls.__annotations__ if hasattr(cls, "__annotations__") else dict()
-
-    for prop_name in dir(cls):
-        prop = getattr(cls, prop_name)
-        if type(prop) != prop_type:
-            continue
-        annotations[prop_name] = prop
-    
-    setattr(cls, "__annotations__", annotations)
-    #print(cls.__annotations__)
-    return cls
-
-
-def make_annotations(cls):
-    if IS_LEGACY:
-        return cls
-
-    cls_props = {}
-    for k, v in cls.__dict__.items():
-        if isinstance(v, tuple):
-            cls_props[k] = v
-
-    annos = cls.__dict__.get('__annotations__')  # type: dict[str, type]
-    if annos is None:
-        annos = {}
-        setattr(cls, '__annotations__', annos)
-
-    for k, v in cls_props.items():
-        annos[k] = v
-        delattr(cls, k)
-
-    # 親クラスを辿ってアノテーションを生成
-    for bc in cls.__bases__:
-        # bpyのタイプやbuiltinsの場合はスキップ
-        if bc.__module__ in ['bpy_types', 'builtins']:
-            continue
-        make_annotations(bc)
-
-    return cls
+        cls.functions.clear()
 
 
 import functools

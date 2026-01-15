@@ -172,10 +172,10 @@ else:
 
 
 class shape_key_transfer_op(_op_base):
-    is_first_remove_all = bpy.props.BoolProperty(name="最初に全シェイプキーを削除", default=False)
-    is_remove_empty     = bpy.props.BoolProperty(name="変形のないシェイプキーを削除", default=True)
-    is_bind_current_mix = bpy.props.BoolProperty(name="Bind to current source mix", default=False)
-    subdivide_number    = bpy.props.IntProperty (name="参照元の分割", default=1, min=0, max=10, soft_min=0, soft_max=10)
+    is_first_remove_all: bpy.props.BoolProperty(name="最初に全シェイプキーを削除", default=False)
+    is_remove_empty: bpy.props.BoolProperty(name="変形のないシェイプキーを削除", default=True)
+    is_bind_current_mix: bpy.props.BoolProperty(name="Bind to current source mix", default=False)
+    subdivide_number: bpy.props.IntProperty(name="参照元の分割", default=1, min=0, max=10, soft_min=0, soft_max=10)
 
     def __init__(self):
         self.target_ob = None
@@ -460,7 +460,7 @@ class CNV_OT_quick_shape_key_transfer(shape_key_transfer_op, bpy.types.Operator)
     bl_description = "アクティブなメッシュに他の選択メッシュのシェイプキーを高速で転送します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    step_size = bpy.props.IntProperty(name="Step Size (low = quality, high = speed)", default=1, min=1, max=100, soft_min=1, soft_max=10, step=1)
+    step_size: bpy.props.IntProperty(name="Step Size (low = quality, high = speed)", default=1, min=1, max=100, soft_min=1, soft_max=10, step=1)
 
     near_vert_indexs = []
     my_iter = None
@@ -557,8 +557,8 @@ class CNV_OT_precision_shape_key_transfer(shape_key_transfer_op, bpy.types.Opera
     bl_description = "アクティブなメッシュに他の選択メッシュのシェイプキーを遠いほどぼかして転送します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    step_size = bpy.props.IntProperty(name="Step Size (low = quality, high = speed)", default=1, min=1, max=100, soft_min=1, soft_max=10, step=1)
-    extend_range = bpy.props.FloatProperty(name="範囲倍率", default=1.1, min=1.0001, max=5.0, soft_min=1.0001, soft_max=5.0, step=10, precision=2)
+    step_size: bpy.props.IntProperty(name="Step Size (low = quality, high = speed)", default=1, min=1, max=100, soft_min=1, soft_max=10, step=1)
+    extend_range: bpy.props.FloatProperty(name="範囲倍率", default=1.1, min=1.0001, max=5.0, soft_min=1.0001, soft_max=5.0, step=10, precision=2)
 
     
     near_vert_data = []
@@ -900,31 +900,31 @@ class CNV_UL_vgroups_selector(bpy.types.UIList):
     expanded_layout = False
 
     # Custom properties, saved with .blend file.
-    use_filter_name_reverse = bpy.props.BoolProperty(
+    use_filter_name_reverse: bpy.props.BoolProperty(
         name="Reverse Name",
         default=False,
         options=set(),
         description="Reverse name filtering",
     )
-    use_filter_deform = bpy.props.BoolProperty(
+    use_filter_deform: bpy.props.BoolProperty(
         name="Only Deform",
         default=False,
         options=set(),
         description="Only show deforming vertex groups",
     )
-    use_filter_deform_reverse = bpy.props.BoolProperty(
+    use_filter_deform_reverse: bpy.props.BoolProperty(
         name="Other",
         default=False,
         options=set(),
         description="Only show non-deforming vertex groups",
     )
-    use_filter_empty = bpy.props.BoolProperty(
+    use_filter_empty: bpy.props.BoolProperty(
         name="Filter Empty",
         default=False,
         options=set(),
         description="Whether to filter empty vertex groups",
     )
-    use_filter_empty_reverse = bpy.props.BoolProperty(
+    use_filter_empty_reverse: bpy.props.BoolProperty(
         name="Reverse Empty",
         default=False,
         options=set(),
@@ -937,19 +937,19 @@ class CNV_UL_vgroups_selector(bpy.types.UIList):
             if (getattr(self, name1)):
                 setattr(self, name2, False)
         return _u
-    use_order_name = bpy.props.BoolProperty(
+    use_order_name: bpy.props.BoolProperty(
         name="Name", default=False, options=set(),
         description="Sort groups by their name (case-insensitive)",
         update=_gen_order_update("use_order_name", "use_order_importance"),
     )
-    use_order_importance = bpy.props.BoolProperty(
+    use_order_importance: bpy.props.BoolProperty(
         name="Importance",
         default=False,
         options=set(),
         description="Sort groups by their average weight in the mesh",
         update=_gen_order_update("use_order_importance", "use_order_name"),
     )
-    use_filter_orderby_invert = bpy.props.BoolProperty(
+    use_filter_orderby_invert: bpy.props.BoolProperty(
         name="Order by Invert",
         default=False,
         options=set(),
@@ -1155,19 +1155,19 @@ class CNV_OT_weighted_shape_key_transfer(shape_key_transfer_op, bpy.types.Operat
     bl_description = "Transfers the shape keys of other selected mesh to the active mesh, using matching vertex groups as masks"
     bl_options = {'REGISTER', 'UNDO'}
 
-    step_size = bpy.props.IntProperty(name="Step Size (low = quality, high = speed)", default=1, min=1, max=100, soft_min=1, soft_max=10, step=1)
-    extend_range = bpy.props.FloatProperty(name="Range magnification", default=1.1, min=1.0001, max=5.0, soft_min=1.0001, soft_max=5.0, step=10, precision=2)
+    step_size: bpy.props.IntProperty(name="Step Size (low = quality, high = speed)", default=1, min=1, max=100, soft_min=1, soft_max=10, step=1)
+    extend_range: bpy.props.FloatProperty(name="Range magnification", default=1.1, min=1.0001, max=5.0, soft_min=1.0001, soft_max=5.0, step=10, precision=2)
 
     near_vert_data = []
     near_vert_multi_total = []
     my_iter = None
 
     matched_vgroups = []
-    using_vgroups = bpy.props.CollectionProperty(type=common.CNV_SelectorItem)
-    active_vgroup = bpy.props.IntProperty(name="Active Vertex Group")
+    using_vgroups: bpy.props.CollectionProperty(type=common.CNV_SelectorItem)
+    active_vgroup: bpy.props.IntProperty(name="Active Vertex Group")
     
-    #armature = bpy.props.PointerProperty(type=bpy.types.ID)
-    #bone_data_ob = bpy.props.PointerProperty(type=bpy.types.ID)
+    #armature: bpy.props.PointerProperty(type=bpy.types.ID)
+    #bone_data_ob: bpy.props.PointerProperty(type=bpy.types.ID)
     armature = None
     bone_data_ob = None
 
@@ -1291,14 +1291,14 @@ class CNV_OT_multiply_shape_key(bpy.types.Operator):
     bl_description = "シェイプキーの変形に数値を乗算し、変形の強度を増減させます"
     bl_options = {'REGISTER', 'UNDO'}
 
-    multi = bpy.props.FloatProperty(name="倍率", description="シェイプキーの拡大率です", default=1.1, min=-10, max=10, soft_min=-10, soft_max=10, step=10, precision=2)
+    multi: bpy.props.FloatProperty(name="倍率", description="シェイプキーの拡大率です", default=1.1, min=-10, max=10, soft_min=-10, soft_max=10, step=10, precision=2)
     items = [
         ('ACTIVE', "アクティブのみ", "", 'HAND', 1),
         ('UP', "アクティブより上", "", 'TRIA_UP_BAR', 2),
         ('DOWN', "アクティブより下", "", 'TRIA_DOWN_BAR', 3),
         ('ALL', "全て", "", 'ARROW_LEFTRIGHT', 4),
     ]
-    mode = bpy.props.EnumProperty(items=items, name="対象", default='ACTIVE')
+    mode: bpy.props.EnumProperty(items=items, name="対象", default='ACTIVE')
 
     @classmethod
     def poll(cls, context):
@@ -1361,21 +1361,21 @@ class CNV_OT_blur_shape_key(bpy.types.Operator):
         ('DOWN', "アクティブより下", "", 'TRIA_DOWN_BAR', 3),
         ('ALL', "全て", "", 'ARROW_LEFTRIGHT', 4),
     ]
-    target = bpy.props.EnumProperty(items=items, name="対象", default='ACTIVE')
-    radius = bpy.props.FloatProperty(name="範囲倍率", default=3, min=0.1, max=50, soft_min=0.1, soft_max=50, step=50, precision=2)
-    strength = bpy.props.IntProperty(name="強さ", default=1, min=1, max=10, soft_min=1, soft_max=10)
-    items = [
+    target: bpy.props.EnumProperty(items=items, name="対象", default='ACTIVE')
+    radius: bpy.props.FloatProperty(name="範囲倍率", default=3, min=0.1, max=50, soft_min=0.1, soft_max=50, step=50, precision=2)
+    strength: bpy.props.IntProperty(name="強さ", default=1, min=1, max=10, soft_min=1, soft_max=10)
+    items_2 = [
         ('BOTH', "増減両方", "", 'AUTOMERGE_ON', 1),
         ('ADD', "増加のみ", "", 'TRIA_UP', 2),
         ('SUB', "減少のみ", "", 'TRIA_DOWN', 3),
     ]
-    effect = bpy.props.EnumProperty(items=items, name="ぼかし効果", default='BOTH')
-    items = [
+    effect: bpy.props.EnumProperty(items=items_2, name="ぼかし効果", default='BOTH')
+    items_3 = [
         ('LINER', "ライナー", "", 'LINCURVE', 1),
         ('SMOOTH1', "スムーズ1", "", 'SMOOTHCURVE', 2),
         ('SMOOTH2', "スムーズ2", "", 'SMOOTHCURVE', 3),
     ]
-    blend = bpy.props.EnumProperty(items=items, name="減衰タイプ", default='LINER')
+    blend: bpy.props.EnumProperty(items=items_3, name="減衰タイプ", default='LINER')
 
     @classmethod
     def poll(cls, context):
@@ -1506,8 +1506,8 @@ class CNV_OT_change_base_shape_key(bpy.types.Operator):
     bl_description = "アクティブなシェイプキーを他のシェイプキーのベースにします"
     bl_options = {'REGISTER', 'UNDO'}
 
-    is_deform_mesh = bpy.props.BoolProperty(name="素メッシュを調整", default=True)
-    is_deform_other_shape = bpy.props.BoolProperty(name="他シェイプを調整", default=True)
+    is_deform_mesh: bpy.props.BoolProperty(name="素メッシュを調整", default=True)
+    is_deform_other_shape: bpy.props.BoolProperty(name="他シェイプを調整", default=True)
 
     @classmethod
     def poll(cls, context):
@@ -1565,7 +1565,7 @@ class CNV_OT_copy_shape_key_values(bpy.types.Operator):
     bl_description = "Copy the shape key values from the other selected mesh"
     bl_options = {'REGISTER', 'UNDO'}
 
-    use_drivers = bpy.props.BoolProperty(name="Apply as drivers", default=False)
+    use_drivers: bpy.props.BoolProperty(name="Apply as drivers", default=False)
 
     @classmethod
     def poll(cls, context):

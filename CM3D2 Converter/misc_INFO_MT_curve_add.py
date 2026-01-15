@@ -22,9 +22,9 @@ class CNV_OT_hair_bunch_add(bpy.types.Operator):
     bl_description = "アニメ調の髪の房を追加します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    radius = bpy.props.FloatProperty(name="房の半径", default=0.1, min=0, max=10, soft_min=0, soft_max=10, step=10, precision=2)
-    random_multi = bpy.props.FloatProperty(name="ランダム要素の強さ", default=0.5, min=0, max=10, soft_min=0, soft_max=10, step=10, precision=2)
-    z_plus = bpy.props.FloatProperty(name="中間のZ軸の高さ", default=0.1, min=0, max=10, soft_min=0, soft_max=10, step=10, precision=2)
+    radius: bpy.props.FloatProperty(name="房の半径", default=0.1, min=0, max=10, soft_min=0, soft_max=10, step=10, precision=2)
+    random_multi: bpy.props.FloatProperty(name="ランダム要素の強さ", default=0.5, min=0, max=10, soft_min=0, soft_max=10, step=10, precision=2)
+    z_plus: bpy.props.FloatProperty(name="中間のZ軸の高さ", default=0.1, min=0, max=10, soft_min=0, soft_max=10, step=10, precision=2)
 
     @classmethod
     def poll(cls, context):

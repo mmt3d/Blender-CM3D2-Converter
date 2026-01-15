@@ -113,9 +113,9 @@ class CM3D2MENU_OT_import(bpy.types.Operator):
     bl_description = "Open a .menu file"
     bl_options     = {'REGISTER', 'UNDO'}
 
-    filepath     = bpy.props.StringProperty(subtype='FILE_PATH')
+    filepath: bpy.props.StringProperty(subtype='FILE_PATH')
     filename_ext = '.menu'
-    filter_glob  = bpy.props.StringProperty(default='*.menu', options={'HIDDEN'})
+    filter_glob: bpy.props.StringProperty(default='*.menu', options={'HIDDEN'})
 
     @classmethod
     def poll(cls, context):
@@ -153,11 +153,11 @@ class CM3D2MENU_OT_export(bpy.types.Operator):
     bl_description = "Writes the active CM3D2Menu to a .menu file"
     bl_options     = {'REGISTER', 'UNDO'}
 
-    filepath     = bpy.props.StringProperty(subtype='FILE_PATH')
+    filepath: bpy.props.StringProperty(subtype='FILE_PATH')
     filename_ext = '.menu'
-    filter_glob  = bpy.props.StringProperty(default='*.menu', options={'HIDDEN'})
+    filter_glob: bpy.props.StringProperty(default='*.menu', options={'HIDDEN'})
 
-    is_backup = bpy.props.BoolProperty(name="Backup", default=True, description="Will backup overwritten files.")
+    is_backup: bpy.props.BoolProperty(name="Backup", default=True, description="Will backup overwritten files.")
 
     @classmethod
     def poll(cls, context):
@@ -201,9 +201,9 @@ class CM3D2MENU_OT_command_add(bpy.types.Operator):
 
     command_type_enums = menu_file.COMMAND_ENUMS.copy()
     command_type_enums.append( ('NONE', 'Custom', 'Some other manually entered miscillaneous command', 'GREASEPENCIL', -1) )
-    type = bpy.props.EnumProperty(items=command_type_enums, name="Type", default='NONE')
+    type: bpy.props.EnumProperty(items=command_type_enums, name="Type", default='NONE')
     
-    string = bpy.props.StringProperty(name="String", default="newcommand")
+    string: bpy.props.StringProperty(name="String", default="newcommand")
 
     @classmethod
     def poll(cls, context):
@@ -267,7 +267,7 @@ class CM3D2MENU_OT_command_move(bpy.types.Operator):
         ('UP'  , "Up"  , "Move the active CM3D2MenuCommand up in the list"  ),
         ('DOWN', "Down", "Move the active CM3D2MenuCommand down in the list"),
     ]
-    direction = bpy.props.EnumProperty(items=items, name="Direction")
+    direction: bpy.props.EnumProperty(items=items, name="Direction")
 
     @classmethod
     def poll(cls, context):
@@ -305,7 +305,7 @@ class CM3D2MENU_OT_align_selected_to_attach_point(bpy.types.Operator):
     bl_description = "Align other selected objects to the active object's active CM3D2 attach point"
     bl_options     = {'REGISTER', 'UNDO'}
 
-    scale = bpy.props.FloatProperty(name="Scale", default=5, min=0.1, max=100, soft_min=0.1, soft_max=100, step=100, precision=1, description="The amount by which the mesh is scaled when imported. Recommended that you use the same when at the time of export.")
+    scale: bpy.props.FloatProperty(name="Scale", default=5, min=0.1, max=100, soft_min=0.1, soft_max=100, step=100, precision=1, description="The amount by which the mesh is scaled when imported. Recommended that you use the same when at the time of export.")
 
     @classmethod
     def poll(cls, context):
@@ -382,7 +382,7 @@ class CM3D2MENU_OT_align_attach_point_to_selected(bpy.types.Operator):
     bl_description = "Align the active CM3D2Menu's active attach point to the first other selected object"
     bl_options     = {'REGISTER', 'UNDO'}
 
-    scale = bpy.props.FloatProperty(name="Scale", default=5, min=0.1, max=100, soft_min=0.1, soft_max=100, step=100, precision=1, description="The amount by which the mesh is scaled when imported. Recommended that you use the same when at the time of export.")
+    scale: bpy.props.FloatProperty(name="Scale", default=5, min=0.1, max=100, soft_min=0.1, soft_max=100, step=100, precision=1, description="The amount by which the mesh is scaled when imported. Recommended that you use the same when at the time of export.")
 
     @classmethod
     def poll(cls, context):
@@ -521,7 +521,7 @@ class CM3D2MENU_OT_param_move(bpy.types.Operator):
         ('UP'  , "Up"  , "Move the active CM3D2MenuCommand up in the list"  ),
         ('DOWN', "Down", "Move the active CM3D2MenuCommand down in the list"),
     ]
-    direction = bpy.props.EnumProperty(items=items, name="Direction")
+    direction: bpy.props.EnumProperty(items=items, name="Direction")
 
     @classmethod
     def poll(cls, context):

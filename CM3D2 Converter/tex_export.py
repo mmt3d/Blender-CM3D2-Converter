@@ -13,20 +13,20 @@ class CNV_OT_export_cm3d2_tex(bpy.types.Operator):
     bl_description = "CM3D2で使用されるテクスチャファイル(.tex)として保存します"
     bl_options = {'REGISTER'}
 
-    filepath = bpy.props.StringProperty(subtype='FILE_PATH')
+    filepath: bpy.props.StringProperty(subtype='FILE_PATH')
     filename_ext = ".tex"
-    filter_glob = bpy.props.StringProperty(default="*.tex", options={'HIDDEN'})
+    filter_glob: bpy.props.StringProperty(default="*.tex", options={'HIDDEN'})
 
-    is_backup = bpy.props.BoolProperty(name="ファイルをバックアップ", default=True, description="ファイルに上書きする場合にバックアップファイルを複製します")
+    is_backup: bpy.props.BoolProperty(name="ファイルをバックアップ", default=True, description="ファイルに上書きする場合にバックアップファイルを複製します")
 
-    version = bpy.props.EnumProperty(
+    version: bpy.props.EnumProperty(
         name="ファイルバージョン",
         items=[
             ('1011', '1011', 'COM3D2 1.13 or later', 'NONE', 0),
             ('1010', '1010', 'CM3D2 1.49 ～ or COM3D2', 'NONE', 1),
             ('1000', '1000', '旧フォーマット', 'NONE', 2),
         ], default='1010')
-    path = bpy.props.StringProperty(name="パス", default=common.BASE_PATH_TEX + "/*.png")
+    path: bpy.props.StringProperty(name="パス", default=common.BASE_PATH_TEX + "/*.png")
 
     @classmethod
     def poll(cls, context):

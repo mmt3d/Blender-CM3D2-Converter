@@ -22,7 +22,7 @@ class CNV_OT_selected_mesh_sort_front(bpy.types.Operator):
     bl_description = "選択中の面の描画順を最も前面/背面に並び替えます"
     bl_options = {'REGISTER', 'UNDO'}
 
-    is_back = bpy.props.BoolProperty(name="最背面")
+    is_back: bpy.props.BoolProperty(name="最背面")
 
     @classmethod
     def poll(cls, context):

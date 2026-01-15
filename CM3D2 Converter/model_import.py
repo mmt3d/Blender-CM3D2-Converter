@@ -24,33 +24,33 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
     bl_description = "カスタムメイド3D2のmodelファイルを読み込みます"
     bl_options = {'REGISTER'}
 
-    filepath = bpy.props.StringProperty(subtype='FILE_PATH')
+    filepath: bpy.props.StringProperty(subtype='FILE_PATH')
     filename_ext = ".model"
-    filter_glob = bpy.props.StringProperty(default="*.model", options={'HIDDEN'})
+    filter_glob: bpy.props.StringProperty(default="*.model", options={'HIDDEN'})
 
-    scale = bpy.props.FloatProperty(name="倍率", default=5, min=0.1, max=100, soft_min=0.1, soft_max=100, step=100, precision=1, description="インポート時のメッシュ等の拡大率です")
+    scale: bpy.props.FloatProperty(name="倍率", default=5, min=0.1, max=100, soft_min=0.1, soft_max=100, step=100, precision=1, description="インポート時のメッシュ等の拡大率です")
 
-    is_mesh = bpy.props.BoolProperty(name="メッシュ生成", default=True, description="ポリゴンを読み込みます、大抵の場合オンでOKです")
-    is_remove_doubles = bpy.props.BoolProperty(name="重複頂点を結合", default=False, description="UVの切れ目でポリゴンが分かれている仕様なので、インポート時にくっつけます")
-    is_seam = bpy.props.BoolProperty(name="シームをつける", default=True, description="UVの切れ目にシームをつけます")
-    is_sharp = bpy.props.BoolProperty(name="Mark Sharp", default=True, description="This will mark removed doubles on your mesh as sharp (or all free edges if not removing doubles).")
+    is_mesh: bpy.props.BoolProperty(name="メッシュ生成", default=True, description="ポリゴンを読み込みます、大抵の場合オンでOKです")
+    is_remove_doubles: bpy.props.BoolProperty(name="重複頂点を結合", default=False, description="UVの切れ目でポリゴンが分かれている仕様なので、インポート時にくっつけます")
+    is_seam: bpy.props.BoolProperty(name="シームをつける", default=True, description="UVの切れ目にシームをつけます")
+    is_sharp: bpy.props.BoolProperty(name="Mark Sharp", default=True, description="This will mark removed doubles on your mesh as sharp (or all free edges if not removing doubles).")
 
-    is_convert_bone_weight_names = bpy.props.BoolProperty(name="頂点グループ名をBlender用に変換", default=False, description="全ての頂点グループ名をBlenderの左右対称編集で使えるように変換してから読み込みます")
-    is_vertex_group_sort = bpy.props.BoolProperty(name="頂点グループを名前順ソート", default=True, description="頂点グループを名前順でソートします")
-    is_remove_empty_vertex_group = bpy.props.BoolProperty(name="割り当てのない頂点グループを削除", default=True, description="全ての頂点に割り当てのない頂点グループを削除します")
+    is_convert_bone_weight_names: bpy.props.BoolProperty(name="頂点グループ名をBlender用に変換", default=False, description="全ての頂点グループ名をBlenderの左右対称編集で使えるように変換してから読み込みます")
+    is_vertex_group_sort: bpy.props.BoolProperty(name="頂点グループを名前順ソート", default=True, description="頂点グループを名前順でソートします")
+    is_remove_empty_vertex_group: bpy.props.BoolProperty(name="割り当てのない頂点グループを削除", default=True, description="全ての頂点に割り当てのない頂点グループを削除します")
 
-    reload_tex_cache = bpy.props.BoolProperty(name="テクスチャキャッシュを再構成", default=False, description="texファイルを探す際、キャッシュを再構成します")
-    is_decorate = bpy.props.BoolProperty(name="種類に合わせてマテリアルを装飾", default=True)
-    is_mate_data_text = bpy.props.BoolProperty(name="テキストにマテリアル情報埋め込み", default=True, description="シェーダー情報をテキストに埋め込みます")
+    reload_tex_cache: bpy.props.BoolProperty(name="テクスチャキャッシュを再構成", default=False, description="texファイルを探す際、キャッシュを再構成します")
+    is_decorate: bpy.props.BoolProperty(name="種類に合わせてマテリアルを装飾", default=True)
+    is_mate_data_text: bpy.props.BoolProperty(name="テキストにマテリアル情報埋め込み", default=True, description="シェーダー情報をテキストに埋め込みます")
 
-    is_armature = bpy.props.BoolProperty(name="アーマチュア生成", default=True, description="ウェイトを編集する時に役立つアーマチュアを読み込みます")
-    is_armature_clean = bpy.props.BoolProperty(name="不要なボーンを削除", default=False, description="ウェイトが無いボーンを削除します")
-    is_custom_bones = bpy.props.BoolProperty(name="Use Custom Bones", default=False, description="Use the currently selected object for custom bone shapes.")
-    is_use_local_bones = bpy.props.BoolProperty(name="Use Local Bones", default=True, description="Use the Local Bone Data for orientation (more accurate)")
+    is_armature: bpy.props.BoolProperty(name="アーマチュア生成", default=True, description="ウェイトを編集する時に役立つアーマチュアを読み込みます")
+    is_armature_clean: bpy.props.BoolProperty(name="不要なボーンを削除", default=False, description="ウェイトが無いボーンを削除します")
+    is_custom_bones: bpy.props.BoolProperty(name="Use Custom Bones", default=False, description="Use the currently selected object for custom bone shapes.")
+    is_use_local_bones: bpy.props.BoolProperty(name="Use Local Bones", default=True, description="Use the Local Bone Data for orientation (more accurate)")
 
-    is_bone_data_text = bpy.props.BoolProperty(name="テキスト", default=True, description="ボーン情報をテキストとして読み込みます")
-    is_bone_data_obj_property = bpy.props.BoolProperty(name="オブジェクトのカスタムプロパティ", default=True, description="メッシュオブジェクトのカスタムプロパティにボーン情報を埋め込みます")
-    is_bone_data_arm_property = bpy.props.BoolProperty(name="アーマチュアのカスタムプロパティ", default=True, description="アーマチュアデータのカスタムプロパティにボーン情報を埋め込みます")
+    is_bone_data_text: bpy.props.BoolProperty(name="テキスト", default=True, description="ボーン情報をテキストとして読み込みます")
+    is_bone_data_obj_property: bpy.props.BoolProperty(name="オブジェクトのカスタムプロパティ", default=True, description="メッシュオブジェクトのカスタムプロパティにボーン情報を埋め込みます")
+    is_bone_data_arm_property: bpy.props.BoolProperty(name="アーマチュアのカスタムプロパティ", default=True, description="アーマチュアデータのカスタムプロパティにボーン情報を埋め込みます")
     texpath_dict = None
 
     @classmethod

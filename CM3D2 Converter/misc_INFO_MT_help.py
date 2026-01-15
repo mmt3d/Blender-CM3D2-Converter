@@ -142,15 +142,15 @@ class CNV_OT_update_cm3d2_converter(bpy.types.Operator):
     bl_description = "GitHubから最新版のCM3D2 Converterアドオンをダウンロードし上書き更新します"
     bl_options = {'REGISTER'}
 
-    is_restart = bpy.props.BoolProperty(name="更新後にBlenderを再起動", default=compat.IS_LEGACY)
-    is_toggle_console = bpy.props.BoolProperty(name="再起動後にコンソールを閉じる", default=True)
+    is_restart: bpy.props.BoolProperty(name="更新後にBlenderを再起動", default=compat.IS_LEGACY)
+    is_toggle_console: bpy.props.BoolProperty(name="再起動後にコンソールを閉じる", default=True)
 
     items = [
         ('current', f_iface_("Current ({branch})", branch=common.BRANCH), ""),
         ('bl_28'  , "bl_28", ""),
         ('testing', "testing", ""),
     ]
-    branch = bpy.props.EnumProperty(items=items, name="Branch", default='current')
+    branch: bpy.props.EnumProperty(items=items, name="Branch", default='current')
 
     def invoke(self, context, event):
         return context.window_manager.invoke_props_dialog(self)

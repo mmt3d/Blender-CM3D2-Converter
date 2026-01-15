@@ -24,11 +24,11 @@ class CNV_OT_copy_prime_field(bpy.types.Operator):
     #is_swap_prime_field        = bpy.props.BoolProperty(name="Swap Prime Field"       , default=False)
     #is_bake_drivers            = bpy.props.BoolProperty(name="Bake Drivers"           , default=False, description="Enable keyframing of driven properties, locking sliders and twist bones for final apply")
     
-    is_only_selected = bpy.props.BoolProperty(name="Only Selected", default=True )
-    is_key_location  = bpy.props.BoolProperty(name="Key Location" , default=True )
-    is_key_rotation  = bpy.props.BoolProperty(name="Key Rotation" , default=True )
-    is_key_scale     = bpy.props.BoolProperty(name="Key Scale"    , default=True )
-    is_apply_prime   = bpy.props.BoolProperty(name="Apply Prime"  , default=False, options={'HIDDEN'})
+    is_only_selected: bpy.props.BoolProperty(name="Only Selected", default=True)
+    is_key_location: bpy.props.BoolProperty(name="Key Location", default=True)
+    is_key_rotation: bpy.props.BoolProperty(name="Key Rotation", default=True)
+    is_key_scale: bpy.props.BoolProperty(name="Key Scale", default=True)
+    is_apply_prime: bpy.props.BoolProperty(name="Apply Prime", default=False, options={'HIDDEN'})
     
 
 
@@ -161,12 +161,12 @@ class CNV_OT_apply_prime_field(bpy.types.Operator):
     bl_description = "現在のポーズで衣装をモデリングしやすくする素体を作成します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    is_apply_armature_modifier   = bpy.props.BoolProperty(name="関係するメッシュのアーマチュアを適用", default=True)
-    is_preserve_shape_key_values = bpy.props.BoolProperty(name="Preserve Shape Key Values", default=True , description="Ensure shape key values of child mesh objects are not changed")
-    is_deform_preserve_volume    = bpy.props.BoolProperty(name="アーマチュア適用は体積を維持", default=True)
-    is_keep_original             = bpy.props.BoolProperty(name="Keep Original"            , default=True , description="If the armature is already primed, don't replace the base pose with the current rest pose")
-    is_swap_prime_field          = bpy.props.BoolProperty(name="Swap Prime Field"         , default=False)
-    #is_bake_drivers              = bpy.props.BoolProperty(name="Bake Drivers"             , default=False, description="Enable keyframing of driven properties, locking sliders and twist bones for final apply")
+    is_apply_armature_modifier: bpy.props.BoolProperty(name="関係するメッシュのアーマチュアを適用", default=True)
+    is_preserve_shape_key_values: bpy.props.BoolProperty(name="Preserve Shape Key Values", default=True , description="Ensure shape key values of child mesh objects are not changed")
+    is_deform_preserve_volume: bpy.props.BoolProperty(name="アーマチュア適用は体積を維持", default=True)
+    is_keep_original: bpy.props.BoolProperty(name="Keep Original", default=True , description="If the armature is already primed, don't replace the base pose with the current rest pose")
+    is_swap_prime_field: bpy.props.BoolProperty(name="Swap Prime Field", default=False)
+    #is_bake_drivers: bpy.props.BoolProperty(name="Bake Drivers", default=False, description="Enable keyframing of driven properties, locking sliders and twist bones for final apply")
     
     
     was_t_stance = False

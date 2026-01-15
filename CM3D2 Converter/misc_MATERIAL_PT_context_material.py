@@ -287,8 +287,8 @@ class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
 
 
 class new_mate_opr():
-    is_decorate = bpy.props.BoolProperty(name="種類に合わせてマテリアルを装飾", default=True)
-    # is_replace_cm3d2_tex = bpy.props.BoolProperty(name="テクスチャを探す", default=False, description="CM3D2本体のインストールフォルダからtexファイルを探して開きます")
+    is_decorate: bpy.props.BoolProperty(name="種類に合わせてマテリアルを装飾", default=True)
+    # is_replace_cm3d2_tex: bpy.props.BoolProperty(name="テクスチャを探す", default=False, description="CM3D2本体のインストールフォルダからtexファイルを探して開きます")
 
     @classmethod
     def poll(cls, context):
@@ -634,7 +634,7 @@ class CNV_OT_new_cm3d2(bpy.types.Operator, new_mate_opr):
     bl_description = "Blender-CM3D2-Converterで使用できるマテリアルを新規で作成します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    shader_type = bpy.props.EnumProperty(items=cm3d2_data.Handler.create_shader_items(), name="種類", default='CM3D2/Toony_Lighted_Outline')
+    shader_type: bpy.props.EnumProperty(items=cm3d2_data.Handler.create_shader_items(), name="種類", default='CM3D2/Toony_Lighted_Outline')
 
 
 @compat.BlRegister()
@@ -644,7 +644,7 @@ class CNV_OT_new_com3d2(bpy.types.Operator, new_mate_opr):
     bl_description = "Blender-CM3D2-Converterで使用できるマテリアルを新規で作成します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    shader_type = bpy.props.EnumProperty(items=cm3d2_data.Handler.create_comshader_items(), name="種類", default='CM3D2/Toony_Lighted_Outline')
+    shader_type: bpy.props.EnumProperty(items=cm3d2_data.Handler.create_comshader_items(), name="種類", default='CM3D2/Toony_Lighted_Outline')
 
 
 @compat.BlRegister()
@@ -654,11 +654,11 @@ class CNV_OT_paste_material(bpy.types.Operator):
     bl_description = "クリップボード内のテキストからマテリアル情報を上書きします"
     bl_options = {'REGISTER', 'UNDO'}
 
-    is_decorate = bpy.props.BoolProperty(name="種類に合わせてマテリアルを装飾", default=False)
-    is_replace_cm3d2_tex = bpy.props.BoolProperty(name="テクスチャを探す", default=False, description="CM3D2本体のインストールフォルダからtexファイルを探して開きます")
-    is_create = bpy.props.BoolProperty(name="マテリアルの新規作成", default=False)
-    override_name = bpy.props.BoolProperty(name="マテリアル名を上書きする", default=False)
-    use_dialog = bpy.props.BoolProperty(name="上書き設定", default=True)
+    is_decorate: bpy.props.BoolProperty(name="種類に合わせてマテリアルを装飾", default=False)
+    is_replace_cm3d2_tex: bpy.props.BoolProperty(name="テクスチャを探す", default=False, description="CM3D2本体のインストールフォルダからtexファイルを探して開きます")
+    is_create: bpy.props.BoolProperty(name="マテリアルの新規作成", default=False)
+    override_name: bpy.props.BoolProperty(name="マテリアル名を上書きする", default=False)
+    use_dialog: bpy.props.BoolProperty(name="上書き設定", default=True)
 
     @classmethod
     def poll(cls, context):
@@ -791,7 +791,7 @@ class CNV_OT_quick_texture_show(bpy.types.Operator):
     bl_description = "このテクスチャを見る"
     bl_options = {'REGISTER'}
 
-    texture_name = bpy.props.StringProperty(name="テクスチャ名")
+    texture_name: bpy.props.StringProperty(name="テクスチャ名")
 
     @classmethod
     def poll(cls, context):

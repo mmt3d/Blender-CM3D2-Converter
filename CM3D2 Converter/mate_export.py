@@ -12,15 +12,15 @@ class CNV_OT_export_cm3d2_mate(bpy.types.Operator):
     bl_description = "表示しているマテリアルをmateファイルとして保存します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    filepath = bpy.props.StringProperty(subtype='FILE_PATH')
+    filepath: bpy.props.StringProperty(subtype='FILE_PATH')
     filename_ext = ".mate"
-    filter_glob = bpy.props.StringProperty(default="*.mate", options={'HIDDEN'})
+    filter_glob: bpy.props.StringProperty(default="*.mate", options={'HIDDEN'})
 
-    is_backup = bpy.props.BoolProperty(name="ファイルをバックアップ", default=True, description="ファイルに上書きする場合にバックアップファイルを複製します")
+    is_backup: bpy.props.BoolProperty(name="ファイルをバックアップ", default=True, description="ファイルに上書きする場合にバックアップファイルを複製します")
 
-    version = bpy.props.IntProperty(name="ファイルバージョン", default=1000, min=1000, max=1111, soft_min=1000, soft_max=1111, step=1)
-    name1 = bpy.props.StringProperty(name="名前1")
-    name2 = bpy.props.StringProperty(name="名前2")
+    version: bpy.props.IntProperty(name="ファイルバージョン", default=1000, min=1000, max=1111, soft_min=1000, soft_max=1111, step=1)
+    name1: bpy.props.StringProperty(name="名前1")
+    name2: bpy.props.StringProperty(name="名前2")
 
     @classmethod
     def poll(cls, context):
@@ -89,15 +89,15 @@ class CNV_OT_export_cm3d2_mate_text(bpy.types.Operator):
     bl_description = "表示しているテキストデータをmateファイルとして保存します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    filepath = bpy.props.StringProperty(subtype='FILE_PATH')
+    filepath: bpy.props.StringProperty(subtype='FILE_PATH')
     filename_ext = ".mate"
-    filter_glob = bpy.props.StringProperty(default="*.mate", options={'HIDDEN'})
+    filter_glob: bpy.props.StringProperty(default="*.mate", options={'HIDDEN'})
 
-    is_backup = bpy.props.BoolProperty(name="ファイルをバックアップ", default=True, description="ファイルに上書きする場合にバックアップファイルを複製します")
+    is_backup: bpy.props.BoolProperty(name="ファイルをバックアップ", default=True, description="ファイルに上書きする場合にバックアップファイルを複製します")
 
-    version = bpy.props.IntProperty(name="ファイルバージョン", default=1000, min=1000, max=1111, soft_min=1000, soft_max=1111, step=1)
-    name1 = bpy.props.StringProperty(name="名前1")
-    name2 = bpy.props.StringProperty(name="名前2")
+    version: bpy.props.IntProperty(name="ファイルバージョン", default=1000, min=1000, max=1111, soft_min=1000, soft_max=1111, step=1)
+    name1: bpy.props.StringProperty(name="名前1")
+    name2: bpy.props.StringProperty(name="名前2")
 
     @classmethod
     def poll(cls, context):

@@ -57,7 +57,7 @@ class CNV_OT_show_text(bpy.types.Operator):
     bl_description = "指定したテキストをこの領域に表示します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    name = bpy.props.StringProperty(name="テキスト名")
+    name: bpy.props.StringProperty(name="テキスト名")
 
     @classmethod
     def poll(cls, context):
@@ -148,7 +148,7 @@ class CNV_OT_remove_all_material_texts(bpy.types.Operator):
     bl_description = "CM3D2で使用できるマテリアルテキストを全て削除します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    is_keep_used_material = bpy.props.BoolProperty(name="使用する分は保管", default=True)
+    is_keep_used_material: bpy.props.BoolProperty(name="使用する分は保管", default=True)
 
     @classmethod
     def poll(cls, context):

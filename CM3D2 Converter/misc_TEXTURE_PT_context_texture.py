@@ -303,7 +303,7 @@ class TEXTURE_MT_context_texture_values_ZTest(bpy.types.Menu):
     bl_idname = 'TEXTURE_MT_context_texture_values_ZTest'
     bl_label = "値リスト"
 
-    node_name = bpy.props.StringProperty(name='NodeName')
+    node_name: bpy.props.StringProperty(name='NodeName')
 
     @classmethod
     def poll(cls, context):
@@ -333,7 +333,7 @@ class CNV_OT_show_image(bpy.types.Operator):
     bl_description = "指定の画像をUV/画像エディターに表示します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    image_name = bpy.props.StringProperty(name="画像名")
+    image_name: bpy.props.StringProperty(name="画像名")
 
     def execute(self, context):
         if self.image_name in context.blend_data.images:
@@ -439,8 +439,8 @@ class CNV_OT_set_default_toon_textures_old(bpy.types.Operator):
     bl_description = "CM3D2にデフォルトで入っているトゥーンテクスチャを選択できます"
     bl_options = {'REGISTER', 'UNDO'}
 
-    name = bpy.props.StringProperty(name="テクスチャ名")
-    # dir = bpy.props.StringProperty(name="パス", default="Assets\\texture\\texture\\toon\\")
+    name: bpy.props.StringProperty(name="テクスチャ名")
+    # dir: bpy.props.StringProperty(name="パス", default="Assets\\texture\\texture\\toon\\")
 
     @classmethod
     def poll(cls, context):
@@ -482,7 +482,7 @@ class CNV_OT_set_default_toon_textures(bpy.types.Operator, common.NodeHandler):
     bl_description = "CM3D2にデフォルトで入っているトゥーンテクスチャを選択できます"
     bl_options = {'REGISTER', 'UNDO'}
 
-    tex_name = bpy.props.StringProperty(name="テクスチャ名")
+    tex_name: bpy.props.StringProperty(name="テクスチャ名")
 
     @classmethod
     def poll(cls, context):
@@ -530,7 +530,7 @@ class CNV_OT_reload_textures(bpy.types.Operator):
     bl_description = "実ファイルパスの設定から、再読込み"
     bl_options = {'REGISTER', 'UNDO'}
 
-    tex_name = bpy.props.StringProperty(name="テクスチャ名")
+    tex_name: bpy.props.StringProperty(name="テクスチャ名")
 
     @classmethod
     def poll(cls, context):
@@ -553,9 +553,9 @@ class CNV_OT_auto_set_color_value_old(bpy.types.Operator):
     bl_description = "色関係の設定値をテクスチャの色情報から自動で設定します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    is_all = bpy.props.BoolProperty(name="全てが対象", default=True)
-    saturation_multi = bpy.props.FloatProperty(name="彩度の乗算値", default=2.2, min=0, max=5, soft_min=0, soft_max=5, step=10, precision=2)
-    value_multi = bpy.props.FloatProperty(name="明度の乗算値", default=0.3, min=0, max=5, soft_min=0, soft_max=5, step=10, precision=2)
+    is_all: bpy.props.BoolProperty(name="全てが対象", default=True)
+    saturation_multi: bpy.props.FloatProperty(name="彩度の乗算値", default=2.2, min=0, max=5, soft_min=0, soft_max=5, step=10, precision=2)
+    value_multi: bpy.props.FloatProperty(name="明度の乗算値", default=0.3, min=0, max=5, soft_min=0, soft_max=5, step=10, precision=2)
 
     @classmethod
     def poll(cls, context):
@@ -674,10 +674,10 @@ class CNV_OT_auto_set_color_value(bpy.types.Operator):
     bl_description = "色関係の設定値をテクスチャの色情報から自動で設定します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    is_all = bpy.props.BoolProperty(name="全てが対象", default=True)
-    saturation_multi = bpy.props.FloatProperty(name="彩度の乗算値", default=2.2, min=0, max=5, soft_min=0, soft_max=5, step=10, precision=2)
-    value_multi = bpy.props.FloatProperty(name="明度の乗算値", default=0.3, min=0, max=5, soft_min=0, soft_max=5, step=10, precision=2)
-    node_name = bpy.props.StringProperty(name='NodeName')
+    is_all: bpy.props.BoolProperty(name="全てが対象", default=True)
+    saturation_multi: bpy.props.FloatProperty(name="彩度の乗算値", default=2.2, min=0, max=5, soft_min=0, soft_max=5, step=10, precision=2)
+    value_multi: bpy.props.FloatProperty(name="明度の乗算値", default=0.3, min=0, max=5, soft_min=0, soft_max=5, step=10, precision=2)
+    node_name: bpy.props.StringProperty(name='NodeName')
 
     @classmethod
     def poll(cls, context):
@@ -803,7 +803,7 @@ class CNV_OT_quick_export_cm3d2_tex(bpy.types.Operator):
     bl_description = "テクスチャの画像を同フォルダにtexとして保存します"
     bl_options = {'REGISTER'}
 
-    node_name = bpy.props.StringProperty(name="NodeName")
+    node_name: bpy.props.StringProperty(name="NodeName")
 
     def execute(self, context):
         img = compat.get_tex_image(context, self.node_name)
@@ -843,7 +843,7 @@ class CNV_OT_set_color_value_old(bpy.types.Operator):
     bl_description = "色タイプの設定値を設定します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    color = bpy.props.FloatVectorProperty(name="色", default=(0, 0, 0, 0), subtype='COLOR', size=4)
+    color: bpy.props.FloatVectorProperty(name="色", default=(0, 0, 0, 0), subtype='COLOR', size=4)
 
     @classmethod
     def poll(cls, context):
@@ -866,7 +866,7 @@ class CNV_OT_set_color_value(bpy.types.Operator, common.NodeHandler):
     bl_description = "色タイプの設定値を設定します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    color = bpy.props.FloatVectorProperty(name="色", default=(0, 0, 0, 0), subtype='COLOR', size=4)
+    color: bpy.props.FloatVectorProperty(name="色", default=(0, 0, 0, 0), subtype='COLOR', size=4)
 
     @classmethod
     def poll(cls, context):
@@ -889,7 +889,7 @@ class CNV_OT_set_value(bpy.types.Operator, common.NodeHandler):
     bl_description = "floatタイプの設定値を設定します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    value = bpy.props.FloatProperty(name='value')
+    value: bpy.props.FloatProperty(name='value')
 
     @classmethod
     def poll(cls, context):

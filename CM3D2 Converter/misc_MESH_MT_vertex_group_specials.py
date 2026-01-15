@@ -30,18 +30,18 @@ class CNV_OT_quick_transfer_vertex_group(bpy.types.Operator):
     bl_description = "アクティブなメッシュに他の選択メッシュの頂点グループを高速で転送します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    is_remove_old_vertex_groups = bpy.props.BoolProperty(name="すでにある頂点グループを削除 (ロックで保護)", default=False)
-    is_source_select_vert_only = bpy.props.BoolProperty(name="選択頂点のみ(参照)", default=False)
-    is_target_select_vert_only = bpy.props.BoolProperty(name="選択頂点のみ(対象)", default=False)
+    is_remove_old_vertex_groups: bpy.props.BoolProperty(name="すでにある頂点グループを削除 (ロックで保護)", default=False)
+    is_source_select_vert_only: bpy.props.BoolProperty(name="選択頂点のみ(参照)", default=False)
+    is_target_select_vert_only: bpy.props.BoolProperty(name="選択頂点のみ(対象)", default=False)
     items = [
         ('NEAREST', "最も近い頂点", "", 'VERTEXSEL', 1),
         ('EDGEINTERP_NEAREST', "最も近い辺", "", 'EDGESEL', 2),
         ('POLYINTERP_NEAREST', "最も近い面", "", 'FACESEL', 3),
         ('POLYINTERP_VNORPROJ', "投影先", "", 'MOD_UVPROJECT', 4),
     ]
-    vert_mapping = bpy.props.EnumProperty(items=items, name="参照要素", default='POLYINTERP_NEAREST')
-    is_clean = bpy.props.BoolProperty(name="転送後にクリーンを実行", default=True)
-    is_remove_noassign = bpy.props.BoolProperty(name="転送後に割り当てのない頂点グループを削除", default=True)
+    vert_mapping: bpy.props.EnumProperty(items=items, name="参照要素", default='POLYINTERP_NEAREST')
+    is_clean: bpy.props.BoolProperty(name="転送後にクリーンを実行", default=True)
+    is_remove_noassign: bpy.props.BoolProperty(name="転送後に割り当てのない頂点グループを削除", default=True)
 
     @classmethod
     def poll(cls, context):
@@ -197,10 +197,10 @@ class CNV_OT_precision_transfer_vertex_group(bpy.types.Operator):
     bl_description = "アクティブなメッシュに他の選択メッシュの頂点グループを遠いほどぼかして転送します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    is_first_remove_all = bpy.props.BoolProperty(name="すでにある頂点グループを削除 (ロックで保護)", default=False)
-    subdivide_number = bpy.props.IntProperty(name="参照元の分割", default=1, min=0, max=10, soft_min=0, soft_max=10)
-    extend_range = bpy.props.FloatProperty(name="範囲倍率", default=1.1, min=1.0001, max=5.0, soft_min=1.0001, soft_max=5.0, step=10, precision=2)
-    is_remove_empty = bpy.props.BoolProperty(name="割り当てのない頂点グループを削除", default=True)
+    is_first_remove_all: bpy.props.BoolProperty(name="すでにある頂点グループを削除 (ロックで保護)", default=False)
+    subdivide_number: bpy.props.IntProperty(name="参照元の分割", default=1, min=0, max=10, soft_min=0, soft_max=10)
+    extend_range: bpy.props.FloatProperty(name="範囲倍率", default=1.1, min=1.0001, max=5.0, soft_min=1.0001, soft_max=5.0, step=10, precision=2)
+    is_remove_empty: bpy.props.BoolProperty(name="割り当てのない頂点グループを削除", default=True)
 
     @classmethod
     def poll(cls, context):
@@ -362,10 +362,10 @@ class CNV_OT_quick_blur_vertex_group(bpy.types.Operator):
         ('ACTIVE', "アクティブのみ", "", 'HAND', 1),
         ('ALL', "全て", "", 'ARROW_LEFTRIGHT', 2),
     ]
-    target = bpy.props.EnumProperty(items=items, name="対象", default='ALL')
-    strength = bpy.props.FloatProperty(name="強さ", default=1.0, min=0.0, max=1.0, soft_min=0.0, soft_max=1.0, step=10, precision=3)
-    count = bpy.props.IntProperty(name="反復", default=1, min=1, max=256, soft_min=1, soft_max=256)
-    size = bpy.props.FloatProperty(name="拡大縮小", default=0.0, min=-1.0, max=1.0, soft_min=-1.0, soft_max=1.0, step=10, precision=3)
+    target: bpy.props.EnumProperty(items=items, name="対象", default='ALL')
+    strength: bpy.props.FloatProperty(name="強さ", default=1.0, min=0.0, max=1.0, soft_min=0.0, soft_max=1.0, step=10, precision=3)
+    count: bpy.props.IntProperty(name="反復", default=1, min=1, max=256, soft_min=1, soft_max=256)
+    size: bpy.props.FloatProperty(name="拡大縮小", default=0.0, min=-1.0, max=1.0, soft_min=-1.0, soft_max=1.0, step=10, precision=3)
 
     @classmethod
     def poll(cls, context):
@@ -416,16 +416,16 @@ class CNV_OT_blur_vertex_group(bpy.types.Operator):
         ('DOWN', "アクティブより下", "", 'TRIA_DOWN_BAR', 3),
         ('ALL', "全て", "", 'ARROW_LEFTRIGHT', 4),
     ]
-    target = bpy.props.EnumProperty(items=items, name="対象", default='ACTIVE')
-    radius = bpy.props.FloatProperty(name="範囲倍率", default=3, min=0.1, max=50, soft_min=0.1, soft_max=50, step=50, precision=2)
-    strength = bpy.props.IntProperty(name="強さ", default=1, min=1, max=10, soft_min=1, soft_max=10)
-    items = [
+    target: bpy.props.EnumProperty(items=items, name="対象", default='ACTIVE')
+    radius: bpy.props.FloatProperty(name="範囲倍率", default=3, min=0.1, max=50, soft_min=0.1, soft_max=50, step=50, precision=2)
+    strength: bpy.props.IntProperty(name="強さ", default=1, min=1, max=10, soft_min=1, soft_max=10)
+    items_2 = [
         ('BOTH', "増減両方", "", 'AUTOMERGE_ON', 1),
         ('ADD', "増加のみ", "", 'TRIA_UP', 2),
         ('SUB', "減少のみ", "", 'TRIA_DOWN', 3),
     ]
-    effect = bpy.props.EnumProperty(items=items, name="ぼかし効果", default='BOTH')
-    is_normalize = bpy.props.BoolProperty(name="他頂点グループも調節", default=True)
+    effect: bpy.props.EnumProperty(items=items_2, name="ぼかし効果", default='BOTH')
+    is_normalize: bpy.props.BoolProperty(name="他頂点グループも調節", default=True)
 
     @classmethod
     def poll(cls, context):
@@ -581,9 +581,9 @@ class CNV_OT_multiply_vertex_group(bpy.types.Operator):
         ('DOWN', "アクティブより下", "", 'TRIA_DOWN_BAR', 3),
         ('ALL', "全て", "", 'ARROW_LEFTRIGHT', 4),
     ]
-    target = bpy.props.EnumProperty(items=items, name="対象", default='ACTIVE')
-    value = bpy.props.FloatProperty(name="倍率", default=1.1, min=0.1, max=10, soft_min=0.1, soft_max=10, step=10, precision=2)
-    is_normalize = bpy.props.BoolProperty(name="他頂点グループも調節", default=True)
+    target: bpy.props.EnumProperty(items=items, name="対象", default='ACTIVE')
+    value: bpy.props.FloatProperty(name="倍率", default=1.1, min=0.1, max=10, soft_min=0.1, soft_max=10, step=10, precision=2)
+    is_normalize: bpy.props.BoolProperty(name="他頂点グループも調節", default=True)
 
     @classmethod
     def poll(cls, context):
@@ -665,7 +665,7 @@ class CNV_OT_remove_noassign_vertex_groups(bpy.types.Operator):
     bl_description = "どの頂点にも割り当てられていない頂点グループを全て削除します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    threshold = bpy.props.FloatProperty(name="これ以下の影響は切り捨て", default=0.000001, min=0.0, max=1.0, soft_min=0.0, soft_max=1.0, step=1, precision=10)
+    threshold: bpy.props.FloatProperty(name="これ以下の影響は切り捨て", default=0.000001, min=0.0, max=1.0, soft_min=0.0, soft_max=1.0, step=1, precision=10)
 
     @classmethod
     def poll(cls, context):

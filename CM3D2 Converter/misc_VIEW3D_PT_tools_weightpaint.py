@@ -27,25 +27,25 @@ class CNV_OT_selected_mesh_vertex_group_blur(bpy.types.Operator):
         ('LINER', "リニア", "", 'LINCURVE', 1),
         ('TRIGONOMETRIC', "スムーズ", "", 'SMOOTHCURVE', 2),
     ]
-    smooth_method = bpy.props.EnumProperty(items=items, name="減衰タイプ", default='TRIGONOMETRIC')
+    smooth_method: bpy.props.EnumProperty(items=items, name="減衰タイプ", default='TRIGONOMETRIC')
 
-    selection_blur_range_multi = bpy.props.FloatProperty(name="選択をぼかす範囲倍率", default=4.0, min=0.0, max=100.0, soft_min=0.0, soft_max=100.0, step=50, precision=1)
-    selection_blur_accuracy = bpy.props.IntProperty(name="選択をぼかす分割精度", default=3, min=0, max=10, soft_min=1, soft_max=10)
+    selection_blur_range_multi: bpy.props.FloatProperty(name="選択をぼかす範囲倍率", default=4.0, min=0.0, max=100.0, soft_min=0.0, soft_max=100.0, step=50, precision=1)
+    selection_blur_accuracy: bpy.props.IntProperty(name="選択をぼかす分割精度", default=3, min=0, max=10, soft_min=1, soft_max=10)
 
-    items = [
+    items_2 = [
         ('ALL', "全て", "", 'COLLAPSEMENU', 1),
         ('ACTIVE', "アクティブのみ", "", 'LAYER_ACTIVE', 2),
     ]
-    target_vertex_group = bpy.props.EnumProperty(items=items, name="対象頂点グループ", default='ALL')
-    items = [
+    target_vertex_group: bpy.props.EnumProperty(items=items_2, name="対象頂点グループ", default='ALL')
+    items_3 = [
         ('NORMAL', "通常・ぼかし", "", 'BRUSH_BLUR', 1),
         ('ADD', "増加・拡張", "", 'BRUSH_DARKEN', 2),
         ('SUB', "減少・縮小", "", 'BRUSH_LIGHTEN', 3),
     ]
-    blur_mode = bpy.props.EnumProperty(items=items, name="ぼかしモード", default='NORMAL')
-    blur_range_multi = bpy.props.FloatProperty(name="ウェイトをぼかす範囲倍率", default=4.0, min=0.0, max=100.0, soft_min=0.0, soft_max=100.0, step=50, precision=1)
-    blur_count = bpy.props.IntProperty(name="ウェイトをぼかす回数", default=1, min=1, max=100, soft_min=1, soft_max=100)
-    is_vertex_group_limit_total = bpy.props.BoolProperty(name="ウェイト数を4つに制限", default=True)
+    blur_mode: bpy.props.EnumProperty(items=items_3, name="ぼかしモード", default='NORMAL')
+    blur_range_multi: bpy.props.FloatProperty(name="ウェイトをぼかす範囲倍率", default=4.0, min=0.0, max=100.0, soft_min=0.0, soft_max=100.0, step=50, precision=1)
+    blur_count: bpy.props.IntProperty(name="ウェイトをぼかす回数", default=1, min=1, max=100, soft_min=1, soft_max=100)
+    is_vertex_group_limit_total: bpy.props.BoolProperty(name="ウェイト数を4つに制限", default=True)
 
     @classmethod
     def poll(cls, context):
@@ -256,23 +256,23 @@ class CNV_OT_selected_mesh_vertex_group_calculation(bpy.types.Operator):
         ('LINER', "リニア", "", 'LINCURVE', 1),
         ('TRIGONOMETRIC', "スムーズ", "", 'SMOOTHCURVE', 2),
     ]
-    smooth_method = bpy.props.EnumProperty(items=items, name="減衰タイプ", default='TRIGONOMETRIC')
+    smooth_method: bpy.props.EnumProperty(items=items, name="減衰タイプ", default='TRIGONOMETRIC')
 
-    selection_blur_range_multi = bpy.props.FloatProperty(name="選択をぼかす範囲倍率", default=4.0, min=0.0, max=100.0, soft_min=0.0, soft_max=100.0, step=50, precision=1)
-    selection_blur_accuracy = bpy.props.IntProperty(name="選択をぼかす分割精度", default=3, min=0, max=10, soft_min=1, soft_max=10)
+    selection_blur_range_multi: bpy.props.FloatProperty(name="選択をぼかす範囲倍率", default=4.0, min=0.0, max=100.0, soft_min=0.0, soft_max=100.0, step=50, precision=1)
+    selection_blur_accuracy: bpy.props.IntProperty(name="選択をぼかす分割精度", default=3, min=0, max=10, soft_min=1, soft_max=10)
 
-    items = [
+    items_2 = [
         ('ACTIVE', "アクティブのみ", "", 'LAYER_ACTIVE', 1),
     ]
-    target_vertex_group = bpy.props.EnumProperty(items=items, name="対象頂点グループ", default='ACTIVE')
-    items = [
+    target_vertex_group: bpy.props.EnumProperty(items=items_2, name="対象頂点グループ", default='ACTIVE')
+    items_3 = [
         ('ADD', "加算", "", 'ZOOMIN', 1),
         ('SUB', "減算", "", 'ZOOMOUT', 2),
         ('MULTI', "乗算", "", 'X', 3),
         ('DIV', "除算", "", 'FULLSCREEN_EXIT', 4),
     ]
-    calculation_mode = bpy.props.EnumProperty(items=items, name="四則演算モード", default='ADD')
-    calculation_value = bpy.props.FloatProperty(name="値", default=1.0, min=-100.0, max=100.0, soft_min=-100.0, soft_max=100.0, step=10, precision=1)
+    calculation_mode: bpy.props.EnumProperty(items=items_3, name="四則演算モード", default='ADD')
+    calculation_value: bpy.props.FloatProperty(name="値", default=1.0, min=-100.0, max=100.0, soft_min=-100.0, soft_max=100.0, step=10, precision=1)
 
     @classmethod
     def poll(cls, context):

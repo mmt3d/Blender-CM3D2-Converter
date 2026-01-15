@@ -20,11 +20,11 @@ class CNV_OT_remove_and_mark_doubles(bpy.types.Operator):
     bl_description = "Remove doubles while marking merged geometry as seams and/or sharp edges"
     bl_options = {'REGISTER', 'UNDO'}
 
-    threshold           = bpy.props.FloatProperty(name="Merge Distance"    , default=0.0001, description="Maximum distance between elements to merge")
-    normal_threshold    = bpy.props.FloatProperty(name="Normal Angle"      , default=0.0000, description="Maximum angle between element's normals to mark sharp")
-    use_unselected      = bpy.props.BoolProperty(name="Unselected"         , default=False , description="Merge selected to other unselected vertices")
-    keep_custom_normals = bpy.props.BoolProperty(name="Keep Custom Normals", default=True  , description="Keep custom split normals")
-    mark_sharp          = bpy.props.BoolProperty(name="Mark Sharp"         , default=True  , description="Mark sharp")
+    threshold: bpy.props.FloatProperty(name="Merge Distance", default=0.0001, description="Maximum distance between elements to merge")
+    normal_threshold: bpy.props.FloatProperty(name="Normal Angle", default=0.0000, description="Maximum angle between element's normals to mark sharp")
+    use_unselected: bpy.props.BoolProperty(name="Unselected", default=False, description="Merge selected to other unselected vertices")
+    keep_custom_normals: bpy.props.BoolProperty(name="Keep Custom Normals", default=True, description="Keep custom split normals")
+    mark_sharp: bpy.props.BoolProperty(name="Mark Sharp", default=True, description="Mark sharp")
     
     @classmethod
     def poll(cls, context):
