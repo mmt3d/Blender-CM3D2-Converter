@@ -227,6 +227,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
 
         selected_objs = context.selected_objects
         source_objs = []
+        temp_meshes = []
         ob_source = None
         ob_name = None
         prev_mode = context.active_object.mode
@@ -259,6 +260,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
 
                     if selected.type == 'MESH':
                         ob_created = self.copy_and_activate_ob(context, selected)
+                        temp_meshes.append(ob_created.data)
                         if selected == ob_source:
                             ob_main = ob_created
                         if prefs.is_apply_modifiers:
@@ -287,6 +289,9 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
                 # me_copied = ob_main.data
                 # context.blend_data.objects.remove(ob_main, do_unlink=True)
                 # context.blend_data.meshes.remove(me_copied, do_unlink=True)
+            # join でリンクが外れ未使用となるmeshデータを削除
+            for me in temp_meshes:
+                bpy.data.meshes.remove(me)
 
             for obj in source_objs:
                 compat.set_select(obj, True)
