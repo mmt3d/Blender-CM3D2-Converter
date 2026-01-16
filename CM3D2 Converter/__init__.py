@@ -321,8 +321,6 @@ class AddonPreferences(bpy.types.AddonPreferences):
         row.operator('script.update_cm3d2_converter', icon='FILE_REFRESH')
         row.menu('INFO_MT_help_CM3D2_Converter_RSS', icon='INFO')
 
-        self.layout.operator('cm3d2_converter.dump_py_messages')
-
 
 # プラグインをインストールしたときの処理
 def register():
