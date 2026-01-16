@@ -11,6 +11,7 @@ import inspect
 from typing import Any, Optional, Callable, Protocol, TypeVar, ParamSpec, TYPE_CHECKING
 from types import FunctionType
 import functools
+import warnings
 
 
 UILayoutDrawer = bpy.types.Header | bpy.types.Menu | bpy.types.Panel
@@ -55,9 +56,6 @@ class BlRegister:
         cls.functions.clear()
 
 
-import functools
-import inspect
-import warnings
 
 string_types = (type(b''), type(u''))
 
@@ -318,90 +316,6 @@ def set_bone_matrix(bone, mat):
     #print("mat:  ", mat)
 
 
-LEGACY_TO_BL28_ICON = {
-    # Renamed in 2.80
-    'ZOOMIN'                       : 'ADD'                ,  
-    'ZOOMOUT'                      : 'REMOVE'             ,  
-    'NEW'                          : 'FILE_NEW'           ,  
-    'BBOX'                         : 'SHADING_BBOX'       ,  
-    'POTATO'                       : 'SHADING_TEXTURE'    , #'TEXTURE_SHADED',  
-    'SMOOTH'                       : 'SHADING_RENDERED'   ,  
-    'SOLID'                        : 'SHADING_SOLID'      ,  
-    'WIRE'                         : 'SHADING_WIRE'       ,  
-    'ORTHO'                        : 'XRAY'               ,  
-    'BUTS'                         : 'PROPERTIES'         ,  
-    'IMAGE_COL'                    : 'IMAGE'              ,  
-    'OOPS'                         : 'OUTLINER'           ,  
-    'IPO'                          : 'GRAPH'              ,  
-    'SCRIPTWIN'                    : 'PREFERENCES'        ,  
-    'CURSOR'                       : 'PIVOT_CURSOR'       ,  
-    'ROTATECOLLECTION'             : 'PIVOT_INDIVIDUAL'   ,  
-    'ROTATECENTER'                 : 'PIVOT_MEDIAN'       ,  
-    'ROTACTIVE'                    : 'PIVOT_ACTIVE'       ,  
-    'FULLSCREEN'                   : 'WINDOW'             ,  
-    'LAMP'                         : 'LIGHT'              ,  
-    'LAMP_DATA'                    : 'LIGHT_DATA'         ,  
-    'OUTLINER_OB_LAMP'             : 'OUTLINER_OB_LIGHT'  ,  
-    'OUTLINER_DATA_LAMP'           : 'OUTLINER_DATA_LIGHT',  
-    'LAMP_POINT'                   : 'LIGHT_POINT'        ,  
-    'LAMP_SUN'                     : 'LIGHT_SUN'          ,  
-    'LAMP_SPOT'                    : 'LIGHT_SPOT'         ,  
-    'LAMP_HEMI'                    : 'LIGHT_HEMI'         ,  
-    'LAMP_AREA'                    : 'LIGHT_AREA'         ,  
-    'VISIBLE_IPO_ON'               : 'HIDE_OFF'           ,  
-    'VISIBLE_IPO_OFF'              : 'HIDE_ON'            ,  
-                                                          
-    # Removed in 2.80              
-    'LINK_AREA'                    : 'LINKED'             ,
-    'PLUG'                         : 'PLUGIN'             ,
-    'EDIT'                         : None                 , 
-    'GAME'                         : None                 , 
-    'RADIO'                        : None                 ,
-    'DOTSUP'                       : 'DOT'                ,
-    'DOTSDOWN'                     : 'DOT'                ,
-    'LINK'                         : 'LAYER_USED'         , #(maybe use DOT, LAYER_ACTIVE or LAYER_USED)
-    'INLINK'                       : None                 ,  
-    'GO_LEFT'                      : None                 ,
-    'TEMPERATURE'                  : None                 ,
-    'SNAP_SURFACE'                 : None                 ,
-    'MANIPUL'                      : None                 ,
-    'BORDER_LASSO'                 : None                 ,
-    'MAN_TRANS'                    : None                 ,
-    'MAN_ROT'                      : None                 ,
-    'MAN_SCALE'                    : None                 ,
-    'RENDER_REGION'                : None                 ,
-    'RECOVER_AUTO'                 : None                 ,
-    'SAVE_COPY'                    : None                 ,
-    'OPEN_RECENT'                  : None                 ,
-    'LOAD_FACTORY'                 : None                 ,
-    'ALIGN'                        : None                 ,
-    'SPACE2'                       : None                 ,
-    'ROTATE'                       : None                 ,
-    'SAVE_AS'                      : None                 ,
-    'BORDER_RECT'                  : None                 ,
-}                                                          
-
-def icon(key):
-    # 対応アイコンがdictにない場合はNONEとする
-    return LEGACY_TO_BL28_ICON.get(key, key) or 'NONE'
-
-
-def region_type():
-    return 'UI'
-
-
-def pref_type():
-    return 'PREFERENCES'
-
-
-def get_prefs(context):
-    return context.preferences
-
-
-def get_system(context):
-    return get_prefs(context).view
-
-
 def get_tex_image(context, node_name=None):
     mate = context.material
     if mate and mate.use_nodes:
@@ -410,9 +324,3 @@ def get_tex_image(context, node_name=None):
             return node.image
 
     return None
-
-
-def unit(key):
-    if bpy.app.version < (2, 91):
-        return BL29_TO_BL28_UNIT.get(key, key) or 'NONE'
-    return key

@@ -2,7 +2,6 @@ import os
 import sys
 import csv
 import bpy
-from .. import compat
 
 # get_true_locale() -> Returns the locale
 # get_locale()      -> Returns the closest locale available for translation 
@@ -14,9 +13,7 @@ DICT = dict() # The translations dictionary
 
 # max level of verbose messages to print. -1 = Nothing.
 verbosity = 0
-dump_messages = True
 
-is_verify_contexts  = False
 is_check_duplicates = False
 
 handled_locales   = set()
@@ -95,9 +92,6 @@ def print_verbose(level:int, *args, tab:str="\t", sep:str=" ", end:str="\n", fil
         message = message.format(**format_args)
     return print(message, end=end, file=file, flush=flush)
 
-def verify_context(context: str) -> bool:
-    if not is_verify_contexts:
-        return True
 
 def check_duplicate(key: tuple, lang: str) -> bool:
     if not is_check_duplicates:
@@ -108,7 +102,9 @@ def check_duplicate(key: tuple, lang: str) -> bool:
         return False
 
 
-def get_best_locale_match(locale: str, available=handled_locales) -> str:
+def get_best_locale_match(locale: str) -> str:
+    global handled_locales
+    available = handled_locales
     # First check for exact locale tag match
     if locale in available:
         return locale
@@ -138,6 +134,7 @@ def get_best_locale_match(locale: str, available=handled_locales) -> str:
     
     return match
 
+
 def generate_translations(locale: str):
     if False:
         # Handle any special generations here
@@ -150,57 +147,14 @@ def generate_translations(locale: str):
         DICT[locale] = DICT[match]
 
 
-def get_true_locale() -> str:
-    true_locale = ''
-    if bpy.app.translations.locale:
-        true_locale = bpy.app.translations.locale
-    else: # if built without internationalization support
-        try:
-            import locale
-            if system.language =='DEFAULT':
-                true_locale = locale.getdefaultlocale()[0]
-        except Exception as e: 
-            print("Unable to determine locale.", e)
-    return true_locale
-
 def get_locale() -> str:
-    return get_best_locale_match(get_true_locale())
+    return get_best_locale_match(bpy.app.translations.locale)
 
-
-pre_settings = None
 
 def register(__name__=__name__):
     global DICT
     global comments_dict
-    global pre_settings
-    system = compat.get_system(bpy.context)
-    if hasattr(system, 'use_international_fonts'):
-        pre_settings = system.use_international_fonts
-        system.use_international_fonts = True
-
-    # Since the add-on in Japanese we want to translate even when Blender's language is set to English.
-    elif bpy.app.version >= (2, 93):
-        if system.language in {'en_US', 'DEFAULT'}         \
-            and system.use_translate_tooltips     == False \
-            and system.use_translate_interface    == False \
-            and system.use_translate_new_dataname == False:
-
-            system.use_translate_tooltips     = True
-            system.use_translate_interface    = True
-            system.use_translate_new_dataname = True
-
-    # Work around for disabled translations when language is 'en_US', fixed in 2.93LTS
-    elif bpy.app.version >= (2, 83): 
-        if system.language == 'en_US':
-            pre_settings = system.language
-            system.language = 'DEFAULT'
-            # This hack is required because when language is changed to 'DEFAULT'
-            #   all the options will be set to false next time Blender updates
-            def _set():
-                system.use_translate_tooltips     = True
-                system.use_translate_interface    = True
-                system.use_translate_new_dataname = True
-            bpy.app.timers.register(_set, first_interval=0)
+    global handled_locales
 
     # Generate locales from csv files
     for lang in os.listdir(translations_folder):
@@ -235,7 +189,7 @@ def register(__name__=__name__):
                             continue
                         if len(row) < 3:
                             continue
-                        if row[0].lstrip()[0] == "#":
+                        if row[0].startswith("#"):
                             # ignore comments
                             continue
                         if row[0] not in i18n_contexts.values():
@@ -255,7 +209,7 @@ def register(__name__=__name__):
                             comments_dict[lang][key] = row[3]
 
                         print_verbose(3, f"{line:{4}} {key}: {value}")
-                except Error as e:
+                except Exception as e:
                     print(f"Error parsing {csv_file_name} in {lang_folder}:")
                     print(e)
 
@@ -281,7 +235,7 @@ def register(__name__=__name__):
             generate_translations(lang)
             gen_count += 1
     # For when system.language == 'DEFAULT'
-    true_locale = get_true_locale()
+    true_locale = bpy.app.translations.locale
     if true_locale not in DICT.keys():
         print_verbose(1, f"Generating translations for '{true_locale}'")
         generate_translations(true_locale)
@@ -291,20 +245,7 @@ def register(__name__=__name__):
     bpy.app.translations.register(__name__, DICT)
 
 def unregister(__name__=__name__):
-    DICT = dict()
-    handled_locales = set()
     bpy.app.translations.unregister(__name__)
-
-    global pre_settings
-    if pre_settings != None:
-        system = compat.get_system(bpy.context)
-        if hasattr(system, 'use_international_fonts'):
-            system.use_international_fonts = pre_settings
-        
-        if bpy.app.version >= (2, 83, 0) and bpy.app.version < (2, 93):
-            system.language = pre_settings
-
-    pre_settings = None
 
 
 if __name__ == "__main__":
