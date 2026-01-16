@@ -70,7 +70,8 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
     export_shapekey_normals: bpy.props.BoolProperty(name="Export Shape Key Normals", default=True, description="Export custom normals for each shape key on export.")
     shapekey_normals_blend: bpy.props.FloatProperty(name="Shape Key Normals Blend", default=0.6, min=0, max=1, precision=3, description="Adjust the influence of shape keys on custom normals")
     use_shapekey_colors: bpy.props.BoolProperty(name="Use Shape Key Colors", default=True, description="Use the shape key normals stored in the vertex colors instead of calculating the normals on export. (Recommend disabling if geometry was customized)")
-    
+
+    force_mode = None
 
     @classmethod
     def poll(cls, context):
@@ -231,6 +232,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         ob_source = None
         ob_name = None
         prev_mode = context.active_object.mode
+        self.force_mode = None
         try:
             ob_source = context.active_object
             ob_name = ob_source.name
@@ -274,7 +276,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
                     bpy.ops.object.join()
                     self.report(type={'INFO'}, message=f_tip_("{}個のオブジェクトをマージしました", selected_count))
 
-            ret = self.export(context, ob_main)
+            ret = self.export(context, ob_main, selected_objs)
             if 'FINISHED' not in ret:
                 return ret
 
@@ -299,10 +301,13 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
             if ob_source and ob_name in bpy.data.objects:
                 compat.set_active(context, ob_source)
 
-            if prev_mode:
+            if self.force_mode:
+                bpy.ops.object.mode_set(mode=self.force_mode)
+                self.force_mode = None
+            elif prev_mode:
                 bpy.ops.object.mode_set(mode=prev_mode)
 
-    def export(self, context, ob):
+    def export(self, context, ob, selected_objs):
         """モデルファイルを出力"""
         prefs = common.preferences()
 
@@ -452,7 +457,8 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
                         boneindex = parent['parent_index']
             if len(vgs) == 0:
                 if not self.is_batch:
-                    self.select_no_weight_vertices(context, local_bone_name_indices)
+                    self.select_no_weight_vertices(context, local_bone_name_indices, selected_objs)
+                self.force_mode = True
                 return self.report_cancel("ウェイトが割り当てられていない頂点が見つかりました、中止します")
             if len(vgs) > 4:
                 is_in_too_many += 1
@@ -982,23 +988,23 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
 
         return tangents
 
-    def select_no_weight_vertices(self, context, local_bone_name_indices):
+    def select_no_weight_vertices(self, context, local_bone_name_indices, selected_objs):
         """ウェイトが割り当てられていない頂点を選択する"""
-        ob = context.active_object
-        me = ob.data
-        bpy.ops.object.mode_set(mode='EDIT')
-        bpy.ops.mesh.select_all(action='SELECT')
-        #bpy.ops.object.mode_set(mode='OBJECT')
-        context.tool_settings.mesh_select_mode = (True, False, False)
-        for vert in me.vertices:
-            for vg in vert.groups:
-                if len(ob.vertex_groups) <= vg.group: # Apparently a vertex can be assigned to a non-existent group.
-                    continue
-                name = common.encode_bone_name(ob.vertex_groups[vg.group].name, self.is_convert_bone_weight_names)
-                if name in local_bone_name_indices and 0.0 < vg.weight:
-                    vert.select = False
-                    break
-        bpy.ops.object.mode_set(mode='EDIT')
+        for ob in selected_objs:
+            compat.set_select(ob, False)
+        for ob in selected_objs:
+            compat.set_active(context, ob)
+            bpy.ops.object.mode_set(mode='EDIT')
+            bpy.ops.mesh.select_all(action='SELECT')
+            context.tool_settings.mesh_select_mode = (True, False, False)
+
+            for group in ob.vertex_groups:
+                name = common.encode_bone_name(group.name)
+                if name in local_bone_name_indices.keys():
+                    ob.vertex_groups.active_index = group.index
+                    bpy.ops.object.vertex_group_deselect()
+
+            bpy.ops.object.mode_set(mode='OBJECT')
 
     def armature_bone_data_parser(self, context, ob):
         """アーマチュアを解析してBoneDataを返す"""
