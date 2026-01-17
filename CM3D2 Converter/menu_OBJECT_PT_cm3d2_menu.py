@@ -136,9 +136,9 @@ class CM3D2MENU_OT_import(bpy.types.Operator):
     def execute(self, context):
         ob = context.object
         try:
-            file = open(self.filepath, 'rb')
-            ob.cm3d2_menu.clear()
-            ob.cm3d2_menu.unpack_from_file(file)
+            with open(self.filepath, 'rb') as file:
+                ob.cm3d2_menu.clear()
+                ob.cm3d2_menu.unpack_from_file(file)
         except IOError as e:
             self.report(type={'ERROR'}, message=e.args[0])
             return {'CANCELLED'}

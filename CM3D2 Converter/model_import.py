@@ -136,9 +136,9 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             self.report(type={'ERROR'}, message=f_tip_("ファイルを開くのに失敗しました、アクセス不可かファイルが存在しません。file={}", self.filepath))
             return {'CANCELLED'}
 
-        self.texpath_dict = common.get_texpath_dict(reload=self.reload_tex_cache)
-
         with reader:
+            self.texpath_dict = common.get_texpath_dict(reload=self.reload_tex_cache)
+
             # ヘッダー
             ext = None
             try: # luvoid : utf-8 decoding could possibly throw an error here

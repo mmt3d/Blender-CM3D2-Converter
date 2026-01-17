@@ -86,15 +86,13 @@ class CNV_OT_import_cm3d2_anm(bpy.types.Operator):
         prefs.scale = self.scale
 
         try:
-            file = open(self.filepath, 'rb')
+            with open(self.filepath, 'rb') as file:
+                action_name = os.path.basename(self.filepath)
+                anm_importer = self.get_anm_importer()
+                anm_importer.import_anm(context, file, action_name)
         except IOError:
             self.report(type={'ERROR'}, message=f_tip_("ファイルを開くのに失敗しました、アクセス不可かファイルが存在しません。file={}", self.filepath))
             return {'CANCELLED'}
-
-        action_name = os.path.basename(self.filepath)
-        anm_importer = self.get_anm_importer()
-        try:
-            anm_importer.import_anm(context, file, action_name)
         except CM3D2ImportError as ex:
             self.report(type={'ERROR'}, message=ex.message)
             return {'CANCELLED'}
