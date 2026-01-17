@@ -905,7 +905,7 @@ class CNV_OT_quick_hair_bake_image(bpy.types.Operator):
         row = self.layout.row(align=True)
         row.prop(self, 'use_ao', icon='FILE_TICK')
         row.prop(self, 'ao_samples', icon='ANIM_DATA')
-        self.layout.prop(self, 'ao_hide_other', icon=compat.icon('VIS_SEL_01'))
+        self.layout.prop(self, 'ao_hide_other', icon='VIS_SEL_01')
 
     def execute(self, context):
         import os.path

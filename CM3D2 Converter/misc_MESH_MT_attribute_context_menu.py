@@ -15,7 +15,7 @@ def menu_func(self, context):
     self.layout.operator('geometry.attribute_from_custom_normals', icon_value=icon_id)
     if (self.__class__.__name__ == 'MESH_MT_attribute_context_menu'):
         self.layout.operator('geometry.attribute_convert_normals', icon_value=icon_id)
-    #self.layout.operator('geometry.attribute_from_custom_normals', icon_value=compat.icon('NORMALS_VERTEX_FACE'))
+    #self.layout.operator('geometry.attribute_from_custom_normals', icon_value='NORMALS_VERTEX_FACE')
 
 
 @compat.BlRegister()

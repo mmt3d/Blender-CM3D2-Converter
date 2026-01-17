@@ -254,7 +254,7 @@ class DataHandler:
         }
         trans_diffuse = {
             'type_name': "リアル 透過",
-            'icon': 'BRUSH_TEXFILL',
+            'icon': 'SHADING_RENDERED',
             'shader2': 'Legacy Shaders__Transparent__Diffuse',
             'tex_list': ['_MainTex'],
             'col_list': ['_Color'],
@@ -264,7 +264,7 @@ class DataHandler:
         self.shader_dict = {
             'CM3D2/Toony_Lighted': {
                 'type_name': "トゥーン",
-                'icon': compat.icon('SHADING_SOLID'),
+                'icon': 'SHADING_SOLID',
                 'shader2': 'CM3D2__Toony_Lighted',
                 'tex_list': ['_MainTex', '_ToonRamp', '_ShadowTex', '_ShadowRateToon'],
                 'col_list': ['_Color', '_ShadowColor', '_RimColor'],
@@ -280,7 +280,7 @@ class DataHandler:
             },
             'CM3D2/Toony_Lighted_Trans': {
                 'type_name': "トゥーン 透過",
-                'icon': compat.icon('SHADING_WIRE'),
+                'icon': 'SHADING_WIRE',
                 'shader2': 'CM3D2__Toony_Lighted_Trans',
                 'tex_list': ['_MainTex', '_ToonRamp', '_ShadowTex', '_ShadowRateToon'],
                 'col_list': ['_Color', '_ShadowColor', '_RimColor'],
@@ -352,7 +352,7 @@ class DataHandler:
             },
             'CM3D2/Lighted_Trans': {
                 'type_name': "トゥーン無し 透過",
-                'icon': compat.icon('VIS_SEL_01'),
+                'icon': 'VIS_SEL_01',
                 'shader2': 'CM3D2__Lighted_Trans',
                 'tex_list': ['_MainTex'],
                 'col_list': ['_Color', '_ShadowColor'],
@@ -360,7 +360,7 @@ class DataHandler:
             },
             'CM3D2/Lighted': {
                 'type_name': "トゥーン無し",
-                'icon': compat.icon('VIS_SEL_11'),
+                'icon': 'VIS_SEL_11',
                 'shader2': 'CM3D2__Lighted',
                 'tex_list': ['_MainTex'],
                 'col_list': ['_Color', '_ShadowColor'],
@@ -412,7 +412,7 @@ class DataHandler:
             'Legacy Shaders/Transparent/Diffuse': trans_diffuse,
             'CM3D2_Debug/Debug_CM3D2_Normal2Color': {
                 'type_name': "法線",
-                'icon': compat.icon('NORMALS_VERTEX'),
+                'icon': 'NORMALS_VERTEX',
                 'shader2': 'CM3D2_Debug__Debug_CM3D2_Normal2Color',
                 'tex_list': [],
                 'col_list': ['_Color'],  # , '_RimColor', '_OutlineColor', '_SpecColor'],

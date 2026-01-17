@@ -93,7 +93,7 @@ def menu_func(self, context):
                     row = sub_box.row()
                     row.operator('image.show_image', text="画像を表示", icon='ZOOM_IN').image_name = img.name
                     if len(img.pixels):
-                        row.operator('image.quick_export_cm3d2_tex', text="texで保存", icon='FILESEL').node_name = tex.name
+                        row.operator('image.quick_export_cm3d2_tex', text="texで保存", icon='OUTPUT').node_name = tex.name
                     else:
                         row.operator('image.replace_cm3d2_tex', icon='BORDERMOVE')
 
@@ -104,8 +104,8 @@ def menu_func(self, context):
         row = sub_box.row(align=True)
         row.prop(tex_slot, 'color', text="")
         row.operator('texture.auto_set_color_value', icon='AUTO', text="自動設定")
-        row.operator('texture.set_color_value_old', text="", icon=compat.icon('SHADING_SOLID')).color = [0, 0, 0] + [tex_slot.diffuse_color_factor]
-        row.operator('texture.set_color_value_old', text="", icon=compat.icon('MESH_CIRCLE')).color = [1, 1, 1] + [tex_slot.diffuse_color_factor]
+        row.operator('texture.set_color_value_old', text="", icon='SHADING_SOLID').color = [0, 0, 0] + [tex_slot.diffuse_color_factor]
+        row.operator('texture.set_color_value_old', text="", icon='MESH_CIRCLE').color = [1, 1, 1] + [tex_slot.diffuse_color_factor]
 
         row = sub_box.row(align=True)
         row.operator('texture.set_color_value_old', text="", icon='TRIA_LEFT').color = list(tex_slot.color) + [0]
@@ -126,7 +126,7 @@ def menu_func(self, context):
             row.operator('texture.set_color_value_old', text="0.25").color = list(tex_slot.color) + [0.25]
             row.operator('texture.set_color_value_old', text="0.5").color = list(tex_slot.color) + [0.5]
             row.operator('texture.set_color_value_old', text="0.75").color = list(tex_slot.color) + [0.75]
-            row.operator('texture.set_color_value_old', text="1.0", icon=compat.icon('NODE_MATERIAL')).color = list(tex_slot.color) + [1.0]
+            row.operator('texture.set_color_value_old', text="1.0", icon='NODE_MATERIAL').color = list(tex_slot.color) + [1.0]
 
         elif base_name == '_OutlineWidth':
             row.menu('TEXTURE_MT_context_texture_values_OutlineWidth', icon='DOWNARROW_HLT', text="")
@@ -144,10 +144,10 @@ def menu_func(self, context):
             row.menu('TEXTURE_MT_context_texture_values_RimPower', icon='DOWNARROW_HLT', text="")
 
             row = sub_box.row(align=True)
-            row.operator('texture.set_color_value_old', text="1", icon='BRUSH_TEXFILL').color = list(tex_slot.color) + [1]
+            row.operator('texture.set_color_value_old', text="1", icon='SHADING_RENDERED').color = list(tex_slot.color) + [1]
             row.operator('texture.set_color_value_old', text="10").color = list(tex_slot.color) + [10]
             row.operator('texture.set_color_value_old', text="20").color = list(tex_slot.color) + [20]
-            row.operator('texture.set_color_value_old', text="30", icon=compat.icon('SHADING_RENDERED')).color = list(tex_slot.color) + [30]
+            row.operator('texture.set_color_value_old', text="30", icon='SHADING_RENDERED').color = list(tex_slot.color) + [30]
 
         elif base_name == '_RimShift':
             row.menu('TEXTURE_MT_context_texture_values_normal', icon='DOWNARROW_HLT', text="")
@@ -477,10 +477,10 @@ class CNV_OT_auto_set_color_value(bpy.types.Operator):
     def draw(self, context):
         self.layout.prop(self, 'is_all', icon='ACTION')
         row = self.layout.row()
-        row.label(text="", icon=compat.icon('SHADING_RENDERED'))
+        row.label(text="", icon='SHADING_RENDERED')
         row.prop(self, 'saturation_multi')
         row = self.layout.row()
-        row.label(text="", icon=compat.icon('SHADING_SOLID'))
+        row.label(text="", icon='SHADING_SOLID')
         row.prop(self, 'value_multi')
 
     def execute(self, context):

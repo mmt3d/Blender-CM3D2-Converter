@@ -38,9 +38,9 @@ class CNV_OT_selected_mesh_vertex_group_blur(bpy.types.Operator):
     ]
     target_vertex_group: bpy.props.EnumProperty(items=items_2, name="対象頂点グループ", default='ALL')
     items_3 = [
-        ('NORMAL', "通常・ぼかし", "", 'BRUSH_BLUR', 1),
-        ('ADD', "増加・拡張", "", 'BRUSH_DARKEN', 2),
-        ('SUB', "減少・縮小", "", 'BRUSH_LIGHTEN', 3),
+        ('NORMAL', "通常・ぼかし", "", 'AUTOMERGE_ON', 1),
+        ('ADD', "増加・拡張", "", 'TRIA_UP', 2),
+        ('SUB', "減少・縮小", "", 'TRIA_DOWN', 3),
     ]
     blur_mode: bpy.props.EnumProperty(items=items_3, name="ぼかしモード", default='NORMAL')
     blur_range_multi: bpy.props.FloatProperty(name="ウェイトをぼかす範囲倍率", default=4.0, min=0.0, max=100.0, soft_min=0.0, soft_max=100.0, step=50, precision=1)
@@ -266,8 +266,8 @@ class CNV_OT_selected_mesh_vertex_group_calculation(bpy.types.Operator):
     ]
     target_vertex_group: bpy.props.EnumProperty(items=items_2, name="対象頂点グループ", default='ACTIVE')
     items_3 = [
-        ('ADD', "加算", "", 'ZOOMIN', 1),
-        ('SUB', "減算", "", 'ZOOMOUT', 2),
+        ('ADD', "加算", "", 'ADD', 1),
+        ('SUB', "減算", "", 'REMOVE', 2),
         ('MULTI', "乗算", "", 'X', 3),
         ('DIV', "除算", "", 'FULLSCREEN_EXIT', 4),
     ]
@@ -287,7 +287,7 @@ class CNV_OT_selected_mesh_vertex_group_calculation(bpy.types.Operator):
         self.layout.prop(self, 'selection_blur_range_multi', text="範囲 | 辺の長さの平均×")
         self.layout.prop(self, 'selection_blur_accuracy', text="精度 (分割数)")
 
-        self.layout.label(text="四則演算", icon='BRUSH_ADD')
+        self.layout.label(text="四則演算", icon='ADD')
         self.layout.prop(self, 'target_vertex_group', text="対象グループ")
         self.layout.prop(self, 'calculation_mode', text="モード")
         self.layout.prop(self, 'calculation_value', text="値")

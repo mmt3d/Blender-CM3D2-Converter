@@ -441,7 +441,7 @@ class CNV_OT_blur_vertex_group(bpy.types.Operator):
         self.layout.prop(self, 'target', icon='VIEWZOOM')
         self.layout.prop(self, 'radius', icon='PROP_ON')
         self.layout.prop(self, 'strength', icon='ARROW_LEFTRIGHT')
-        self.layout.prop(self, 'effect', icon='BRUSH_BLUR')
+        self.layout.prop(self, 'effect', icon='NODE_TEXTURE')
         self.layout.prop(self, 'is_normalize', icon='GROUP')
 
     def execute(self, context):

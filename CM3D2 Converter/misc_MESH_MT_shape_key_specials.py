@@ -974,7 +974,7 @@ class CNV_UL_vgroups_selector(bpy.types.UIList):
                 layout.prop(item, "value", text=item.name, icon_value=icon)
 
             icon = 'RADIOBUT_ON' if item.preferred else 'RADIOBUT_OFF'
-            layout.prop(item, "preferred", text="", icon=compat.icon(icon), emboss=False)
+            layout.prop(item, "preferred", text="", icon=icon, emboss=False)
         elif self.layout_type in {'GRID'}:
             layout.alignment = 'CENTER'
             if flt_flag & self.VGROUP_EMPTY:
@@ -1379,7 +1379,7 @@ class CNV_OT_blur_shape_key(bpy.types.Operator):
         self.layout.prop(self, 'target', icon='VIEWZOOM')
         self.layout.prop(self, 'radius', icon='RADIOBUT_OFF')
         self.layout.prop(self, 'strength', icon='ARROW_LEFTRIGHT')
-        self.layout.prop(self, 'effect', icon='BRUSH_BLUR')
+        self.layout.prop(self, 'effect', icon='NODE_TEXTURE')
         self.layout.prop(self, 'blend', icon='IPO_SINE')
 
     def execute(self, context):

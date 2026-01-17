@@ -34,8 +34,8 @@ class CNV_OT_import_cm3d2_tex(bpy.types.Operator):
     def draw(self, context):
         box = self.layout.box()
         col = box.column(align=True)
-        col.label(text="展開方法", icon='FILESEL')
-        col.prop(self, 'mode', icon='FILESEL', expand=True)
+        col.label(text="展開方法", icon='OUTPUT')
+        col.prop(self, 'mode', icon='OUTPUT', expand=True)
 
     def execute(self, context):
         common.preferences().tex_import_path = self.filepath

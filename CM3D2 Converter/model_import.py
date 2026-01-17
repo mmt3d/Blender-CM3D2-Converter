@@ -79,8 +79,8 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         sub_box.enabled = self.is_mesh
         sub_box.label(text="メッシュ")
         sub_box.prop(self, 'is_remove_doubles', icon='STICKY_UVS_VERT')
-        sub_box.prop(self, 'is_seam' , icon=compat.icon('UV_EDGESEL'))
-        sub_box.prop(self, 'is_sharp', icon=compat.icon('EDGESEL'))
+        sub_box.prop(self, 'is_seam' , icon='UV_EDGESEL')
+        sub_box.prop(self, 'is_sharp', icon='EDGESEL')
 
         sub_box = box.box()
         sub_box.enabled = self.is_mesh
@@ -101,12 +101,12 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         
         sub_box = box.box()
         sub_box.label(text="アーマチュア")
-        sub_box.prop(self , 'is_use_local_bones'          , icon=compat.icon('GROUP_BONE'), text="Use Local Bone Data")
-        sub_box.prop(self , 'is_armature_clean'           , icon=compat.icon('X'         ))
-        sub_box.prop(self , 'is_convert_bone_weight_names', icon=compat.icon('BLENDER'   ), text="ボーン名をBlender用に変換")
-        sub_box.prop(prefs, 'show_bone_in_front'          , icon=compat.icon('HIDE_OFF'  ), text="Show Bones in Front")
+        sub_box.prop(self , 'is_use_local_bones', icon='GROUP_BONE', text="Use Local Bone Data")
+        sub_box.prop(self , 'is_armature_clean', icon='X')
+        sub_box.prop(self , 'is_convert_bone_weight_names', icon='BLENDER', text="ボーン名をBlender用に変換")
+        sub_box.prop(prefs, 'show_bone_in_front', icon='HIDE_OFF', text="Show Bones in Front")
         row = sub_box.row()
-        row.prop    (self , 'is_custom_bones'             , icon=compat.icon('BONE_DATA' ), text="Use Selected as Bone Shape"     )
+        row.prop(self , 'is_custom_bones', icon='BONE_DATA', text="Use Selected as Bone Shape")
         row.enabled = bool(context.object)
         
         box = self.layout.box()

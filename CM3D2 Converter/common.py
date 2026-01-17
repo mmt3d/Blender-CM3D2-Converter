@@ -926,7 +926,7 @@ class CNV_UL_generic_selector(bpy.types.UIList):
             
             #layout.prop(item, "value", text=item.name, icon=item.icon)
             icon = 'RADIOBUT_ON' if item.preferred else 'RADIOBUT_OFF'
-            layout.prop(item, "preferred", text="", icon=compat.icon(icon), emboss=False)
+            layout.prop(item, "preferred", text="", icon=icon, emboss=False)
         
         elif self.layout_type in {'GRID'}:
             layout.alignment = 'CENTER'

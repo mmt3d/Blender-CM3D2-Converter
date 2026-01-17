@@ -135,14 +135,14 @@ class VIEW3D_PT_com3d2_livelink(bpy.types.Panel):
                       else "Not connected")
 
     def draw_model_controls(self, context: bpy.types.Context, layout: bpy.types.UILayout):
-        layout.label(text='Model', icon=compat.icon('MESH_DATA'))
+        layout.label(text='Model', icon='MESH_DATA')
         layout.operator(COM3D2LIVELINK_OT_send_model.bl_idname)
         
     def draw_animation_controls(self, context: bpy.types.Context, layout: bpy.types.UILayout):
         wm: WindowManager = context.window_manager
         core = _get_active_core()
         
-        layout.label(text='Animation', icon=compat.icon('ANIM_DATA'))
+        layout.label(text='Animation', icon='ANIM_DATA')
         if not wm.com3d2_livelink_state.is_link_pose:
             layout.operator(COM3D2LIVELINK_OT_link_pose.bl_idname)
         else:

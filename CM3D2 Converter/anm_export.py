@@ -136,18 +136,18 @@ class CNV_OT_export_cm3d2_anm(bpy.types.Operator):
         sub_box = box.box()
         sub_box.label(text="輸出アニメーション情報")
         column = sub_box.column(align=True)
-        column.prop(self, 'is_location', icon=compat.icon('CON_LOCLIKE' ))
-        column.prop(self, 'is_rotation', icon=compat.icon('CON_ROTLIKE' ))
-        column.prop(self, 'is_scale'   , icon=compat.icon('CON_SIZELIKE'))
+        column.prop(self, 'is_location', icon='CON_LOCLIKE')
+        column.prop(self, 'is_rotation', icon='CON_ROTLIKE')
+        column.prop(self, 'is_scale'   , icon='CON_SIZELIKE')
 
         sub_box = box.box()
         sub_box.label(text="除外するボーン", icon='X')
         column = sub_box.column(align=True)
-        column.prop(self, 'is_remove_unkeyed_bone'      , icon='KEY_DEHLT'              )
-        column.prop(self, 'is_remove_alone_bone'        , icon='UNLINKED'               )
-        column.prop(self, 'is_remove_ik_bone'           , icon='CONSTRAINT_BONE'        )
-        column.prop(self, 'is_remove_serial_number_bone', icon='SEQUENCE'               )
-        column.prop(self, 'is_remove_japanese_bone'     , icon=compat.icon('HOLDOUT_ON'))
+        column.prop(self, 'is_remove_unkeyed_bone'      , icon='KEY_DEHLT')
+        column.prop(self, 'is_remove_alone_bone'        , icon='UNLINKED')
+        column.prop(self, 'is_remove_ik_bone'           , icon='CONSTRAINT_BONE')
+        column.prop(self, 'is_remove_serial_number_bone', icon='SEQUENCE')
+        column.prop(self, 'is_remove_japanese_bone'     , icon='HOLDOUT_ON')
         
         file_select_params: bpy.types.FileSelectParams = None
         try:

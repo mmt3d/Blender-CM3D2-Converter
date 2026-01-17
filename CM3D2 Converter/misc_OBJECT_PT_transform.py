@@ -132,7 +132,7 @@ class CNV_OT_align_to_cm3d2_base_bone(bpy.types.Operator):
             return row
         
         self.layout.prop(self, 'scale')
-        self.layout.prop(self, 'is_preserve_mesh', icon=compat.icon('MESH_DATA'))
+        self.layout.prop(self, 'is_preserve_mesh', icon='MESH_DATA')
 
         col = self.layout.column(align=True)
         col.label(text="Bone Data Source", icon='BONE_DATA')

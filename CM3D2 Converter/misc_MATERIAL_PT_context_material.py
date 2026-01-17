@@ -54,9 +54,9 @@ def menu_func(self, context):
             row.label(text=type_name, icon=icon)
             box.prop(mate, 'name', icon='SORTALPHA', text="マテリアル名")
             box.prop(mate, '["shader1"]', icon='MATERIAL', text="シェーダー1")
-            box.prop(mate, '["shader2"]', icon=compat.icon('SHADING_RENDERED'), text="シェーダー2")
+            box.prop(mate, '["shader2"]', icon='SHADING_RENDERED', text="シェーダー2")
 
-            box.operator('material.decorate_material', icon=compat.icon('SHADING_TEXTURE'))
+            box.operator('material.decorate_material', icon='SHADING_TEXTURE')
 
             if 'CM3D2 Texture Expand' not in mate:
                 mate['CM3D2 Texture Expand'] = True
@@ -137,7 +137,7 @@ class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
                 row.label(text=type_name, icon=icon)
                 box.prop(mate, 'name', icon='SORTALPHA', text="マテリアル名")
                 box.prop(mate, '["shader1"]', icon='MATERIAL', text="シェーダー1")
-                box.prop(mate, '["shader2"]', icon=compat.icon('SHADING_RENDERED'), text="シェーダー2")
+                box.prop(mate, '["shader2"]', icon='SHADING_RENDERED', text="シェーダー2")
 
                 if 'CM3D2 Texture Expand' not in mate:
                     box.operator('material.setup_mate_expand', text="フラグセットアップ")
@@ -225,7 +225,7 @@ class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
                         row = box.row(align=True)
                         sub_row = compat.layout_split(row, factor=1 / 3, align=True)
                         sub_row.label(text="_ALPHAPREMULTIPLY_ON", icon='CHECKBOX_HLT')
-                        sub_row.prop(mate, '["_ALPHAPREMULTIPLY_ON"]', icon=compat.icon('SHADING_RENDERED'), text="Value", toggle=1)
+                        sub_row.prop(mate, '["_ALPHAPREMULTIPLY_ON"]', icon='SHADING_RENDERED', text="Value", toggle=1)
                         row.label(text="", icon='BLANK1')
 
                 else:
@@ -869,7 +869,7 @@ def menu_mateprop_tex(context, layout, node):
         # 	row.label(text="画像を表示", icon='ZOOM_IN')
 
         if len(img.pixels):
-            row.operator('image.quick_export_cm3d2_tex', text="texで保存", icon=compat.icon('FILE_FOLDER')).node_name = node.name
+            row.operator('image.quick_export_cm3d2_tex', text="texで保存", icon='FILE_FOLDER').node_name = node.name
         else:
             row.operator('image.replace_cm3d2_tex', icon='BORDERMOVE').node_name = node.name
 
@@ -908,9 +908,9 @@ def menu_mateprop_col(context, layout, node):
     col_val = col.default_value
     if node.name in ['_ShadowColor', '_RimColor', '_OutlineColor']:
         row.operator('texture.auto_set_color_value', icon='AUTO', text="自動設定").node_name = node.name
-    opr = row.operator('texture.set_color_value', text="", icon=compat.icon('MESH_CIRCLE'))
+    opr = row.operator('texture.set_color_value', text="", icon='MESH_CIRCLE')
     opr.node_name, opr.color = node.name, [0, 0, 0, col_val[3]]
-    opr = row.operator('texture.set_color_value', text="", icon=compat.icon('SHADING_SOLID'))
+    opr = row.operator('texture.set_color_value', text="", icon='SHADING_SOLID')
     opr.node_name, opr.color = node.name, [1, 1, 1, col_val[3]]
 
     # 透過は_Colorのみ (TODO さらにTransシェーダの場合に限定)

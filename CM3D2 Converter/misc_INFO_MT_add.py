@@ -20,7 +20,7 @@ class misc_INFO_MT_add_cm3d2(bpy.types.Menu):
     def draw(self, context):
         self.layout.operator('wm.append_cm3d2_figure', text="body001", icon_value=common.kiss_icon()).object_name = "body001.body"
         self.layout.separator()
-        self.layout.operator('wm.append_cm3d2_figure', text="乳袋防止素体", icon=compat.icon('PIVOT_INDIVIDUAL')).object_name = "乳袋防止素体"
+        self.layout.operator('wm.append_cm3d2_figure', text="乳袋防止素体", icon='PIVOT_INDIVIDUAL').object_name = "乳袋防止素体"
         self.layout.separator()
         self.layout.operator('wm.append_cm3d2_figure', text="Tスタンス素体", icon='MOD_ARMATURE').object_name = "Tスタンス素体"
         self.layout.operator('wm.append_cm3d2_figure', text="Tスタンス素体 足のみ", icon='SOUND').object_name = "Tスタンス素体 足のみ"

@@ -74,9 +74,9 @@ def menu_func(self, context):
         
     if bone_data_count:
         col = box.column(align=True)
-        col.label(text="Armature Operators", icon=compat.icon('OUTLINER_OB_ARMATURE'))
-        col.operator("object.add_cm3d2_twist_bones", text="Connect Twist Bones", icon=compat.icon('CONSTRAINT_BONE'))
-        col.operator("object.cleanup_scale_bones"  , text="Cleanup Scale Bones", icon=compat.icon('X'              ))
+        col.label(text="Armature Operators", icon='OUTLINER_OB_ARMATURE')
+        col.operator("object.add_cm3d2_twist_bones", text="Connect Twist Bones", icon='CONSTRAINT_BONE')
+        col.operator("object.cleanup_scale_bones", text="Cleanup Scale Bones", icon='X')
         
     if 'is T Stance' in arm:
         if not is_boxed:
@@ -101,7 +101,7 @@ def menu_func(self, context):
         #    sub_row.enabled = False
         
         sub_row = row.row(align=True)
-        op = sub_row.operator('poselib.apply_pose', icon=compat.icon('OUTLINER_DATA_ARMATURE'), text="Pose data")#, depress=(context.scene.frame_current % 2 != arm['is T Stance']))
+        op = sub_row.operator('poselib.apply_pose', icon='OUTLINER_DATA_ARMATURE', text="Pose data")#, depress=(context.scene.frame_current % 2 != arm['is T Stance']))
         op.pose_index = not arm['is T Stance']
         #if context.scene.frame_current % 2 == op.value:
         #    sub_row.enabled = False
@@ -110,7 +110,7 @@ def menu_func(self, context):
         
         sub_row = row.row(align=True)
         sub_row.operator_context = 'EXEC_DEFAULT'
-        op = sub_row.operator('pose.apply_prime_field', icon=compat.icon('FILE_REFRESH'), text="Swap Prime Field")
+        op = sub_row.operator('pose.apply_prime_field', icon='FILE_REFRESH', text="Swap Prime Field")
         op.is_swap_prime_field = True
 
 
@@ -1638,11 +1638,11 @@ class DATA_PT_cm3d2_sliders(bpy.types.Panel):
                                 
         row = self.layout.row()
         #row.enabled = bpy.ops.object.add_cm3d2_body_sliders.poll(context.copy())
-        op = row.operator("object.add_cm3d2_body_sliders", text="Connect Sliders"    , icon=compat.icon('CONSTRAINT_BONE'))
+        op = row.operator("object.add_cm3d2_body_sliders", text="Connect Sliders", icon='CONSTRAINT_BONE')
         
         row = self.layout.row()
         #row.enabled = bpy.ops.object.cleanup_scale_bones.poll(context.copy())
-        op = row.operator("object.cleanup_scale_bones"   , text="Cleanup Scale Bones", icon=compat.icon('X'              ))
+        op = row.operator("object.cleanup_scale_bones", text="Cleanup Scale Bones", icon='X')
 
 
 
@@ -1663,7 +1663,7 @@ class DATA_PT_cm3d2_body_sliders(bpy.types.Panel):
 
     def draw(self, context):
         morph = context.object.cm3d2_bone_morph
-        self.layout.operator('object.save_cm3d2_body_sliders_to_menu', icon=compat.icon('COPYDOWN'))
+        self.layout.operator('object.save_cm3d2_body_sliders_to_menu', icon='COPYDOWN')
 
         self.layout.use_property_split = True
         flow = self.layout.column_flow()
@@ -1875,7 +1875,7 @@ class CNV_OT_save_cm3d2_body_sliders_to_menu(bpy.types.Operator):
     def draw(self, context):
         self.layout.prop(self, 'is_overwrite')
         if self.is_overwrite:
-            self.layout.label(text="Any existing data will be overwritten", icon=compat.icon('ERROR'))
+            self.layout.label(text="Any existing data will be overwritten", icon='ERROR')
 
     def execute(self, context):
         ob = context.object

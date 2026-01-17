@@ -11,7 +11,6 @@ import inspect
 from typing import Any, Optional, Callable, Protocol, TypeVar, ParamSpec, TYPE_CHECKING
 from types import FunctionType
 import functools
-import warnings
 
 
 UILayoutDrawer = bpy.types.Header | bpy.types.Menu | bpy.types.Panel
@@ -56,6 +55,9 @@ class BlRegister:
         cls.functions.clear()
 
 
+import functools
+import inspect
+import warnings
 
 string_types = (type(b''), type(u''))
 
@@ -314,6 +316,22 @@ def set_bone_matrix(bone, mat):
         bone.align_roll((mat[0][2],mat[1][2],mat[2][2]))
     #print("bone: ", bone.matrix)
     #print("mat:  ", mat)
+
+
+def region_type():
+    return 'UI'
+
+
+def pref_type():
+    return 'PREFERENCES'
+
+
+def get_prefs(context):
+    return context.preferences
+
+
+def get_system(context):
+    return get_prefs(context).view
 
 
 def get_tex_image(context, node_name=None):

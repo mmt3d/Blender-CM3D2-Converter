@@ -63,9 +63,9 @@ class CNV_OT_import_cm3d2_anm(bpy.types.Operator):
 
     def draw(self, context):
         self.layout.prop(self, 'scale')
-        self.layout.prop(self, 'set_frame_rate'  , icon=compat.icon('RENDER_ANIMATION'))
-        self.layout.prop(self, 'is_loop'         , icon=compat.icon('LOOP_BACK'       ))
-        self.layout.prop(self, 'is_anm_data_text', icon=compat.icon('TEXT'            ))
+        self.layout.prop(self, 'set_frame_rate'  , icon='RENDER_ANIMATION')
+        self.layout.prop(self, 'is_loop'         , icon='LOOP_BACK')
+        self.layout.prop(self, 'is_anm_data_text', icon='TEXT')
 
         box = self.layout.box()
         box.prop(self, 'remove_pre_animation', icon='DISCLOSURE_TRI_DOWN')
@@ -75,10 +75,10 @@ class CNV_OT_import_cm3d2_anm(bpy.types.Operator):
         box = self.layout.box()
         box.label(text="読み込むアニメーション情報")
         column = box.column(align=True)
-        column.prop(self, 'is_location', icon=compat.icon('CON_LOCLIKE' ))
-        column.prop(self, 'is_rotation', icon=compat.icon('CON_ROTLIKE' ))
-        column.prop(self, 'is_scale'   , icon=compat.icon('CON_SIZELIKE'))
-        column.prop(self, 'is_tangents', icon=compat.icon('IPO_BEZIER'  ))
+        column.prop(self, 'is_location', icon='CON_LOCLIKE')
+        column.prop(self, 'is_rotation', icon='CON_ROTLIKE')
+        column.prop(self, 'is_scale'   , icon='CON_SIZELIKE')
+        column.prop(self, 'is_tangents', icon='IPO_BEZIER')
 
     def execute(self, context):
         prefs = common.preferences()

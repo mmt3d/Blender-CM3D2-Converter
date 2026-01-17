@@ -271,8 +271,8 @@ class CM3D2MENU_PG_AttachPointCommand(bpy.types.PropertyGroup):
         col.prop(self, 'rotation'  )
         
         col = layout.column(align=True)
-        col.operator('cm3d2menu.align_selected_to_attach_point', icon=compat.icon('OBJECT_ORIGIN')    )
-        col.operator('cm3d2menu.align_attach_point_to_selected', icon=compat.icon('ORIENTATION_LOCAL'))
+        col.operator('cm3d2menu.align_selected_to_attach_point', icon='OBJECT_ORIGIN')
+        col.operator('cm3d2menu.align_attach_point_to_selected', icon='ORIENTATION_LOCAL')
 
 
 @compat.BlRegister()

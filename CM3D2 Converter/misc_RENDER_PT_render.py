@@ -24,7 +24,7 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     items = [
-        ('FACE_TEXTURE', "面のテクスチャで", "", 'FACESEL_HLT', 1),
+        ('FACE_TEXTURE', "面のテクスチャで", "", 'FACESEL', 1),
         ('NOW_MATERIAL', "今のマテリアルで", "", 'MATERIAL', 2),
     ]
     mode: bpy.props.EnumProperty(items=items, name="モード", default='FACE_TEXTURE')
@@ -81,11 +81,11 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self)
 
     def draw(self, context):
-        self.layout.prop(self, 'resolution', icon=compat.icon('FILE_IMAGE'), slider=True)
+        self.layout.prop(self, 'resolution', icon='FILE_IMAGE', slider=True)
         col = self.layout.column(align=True)
-        col.label(text="テクスチャ参照方法", icon=compat.icon('SHADING_TEXTURE'))
+        col.label(text="テクスチャ参照方法", icon='SHADING_TEXTURE')
         row = col.row()
-        row.prop(self, 'mode', icon=compat.icon('SHADING_TEXTURE'), expand=True)
+        row.prop(self, 'mode', icon='SHADING_TEXTURE', expand=True)
         self.layout.separator()
 
         row = compat.layout_split(self.layout, factor=1 / 3, align=True)
@@ -104,7 +104,7 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
         row = compat.layout_split(self.layout, factor=0.333333333, align=True)
         row.prop(self, 'use_background_color', icon='WORLD')
         row.prop(self, 'background_color', icon='COLOR', text="")
-        row.prop(self, 'is_round_background', icon=compat.icon('CLIPUV_DEHLT'))
+        row.prop(self, 'is_round_background', icon='CLIPUV_DEHLT')
 
         self.layout.separator()
         self.layout.prop_search(self, 'layer_image', context.blend_data, "images", icon='MOD_UVPROJECT')

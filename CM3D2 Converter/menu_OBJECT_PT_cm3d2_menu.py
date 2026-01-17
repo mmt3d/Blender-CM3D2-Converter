@@ -38,7 +38,7 @@ class CM3D2MENU_UL_command_list(bpy.types.UIList):
                 command_enum_info = menu_file.get_command_enum_info(command_prop.command)
                 icon = 'NONE'
                 if command_enum_info:
-                    icon = compat.icon(command_enum_info[3])
+                    icon = command_enum_info[3]
                 layout.label(text=command_prop.name, icon=icon)
             else:
                 layout.label(text="", translate=False, icon_value=icon)
@@ -67,8 +67,8 @@ class OBJECT_PT_cm3d2_menu(bpy.types.Panel):
         ob = context.object
 
         row = self.layout.row(align=True)
-        row.operator('cm3d2menu.import', text="Import CM3D2 Menu File", icon=compat.icon('IMPORT'))
-        row.operator('cm3d2menu.export', text="Export CM3D2 Menu File", icon=compat.icon('EXPORT'))
+        row.operator('cm3d2menu.import', text="Import CM3D2 Menu File", icon='IMPORT')
+        row.operator('cm3d2menu.export', text="Export CM3D2 Menu File", icon='EXPORT')
 
         cm3d2_menu = ob.cm3d2_menu
         active_command = cm3d2_menu.get_active_command()

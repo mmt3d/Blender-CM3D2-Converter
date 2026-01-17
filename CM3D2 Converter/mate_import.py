@@ -100,7 +100,7 @@ class CNV_OT_import_cm3d2_mate_text(bpy.types.Operator):
         return {'RUNNING_MODAL'}
 
     def draw(self, context):
-        self.layout.prop(self, 'is_overwrite', icon='SAVE_COPY')
+        self.layout.prop(self, 'is_overwrite', icon='FILE_TICK')
 
     def execute(self, context):
         prefs = common.preferences()

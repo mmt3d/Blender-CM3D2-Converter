@@ -116,7 +116,6 @@ class CNV_UL_modifier_selector(common.CNV_UL_generic_selector):
         subrow.prop(self, "use_filter_viewport_visible", toggle=True)
         subrow.prop(self, "use_filter_renderer_visible", toggle=True)
         icon = 'ZOOM_OUT' if self.use_filter_reversed_visible else 'ZOOM_IN'
-        icon = compat.icon(icon)
         subrow.prop(self, "use_filter_reversed_visible", text="", icon=icon)
 
         super(CNV_UL_modifier_selector, self).draw_filter(context, layout)
@@ -188,13 +187,13 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
         if len(ob.modifiers) == 0:
             return {'CANCELLED'}
 
+        modifier_enums = bpy.types.Modifier.bl_rna.properties['type'].enum_items
         for index, mod in enumerate(ob.modifiers):
             #if index >= 32: # luvoid : can only apply 32 modifiers at once.
             #    self.report(type={'WARNING'}, message="Can only apply the first 32 modifiers at once.")
             #    break
-            icon = 'MOD_%s' % mod.type.replace('DECIMATE','DECIM').replace('SOFT_BODY','SOFT').replace('PARTICLE_SYSTEM','PARTICLES').replace('_SPLIT','SPLIT').replace('_PROJECT','PROJECT').replace('_DEFORM','DEFORM').replace('_SIMULATION','SIM').replace('_EDIT','').replace('_MIX','').replace('_PROXIMITY','').replace('_PAINT','PAINT')
-            icon = compat.icon(icon)
-            
+            icon = modifier_enums[mod.type].icon
+
             new_prop = None
             if index < len(self.is_applies):
                 new_prop = self.is_applies[index]
@@ -219,7 +218,7 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self)
 
     def draw(self, context):
-        self.layout.prop(self , 'is_preserve_shape_key_values', icon=compat.icon('SHAPEKEY_DATA'), slider=True)
+        self.layout.prop(self , 'is_preserve_shape_key_values', icon='SHAPEKEY_DATA', slider=True)
         self.layout.label(text="適用するモディファイア")
         ob = context.active_object
 
