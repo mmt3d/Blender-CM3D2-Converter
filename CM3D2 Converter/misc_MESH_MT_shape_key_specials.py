@@ -152,36 +152,25 @@ class transfer_shape_key_iter:
             #self.binded_shape_key_data.free()
 
 
-if TYPE_CHECKING:
-    _op_base = bpy.types.Operator
-else:
-    _op_base = object
-
-
-class shape_key_transfer_op(_op_base):
+class shape_key_transfer_op(bpy.types.Operator):
     is_first_remove_all: bpy.props.BoolProperty(name="最初に全シェイプキーを削除", default=False)
     is_remove_empty: bpy.props.BoolProperty(name="変形のないシェイプキーを削除", default=True)
     is_bind_current_mix: bpy.props.BoolProperty(name="Bind to current source mix", default=False)
     subdivide_number: bpy.props.IntProperty(name="参照元の分割", default=1, min=0, max=10, soft_min=0, soft_max=10)
 
-    def __init__(self):
-        self.target_ob = None
-        self.source_ob = None
-        self.og_source_ob = None
-
-        self._start_time = 0
-        self._timer = None
-        
-        self.is_finished = False
-        self.is_canceled = False
-
-        self.pre_mode = None
-        self.pre_selected = None
-        self.pre_active = None
-
-        self.binded_shape_key = None
-        self.kd = None
-        self.is_shapeds = {}
+    target_ob: bpy.types.Object | None = None
+    source_ob: bpy.types.Object | None = None
+    og_source_ob: bpy.types.Object | None = None
+    _start_time: float = 0.0
+    _timer: bpy.types.Timer | None = None
+    is_finished: bool = False
+    is_canceled: bool = False
+    pre_mode: str | None = None
+    pre_selected: list[bpy.types.Object] | None = None
+    pre_active: bpy.types.Object | None = None
+    binded_shape_key: bpy.types.ShapeKey | None = None
+    kd: mathutils.kdtree.KDTree | None = None
+    is_shapeds: dict = {}
 
     def draw(self, context):
         self.layout.prop(self, 'is_first_remove_all', icon='ERROR'        )
@@ -441,7 +430,7 @@ class shape_key_transfer_op(_op_base):
 
 
 @compat.BlRegister()
-class CNV_OT_quick_shape_key_transfer(shape_key_transfer_op, bpy.types.Operator):
+class CNV_OT_quick_shape_key_transfer(shape_key_transfer_op):
     bl_idname = 'object.quick_shape_key_transfer'
     bl_label = "クイック・シェイプキー転送"
     bl_description = "アクティブなメッシュに他の選択メッシュのシェイプキーを高速で転送します"
@@ -538,7 +527,7 @@ class CNV_OT_quick_shape_key_transfer(shape_key_transfer_op, bpy.types.Operator)
 
 
 @compat.BlRegister()
-class CNV_OT_precision_shape_key_transfer(shape_key_transfer_op, bpy.types.Operator):
+class CNV_OT_precision_shape_key_transfer(shape_key_transfer_op):
     bl_idname = 'object.precision_shape_key_transfer'
     bl_label = "空間ぼかし・シェイプキー転送"
     bl_description = "アクティブなメッシュに他の選択メッシュのシェイプキーを遠いほどぼかして転送します"
@@ -1136,7 +1125,7 @@ class CNV_UL_vgroups_selector(bpy.types.UIList):
 
 
 @compat.BlRegister()
-class CNV_OT_weighted_shape_key_transfer(shape_key_transfer_op, bpy.types.Operator):
+class CNV_OT_weighted_shape_key_transfer(shape_key_transfer_op):
     bl_idname = 'object.weighted_shape_key_transfer'
     bl_label = "Weighted shape key transfer"
     bl_description = "Transfers the shape keys of other selected mesh to the active mesh, using matching vertex groups as masks"
