@@ -909,7 +909,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                 for vert in vertex_data
             )
         )
-        me.use_auto_smooth = True
+        compat.enable_use_auto_smooth(me)
 
         return ob, me
 

@@ -347,3 +347,8 @@ def calc_normals_split(mesh: bpy.types.Mesh):
     # update automatically since Blender 4.1
     if IS_LT41:
         mesh.calc_normals_split()
+
+
+def enable_use_auto_smooth(mesh: bpy.types.Mesh):
+   if IS_LT41:
+       mesh.use_auto_smooth = True
