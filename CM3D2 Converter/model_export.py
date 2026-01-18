@@ -619,7 +619,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         # カスタム法線情報を取得
         if me.has_custom_normals:
             custom_normals = [mathutils.Vector() for i in range(len(me.vertices))]
-            me.calc_normals_split()
+            compat.calc_normals_split(me)
             for loop in me.loops:
                 custom_normals[loop.vertex_index] += loop.normal
             for no in custom_normals:

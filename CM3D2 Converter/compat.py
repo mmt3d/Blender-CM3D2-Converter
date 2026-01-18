@@ -15,6 +15,7 @@ import warnings
 
 
 IS_LT40 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 0)
+IS_LT41 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 1)
 
 UILayoutDrawer = bpy.types.Header | bpy.types.Menu | bpy.types.Panel
 
@@ -340,3 +341,9 @@ def set_show_bone_colors(arm: bpy.types.Armature, show: bool):
         arm.show_group_colors = show
     else:
         arm.show_bone_colors = show
+
+
+def calc_normals_split(mesh: bpy.types.Mesh):
+    # update automatically since Blender 4.1
+    if IS_LT41:
+        mesh.calc_normals_split()

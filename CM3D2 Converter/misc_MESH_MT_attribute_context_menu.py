@@ -55,7 +55,7 @@ class CNV_OT_attribute_from_custom_normals(bpy.types.Operator):
         pre_mode = ob.mode
         bpy.ops.object.mode_set(mode='OBJECT')
 
-        me.calc_normals_split()
+        compat.calc_normals_split(me)
 
         attribute = me.attributes.new('custom_normals', self.data_type, 'CORNER')
 
