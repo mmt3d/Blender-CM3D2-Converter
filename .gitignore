@@ -1,7 +1,8 @@
 *.zip
 __pycache__
 venv
-.venv
+.venv*
+.idea
 
 # This is symlinked for convienence
 cm3d2converter
