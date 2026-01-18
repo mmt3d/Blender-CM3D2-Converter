@@ -20,6 +20,12 @@ class LiveLinkClientCLI:
             stderr=subprocess.PIPE
         )
 
+    def __del__(self):
+        self.process.terminate()
+        self.process.wait()
+        self.process.stdout.close()
+        self.process.stderr.close()
+
 class TestLiveLink(BlenderTestCase):
     def setUp(self):
         super().setUp()
@@ -27,7 +33,12 @@ class TestLiveLink(BlenderTestCase):
         bpy.ops.com3d2livelink.start_server(address=self.address, wait_for_connection=False)
         self.client = LiveLinkClientCLI(self.address)
         bpy.ops.com3d2livelink.wait_for_connection()
-    
+
+    def tearDown(self):
+        del self.client
+        bpy.ops.com3d2livelink.stop_server()
+        super().tearDown()
+
     def test_send_animation(self):
         tpose_object: bpy.types.Object = bpy.data.objects.get('Tスタンス素体.armature')
         self.activate_object(tpose_object)
@@ -42,10 +53,7 @@ class TestLiveLink(BlenderTestCase):
         
         with ProfileLog(self.test_link_pose.__name__):
             bpy.ops.com3d2livelink.link_pose()
-        
-    def test_stop_server(self):
-        bpy.ops.com3d2livelink.stop_server()
-    
+
     def test_send_model(self):
         bpy.ops.import_mesh.import_cm3d2_model(filepath=f'{self.resources_dir}/body001.model')
         bpy.ops.com3d2livelink.send_model()
