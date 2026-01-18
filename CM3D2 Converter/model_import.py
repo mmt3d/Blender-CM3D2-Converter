@@ -1038,7 +1038,8 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                 bpy.ops.object.shape_key_add(from_mix=False)
                 me.shape_keys.name = ob.name
             shape_key = ob.shape_key_add(name=data['name'], from_mix=False)
-            
+            shape_key.value = 0.0
+
             normals_color = create_normals_color(f"{data['name']}_delta_normals")
             unknown_color = create_unknown_color(data)
             set_shape_key_data(shape_key, normals_color, unknown_color)
