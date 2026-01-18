@@ -87,7 +87,6 @@ if True:
     from . import misc_TEXTURE_PT_context_texture
     from . import misc_TEXT_HT_header
     from . import misc_TEXT_MT_templates
-    from . import misc_VIEW3D_MT_edit_mesh_merge
     from . import misc_VIEW3D_MT_edit_mesh_specials
     from . import misc_VIEW3D_MT_edit_mesh_split
     from . import misc_VIEW3D_MT_pose_apply
