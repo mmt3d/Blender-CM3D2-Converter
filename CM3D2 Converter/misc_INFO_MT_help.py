@@ -254,9 +254,9 @@ class CNV_OT_show_cm3d2_converter_preference(bpy.types.Operator):
                 my_info = info
                 break
         bpy.ops.screen.userpref_show()
-        area = common.get_request_area(context, compat.pref_type())
+        area = common.get_request_area(context, 'PREFERENCES')
         if area and my_info:
-            compat.get_prefs(context).active_section = 'ADDONS'
+            context.preferences.active_section = 'ADDONS'
             context.window_manager.addon_search = my_info['name']
             context.window_manager.addon_filter = 'All'
             if 'COMMUNITY' not in context.window_manager.addon_support:

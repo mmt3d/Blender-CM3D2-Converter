@@ -224,7 +224,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
         split.label(text=".".join(str(i) for i in bpy.app.version) if hasattr(bpy.app, 'version') else "Legacy")
         split = compat.layout_split(col.row(), factor)
         split.label(text="Blender Language: ")
-        split.label(text=compat.get_system(bpy.context).language or 'None')
+        split.label(text=bpy.context.preferences.view.language or 'None')
         default_locale = 'UNKNOWN'
         try:
             import locale

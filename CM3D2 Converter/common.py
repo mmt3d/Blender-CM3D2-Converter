@@ -39,7 +39,7 @@ def preferences():
     global PREFS
     if PREFS is None:
         try:
-            PREFS = compat.get_prefs(bpy.context).addons[__package__].preferences
+            PREFS = bpy.context.preferences.addons[__package__].preferences
         except KeyError:
             # This can happen when using Blender-as-a-Module
             # which is how the unit-tests work
@@ -619,7 +619,7 @@ def set_texture_color(slot):
 # 必要なエリアタイプを設定を変更してでも取得
 def get_request_area(context, request_type, except_types=None):
     if except_types is None:
-        except_types = ['VIEW_3D', 'PROPERTIES', 'INFO', compat.pref_type()]
+        except_types = ['VIEW_3D', 'PROPERTIES', 'INFO', 'PREFERENCES']
 
     request_areas = [(a, a.width * a.height) for a in context.screen.areas if a.type == request_type]
     candidate_areas = [(a, a.width * a.height) for a in context.screen.areas if a.type not in except_types]
