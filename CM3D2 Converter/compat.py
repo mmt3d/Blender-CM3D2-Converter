@@ -14,6 +14,8 @@ import functools
 import warnings
 
 
+IS_LT40 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 0)
+
 UILayoutDrawer = bpy.types.Header | bpy.types.Menu | bpy.types.Panel
 
 
@@ -324,3 +326,10 @@ def get_tex_image(context, node_name=None):
             return node.image
 
     return None
+
+
+def add_armature_layer(arm: bpy.types.Armature):
+    if IS_LT40:
+        arm.layers[16] = True
+    else:
+        bpy.ops.armature.collection_add()
