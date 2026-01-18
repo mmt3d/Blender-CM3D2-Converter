@@ -333,3 +333,10 @@ def add_armature_layer(arm: bpy.types.Armature):
         arm.layers[16] = True
     else:
         bpy.ops.armature.collection_add()
+
+
+def set_show_bone_colors(arm: bpy.types.Armature, show: bool):
+    if IS_LT40:
+        arm.show_group_colors = show
+    else:
+        arm.show_bone_colors = show

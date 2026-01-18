@@ -372,7 +372,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             arm.show_names              = prefs.show_bone_names        
             arm.show_axes               = prefs.show_bone_axes         
             arm.show_bone_custom_shapes = prefs.show_bone_custom_shapes
-            arm.show_group_colors       = prefs.show_bone_group_colors
+            compat.set_show_bone_colors(arm, prefs.show_bone_group_colors)
             arm_ob.show_in_front        = prefs.show_bone_in_front
 
             bpy.ops.object.mode_set(mode='EDIT')
