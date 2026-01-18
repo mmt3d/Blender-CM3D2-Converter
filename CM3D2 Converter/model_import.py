@@ -670,31 +670,29 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
 
             face_seek = 0
             mates_set = set()
-            override = context.copy()
-            override['object'] = ob
-            prefs = common.preferences()
-            
-            for index, data in enumerate(material_data):
-                print(f_("material count: {num} of {count}", num=index, count=material_count))
-                
-                mates_set.add(data.name)
-                #common.preferences().mate_unread_same_value
-                bpy.ops.object.material_slot_add(override)
-                mate = context.blend_data.materials.new(data.name)#['name1'])
-                #mate['shader1'] = data['name2']
-                #mate['shader2'] = data['name3']
 
-                ob.material_slots[-1].material = mate
-                # 面にマテリアル割り当て
-                for i in range(face_seek, face_seek + len(face_data[index])):
-                    me.polygons[i].material_index = index
-                face_seek += len(face_data[index])
+            with context.temp_override(object=ob):
+                for index, data in enumerate(material_data):
+                    print(f_("material count: {num} of {count}", num=index, count=material_count))
 
-                # テクスチャ追加
-                #self.create_mateprop(context, me, texes_set, mate, index, data)
-                cm3d2_data.MaterialHandler.apply_to(override, mate, data)
-                common.decorate_material(mate, self.is_decorate, me, index)
-                common.setup_material(mate)
+                    mates_set.add(data.name)
+                    #common.preferences().mate_unread_same_value
+                    bpy.ops.object.material_slot_add()
+                    mate = context.blend_data.materials.new(data.name)#['name1'])
+                    #mate['shader1'] = data['name2']
+                    #mate['shader2'] = data['name3']
+
+                    ob.material_slots[-1].material = mate
+                    # 面にマテリアル割り当て
+                    for i in range(face_seek, face_seek + len(face_data[index])):
+                        me.polygons[i].material_index = index
+                    face_seek += len(face_data[index])
+
+                    # テクスチャ追加
+                    #self.create_mateprop(context, me, texes_set, mate, index, data)
+                    cm3d2_data.MaterialHandler.apply_to(context, mate, data)
+                    common.decorate_material(mate, self.is_decorate, me, index)
+                    common.setup_material(mate)
 
             ob.active_material_index = 0
             context.window_manager.progress_update(7)

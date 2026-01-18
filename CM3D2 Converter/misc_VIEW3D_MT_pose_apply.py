@@ -215,46 +215,45 @@ class CNV_OT_apply_prime_field(bpy.types.Operator):
             bpy.context.view_layer.update()
 
         if self.is_apply_armature_modifier and ob.children:
-            override = context.copy()
-            context.window_manager.progress_begin(0, len(ob.children)+1)  
+            context.window_manager.progress_begin(0, len(ob.children)+1)
             for child in ob.children:
-                override['object'], override['active_object'] = child, child
-                if child.type == 'MESH' and len(child.modifiers) and bpy.ops.object.forced_modifier_apply.poll(override):
-                    for mod in child.modifiers:
-                        if mod.type == 'ARMATURE':
-                            mod.use_deform_preserve_volume = self.is_deform_preserve_volume
-                            if not mod.object == ob:
-                                had_armature = False
-                            else:
-                                had_armature = True
-                                old_name                = mod.name                      
-                                old_show_expanded       = mod.show_expanded             
-                                old_show_in_editmode    = mod.show_in_editmode          
-                                old_show_on_cage        = mod.show_on_cage              
-                                old_show_render         = mod.show_render               
-                                old_show_viewport       = mod.show_viewport             
-                                old_use_apply_on_spline = mod.use_apply_on_spline       
-                                old_invert_vertex_group = mod.invert_vertex_group       
-                                old_use_bone_envelopes  = mod.use_bone_envelopes        
-                                #old_use_multi_modifier  = mod.use_multi_modifier        
-                                old_use_vertex_groups   = mod.use_vertex_groups         
-                                old_vertex_group        = mod.vertex_group        
-                    apply_results = bpy.ops.object.forced_modifier_apply(override, apply_viewport_visible=True, is_preserve_shape_key_values=self.is_preserve_shape_key_values, initial_progress=progress)
-                    if ('FINISHED' in apply_results) and had_armature:
-                        new_mod = child.modifiers.new(name=old_name, type='ARMATURE')
-                        new_mod.object              = ob
-                        new_mod.use_deform_preserve_volume = self.is_deform_preserve_volume
-                        new_mod.show_expanded       = old_show_expanded      
-                        new_mod.show_in_editmode    = old_show_in_editmode   
-                        new_mod.show_on_cage        = old_show_on_cage       
-                        new_mod.show_render         = old_show_render        
-                        new_mod.show_viewport       = old_show_viewport      
-                        new_mod.use_apply_on_spline = old_use_apply_on_spline
-                        new_mod.invert_vertex_group = old_invert_vertex_group
-                        new_mod.use_bone_envelopes  = old_use_bone_envelopes 
-                        #new_mod.use_multi_modifier  = old_use_multi_modifier 
-                        new_mod.use_vertex_groups   = old_use_vertex_groups  
-                        new_mod.vertex_group        = old_vertex_group
+                with context.temp_override(object=child, active_object=child):
+                    if child.type == 'MESH' and len(child.modifiers) and bpy.ops.object.forced_modifier_apply.poll():
+                        for mod in child.modifiers:
+                            if mod.type == 'ARMATURE':
+                                mod.use_deform_preserve_volume = self.is_deform_preserve_volume
+                                if not mod.object == ob:
+                                    had_armature = False
+                                else:
+                                    had_armature = True
+                                    old_name                = mod.name
+                                    old_show_expanded       = mod.show_expanded
+                                    old_show_in_editmode    = mod.show_in_editmode
+                                    old_show_on_cage        = mod.show_on_cage
+                                    old_show_render         = mod.show_render
+                                    old_show_viewport       = mod.show_viewport
+                                    old_use_apply_on_spline = mod.use_apply_on_spline
+                                    old_invert_vertex_group = mod.invert_vertex_group
+                                    old_use_bone_envelopes  = mod.use_bone_envelopes
+                                    #old_use_multi_modifier  = mod.use_multi_modifier
+                                    old_use_vertex_groups   = mod.use_vertex_groups
+                                    old_vertex_group        = mod.vertex_group
+                        apply_results = bpy.ops.object.forced_modifier_apply(apply_viewport_visible=True, is_preserve_shape_key_values=self.is_preserve_shape_key_values, initial_progress=progress)
+                        if ('FINISHED' in apply_results) and had_armature:
+                            new_mod = child.modifiers.new(name=old_name, type='ARMATURE')
+                            new_mod.object              = ob
+                            new_mod.use_deform_preserve_volume = self.is_deform_preserve_volume
+                            new_mod.show_expanded       = old_show_expanded
+                            new_mod.show_in_editmode    = old_show_in_editmode
+                            new_mod.show_on_cage        = old_show_on_cage
+                            new_mod.show_render         = old_show_render
+                            new_mod.show_viewport       = old_show_viewport
+                            new_mod.use_apply_on_spline = old_use_apply_on_spline
+                            new_mod.invert_vertex_group = old_invert_vertex_group
+                            new_mod.use_bone_envelopes  = old_use_bone_envelopes
+                            #new_mod.use_multi_modifier  = old_use_multi_modifier
+                            new_mod.use_vertex_groups   = old_use_vertex_groups
+                            new_mod.vertex_group        = old_vertex_group
                 
                 progress += 1
                 context.window_manager.progress_update(progress)

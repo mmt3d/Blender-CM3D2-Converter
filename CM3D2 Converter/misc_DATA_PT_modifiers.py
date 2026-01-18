@@ -315,14 +315,13 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
                     for vert in temp_me.vertices:
                         vert.co = deforms[vert.index].copy()
 
-                    override = context.copy()
-                    override['object'] = temp_ob
-                    for index, mod in enumerate(temp_ob.modifiers):
-                        if self.is_applies[index].value:
-                            try:
-                                bpy.ops.object.modifier_apply(override, modifier=mod.name)
-                            except:
-                                temp_ob.modifiers.remove(mod)
+                    with context.temp_override(object=temp_ob):
+                        for index, mod in enumerate(temp_ob.modifiers):
+                            if self.is_applies[index].value:
+                                try:
+                                    bpy.ops.object.modifier_apply(modifier=mod.name)
+                                except:
+                                    temp_ob.modifiers.remove(mod)
 
                     new_shape_deforms.append([v.co.copy() for v in temp_me.vertices])
                 except Exception as e:
@@ -343,30 +342,29 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
         copy_modifiers = ob.modifiers[:]
         mod_count = len(copy_modifiers)
         mod_progress = 0
-        override = context.copy()
-        override['object'] = ob
-        for index, mod in enumerate(copy_modifiers):
-            #if index >= 32: # luvoid : can only apply 32 modifiers at once.
-            #    break
-            if self.is_applies[index].value:
-                if mod.type == 'MIRROR' and mod.use_mirror_vertex_groups:
-                    if bpy.ops.object.decode_cm3d2_vertex_group_names.poll():
-                        self.report(type={'WARNING'}, message="Vertex groups are not in blender naming style. Mirror modifier results may not be as expected")
-                    for vg in ob.vertex_groups[:]:
-                        replace_list = ((r'\.L$', ".R"), (r'\.R$', ".L"), (r'\.l$', ".r"), (r'\.r$', ".l"), (r'_L$', "_R"), (r'_R$', "_L"), (r'_l$', "_r"), (r'_r$', "_l"))
-                        for before, after in replace_list:
-                            mirrored_name = re.sub(before, after, vg.name)
-                            if mirrored_name not in ob.vertex_groups:
-                                ob.vertex_groups.new(override, name=mirrored_name)
-                try:
-                    bpy.ops.object.modifier_apply(override, modifier=mod.name)
-                except Exception as e:
-                    #ob.modifiers.remove(mod)
-                    self.report(type={'ERROR', 'WARNING'}, message=f_tip_("Could not apply '{type}' modifier \"{name}\"", type=mod.type, name=mod.name))
-                    print(f_("Error applying '{type}' modifier \"{name}\":\n\t", type=mod.type, name=mod.name), e)
-            
-            mod_progress += 1
-            context.window_manager.progress_update( progress_start + (progress + mod_progress / mod_count) / progress_count )
+        with context.temp_override(object=ob):
+            for index, mod in enumerate(copy_modifiers):
+                #if index >= 32: # luvoid : can only apply 32 modifiers at once.
+                #    break
+                if self.is_applies[index].value:
+                    if mod.type == 'MIRROR' and mod.use_mirror_vertex_groups:
+                        if bpy.ops.object.decode_cm3d2_vertex_group_names.poll():
+                            self.report(type={'WARNING'}, message="Vertex groups are not in blender naming style. Mirror modifier results may not be as expected")
+                        for vg in ob.vertex_groups[:]:
+                            replace_list = ((r'\.L$', ".R"), (r'\.R$', ".L"), (r'\.l$', ".r"), (r'\.r$', ".l"), (r'_L$', "_R"), (r'_R$', "_L"), (r'_l$', "_r"), (r'_r$', "_l"))
+                            for before, after in replace_list:
+                                mirrored_name = re.sub(before, after, vg.name)
+                                if mirrored_name not in ob.vertex_groups:
+                                    ob.vertex_groups.new(name=mirrored_name)
+                    try:
+                        bpy.ops.object.modifier_apply(modifier=mod.name)
+                    except Exception as e:
+                        #ob.modifiers.remove(mod)
+                        self.report(type={'ERROR', 'WARNING'}, message=f_tip_("Could not apply '{type}' modifier \"{name}\"", type=mod.type, name=mod.name))
+                        print(f_("Error applying '{type}' modifier \"{name}\":\n\t", type=mod.type, name=mod.name), e)
+
+                mod_progress += 1
+                context.window_manager.progress_update( progress_start + (progress + mod_progress / mod_count) / progress_count )
 
         # Calculate custom normals for armature modifiers in legacy blender
         if arm_ob:
@@ -415,20 +413,19 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
             progress += 1
             context.window_manager.progress_update(progress_start + progress / progress_count)
 
-        override = context.copy()
-        override['object'] = ob
-        for index, mod in enumerate(copy_modifiers):
-            #if index >= 32: # luvoid : can only apply 32 modifiers at once.
-            #    break
-            if self.is_applies[index].value:
-                try:
-                    bpy.ops.object.modifier_apply(override, modifier=mod.name)
-                except Exception as e:
-                    #ob.modifiers.remove(mod)
-                    self.report(type={'ERROR', 'WARNING'}, message=f_tip_("Could not apply '{mod_type}' modifier \"{mod_name}\"", mod_type=mod.type, mod_name=mod.name) )
-                    print(f_("Could not apply '{mod_type}' modifier \"{mod_name}\":\n\t", mod_type=mod.type, mod_name=mod.name), e)
-            
-            context.window_manager.progress_update( progress_start + (progress + mod_progress / mod_count) / progress_count )
+        with context.temp_override(object=ob):
+            for index, mod in enumerate(copy_modifiers):
+                #if index >= 32: # luvoid : can only apply 32 modifiers at once.
+                #    break
+                if self.is_applies[index].value:
+                    try:
+                        bpy.ops.object.modifier_apply(modifier=mod.name)
+                    except Exception as e:
+                        #ob.modifiers.remove(mod)
+                        self.report(type={'ERROR', 'WARNING'}, message=f_tip_("Could not apply '{mod_type}' modifier \"{mod_name}\"", mod_type=mod.type, mod_name=mod.name) )
+                        print(f_("Could not apply '{mod_type}' modifier \"{mod_name}\":\n\t", mod_type=mod.type, mod_name=mod.name), e)
+
+                context.window_manager.progress_update( progress_start + (progress + mod_progress / mod_count) / progress_count )
 
         progress += 1
         context.window_manager.progress_update(progress_start + progress / progress_count)

@@ -567,9 +567,6 @@ class CNV_OT_quick_export_cm3d2_tex(bpy.types.Operator):
             self.report(type={'ERROR'}, message=f_tip_("イメージの取得に失敗しました。{}", self.node_name))
             return {'CANCELLED'}
 
-        override = context.copy()
-        override['edit_image'] = img
-
         filepath = os.path.splitext(bpy.path.abspath(img.filepath))[0] + ".tex"
         if 'cm3d2_path' in img:
             path = img['cm3d2_path']
@@ -586,7 +583,8 @@ class CNV_OT_quick_export_cm3d2_tex(bpy.types.Operator):
                 version = str(tex_data[0])
                 uv_rects = tex_data[2]
         bpy.types.Scene.MyUVRects = uv_rects
-        bpy.ops.image.export_cm3d2_tex(override, filepath=filepath, path=path, version=version)
+        with context.temp_override(edit_image=img):
+            bpy.ops.image.export_cm3d2_tex(filepath=filepath, path=path, version=version)
 
         self.report(type={'INFO'}, message="同フォルダにtexとして保存しました。" + filepath)
         return {'FINISHED'}

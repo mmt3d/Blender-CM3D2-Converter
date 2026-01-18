@@ -794,9 +794,8 @@ class AnmBuilder:
                                            path=rna_data_path, index=axis_index)
                         )
                     else:
-                        override = context.copy()
-                        override['active_editable_fcurve'] = fcurve
-                        bpy.ops.fcurve.convert_to_cm3d2_interpolation(override, only_selected=False, keep_reports=True)
+                        with context.temp_override(active_editable_fcurve=fcurve):
+                            bpy.ops.fcurve.convert_to_cm3d2_interpolation(only_selected=False, keep_reports=True)
                         for kwargs in misc_DOPESHEET_MT_editor_menus.REPORTS:
                             self.report(**kwargs)
                         misc_DOPESHEET_MT_editor_menus.REPORTS.clear()

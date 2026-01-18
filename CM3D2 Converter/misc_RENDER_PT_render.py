@@ -114,7 +114,6 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
         context.scene['render_cm3d2_icon_background_color'] = ",".join([str(c[0]), str(c[1]), str(c[2])])
         context.scene['render_cm3d2_icon_background_color_layer_image'] = self.layer_image
 
-        override = context.copy()
         obs = context.selected_objects
 
         material_restores, pre_mate_settings = None, None
@@ -123,8 +122,8 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
             temp_mates = []
             for ob in obs:
                 material_restores.append(common.material_restore(ob))
-                override['object'] = ob
-                bpy.ops.object.material_slot_add(override)
+                with context.temp_override(object=ob):
+                    bpy.ops.object.material_slot_add()
                 if len(ob.material_slots) > 0:
                     temp_mate = context.blend_data.materials.new("temp")
                     ob.material_slots[0].material = temp_mate

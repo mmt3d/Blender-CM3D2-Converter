@@ -681,8 +681,6 @@ def remove_data(target_data):
 # オブジェクトのマテリアルを削除/復元するクラス
 class material_restore:
     def __init__(self, ob):
-        override = bpy.context.copy()
-        override['object'] = ob
         self.object = ob
 
         self.slots = [slot.material if slot.material else None for slot in ob.material_slots]
@@ -695,23 +693,22 @@ class material_restore:
                     mesh_datum.append(face.index)
             self.mesh_data.append(mesh_datum)
 
-        for slot in ob.material_slots[:]:
-            bpy.ops.object.material_slot_remove(override)
+        with bpy.context.temp_override(object=ob):
+            for _ in ob.material_slots[:]:
+                bpy.ops.object.material_slot_remove()
 
     def restore(self):
-        override = bpy.context.copy()
-        override['object'] = self.object
+        with bpy.context.temp_override(object=self.object):
+            for _ in self.object.material_slots[:]:
+                bpy.ops.object.material_slot_remove()
 
-        for slot in self.object.material_slots[:]:
-            bpy.ops.object.material_slot_remove(override)
-
-        for index, mate in enumerate(self.slots):
-            bpy.ops.object.material_slot_add(override)
-            slot = self.object.material_slots[index]
-            if slot:
-                slot.material = mate
-            for face_index in self.mesh_data[index]:
-                self.object.data.polygons[face_index].material_index = index
+            for index, mate in enumerate(self.slots):
+                bpy.ops.object.material_slot_add()
+                slot = self.object.material_slots[index]
+                if slot:
+                    slot.material = mate
+                for face_index in self.mesh_data[index]:
+                    self.object.data.polygons[face_index].material_index = index
 
 
 # 現在のレイヤー内のオブジェクトをレンダリングしなくする/戻す

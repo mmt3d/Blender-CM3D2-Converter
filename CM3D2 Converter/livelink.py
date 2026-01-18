@@ -405,7 +405,8 @@ class COM3D2LIVELINK_OT_send_model(bpy.types.Operator):
         core = _get_active_core()
         if core is None or not core.IsConnected:
             return False
-        return bpy.ops.export_mesh.export_cm3d2_model.poll(context)
+        with context.temp_override():
+            return bpy.ops.export_mesh.export_cm3d2_model.poll()
 
     def execute(self, context):
         core = _get_active_core()

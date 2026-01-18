@@ -91,12 +91,11 @@ class CNV_OT_export_cm3d2_tex(bpy.types.Operator):
             temp_path = os.path.splitext(self.filepath)[0] + ".png"
         pre_filepath = bpy.path.abspath(img.filepath)
         pre_source = img.source
-        override = context.copy()
-        override['edit_image'] = img
         try:
             save_as_render = True if pre_source == 'VIEWER' else False
             copy = True if pre_source == 'VIEWER' else False
-            bpy.ops.image.save_as(override, save_as_render=save_as_render, copy=copy, filepath=temp_path, relative_path=True, show_multiview=False, use_multiview=False)
+            with context.temp_override(edit_image=img):
+                bpy.ops.image.save_as(save_as_render=save_as_render, copy=copy, filepath=temp_path, relative_path=True, show_multiview=False, use_multiview=False)
             is_remove = True
         except:
             temp_path = bpy.path.abspath(img.filepath)
