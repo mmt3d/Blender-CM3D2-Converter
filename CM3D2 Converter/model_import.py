@@ -31,7 +31,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
     scale: bpy.props.FloatProperty(name="倍率", default=5, min=0.1, max=100, soft_min=0.1, soft_max=100, step=100, precision=1, description="インポート時のメッシュ等の拡大率です")
 
     is_mesh: bpy.props.BoolProperty(name="メッシュ生成", default=True, description="ポリゴンを読み込みます、大抵の場合オンでOKです")
-    is_remove_doubles: bpy.props.BoolProperty(name="重複頂点を結合", default=False, description="UVの切れ目でポリゴンが分かれている仕様なので、インポート時にくっつけます")
+    is_remove_doubles: bpy.props.BoolProperty(name="重複頂点を結合", default=True, description="UVの切れ目でポリゴンが分かれている仕様なので、インポート時にくっつけます")
     is_seam: bpy.props.BoolProperty(name="シームをつける", default=True, description="UVの切れ目にシームをつけます")
     is_sharp: bpy.props.BoolProperty(name="Mark Sharp", default=True, description="This will mark removed doubles on your mesh as sharp (or all free edges if not removing doubles).")
 
