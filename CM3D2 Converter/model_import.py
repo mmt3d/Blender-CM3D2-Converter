@@ -35,6 +35,8 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
     is_seam: bpy.props.BoolProperty(name="シームをつける", default=True, description="UVの切れ目にシームをつけます")
     is_sharp: bpy.props.BoolProperty(name="Mark Sharp", default=True, description="This will mark removed doubles on your mesh as sharp (or all free edges if not removing doubles).")
 
+    is_uv_remove_doubles: bpy.props.BoolProperty(name="UV座標の重複頂点を結合", default=False, description="UV座標の重複頂点を結合することで、意図しない切れ目がある場合に役立ちます")
+
     is_convert_bone_weight_names: bpy.props.BoolProperty(name="頂点グループ名をBlender用に変換", default=False, description="全ての頂点グループ名をBlenderの左右対称編集で使えるように変換してから読み込みます")
     is_vertex_group_sort: bpy.props.BoolProperty(name="頂点グループを名前順ソート", default=True, description="頂点グループを名前順でソートします")
     is_remove_empty_vertex_group: bpy.props.BoolProperty(name="割り当てのない頂点グループを削除", default=True, description="全ての頂点に割り当てのない頂点グループを削除します")
@@ -81,6 +83,11 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         sub_box.prop(self, 'is_remove_doubles', icon='STICKY_UVS_VERT')
         sub_box.prop(self, 'is_seam' , icon='UV_EDGESEL')
         sub_box.prop(self, 'is_sharp', icon='EDGESEL')
+
+        sub_box = box.box()
+        sub_box.enabled = self.is_mesh
+        sub_box.label(text="UV")
+        sub_box.prop(self, 'is_uv_remove_doubles', icon='STICKY_UVS_VERT')
 
         sub_box = box.box()
         sub_box.enabled = self.is_mesh
@@ -722,6 +729,9 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                 bpy.ops.object.mode_set(mode='EDIT')
                 bpy.ops.mesh.select_all(action='SELECT')
                 bpy.ops.uv.select_all(action='SELECT')
+                if self.is_uv_remove_doubles:
+                    # メッシュ上で同一頂点となっていてUV上で同一と見なせるUVを結合する
+                    bpy.ops.uv.remove_doubles(threshold=0.00001, use_shared_vertex=True)
                 bpy.ops.uv.seams_from_islands()
                 bpy.ops.object.mode_set(mode='OBJECT')
             bpy.ops.object.mode_set(mode='EDIT')
