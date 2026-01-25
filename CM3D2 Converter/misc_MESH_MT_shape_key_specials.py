@@ -127,6 +127,9 @@ class transfer_shape_key_iter:
         self.source_shape_key_data = source_shape_key.data
         self.target_shape_key_data = target_shape_key.data
 
+        # 処理後は0に戻す
+        target_shape_key.value = 0.0
+        source_shape_key.value = 0.0
 
         return self.index, target_shape_key, self.binded_shape_key_data, self.source_shape_key_data, self.target_shape_key_data
 
