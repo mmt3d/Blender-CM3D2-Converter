@@ -565,6 +565,8 @@ class CNV_OT_precision_shape_key_transfer(shape_key_transfer_op):
         self.layout.prop(self, 'step_size')
         self.layout.prop(self, 'extend_range', icon='PROP_ON')
 
+    # todo: 不要なはず、意図的に名称変更されている
+    #  ベースクラスのexecuteがサブクラスのprepare/loopを呼ぶ設計
     def xexecute(self, context):
         start_time = time.time()
 
@@ -788,200 +790,31 @@ class CNV_OT_precision_shape_key_transfer(shape_key_transfer_op):
         shape_key_transfer_op.cleanup(self, context)
 
 
-"""
-global matched_vgroups
-global is_vgroups_used
-
-matched_vgroups = []
-is_vgroups_used = {}
-
-#@compat.BlRegister()
-class CNV_PT_vgroups_selector(bpy.types.Panel):
-    bl_label = "Vertex Groups Selector"
-    bl_options = {'DEFAULT_CLOSED'}
-    bl_region_type = 'WINDOW'
-    bl_space_type = 'PROPERTIES'
-
-    bools1 = bpy.props.BoolProperty(name="Bools 1", default=False)
-    bools2 = bpy.props.BoolProperty(name="Bools 2", default=False)
-    bools3 = bpy.props.BoolProperty(name="Bools 3", default=False)
-    bools4 = bpy.props.BoolProperty(name="Bools 4", default=False)
-    bools5 = bpy.props.BoolProperty(name="Bools 5", default=False)
-    bools6 = bpy.props.BoolProperty(name="Bools 6", default=False)
-
-
-    keys = []
-
-    def draw(self, context):
-        target_ob, source_ob = common.get_target_and_source_ob(context)
-        matched_vgroups = common.values_of_matched_keys(target_ob.vertex_groups, source_ob.vertex_groups)
-        print(f_("len(matched) = {length}", length=len(matched_vgroups)))
-        armature = target_ob.find_armature() or source_ob.find_armature()
-        armature = armature and armature.data
-        bone_data_ob = (target_ob.get("LocalBoneData:0") and target_ob) or (source_ob.get("LocalBoneData:0") and source_ob) or False
-        if bone_data_ob:
-            local_bone_data = model_export.CNV_OT_export_cm3d2_model.local_bone_data_parser(model_export.CNV_OT_export_cm3d2_model.indexed_data_generator(bone_data_ob, prefix="LocalBoneData:"))
-            local_bone_names = [ bone['name'] for bone in local_bone_data ]
-        for target_vg, source_vg in matched_vgroups:
-            vg_name = target_vg.name
-            is_used = True
-            if armature:
-                is_used = bool( armature.get(vg_name, False) )
-            elif bone_data_ob:
-                is_used = bool( vg_name in local_bone_names )
-                
-            print(vg_name)
-            is_vgroups_used[vg_name] = bpy.props.BoolProperty(name=vg_name, default=is_used)
-            self.layout.prop( self, vg_name )
-    
-    def __getattr__(self, attr):
-        print(f_("get attr {key}", key=attr))
-        if attr == 'matched_vgroups':
-            return matched_vgroups
-        if attr == 'is_vgroups_used':
-            return  is_vgroups_used
-        if attr == 'layout':
-            return bpy.types.Panel.__getattribute__(self, attr)
-        return  is_vgroups_used[attr]
-
-    def __setattr__(self, attr, value):
-        if attr == 'matched_vgroups':
-            matched_vgroups = value
-            return
-        if attr == 'is_vgroups_used':
-            is_vgroups_used = value
-            return
-        if attr == 'layout':
-            bpy.types.Panel.__setattribute__(self, attr, value)
-        print(f_("set attr {key} = {val}", key=attr, val=value))
-        is_vgroups_used[attr] = value
-"""
-
 @compat.BlRegister()
 class CNV_UL_vgroups_selector(bpy.types.UIList):
-    bl_label = "Vertex Groups Selector"
-    bl_options = {'DEFAULT_CLOSED'}
-    bl_region_type = 'WINDOW'
-    bl_space_type = 'PROPERTIES'
 
-    # Constants (flags)
-    # Be careful not to shadow FILTER_ITEM!
-    VGROUP_EMPTY  = 1 << 1
-    VGROUP_DEFORM = 1 << 0
+    use_filter_name_reverse: bpy.props.BoolProperty(name="Reverse Name", default=False, options=set(), description="Reverse name filtering")
+    use_filter_deform: bpy.props.BoolProperty(name="Only Deform", default=False, options=set(), description="Only show deforming vertex groups")
+    use_filter_deform_reverse: bpy.props.BoolProperty(name="Other", default=False, options=set(), description="Only show non-deforming vertex groups")
+    use_filter_empty: bpy.props.BoolProperty(name="Filter Empty", default=False, options=set(), description="Whether to filter empty vertex groups")
+    use_filter_empty_reverse: bpy.props.BoolProperty(name="Reverse Empty", default=False, options=set(), description="Reverse empty filtering" )
+    order_mode: bpy.props.EnumProperty(name="Order by", items=[('NAME', "Name", "Sort groups by name (case-insensitive)"), ('IMPORTANCE', "Importance", "Sort groups by average weight")], default='NAME')
+    use_filter_orderby_invert: bpy.props.BoolProperty(name="Order by Invert", default=False, options=set(), description="Invert the sort by order")
 
-    armature = None
-    local_bone_names = None
-    cached_values = {}
-
-    expanded_layout = False
-
-    # Custom properties, saved with .blend file.
-    use_filter_name_reverse: bpy.props.BoolProperty(
-        name="Reverse Name",
-        default=False,
-        options=set(),
-        description="Reverse name filtering",
-    )
-    use_filter_deform: bpy.props.BoolProperty(
-        name="Only Deform",
-        default=False,
-        options=set(),
-        description="Only show deforming vertex groups",
-    )
-    use_filter_deform_reverse: bpy.props.BoolProperty(
-        name="Other",
-        default=False,
-        options=set(),
-        description="Only show non-deforming vertex groups",
-    )
-    use_filter_empty: bpy.props.BoolProperty(
-        name="Filter Empty",
-        default=False,
-        options=set(),
-        description="Whether to filter empty vertex groups",
-    )
-    use_filter_empty_reverse: bpy.props.BoolProperty(
-        name="Reverse Empty",
-        default=False,
-        options=set(),
-        description="Reverse empty filtering",
-    )
-
-    # This allows us to have mutually exclusive options, which are also all disable-able!
-    def _gen_order_update(name1, name2):
-        def _u(self, ctxt):
-            if (getattr(self, name1)):
-                setattr(self, name2, False)
-        return _u
-    use_order_name: bpy.props.BoolProperty(
-        name="Name", default=False, options=set(),
-        description="Sort groups by their name (case-insensitive)",
-        update=_gen_order_update("use_order_name", "use_order_importance"),
-    )
-    use_order_importance: bpy.props.BoolProperty(
-        name="Importance",
-        default=False,
-        options=set(),
-        description="Sort groups by their average weight in the mesh",
-        update=_gen_order_update("use_order_importance", "use_order_name"),
-    )
-    use_filter_orderby_invert: bpy.props.BoolProperty(
-        name="Order by Invert",
-        default=False,
-        options=set(),
-        description="Invert the sort by order"
-    )
-
-    # Usual draw item function.
     def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index, flt_flag):
-        # Just in case, we do not use it here!
-        self.use_filter_invert = False
-
-        # assert(isinstance(item, bpy.types.VertexGroup)
-        #vgroup = getattr(data, 'matched_vgroups')[item.index]
-        if self.layout_type in {'DEFAULT', 'COMPACT'}:
-            # Here we use one feature of new filtering feature: it can pass data to draw_item, through flt_flag
-            # parameter, which contains exactly what filter_items set in its filter list for this item!
-            # In this case, we show empty groups grayed out.
-            cached_value = self.cached_values.get(item.name, None)
-            if (cached_value != None) and (cached_value != item.value):
-                item.preferred = item.value
-
-            if self.use_filter_deform:
-                item.value = bool(flt_flag & self.VGROUP_DEFORM) and item.preferred
-            else:
-                item.value = item.preferred
-
-            self.cached_values[item.name] = item.value
-
-            if flt_flag & (self.VGROUP_EMPTY | self.VGROUP_DEFORM):
-                col = layout.column()
-                col.enabled = False
-                col.alignment = 'LEFT'
-                col.prop(item, "value", text=item.name, emboss=False, icon_value=icon)
-            else:
-                layout.prop(item, "value", text=item.name, icon_value=icon)
-
-            icon = 'RADIOBUT_ON' if item.preferred else 'RADIOBUT_OFF'
-            layout.prop(item, "preferred", text="", icon=icon, emboss=False)
-        elif self.layout_type in {'GRID'}:
-            layout.alignment = 'CENTER'
-            if flt_flag & self.VGROUP_EMPTY:
-                layout.enabled = False
-            layout.label(text="", icon_value=icon)
+        # ユーザにはpreferredをチェック操作させ、結果はフィルタ反映したものをvalueで取得する想定
+        row = layout.row(align=True)
+        row.prop(item, "preferred", text=item.name, icon_value=icon)
+        if self.order_mode == "IMPORTANCE":
+            sub = row.row()
+            sub.alignment = 'RIGHT'
+            sub.label(text=f"{item.sort0:.4f}")
 
     def draw_filter(self, context, layout):
-        # Nothing much to say here, it's usual UI code...
         row = layout.row()
-        if not self.expanded_layout:
-            layout.active = True
-            layout.enabled = True
-            row.active = True
-            row.enabled = True
-            self.expanded_layout = True
 
         subrow = row.row(align=True)
-        subrow.prop(self, "filter_name", text="")
+        subrow.prop(self, "filter_name", text="", icon="VIEWZOOM")
         icon = 'ZOOM_OUT' if self.use_filter_name_reverse else 'ZOOM_IN'
         subrow.prop(self, "use_filter_name_reverse", text="", icon=icon)
 
@@ -990,138 +823,46 @@ class CNV_UL_vgroups_selector(bpy.types.UIList):
         icon = 'ZOOM_OUT' if self.use_filter_deform_reverse else 'ZOOM_IN'
         subrow.prop(self, "use_filter_deform_reverse", text="", icon=icon)
 
-        #subrow = row.row(align=True)
-        #subrow.prop(self, "use_filter_empty", toggle=True)
-        #icon = 'ZOOM_OUT' if self.use_filter_empty_reverse else 'ZOOM_IN'
-        #subrow.prop(self, "use_filter_empty_reverse", text="", icon=icon)
-
         row = layout.row(align=True)
-        row.label(text="Order by:")
-        row.prop(self, "use_order_name", toggle=True)
-        #row.prop(self, "use_order_importance", toggle=True)
+        row.prop(self, "order_mode")
         icon = 'TRIA_UP' if self.use_filter_orderby_invert else 'TRIA_DOWN'
         row.prop(self, "use_filter_orderby_invert", text="", icon=icon)
 
-    def filter_items_empty_vgroups(self, context, vgroups):
-        # This helper function checks vgroups to find out whether they are empty, and what's their average weights.
-        # TODO: This should be RNA helper actually (a vgroup prop like "raw_data: ((vidx, vweight), etc.)").
-        #       Too slow for python!
-        obj_data = context.active_object.data
-        ret = {vg.index: [True, 0.0] for vg in vgroups}
-        if hasattr(obj_data, "vertices"):  # Mesh data
-            if obj_data.is_editmode:
-                import bmesh
-                bm = bmesh.from_edit_mesh(obj_data)
-                # only ever one deform weight layer
-                dvert_lay = bm.verts.layers.deform.active
-                fact = 1 / len(bm.verts)
-                if dvert_lay:
-                    for v in bm.verts:
-                        for vg_idx, vg_weight in v[dvert_lay].items():
-                            ret[vg_idx][0] = False
-                            ret[vg_idx][1] += vg_weight * fact
-            else:
-                fact = 1 / len(obj_data.vertices)
-                for v in obj_data.vertices:
-                    for vg in v.groups:
-                        ret[vg.group][0] = False
-                        ret[vg.group][1] += vg.weight * fact
-        elif hasattr(obj_data, "points"):  # Lattice data
-            # XXX no access to lattice editdata?
-            fact = 1 / len(obj_data.points)
-            for v in obj_data.points:
-                for vg in v.groups:
-                    ret[vg.group][0] = False
-                    ret[vg.group][1] += vg.weight * fact
-        return ret
-
     def filter_items(self, context, data, propname):
-        # This function gets the collection property (as the usual tuple (data, propname)), and must return two lists:
-        # * The first one is for filtering, it must contain 32bit integers were self.bitflag_filter_item marks the
-        #   matching item as filtered (i.e. to be shown), and 31 other bits are free for custom needs. Here we use the
-        #   first one to mark VGROUP_EMPTY.
-        # * The second one is for reordering, it must return a list containing the new indices of the items (which
-        #   gives us a mapping org_idx -> new_idx).
-        # Please note that the default UI_UL_list defines helper functions for common tasks (see its doc for more info).
-        # If you do not make filtering and/or ordering, return empty list(s) (this will be more efficient than
-        # returning full lists doing nothing!).
         items = getattr(data, propname)
-        
-        if self.armature == None:
-            target_ob, source_ob = common.get_target_and_source_ob(context)
-            armature_ob = target_ob.find_armature() or source_ob.find_armature()
-            self.armature = armature_ob and armature_ob.data or False
-
-        if not self.local_bone_names:
-            target_ob, source_ob = common.get_target_and_source_ob(context)
-            bone_data_ob = (target_ob.get("LocalBoneData:0") and target_ob) or (source_ob.get("LocalBoneData:0") and source_ob) or None
-            if bone_data_ob:
-                local_bone_data = model_export.CNV_OT_export_cm3d2_model.local_bone_data_parser(model_export.CNV_OT_export_cm3d2_model.indexed_data_generator(bone_data_ob, prefix="LocalBoneData:"))
-                self.local_bone_names = [ bone['name'] for bone in local_bone_data ]
-        
-        if not self.cached_values:
-            self.cached_values = { item.name: item.value for item in items }
-        #vgroups = [ getattr(data, 'matched_vgroups')[item.index][0]   for item in items ]
         helper_funcs = bpy.types.UI_UL_list
-
-        # Default return values.
-        flt_flags = []
+        flt_flags = [self.bitflag_filter_item] * len(items)
         flt_neworder = []
 
-        # Pre-compute of vgroups data, CPU-intensive. :/
-        #vgroups_empty = self.filter_items_empty_vgroups(context, vgroups)
-
-        # Filtering by name
+        # 文字列検索
         if self.filter_name:
-            flt_flags = helper_funcs.filter_items_by_name(self.filter_name, self.bitflag_filter_item, items, "name",
-                                                          reverse=self.use_filter_name_reverse)
-        if not flt_flags:
-            flt_flags = [self.bitflag_filter_item] * len(items)
-        
-        for idx, vg in enumerate(items):
-            # Filter by deform.
-            if self.use_filter_deform:
-                flt_flags[idx] |= self.VGROUP_DEFORM
-                if self.use_filter_deform:
-                    if self.armature and self.armature.get(vg.name):
-                        if not self.use_filter_deform_reverse:
-                            flt_flags[idx] &= ~self.VGROUP_DEFORM
-                    elif bone_data_ob and (vg.name in self.local_bone_names):
-                        if not self.use_filter_deform_reverse:
-                            flt_flags[idx] &= ~self.VGROUP_DEFORM
-                    elif self.use_filter_deform_reverse or (not self.armature and not self.local_bone_names):
-                        flt_flags[idx] &= ~self.VGROUP_DEFORM
-            else:
-                flt_flags[idx] &= ~self.VGROUP_DEFORM
+            flt_flags = helper_funcs.filter_items_by_name(
+                self.filter_name, self.bitflag_filter_item, items, "name",
+                reverse=self.use_filter_name_reverse)
 
-            # Filter by emptiness.
-            #if vgroups_empty[vg.index][0]:
-            #    flt_flags[idx] |= self.VGROUP_EMPTY
-            #    if self.use_filter_empty and self.use_filter_empty_reverse:
-            #        flt_flags[idx] &= ~self.bitflag_filter_item
-            #elif self.use_filter_empty and not self.use_filter_empty_reverse:
-            #    flt_flags[idx] &= ~self.bitflag_filter_item
+        # Deform フィルタ
+        if self.use_filter_deform:
+            for i, it in enumerate(items):
+                if not (bool(getattr(it, "filter0", False)) ^ self.use_filter_deform_reverse):
+                    flt_flags[i] &= ~self.bitflag_filter_item
 
-        # Reorder by name or average weight.
-        if self.use_order_name:
-            flt_neworder = helper_funcs.sort_items_by_name(vgroups, "name")
-        #elif self.use_order_importance:
-        #    _sort = [(idx, vgroups_empty[vg.index][1]) for idx, vg in enumerate(vgroups)]
-        #    flt_neworder = helper_funcs.sort_items_helper(_sort, lambda e: e[1], True)
+        # 並び替え
+        if self.order_mode == 'NAME':
+            sort_data = [(i, it) for i, it in enumerate(items)]
+            key = lambda x: (getattr(x[1], "name", "") or "").lower()
+            reverse = self.use_filter_orderby_invert
+            flt_neworder = helper_funcs.sort_items_helper(sort_data, key=key, reverse=reverse)
+        elif self.order_mode == 'IMPORTANCE':
+            sort_data = [(i, it) for i, it in enumerate(items)]
+            key = lambda x: getattr(x[1], "sort0", 0.0)
+            reverse = not self.use_filter_orderby_invert
+            flt_neworder = helper_funcs.sort_items_helper(sort_data, key=key, reverse=reverse)
+
+        # フィルタ結果とユーザ選択結果をvalueに反映
+        for i, it in enumerate(items):
+            it.value = bool(flt_flags[i] & self.bitflag_filter_item) and it.preferred
 
         return flt_flags, flt_neworder
-
-
-#@compat.BlRegister()
-#class CNV_BoolCollectionItem(bpy.types.PropertyGroup):
-#    bl_label = "CNV_BoolCollectionItem"
-#    bl_region_type = 'WINDOW'
-#    bl_space_type = 'PROPERTIES'
-#
-#    name  = bpy.props.StringProperty(name="Name", default="Unknown")
-#    value = bpy.props.BoolProperty(name="Value", default=True)
-#    index = bpy.props.IntProperty(name="Index", default=-1)
-#    preferred = bpy.props.BoolProperty(name="Prefered", default=True)
 
 
 @compat.BlRegister()
@@ -1140,12 +881,7 @@ class CNV_OT_weighted_shape_key_transfer(shape_key_transfer_op):
 
     matched_vgroups = []
     using_vgroups: bpy.props.CollectionProperty(type=common.CNV_SelectorItem)
-    active_vgroup: bpy.props.IntProperty(name="Active Vertex Group")
-    
-    #armature: bpy.props.PointerProperty(type=bpy.types.ID)
-    #bone_data_ob: bpy.props.PointerProperty(type=bpy.types.ID)
-    armature = None
-    bone_data_ob = None
+    active_vgroup: bpy.props.IntProperty(name="Active Vertex Group", default=0)
 
     @classmethod
     def poll(cls, context):
@@ -1158,29 +894,43 @@ class CNV_OT_weighted_shape_key_transfer(shape_key_transfer_op):
                 if ob.data.shape_keys and ob.name != active_ob.name:
                     return True
         return False
-    
-    def draw(self, context):
-        CNV_OT_precision_shape_key_transfer.draw(self, context)
-        target_ob, source_ob = common.get_target_and_source_ob(context)
 
+    def invoke(self , context, event):
+        target_ob, source_ob = common.get_target_and_source_ob(context)
         self.matched_vgroups = common.values_of_matched_keys(target_ob.vertex_groups, source_ob.vertex_groups)
-        print(f_("len(matched) = {length}", length=len(self.matched_vgroups)))
         armature_ob = target_ob.find_armature() or source_ob.find_armature()
-        self.armature = armature_ob and armature_ob.data
-        self.bone_data_ob = (target_ob.get("LocalBoneData:0") and target_ob) or (source_ob.get("LocalBoneData:0") and source_ob) or None
-        
+        armature = armature_ob and armature_ob.data or False
+        bone_data_ob = (target_ob.get("LocalBoneData:0") and target_ob) or (source_ob.get("LocalBoneData:0") and source_ob) or None
+        local_bone_names = []
+        if bone_data_ob:
+            local_bone_data = model_export.CNV_OT_export_cm3d2_model.local_bone_data_parser(model_export.CNV_OT_export_cm3d2_model.indexed_data_generator(bone_data_ob, prefix="LocalBoneData:"))
+            local_bone_names = [ bone['name'] for bone in local_bone_data ]
+
+        importance_map = {vg.index: [0.0, 0] for vg, _ in self.matched_vgroups}
+        for v in target_ob.data.vertices:
+            for g in v.groups:
+                if g.group in importance_map:
+                    importance_map[g.group][0] += g.weight  # 合計ウェイト
+                    importance_map[g.group][1] += 1  # 該当頂点数
+
         for index, vgs in enumerate(self.matched_vgroups):
             target_vg, source_vg = vgs
             vg_name = target_vg.name
             if self.using_vgroups.get(vg_name):
                 continue
-                
-            print(index, vg_name)
             new_prop = self.using_vgroups.add()
             new_prop.name = vg_name
             new_prop.index = index
             new_prop.value = True
+            if armature and armature.get(vg_name) or vg_name in local_bone_names:
+                new_prop.filter0 = True
+            total_w, count = importance_map.get(target_vg.index, [0.0, 0])
+            new_prop.sort0 = (total_w / count) if count > 0 else 0.0
 
+        return CNV_OT_precision_shape_key_transfer.invoke(self, context, event)
+
+    def draw(self, context):
+        CNV_OT_precision_shape_key_transfer.draw(self, context)
         self.layout.template_list("CNV_UL_vgroups_selector", "", self, "using_vgroups", self, "active_vgroup")
         self.layout.label(text="Show filters", icon='FILE_PARENT')
         
@@ -1190,7 +940,7 @@ class CNV_OT_weighted_shape_key_transfer(shape_key_transfer_op):
         target_me = self.target_ob.data
         source_me = self.source_ob.data
 
-        self.matched_vgroups = [ ( self.target_ob.vertex_groups.get(vg.name), self.source_ob.vertex_groups.get(vg.name) ) for vg in self.using_vgroups]
+        self.matched_vgroups = [ ( self.target_ob.vertex_groups.get(vg.name), self.source_ob.vertex_groups.get(vg.name) ) for vg in self.using_vgroups if vg.value]
 
         context.window_manager.progress_begin(0, len(target_me.vertices))
         progress_reduce = len(target_me.vertices) // 200 + 1
@@ -1254,7 +1004,6 @@ class CNV_OT_weighted_shape_key_transfer(shape_key_transfer_op):
         context.window_manager.progress_begin(0, len(source_me.shape_keys.key_blocks) * len(target_me.vertices))
         context.window_manager.progress_update(0)       
       
-    invoke = CNV_OT_precision_shape_key_transfer.invoke
     loop = CNV_OT_precision_shape_key_transfer.loop
     cleanup = CNV_OT_precision_shape_key_transfer.cleanup
 

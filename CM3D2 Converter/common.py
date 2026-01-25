@@ -1058,6 +1058,10 @@ class CNV_SelectorItem(bpy.types.PropertyGroup):
     filter2: bpy.props.BoolProperty(name="Filter 2", default=False)
     filter3: bpy.props.BoolProperty(name="Filter 3", default=False)
 
+    sort0: bpy.props.FloatProperty(name="Sort 0", default=0.0)
+    sort1: bpy.props.FloatProperty(name="Sort 1", default=0.0)
+    sort2: bpy.props.FloatProperty(name="Sort 2", default=0.0)
+    sort3: bpy.props.FloatProperty(name="Sort 3", default=0.0)
 
 
 
