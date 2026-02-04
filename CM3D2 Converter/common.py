@@ -346,7 +346,9 @@ def get_default_tex_paths():
             setattr(prefs, 'default_tex_path' + str(index), path)
     else:
         tex_dirs = [getattr(prefs, 'default_tex_path' + str(i)) for i in range(4) if getattr(prefs, 'default_tex_path' + str(i))]
-    return tex_dirs
+    # 同梱のtoon画像フォルダを先頭に追加
+    tex_base_dirs = [os.path.join(os.path.dirname(__file__), "toon")]
+    return tex_base_dirs + tex_dirs
 
 
 # テクスチャ置き場の全ファイルを返す
