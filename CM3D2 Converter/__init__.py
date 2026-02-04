@@ -151,6 +151,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
     menu_export_path: bpy.props.StringProperty(name=".menu Default Export Path", subtype='FILE_PATH', description="When exporting a .menu file. The file selection prompt will begin here.")
     
     is_replace_cm3d2_tex: bpy.props.BoolProperty(name="基本的にtexファイルを探す", default=True, description="texファイルを探すかどうかのオプションのデフォルト値を設定します")
+    search_tex_path_scope: bpy.props.EnumProperty(items=[('NONE', '指定なし', ''), ('SAME', '同ディレクトリ以下', ''), ('PARENT', '親ディレクトリ以下', '')], name='相対探索範囲', default='SAME', description="インポート対象からの相対ディレクトリ以下を探索対象に加えます")
     default_tex_path0: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します")
     default_tex_path1: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します")
     default_tex_path2: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します")
@@ -272,6 +273,9 @@ class AddonPreferences(bpy.types.AddonPreferences):
         box.prop(self, 'default_tex_path1', icon='LAYER_ACTIVE', text="その2")
         box.prop(self, 'default_tex_path2', icon='LAYER_ACTIVE', text="その3")
         box.prop(self, 'default_tex_path3', icon='LAYER_ACTIVE', text="その4")
+        row = box.row()
+        row.label(text="相対探索範囲")
+        row.prop(self, "search_tex_path_scope", expand=True)
 
         box = self.layout.box()
         box.label(text="CM3D2用マテリアル新規作成時の初期値", icon='MATERIAL')

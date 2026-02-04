@@ -100,6 +100,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         sub_box.enabled = self.is_mesh
         sub_box.label(text="マテリアル")
         sub_box.prop(prefs, 'is_replace_cm3d2_tex', icon='BORDERMOVE')
+        sub_box.prop(prefs, 'search_tex_path_scope')
         sub_box.prop(self, 'reload_tex_cache', icon='FILE_REFRESH')
         sub_box.prop(self, 'is_mate_data_text', icon='TEXT')
 
@@ -122,6 +123,11 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         box.prop(self, 'is_bone_data_obj_property', icon='OBJECT_DATA')
         box.prop(self, 'is_bone_data_arm_property', icon='ARMATURE_DATA')
 
+    def cleanup(self, context):
+        if 'cm3d2_converter_import_filepath' in context.scene:
+            del context.scene['cm3d2_converter_import_filepath']
+
+    @common.with_finally(cleanup)
     def execute(self, context):
         start_time = time.time()
 
@@ -144,6 +150,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             return {'CANCELLED'}
 
         with reader:
+            context.scene['cm3d2_converter_import_filepath'] = self.filepath
             self.texpath_dict = common.get_texpath_dict(reload=self.reload_tex_cache)
 
             # ヘッダー

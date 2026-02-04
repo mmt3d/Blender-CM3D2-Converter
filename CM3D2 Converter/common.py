@@ -348,6 +348,13 @@ def get_default_tex_paths():
         tex_dirs = [getattr(prefs, 'default_tex_path' + str(i)) for i in range(4) if getattr(prefs, 'default_tex_path' + str(i))]
     # 同梱のtoon画像フォルダを先頭に追加
     tex_base_dirs = [os.path.join(os.path.dirname(__file__), "toon")]
+    # models 以下フォルダ・親フォルダ以下の追加
+    if 'cm3d2_converter_import_filepath' in bpy.context.scene:
+        base_dir = os.path.dirname(bpy.context.scene['cm3d2_converter_import_filepath'])
+        if prefs.search_tex_path_scope == 'SAME':
+            tex_base_dirs.append(base_dir)
+        elif prefs.search_tex_path_scope == 'PARENT':
+            tex_base_dirs.append(os.path.dirname(base_dir))
     return tex_base_dirs + tex_dirs
 
 
@@ -1166,3 +1173,15 @@ def is_descendant_of(bone, ancestor) -> bool:
         if bone.name == ancestor.name:
             return True
     return False
+
+
+def with_finally(finally_func):
+    """対象メソッドまるごとtry/finallyでラップするデコレータ"""
+    def decorator(func):
+        def wrapper(self, context, *args, **kwargs):
+            try:
+                return func(self, context, *args, **kwargs)
+            finally:
+                finally_func(self, context)
+        return wrapper
+    return decorator
