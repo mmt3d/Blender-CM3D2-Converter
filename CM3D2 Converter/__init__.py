@@ -208,37 +208,6 @@ class AddonPreferences(bpy.types.AddonPreferences):
     show_bone_in_front: bpy.props.BoolProperty(name="Show Bones in Front"   , default=True , description="Make the object draw in front of others")
 
     def draw(self, context):
-        col = self.layout.column()
-        col.label(text="CM3D2 Converter Info")
-        factor = 0.25
-        split = compat.layout_split(col.row(), factor)
-        split.label(text="Add-on Version: ")
-        split.label(text=".".join(str(i) for i in bl_info["version"]))
-        split = compat.layout_split(col.row(), factor)
-        split.label(text="Branch: ")
-        split.label(text=common.BRANCH)
-        split = compat.layout_split(col.row(), factor)
-        split.label(text="Repo URL: ")
-        split.label(text=common.URL_REPOS)
-        split = compat.layout_split(col.row(), factor)
-        split.label(text="Blender Version: ")
-        split.label(text=".".join(str(i) for i in bpy.app.version) if hasattr(bpy.app, 'version') else "Legacy")
-        split = compat.layout_split(col.row(), factor)
-        split.label(text="Blender Language: ")
-        split.label(text=bpy.context.preferences.view.language or 'None')
-        default_locale = 'UNKNOWN'
-        try:
-            import locale
-            default_locale = locale.getdefaultlocale()[0]
-        except:
-            pass
-        split = compat.layout_split(col.row(), factor)
-        split.label(text="Default Language: ")
-        split.label(text=default_locale)
-
-        self.layout.label(text="."*9999)
-        self.layout.label(text="Preferences:")
-
         self.layout.prop(self, 'cm3d2_path', icon_value=common.kiss_icon())
         self.layout.prop(self, 'backup_ext', icon='FILE_BACKUP')
 
@@ -269,13 +238,13 @@ class AddonPreferences(bpy.types.AddonPreferences):
         box = self.layout.box()
         box.label(text="texファイル検索", icon='BORDERMOVE')
         box.prop(self, 'is_replace_cm3d2_tex', icon='VIEWZOOM')
-        box.prop(self, 'default_tex_path0', icon='LAYER_ACTIVE', text="その1")
-        box.prop(self, 'default_tex_path1', icon='LAYER_ACTIVE', text="その2")
-        box.prop(self, 'default_tex_path2', icon='LAYER_ACTIVE', text="その3")
-        box.prop(self, 'default_tex_path3', icon='LAYER_ACTIVE', text="その4")
         row = box.row()
         row.label(text="相対探索範囲")
         row.prop(self, "search_tex_path_scope", expand=True)
+        box.prop(self, 'default_tex_path0', icon='LAYER_ACTIVE', text="探索パス1")
+        box.prop(self, 'default_tex_path1', icon='LAYER_ACTIVE', text="探索パス2")
+        box.prop(self, 'default_tex_path2', icon='LAYER_ACTIVE', text="探索パス3")
+        box.prop(self, 'default_tex_path3', icon='LAYER_ACTIVE', text="探索パス4")
 
         box = self.layout.box()
         box.label(text="CM3D2用マテリアル新規作成時の初期値", icon='MATERIAL')
@@ -303,14 +272,13 @@ class AddonPreferences(bpy.types.AddonPreferences):
 
         box = self.layout.box()
         box.label(text="Default Armature Settings", icon='ARMATURE_DATA')
-        box.use_property_split = True
         box.prop(self, "bone_display_type", text="Display As")
-        flow = box.grid_flow(align=True)
-        col = flow.column(); col.prop(self, "show_bone_names",         text="Names"       )
-        col = flow.column(); col.prop(self, "show_bone_axes",          text="Axes"        )
-        col = flow.column(); col.prop(self, "show_bone_custom_shapes", text="Shapes"      )
-        col = flow.column(); col.prop(self, "show_bone_group_colors",  text="Group Colors")
-        col = flow.column(); col.prop(self, "show_bone_in_front",      text="In Front"    )
+        row = box.row()
+        row.prop(self, "show_bone_names",         text="Names"       )
+        row.prop(self, "show_bone_axes",          text="Axes"        )
+        row.prop(self, "show_bone_custom_shapes", text="Shapes"      )
+        row.prop(self, "show_bone_group_colors",  text="Group Colors")
+        row.prop(self, "show_bone_in_front",      text="In Front"    )
 
         box = self.layout.box()
         box.label(text="各操作の初期パラメータ", icon='MATERIAL')
