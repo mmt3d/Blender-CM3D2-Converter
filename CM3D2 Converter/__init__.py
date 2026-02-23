@@ -25,8 +25,8 @@ def install_dependencies():
     import bpy  # import inside a function, so "bpy" in locals() check later is unchanged
     if not package_helper.check_module('pythonnet'):
         print("Installing dependency 'pythonnet'...")
-        package_helper.install_package('pythonnet==3.0.5')
-        raise Exception("Dependencies installed. Restart is required.")
+        package_helper.install_package()
+        importlib.invalidate_caches()
     else:
         print("Package 'pythonnet' is installed")
 install_dependencies()
