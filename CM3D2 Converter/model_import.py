@@ -49,6 +49,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
     is_armature_clean: bpy.props.BoolProperty(name="不要なボーンを削除", default=False, description="ウェイトが無いボーンを削除します")
     is_custom_bones: bpy.props.BoolProperty(name="Use Custom Bones", default=False, description="Use the currently selected object for custom bone shapes.")
     is_use_local_bones: bpy.props.BoolProperty(name="Use Local Bones", default=True, description="Use the Local Bone Data for orientation (more accurate)")
+    hide_armature: bpy.props.BoolProperty(name="アーマチュアを非表示", default=False, description="インポート後のアーマチュアを非表示にします")
 
     is_bone_data_text: bpy.props.BoolProperty(name="テキスト", default=True, description="ボーン情報をテキストとして読み込みます")
     is_bone_data_obj_property: bpy.props.BoolProperty(name="オブジェクトのカスタムプロパティ", default=True, description="メッシュオブジェクトのカスタムプロパティにボーン情報を埋め込みます")
@@ -113,6 +114,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         sub_box.prop(self , 'is_armature_clean', icon='X')
         sub_box.prop(self , 'is_convert_bone_weight_names', icon='BLENDER', text="ボーン名をBlender用に変換")
         sub_box.prop(prefs, 'show_bone_in_front', icon='HIDE_OFF', text="Show Bones in Front")
+        sub_box.prop(self, 'hide_armature', icon='HIDE_ON', text="アーマチュアを非表示にする")
         row = sub_box.row()
         row.prop(self , 'is_custom_bones', icon='BONE_DATA', text="Use Selected as Bone Shape")
         row.enabled = bool(context.object)
@@ -658,6 +660,9 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                 print("Set custom bones")
                 for pose_bone in arm_ob.pose.bones:
                     pose_bone.custom_shape = custom_bone_ob
+            # アーマチュアを非表示にする場合
+            if self.hide_armature:
+                arm_ob.hide_set(True)
         context.window_manager.progress_update(2)
 
         if self.is_mesh:
