@@ -9,7 +9,8 @@ import bmesh
 import mathutils
 from . import fileutil
 from . import compat
-from . import cm3d2_data
+from .cm3d2_shader import toon_vector_node_tree, com3d2_shader_node_tree, bind_light_switch, bind_use_transparent
+
 
 # アドオン情報
 bl_info = {}
@@ -133,47 +134,58 @@ def decorate_material(mate, enable=True, me=None, mate_index=-1):
     if not enable or 'shader1' not in mate:
         return
 
-    # luvoid : set properties of the mate
     shader = mate['shader1']
     mate.preview_render_type  = 'FLAT'
-    mate.blend_method         = 'BLEND' if 'Trans' in shader else 'OPAQUE'
     mate.use_backface_culling = 'Outline' not in shader
-
-    # luvoid : create cm3d2 shader node group and material output node
-    cmnode = None
     mate.use_nodes = True
-    #cm3d2_data.clear_nodes(mate.node_tree.nodes)
-    cmtree = bpy.data.node_groups.get('CM3D2 Shader')
-    if not cmtree:
-        blend_path = os.path.join(os.path.dirname(__file__), "append_data.blend")
-        with bpy.data.libraries.load(blend_path) as (data_from, data_to):
-            data_to.node_groups = ['CM3D2 Shader']
-        cmtree = data_to.node_groups[0]
-    cmnode = mate.node_tree.nodes.new('ShaderNodeGroup')
-    cmnode.node_tree = cmtree
-    matout = mate.node_tree.nodes.new('ShaderNodeOutputMaterial')
-    matout.location = (300,0)
-    mate.node_tree.links.new(matout.inputs.get('Surface'), cmnode.outputs.get('Surface'))
+    compat.set_transparent(mate, any(x in shader for x in ['Trans', 'Cutout']))
 
+    # Toon Vector ノードグループ
+    toon_vector_ng = mate.node_tree.nodes.new('ShaderNodeGroup')
+    toon_vector_ng.node_tree = toon_vector_node_tree()
+    toon_vector_ng.location = (-700,260)
+
+    # light 位置のバインド
+    bind_light_switch(toon_vector_ng.inputs.get('Light Switch'))
+
+    # COM3D2 Shader ノードグループ
+    com3d2_shader_ng = mate.node_tree.nodes.new('ShaderNodeGroup')
+    com3d2_shader_ng.node_tree = com3d2_shader_node_tree()
+    com3d2_shader_ng.location = (0,320)
+    com3d2_shader_ng.width = 180
+
+    # 透過モードのバインド
+    bind_use_transparent(com3d2_shader_ng.inputs.get('UseTransparent'), mate)
+
+    # マテリアル出力ノード
+    mate_out = mate.node_tree.nodes.new('ShaderNodeOutputMaterial')
+    mate_out.location = (300,320)
+
+    # COM3D2 Shader => マテリアル出力
+    mate.node_tree.links.new(mate_out.inputs.get('Surface'), com3d2_shader_ng.outputs.get('Shader'))
+
+    # インポートされたマテリアル内各要素ノードからの接続
     for key, node in mate.node_tree.nodes.items():
         if not key.startswith('_'):
             continue
+        # 画像ノードの場合
         if type(node) == bpy.types.ShaderNodeTexImage:
-            # luvoid : attatch tex node to cmnode sockets
-            socket = cmnode.inputs.get(key+" Color")
+            socket = com3d2_shader_ng.inputs.get(key[1:])
+            # 画像ノード => COM3D2 Shader (同名のソケットがあれば)
             if socket:
                 mate.node_tree.links.new(socket, node.outputs.get('Color'))
-            socket = cmnode.inputs.get(key+" Alpha")
-            if socket:
-                mate.node_tree.links.new(socket, node.outputs.get('Alpha'))
+            # Toon Calculation(Toon Mapping UV) => 画像ノードベクトル入力 (Toon画像であれば)
+            if 'Toon' in node.name:
+                mate.node_tree.links.new(node.inputs.get('Vector'), toon_vector_ng.outputs.get('Toon Vector'))
+            alpha = com3d2_shader_ng.inputs.get(f'{key[1:]}Alpha')
+            if alpha:
+                mate.node_tree.links.new(alpha, node.outputs.get('Alpha'))
         else:
-            # luvoid : attatch color/float node to cmnode socket
-            input_socket = cmnode.inputs.get(key)
+            # 他Color/Valueノード => COM3D2 Shader (同名のソケットがあれば)
+            input_socket = com3d2_shader_ng.inputs.get(key[1:])
             output_socket = node.outputs.get('Color') or node.outputs.get('Value')
             if input_socket and output_socket:
                 mate.node_tree.links.new(input_socket, output_socket)
-
-    
 
 
 # 画像のおおよその平均色を取得
@@ -487,6 +499,8 @@ def create_tex(context, mate, node_name, tex_name=None, filepath=None, cm3d2path
         tex = mate.node_tree.nodes.new(type='ShaderNodeTexImage')
         tex.name = tex.label = node_name
         tex.show_texture = True
+        # 特にtoonテクスチャではベクトル0や1がリピート画像の境界で色補完の影響があるため、延長にする
+        tex.extension = 'EXTEND'
 
     if tex_name:
         if tex.image is None:

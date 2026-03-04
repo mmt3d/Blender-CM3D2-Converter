@@ -1,21 +1,17 @@
-# -*- coding: utf-8 -*-
 import bpy
 import bpy_extras
-import re
-import struct
-import os
 import mathutils
-import traceback
-import numpy as np
 import inspect
-from typing import Any, Optional, Callable, Protocol, TypeVar, ParamSpec, TYPE_CHECKING
 from types import FunctionType
 import functools
 import warnings
 
 
+IS_LT34 = not hasattr(bpy.app, 'version') or bpy.app.version < (3, 4)
 IS_LT40 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 0)
 IS_LT41 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 1)
+IS_LT42 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 2)
+IS_LT50 = not hasattr(bpy.app, 'version') or bpy.app.version < (5, 0)
 
 UILayoutDrawer = bpy.types.Header | bpy.types.Menu | bpy.types.Panel
 
@@ -350,5 +346,45 @@ def calc_normals_split(mesh: bpy.types.Mesh):
 
 
 def enable_use_auto_smooth(mesh: bpy.types.Mesh):
-   if IS_LT41:
-       mesh.use_auto_smooth = True
+    if IS_LT41:
+        mesh.use_auto_smooth = True
+
+
+def new_socket(node_tree, name, in_out, socket_type):
+    """ノードソケット生成の互換性サポート"""
+    if IS_LT40:
+        sockets = node_tree.inputs if in_out == 'INPUT' else node_tree.outputs
+        return sockets.new(name=name, type=socket_type)
+    else:
+        return node_tree.interface.new_socket(name=name, in_out=in_out, socket_type=socket_type)
+
+
+def map_shader_node(type, inputs: dict = None):
+    """シェーダーノード扱いの互換性サポート"""
+    socket_map = {}
+    inputs = inputs if inputs is not None else {}
+    if IS_LT50:
+        if type == 'ShaderNodeBrightContrast':
+            socket_map = {'Brightness': 'Bright'}
+        elif type == 'ShaderNodeMixShader':
+            socket_map = {'Factor': 'Fac'}
+    if IS_LT40:
+        if type == 'ShaderNodeAttribute':
+            socket_map = {'Factor': 'Fac'}
+    if IS_LT34:
+        if type == 'ShaderNodeMix':
+            type = 'ShaderNodeMixRGB'
+            socket_map = {'Factor': 'Fac', 'A': 'Color1', 'B': 'Color2', 'Result': 'Color'}
+            for key in ['A', 'B']:
+                if key in inputs and isinstance(inputs[key], (int, float)):
+                    inputs[key] = (inputs[key], inputs[key], inputs[key], 1.0)
+    return type, socket_map, inputs
+
+
+def set_transparent(mate: bpy.types.Material, transparent: bool):
+    """透過モード切り替えの互換性サポート"""
+    if IS_LT42:
+        mate.blend_method = 'BLEND' if transparent else 'OPAQUE'
+    else:
+        mate.blend_method = 'BLEND'
+        mate.use_transparency_overlap = transparent

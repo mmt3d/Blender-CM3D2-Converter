@@ -940,7 +940,7 @@ def align_nodes(mate):
                 if node:
                     node.location = (location_x, location_y)
                     node.hide = True
-                    location_y -= 60
+                    location_y -= 40
 
         col_list = shader_prop.get('col_list')
         if col_list:
@@ -948,7 +948,8 @@ def align_nodes(mate):
                 node = nodes.get(node_name)
                 if node:
                     node.location = (location_x, location_y)
-                    location_y -= 200
+                    node.hide = True
+                    location_y -= 40
 
         f_list = shader_prop.get('f_list')
         if f_list:
@@ -956,4 +957,5 @@ def align_nodes(mate):
                 node = nodes.get(node_name)
                 if node:
                     node.location = (location_x, location_y)
-                    location_y -= 90
+                    node.hide = True
+                    location_y -= 40
