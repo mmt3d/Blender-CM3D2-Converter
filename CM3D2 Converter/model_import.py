@@ -652,7 +652,6 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                     else:
                         arm.edit_bones.remove(bone)
 
-            compat.add_armature_layer(arm)
             compat.set_display_type(arm, prefs.bone_display_type)
             bpy.ops.armature.select_all(action='DESELECT')
             bpy.ops.object.mode_set(mode='OBJECT')
