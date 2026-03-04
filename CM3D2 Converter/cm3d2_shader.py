@@ -212,6 +212,14 @@ def find_or_create_light():
     return light
 
 
+def invalidate_cache():
+    """ノードツリーのキャッシュを無効化する"""
+    for name in ['Toon Vector', 'COM3D2 Shader']:
+        node_group = bpy.data.node_groups.get(name)
+        if node_group:
+            bpy.data.node_groups.remove(node_group)
+
+
 class NodeTreeHelper:
     """シェーダーノードツリーの作成と管理を簡略化しバージョンによる違いを吸収するヘルパークラス"""
     def __init__(self, node_tree: bpy.types.NodeTree):

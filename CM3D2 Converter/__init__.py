@@ -50,7 +50,7 @@ _pre_locals = locals().copy()
 if True:
     from . import compat
     from . import common
-    from . import cm3d2_data
+    from . import cm3d2_shader
 
     from . import model_import
     from . import model_export
@@ -115,6 +115,7 @@ if 'bpy' in locals():
         except ModuleNotFoundError:
             # module was renamed or moved
             pass
+    cm3d2_shader.invalidate_cache()
 
 import bpy, os.path, bpy.utils.previews  # type: ignore
 
