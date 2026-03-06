@@ -163,10 +163,10 @@ class AnmImporter:
         if not action:
             action = context.blend_data.actions.new(acion_name)
             anim.action = action
-            fcurves = action.fcurves
+            fcurves = compat.get_fcurves(action, anim)
         else:
             action.name = os.path.basename(acion_name)
-            fcurves = action.fcurves
+            fcurves = compat.get_fcurves(action, anim)
             if self.remove_pre_animation:
                 for fcurve in fcurves:
                     fcurves.remove(fcurve)
@@ -304,7 +304,7 @@ class AnmImporter:
                 for axis_index in range(0, 3):
                     new_fcurve = fcurves.find(rna_data_path, index=axis_index)
                     if not new_fcurve:
-                        new_fcurve = fcurves.new(rna_data_path, index=axis_index, action_group=pose_bone.name)
+                        new_fcurve = compat.fcurves_new(fcurves, rna_data_path, index=axis_index, group_name=pose_bone.name)
                     loc_fcurves[axis_index] = new_fcurve
                 
                 def _convert_loc(loc) -> mathutils.Vector:
@@ -393,7 +393,7 @@ class AnmImporter:
                 for axis_index in range(0, 4):
                     new_fcurve = fcurves.find(rna_data_path, index=axis_index)
                     if not new_fcurve:
-                        new_fcurve = fcurves.new(rna_data_path, index=axis_index, action_group=pose_bone.name)
+                        new_fcurve = compat.fcurves_new(fcurves, rna_data_path, index=axis_index, group_name=pose_bone.name)
                     quat_fcurves[axis_index] = new_fcurve
 
 
@@ -460,7 +460,7 @@ class AnmImporter:
                 for axis_index in range(0, 3):
                     new_fcurve = fcurves.find(rna_data_path, index=axis_index)
                     if not new_fcurve:
-                        new_fcurve = fcurves.new(rna_data_path, index=axis_index, action_group=pose_bone.name)
+                        new_fcurve = compat.fcurves_new(fcurves, rna_data_path, index=axis_index, group_name=pose_bone.name)
                     scl_fcurves[axis_index] = new_fcurve
                 
                 def _convert_scl(scl) -> mathutils.Vector:

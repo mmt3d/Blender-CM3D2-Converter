@@ -1,14 +1,9 @@
 from __future__ import annotations
 
-import re
 import struct
 import math
 import unicodedata
-import time
 import bpy
-import bmesh
-import mathutils
-import numpy as np
 from mathutils import Vector, Quaternion, Matrix
 from pathlib import Path
 from . import common
@@ -786,7 +781,7 @@ class AnmBuilder:
                 # Create missing fcurves, and make existing fcurves CM3D2 compatible.
                 for axis_index, fcurve in enumerate(prop_fcurves):
                     if not fcurve:
-                        fcurve = fcurves.new(rna_data_path, index=axis_index, action_group=pose_bone.name)
+                        fcurve = compat.fcurves_new(fcurves, rna_data_path, index=axis_index, group_name=pose_bone.name)
                         prop_fcurves[axis_index] = fcurve
                         self.report(
                             type={'WARNING'}, 
@@ -875,9 +870,9 @@ class AnmBuilder:
             if self.export_method == 'KEYED': # This method modifies the action, so copy it.
                 copied_action = obj.animation_data.action.copy()
                 copied_action.name = obj.animation_data.action.name + "__anm_export"
-                fcurves = copied_action.fcurves
+                fcurves = compat.get_fcurves(copied_action, obj.animation_data)
             else:
-                fcurves = obj.animation_data.action.fcurves
+                fcurves = compat.get_fcurves(obj.animation_data.action, obj.animation_data)
             keyed_bones = self.get_keyed_bones(arm, fcurves)
         elif self.export_method == 'KEYED' or self.is_remove_unkeyed_bone:
             raise common.CM3D2ExportError(

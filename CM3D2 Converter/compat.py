@@ -381,3 +381,19 @@ def set_transparent(mate: bpy.types.Material, transparent: bool):
     else:
         mate.blend_method = 'BLEND'
         mate.use_transparency_overlap = transparent
+
+
+def get_fcurves(action: bpy.types.Action, anim_data: bpy.types.AnimData):
+    """Fカーブリスト取得の互換性サポート"""
+    if IS_LT50:
+        return action.fcurves
+    else:
+        return bpy_extras.anim_utils.action_ensure_channelbag_for_slot(action, anim_data.action_slot).fcurves
+
+
+def fcurves_new(fcurves: bpy.types.FCurve, data_path: str, index: int = 0, group_name: str = ''):
+    """Fカーブ生成の互換性サポート"""
+    if IS_LT50:
+        return fcurves.new(data_path=data_path, index=index, action_group=group_name)
+    else:
+        return fcurves.new(data_path=data_path, index=index, group_name=group_name)
