@@ -108,9 +108,6 @@ class VIEW3D_PT_com3d2_livelink(bpy.types.Panel):
     bl_category = "COM3D2"
     bl_label = "LiveLink"
 
-    def __init__(self):
-        super().__init__()
-
     def draw(self, context):
         self.draw_livelink_controls(context, self.layout)
         self.layout.separator()
