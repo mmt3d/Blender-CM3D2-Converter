@@ -239,9 +239,9 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                             extra_uvs.append(struct.unpack('<2f', reader.read(2 * 4)))
                     vertex_data.append({'co': co, 'normal': no, 'uv': uv, 'extra_uvs': extra_uvs})
                 if self.is_remove_doubles:
-                    comparison_data = list(hash(repr(v['co']) + " " + repr(v['normal'])) for v in vertex_data)
+                    comparison_data = [(v['co'], v['normal']) for v in vertex_data]
                     comparison_counter = Counter(comparison_data)
-                    comparison_data = list((comparison_counter[h] > 1) for h in comparison_data)
+                    comparison_data = [comparison_counter[h] > 1 for h in comparison_data]
                     del comparison_counter
                 print(f_("Reading unknown count at 0x{num:02X}", num=reader.tell()))
                 unknown_count = struct.unpack('<i', reader.read(4))[0]
@@ -719,19 +719,35 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             pre_mesh_select_mode = context.tool_settings.mesh_select_mode[:]
             
             if self.is_remove_doubles:
-                context.tool_settings.mesh_select_mode = (True, False, False)
+                # エッジ選択モードにする
+                context.tool_settings.mesh_select_mode = (False, True, False)
+
                 bpy.ops.object.mode_set(mode='EDIT')
+                bpy.ops.mesh.select_all(action='DESELECT')
+
+                # 境界線の選択(重複頂点削除対象を絞り込み)
+                bpy.ops.mesh.select_non_manifold()
+
                 if not self.is_sharp:
-                    bpy.ops.mesh.select_all(action='DESELECT')
+                    # 選択状態変更のためOBJECTモードにする
                     bpy.ops.object.mode_set(mode='OBJECT')
-                    for is_comparison, vert in zip(comparison_data, me.vertices):
-                        if is_comparison:
-                            vert.select = True
+                    # 同一法線でない頂点が一つでも混在するエッジは選択解除して重複削除対象から外す(edgeとvert両方とも判定)
+                    for e in filter(lambda edge: edge.select, me.edges):
+                        if not all([comparison_data[me.vertices[v].index] for v in e.vertices]):
+                            e.select = False
+                    for v in me.vertices:
+                        if not comparison_data[v.index]:
+                            v.select = False
                     bpy.ops.object.mode_set(mode='EDIT')
+                    # 重複頂点を結合する
+                    bpy.ops.mesh.remove_doubles(threshold=0.000001 / 5 * self.scale)
                 else:
-                    bpy.ops.mesh.select_all(action='SELECT')
-                
-                bpy.ops.mesh.remove_doubles(threshold=0.000001/5 * self.scale, use_sharp_edge_from_normals=self.is_sharp)
+                    # 重複頂点を結合してシャープエッジを自動で付与する
+                    bpy.ops.mesh.remove_doubles(threshold=0.000001 / 5 * self.scale, use_sharp_edge_from_normals=True)
+                    # Blenderのお節介で非選択エッジに無駄に追加されるシャープがあるため、選択範囲を反転してシャープを除去
+                    bpy.ops.mesh.select_all(action='INVERT')
+                    bpy.ops.mesh.mark_sharp(clear=True)
+
                 bpy.ops.object.mode_set(mode='OBJECT')
             
             context.tool_settings.mesh_select_mode = pre_mesh_select_mode
