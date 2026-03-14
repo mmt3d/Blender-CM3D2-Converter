@@ -1,11 +1,5 @@
 # 「プロパティ」エリア → 「アーマチュアデータ」タブ
-import re
-import struct
-import math
-import unicodedata
-import time
 import bpy
-import bmesh
 import mathutils
 import os
 from . import common
@@ -791,14 +785,19 @@ class CNV_PG_cm3d2_bone_morph(bpy.types.PropertyGroup):
     MuneL:      bpy.props.FloatProperty(name="MuneL"     , description="munel shapekey value"        , default=  50, min=   0)
     MuneS:      bpy.props.FloatProperty(name="MuneS"     , description="munes shapekey value"        , default=   0, min=   0)
 
+    # 初回計算用フラグ
+    is_initialized: bpy.props.BoolProperty(name="is_initialized", options={'HIDDEN'}, default=False)
+
+    def initialize(self):
+        self.is_initialized = True
+        self.__calcMeasurements(bpy.context)
+
     def __measurementSetter(self, value):
         self.__calcMeasurements(bpy.context)
         return None
     
-    def __newGetter(attr, recalc=False):
+    def __newGetter(attr):
         def __getter(self):
-            if recalc:
-                self.__calcMeasurements(bpy.context)
             return getattr(self, attr)
         return __getter
 
@@ -809,7 +808,7 @@ class CNV_PG_cm3d2_bone_morph(bpy.types.PropertyGroup):
     private_hip:    bpy.props.FloatProperty (name="private_hip"   , options={'HIDDEN'})
     private_cup:    bpy.props.StringProperty(name="private_cup"   , options={'HIDDEN'})
                                                      
-    height: bpy.props.FloatProperty (name="height", precision=3, unit='LENGTH', set=__measurementSetter, get=__newGetter('private_height', recalc=True))
+    height: bpy.props.FloatProperty (name="height", precision=3, unit='LENGTH', set=__measurementSetter, get=__newGetter('private_height'))
     weight: bpy.props.FloatProperty (name="weight", precision=3, unit='MASS'  , set=__measurementSetter, get=__newGetter('private_weight'))
     bust:   bpy.props.FloatProperty (name="bust"  , precision=3, unit='LENGTH', set=__measurementSetter, get=__newGetter('private_bust'  ))
     waist:  bpy.props.FloatProperty (name="waist" , precision=3, unit='LENGTH', set=__measurementSetter, get=__newGetter('private_waist' ))
@@ -1625,6 +1624,12 @@ class DATA_PT_cm3d2_sliders(bpy.types.Panel):
             arm = None
 
         morph = ob.cm3d2_bone_morph
+
+        # 初回の数値計算、自プロパティ書き換えがあるためdraw外で行う必要がありタイマー実行する
+        if not morph.is_initialized:
+            bpy.app.timers.register(morph.initialize, first_interval=0)
+            return
+
         self.layout.alignment = 'RIGHT'
         flow = self.layout.grid_flow(row_major=True, columns=2, align=True)
         flow.use_property_split    = True
