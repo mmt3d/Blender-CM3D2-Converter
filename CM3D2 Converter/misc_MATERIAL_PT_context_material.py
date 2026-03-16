@@ -1,85 +1,10 @@
 # 「プロパティ」エリア → 「マテリアル」タブ
 import os
-import re
-import sys
-import time
 import bpy
-import bmesh
-import mathutils
 from . import common
 from . import compat
 from . import cm3d2_data
 from .translations.pgettext_functions import *
-
-
-# メニュー等に項目追加 (for 2.7x or less)
-def menu_func(self, context):
-    return
-
-    # ModelVersionでCOM3D2のmodelか判断
-    model_ver = bpy.context.active_object.get("ModelVersion")
-    is_com_mode = model_ver and model_ver >= 2000
-
-    mate = context.material
-    if not mate:
-        col = self.layout.column(align=True)
-        if is_com_mode:
-            col.operator('material.new_com3d2', icon_value=common.kiss_icon())
-        else:
-            col.operator('material.new_cm3d2', icon_value=common.kiss_icon())
-            col.operator('material.new_com3d2', icon='ERROR')
-        row = col.row(align=True)
-        row.operator('material.import_cm3d2_mate', icon='FILE_FOLDER', text="mateから")
-        opr = row.operator('material.paste_material', icon='PASTEDOWN', text="クリップボードから")
-        opr.is_decorate, opr.is_create = True, True
-    else:
-        if 'shader1' in mate and 'shader2' in mate:
-            box = self.layout.box()
-            # row = box.split(percentage=0.3)
-            row = compat.layout_split(box, factor=0.5)
-            row.label(text="CM3D2用", icon_value=common.kiss_icon())
-            sub_row = row.row(align=True)
-            sub_row.operator('material.export_cm3d2_mate', icon='FILE_FOLDER', text="mateへ")
-            sub_row.operator('material.copy_material', icon='COPYDOWN', text="コピー")
-            sub_row.operator('material.paste_material', icon='PASTEDOWN', text="貼付け")
-
-            icon = 'ERROR'
-            shader1 = mate['shader1']
-            shader_prop = cm3d2_data.MaterialHandler.get_shader_prop_dynamic(mate) #cm3d2_data.Handler.get_shader_prop(shader1)
-            type_name = shader_prop.get('type_name')
-            icon = shader_prop.get('icon')
-
-            row = compat.layout_split(box, factor=0.333333333333333333333)
-            row.label(text="種類:")
-            row.label(text=type_name, icon=icon)
-            box.prop(mate, 'name', icon='SORTALPHA', text="マテリアル名")
-            box.prop(mate, '["shader1"]', icon='MATERIAL', text="シェーダー1")
-            box.prop(mate, '["shader2"]', icon='SHADING_RENDERED', text="シェーダー2")
-
-            box.operator('material.decorate_material', icon='SHADING_TEXTURE')
-
-            if 'CM3D2 Texture Expand' not in mate:
-                mate['CM3D2 Texture Expand'] = True
-            box = self.layout.box()
-            if mate.get('CM3D2 Texture Expand', False):
-                row = box.row()
-                row.alignment = 'LEFT'
-                op = row.operator('wm.context_set_int', icon='DOWNARROW_HLT', text="", emboss=False)
-                op.data_path, op.value, op.relative = 'material["CM3D2 Texture Expand"]', 0, False
-                row.label(text="簡易テクスチャ情報", icon_value=common.kiss_icon())
-            else:
-                row = box.row()
-                row.alignment = 'LEFT'
-                op = row.operator('wm.context_set_int', icon='RIGHTARROW', text="", emboss=False)
-                op.data_path, op.value, op.relative = 'material["CM3D2 Texture Expand"]', 1, False
-                row.label(text="簡易テクスチャ情報", icon_value=common.kiss_icon())
-
-        else:
-            if is_com_mode:
-                self.layout.operator('material.new_com3d2', text="COM3D2用に変更", icon_value=common.kiss_icon())
-            else:
-                self.layout.operator('material.new_com3d2', text="COM3D2用に変更", icon_value=common.kiss_icon())
-                self.layout.operator('material.new_cm3d2', text="CM3D2用に変更", icon_value=common.kiss_icon())
 
 
 @compat.BlRegister()
@@ -653,6 +578,8 @@ class CNV_OT_paste_material(bpy.types.Operator):
 
         prefs = common.preferences()
         cm3d2_data.MaterialHandler.apply_to(context, mate, mat_data, prefs.is_replace_cm3d2_tex)
+        common.decorate_material(mate, self.is_decorate)
+        common.setup_material(mate)
 
         self.report(type={'INFO'}, message="クリップボードからマテリアルを貼付けました")
         return {'FINISHED'}

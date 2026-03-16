@@ -1,7 +1,4 @@
 import os
-import re
-import struct
-import shutil
 import bpy
 from . import common
 from . import compat
@@ -69,6 +66,8 @@ class CNV_OT_import_cm3d2_mate(bpy.types.Operator):
         common.setup_material(mate)
 
         cm3d2_data.MaterialHandler.apply_to(context, mate, mat_data, prefs.is_replace_cm3d2_tex)
+        common.decorate_material(mate, self.is_decorate)
+        common.setup_material(mate)
 
         return {'FINISHED'}
 
@@ -127,15 +126,6 @@ class CNV_OT_import_cm3d2_mate_text(bpy.types.Operator):
         except Exception as e:
             self.report(type={'ERROR'}, message="mateファイルのインポートを中止します。" + str(e))
             return {'CANCELLED'}
-
-        if not context.material_slot:
-            bpy.ops.object.material_slot_add()
-        root, ext = os.path.splitext(os.path.basename(self.filepath))
-        mate = context.blend_data.materials.new(name=mat_data.name)
-        context.material_slot.material = mate
-        common.setup_material(mate)
-
-        cm3d2_data.MaterialHandler.apply_to(context, mate, mat_data, prefs.is_replace_cm3d2_tex)
 
         if not edit_text:
             edit_text = context.blend_data.texts.new(os.path.basename(mat_data.name))
