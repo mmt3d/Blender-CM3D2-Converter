@@ -13,7 +13,6 @@ def toon_vector_node_tree():
 
     # Set nodes
     group_input = nt.node('Group Input', type='NodeGroupInput', location=(-380.0, 80.0))
-    math_maximum = nt.node('Math Maximum', type='ShaderNodeMath', location=(20.0, 160.0), operation='MAXIMUM', use_clamp=False, inputs={'Value': {1: 0.0001}})
     math_less_than = nt.node('Math Less Than', type='ShaderNodeMath', location=(220.0, 160.0), operation='LESS_THAN', inputs={'Value': 0.5})
     diffuse_bsdf = nt.node('Diffuse BSDF', type='ShaderNodeBsdfDiffuse', location=(-180.0, -80.0), inputs={'Color': (1.0, 1.0, 1.0, 1.0)})
     shader_to_rgb = nt.node('Shader To RGB', type='ShaderNodeShaderToRGB', location=(20.0, -80.0))
@@ -23,8 +22,7 @@ def toon_vector_node_tree():
     group_output = nt.node('Group Output', type='NodeGroupOutput', location=(820.0, 20.0))
 
     # Set links
-    nt.link(group_input.outputs('Light Switch'), math_maximum.inputs('Value', 0))
-    nt.link(math_maximum.outputs('Value'), math_less_than.inputs('Value'))
+    nt.link(group_input.outputs('Light Switch'), math_less_than.inputs('Value'))
     nt.link(diffuse_bsdf.outputs('BSDF'), shader_to_rgb.inputs('Shader'))
     nt.link(shader_to_rgb.outputs('Color'), map_range.inputs('Value'))
     nt.link(map_range.outputs('Result'), mix.inputs('A'))
