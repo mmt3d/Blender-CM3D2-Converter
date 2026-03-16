@@ -14,6 +14,8 @@ bl_info = {
     "category": "Import-Export"
 }
 
+DEBUG = False
+
 import importlib
 from . import package_helper
 
@@ -115,7 +117,8 @@ if 'bpy' in locals():
         except ModuleNotFoundError:
             # module was renamed or moved
             pass
-    cm3d2_shader.invalidate_cache()
+    if DEBUG:
+        cm3d2_shader.invalidate_cache()
 
 import bpy, os.path, bpy.utils.previews  # type: ignore
 
