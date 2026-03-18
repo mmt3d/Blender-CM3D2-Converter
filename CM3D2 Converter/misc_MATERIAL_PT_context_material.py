@@ -39,10 +39,10 @@ class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
             opr.is_decorate, opr.is_create, opr.use_dialog = True, True, False
 
         else:
+            layout = self.layout
+            layout.operator('material.rebuild_all_material', icon='FILE_REFRESH', text='全マテリアルを再構成')
+            layout.separator()
             if 'shader1' in mate and 'shader2' in mate:
-                box = self.layout#.box()
-                # row = box.split(percentage=0.3)
-                #row = compat.layout_split(box, factor=0.5)
                 row = self.layout.column()
                 row.label(text="CM3D2用", icon_value=common.kiss_icon())
                 sub_row = row.row(align=True)
@@ -51,21 +51,22 @@ class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
                 opr = sub_row.operator('material.paste_material', icon='PASTEDOWN', text="貼付け")
                 opr.use_dialog = True
                 opr.is_create = False
+                sub_row.operator('material.rebuild_material', icon='FILE_REFRESH', text='再構成')
 
                 shader1 = mate['shader1']
                 shader_prop = cm3d2_data.MaterialHandler.get_shader_prop_dynamic(mate) #cm3d2_data.Handler.get_shader_prop(shader1)
                 type_name = shader_prop.get('type_name', '不明')
                 icon = shader_prop.get('icon', 'ERROR')
 
-                row = compat.layout_split(box, factor=1 / 3)
+                row = compat.layout_split(layout, factor=1 / 3)
                 row.label(text="種類:")
                 row.label(text=type_name, icon=icon)
-                box.prop(mate, 'name', icon='SORTALPHA', text="マテリアル名")
-                box.prop(mate, '["shader1"]', icon='MATERIAL', text="シェーダー1")
-                box.prop(mate, '["shader2"]', icon='SHADING_RENDERED', text="シェーダー2")
+                layout.prop(mate, 'name', icon='SORTALPHA', text="マテリアル名")
+                layout.prop(mate, '["shader1"]', icon='MATERIAL', text="シェーダー1")
+                layout.prop(mate, '["shader2"]', icon='SHADING_RENDERED', text="シェーダー2")
 
                 if 'CM3D2 Texture Expand' not in mate:
-                    box.operator('material.setup_mate_expand', text="フラグセットアップ")
+                    layout.operator('material.setup_mate_expand', text="フラグセットアップ")
                     return
 
                 box = self.layout.box()
@@ -163,10 +164,10 @@ class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
 
             else:
                 if is_com_mode:
-                    self.layout.operator('material.new_com3d2', text="COM3D2用に変更", icon_value=common.kiss_icon())
+                    layout.operator('material.new_com3d2', text="COM3D2用に変更", icon_value=common.kiss_icon())
                 else:
-                    self.layout.operator('material.new_cm3d2', text="CM3D2用に変更", icon_value=common.kiss_icon())
-                    self.layout.operator('material.new_com3d2', text="COM3D2用に変更", icon_value=common.kiss_icon())
+                    layout.operator('material.new_cm3d2', text="CM3D2用に変更", icon_value=common.kiss_icon())
+                    layout.operator('material.new_com3d2', text="COM3D2用に変更", icon_value=common.kiss_icon())
 
 
 class new_mate_opr():
@@ -609,6 +610,65 @@ class CNV_OT_copy_material(bpy.types.Operator):
 
         context.window_manager.clipboard = mat_data.to_text()
         self.report(type={'INFO'}, message="マテリアルテキストをクリップボードにコピーしました")
+        return {'FINISHED'}
+
+
+@compat.BlRegister()
+class CNV_OT_rebuild_all_material(bpy.types.Operator):
+    bl_idname = 'material.rebuild_all_material'
+    bl_label = "全マテリアルを再構築"
+    bl_description = "全マテリアルのシェーダー構成を再構築します"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    @classmethod
+    def poll(cls, context):
+        ob = context.active_object
+        for slot in ob.material_slots:
+            mate = slot.material
+            if 'CM3D2 Texture Expand' in mate and mate['CM3D2 Texture Expand']:
+                return True
+        return False
+
+    def execute(self, context):
+        ob = context.active_object
+        for slot in ob.material_slots:
+            mate = slot.material
+            if 'CM3D2 Texture Expand' not in mate or not mate['CM3D2 Texture Expand']:
+                continue
+            shader_prop = cm3d2_data.MaterialHandler.get_shader_prop_dynamic(mate)
+            names = shader_prop['tex_list'] + shader_prop['col_list'] + shader_prop['f_list']
+            for node in mate.node_tree.nodes:
+                if node.name not in names:
+                    mate.node_tree.nodes.remove(node)
+            common.decorate_material(mate, True)
+
+        return {'FINISHED'}
+
+
+@compat.BlRegister()
+class CNV_OT_rebuild_material(bpy.types.Operator):
+    bl_idname = 'material.rebuild_material'
+    bl_label = "マテリアルを再構築"
+    bl_description = "マテリアルのシェーダー構成を再構築します"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    @classmethod
+    def poll(cls, context):
+        ob = context.active_object
+        mate = ob.active_material
+        return 'CM3D2 Texture Expand' in mate and mate['CM3D2 Texture Expand']
+
+    def execute(self, context):
+        ob = context.active_object
+        mate = ob.active_material
+
+        shader_prop = cm3d2_data.MaterialHandler.get_shader_prop_dynamic(mate)
+        names = shader_prop['tex_list'] + shader_prop['col_list'] + shader_prop['f_list']
+        for node in mate.node_tree.nodes:
+            if node.name not in names:
+                mate.node_tree.nodes.remove(node)
+        common.decorate_material(mate, True)
+
         return {'FINISHED'}
 
 
