@@ -130,7 +130,7 @@ def decode_bone_name(name, enable=True):
 
 
 # CM3D2用マテリアルを設定に合わせて装飾
-def decorate_material(mate, enable=True, me=None, mate_index=-1):
+def decorate_material(mate, enable=True):
     if not enable or 'shader1' not in mate:
         return
 

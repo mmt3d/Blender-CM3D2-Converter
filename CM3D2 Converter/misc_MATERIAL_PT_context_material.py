@@ -486,7 +486,7 @@ class new_mate_opr():
             node = common.create_float(context, mate, data[0], data[1], slot_index)
 
         cm3d2_data.align_nodes(mate)
-        common.decorate_material(mate, self.is_decorate, me, ob.active_material_index)
+        common.decorate_material(mate, self.is_decorate)
 
         return {'FINISHED'}
 
@@ -637,7 +637,7 @@ class CNV_OT_decorate_material(bpy.types.Operator):
         for slot_index, slot in enumerate(ob.material_slots):
             mate = slot.material
             if mate and 'shader1' in mate and 'shader2' in mate:
-                common.decorate_material(mate, True, me, slot_index)
+                common.decorate_material(mate, True)
 
         return {'FINISHED'}
 

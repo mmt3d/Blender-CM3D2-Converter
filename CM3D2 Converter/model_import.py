@@ -709,7 +709,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                     # テクスチャ追加
                     #self.create_mateprop(context, me, texes_set, mate, index, data)
                     cm3d2_data.MaterialHandler.apply_to(context, mate, data)
-                    common.decorate_material(mate, self.is_decorate, me, index)
+                    common.decorate_material(mate, self.is_decorate)
                     common.setup_material(mate)
 
             ob.active_material_index = 0
