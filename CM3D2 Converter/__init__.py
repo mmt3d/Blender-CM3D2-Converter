@@ -16,28 +16,19 @@ bl_info = {
 
 DEBUG = False
 
-import importlib
-from . import package_helper
-
-if 'bpy' in locals():
-    importlib.reload(package_helper)
-
-# Install dependencies
-def install_dependencies():
-    import bpy  # import inside a function, so "bpy" in locals() check later is unchanged
-    if not package_helper.check_module('pythonnet'):
-        print("Installing dependency 'pythonnet'...")
-        package_helper.install_package()
-        importlib.invalidate_caches()
-    else:
-        print("Package 'pythonnet' is installed")
-install_dependencies()
-
+# 同梱のpythonモジュールパスを追加
+import sys
+import os
+addon_dir = os.path.dirname(__file__)
+vendor_path = os.path.join(addon_dir, "vendor")
+if vendor_path not in sys.path:
+    sys.path.insert(0, vendor_path)
 
 
 from . import Managed
 if 'bpy' in locals():
     if not hasattr(Managed, '_LOADED') or not Managed._LOADED:
+        import importlib
         importlib.reload(Managed)
         Managed.reload()
 else:
