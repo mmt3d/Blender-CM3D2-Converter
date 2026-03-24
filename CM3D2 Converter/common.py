@@ -24,6 +24,7 @@ KISS_ICON = None
 PREFS = None
 preview_collections = {}
 texpath_dict = {}
+COM3D2_SHADER_REV = 1
 
 
 re_png = re.compile(r"\.[Pp][Nn][Gg](\.\d{3})?$")
@@ -568,6 +569,7 @@ def setup_material(mate):
     if mate:
         if 'CM3D2 Texture Expand' not in mate:
             mate['CM3D2 Texture Expand'] = True
+        mate['COM3D2 Shader Rev'] = COM3D2_SHADER_REV
 
         mate.use_nodes = True
 

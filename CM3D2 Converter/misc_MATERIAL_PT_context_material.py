@@ -613,8 +613,52 @@ class CNV_OT_copy_material(bpy.types.Operator):
         return {'FINISHED'}
 
 
+class rebuild_material_opr:
+    """
+    マテリアル再構成オペレータMixIn
+    """
+    @staticmethod
+    def can_rebuild(mate: bpy.types.Material, is_replace_cm3d2_tex: bool):
+        if mate is None or 'CM3D2 Texture Expand' not in mate or not mate['CM3D2 Texture Expand']:
+            return False
+        # シェーダーノード構成リビジョンが上がっている場合は再構成可
+        if common.COM3D2_SHADER_REV != mate.get('COM3D2 Shader Rev'):
+            return True
+        if is_replace_cm3d2_tex:
+            # 未解決画像パスがある場合は再構成可
+            shader_prop = cm3d2_data.MaterialHandler.get_shader_prop_dynamic(mate)
+            for tex_name in shader_prop['tex_list']:
+                tex = mate.node_tree.nodes.get(tex_name)
+                if not len(tex.image.pixels):
+                    return True
+        return False
+
+    @staticmethod
+    def rebuild(mate: bpy.types.Material, is_replace_cm3d2_tex: bool):
+        if mate is None or 'CM3D2 Texture Expand' not in mate or not mate['CM3D2 Texture Expand']:
+            return
+        shader_prop = cm3d2_data.MaterialHandler.get_shader_prop_dynamic(mate)
+        names = shader_prop['tex_list'] + shader_prop['col_list'] + shader_prop['f_list']
+        # パラメータノード以外を除去
+        for node in mate.node_tree.nodes:
+            if node.name not in names:
+                mate.node_tree.nodes.remove(node)
+        # シェーダーノード構成
+        common.decorate_material(mate, True)
+        common.setup_material(mate)
+
+        if is_replace_cm3d2_tex:
+            # 実TexPathを再捜索
+            texpath_dict = common.get_texpath_dict()
+            nodes = mate.node_tree.nodes
+            for tex_name in shader_prop['tex_list']:
+                tex = nodes.get(tex_name)
+                tex.extension = 'EXTEND'
+                common.replace_cm3d2_tex(tex.image, texpath_dict=texpath_dict, reload_path=False)
+
+
 @compat.BlRegister()
-class CNV_OT_rebuild_all_material(bpy.types.Operator):
+class CNV_OT_rebuild_all_material(bpy.types.Operator, rebuild_material_opr):
     bl_idname = 'material.rebuild_all_material'
     bl_label = "全マテリアルを再構築"
     bl_description = "全マテリアルのシェーダー構成を再構築します"
@@ -623,30 +667,25 @@ class CNV_OT_rebuild_all_material(bpy.types.Operator):
     @classmethod
     def poll(cls, context):
         ob = context.active_object
+        prefs = common.preferences()
         for slot in ob.material_slots:
             mate = slot.material
-            if 'CM3D2 Texture Expand' in mate and mate['CM3D2 Texture Expand']:
+            if cls.can_rebuild(mate, prefs.is_replace_cm3d2_tex):
                 return True
         return False
 
     def execute(self, context):
         ob = context.active_object
+        prefs = common.preferences()
         for slot in ob.material_slots:
             mate = slot.material
-            if 'CM3D2 Texture Expand' not in mate or not mate['CM3D2 Texture Expand']:
-                continue
-            shader_prop = cm3d2_data.MaterialHandler.get_shader_prop_dynamic(mate)
-            names = shader_prop['tex_list'] + shader_prop['col_list'] + shader_prop['f_list']
-            for node in mate.node_tree.nodes:
-                if node.name not in names:
-                    mate.node_tree.nodes.remove(node)
-            common.decorate_material(mate, True)
+            self.rebuild(mate, prefs.is_replace_cm3d2_tex)
 
         return {'FINISHED'}
 
 
 @compat.BlRegister()
-class CNV_OT_rebuild_material(bpy.types.Operator):
+class CNV_OT_rebuild_material(bpy.types.Operator, rebuild_material_opr):
     bl_idname = 'material.rebuild_material'
     bl_label = "マテリアルを再構築"
     bl_description = "マテリアルのシェーダー構成を再構築します"
@@ -656,18 +695,14 @@ class CNV_OT_rebuild_material(bpy.types.Operator):
     def poll(cls, context):
         ob = context.active_object
         mate = ob.active_material
-        return 'CM3D2 Texture Expand' in mate and mate['CM3D2 Texture Expand']
+        prefs = common.preferences()
+        return cls.can_rebuild(mate, prefs.is_replace_cm3d2_tex)
 
     def execute(self, context):
         ob = context.active_object
         mate = ob.active_material
-
-        shader_prop = cm3d2_data.MaterialHandler.get_shader_prop_dynamic(mate)
-        names = shader_prop['tex_list'] + shader_prop['col_list'] + shader_prop['f_list']
-        for node in mate.node_tree.nodes:
-            if node.name not in names:
-                mate.node_tree.nodes.remove(node)
-        common.decorate_material(mate, True)
+        prefs = common.preferences()
+        self.rebuild(mate, prefs.is_replace_cm3d2_tex)
 
         return {'FINISHED'}
 
