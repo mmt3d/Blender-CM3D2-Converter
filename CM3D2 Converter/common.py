@@ -926,7 +926,7 @@ class CNV_UL_generic_selector(bpy.types.UIList):
     #)
         
     # Usual draw item function.
-    def draw_item(self, context, layout, data, item, icon_value, active_data, active_propname, index, flt_flag):
+    def draw_item(self, context, layout, data, item, icon_value, active_data, active_propname, index = 0, flt_flag = 0):
         # Just in case, we do not use it here!
         self.use_filter_invert = False
 
@@ -964,12 +964,6 @@ class CNV_UL_generic_selector(bpy.types.UIList):
             #layout.prop(item, "value", text=item.name, icon=item.icon)
             icon = 'RADIOBUT_ON' if item.preferred else 'RADIOBUT_OFF'
             layout.prop(item, "preferred", text="", icon=icon, emboss=False)
-        
-        elif self.layout_type in {'GRID'}:
-            layout.alignment = 'CENTER'
-            if flt_flag & self.VGROUP_EMPTY:
-                layout.enabled = False
-            layout.label(text="", icon_value=icon)
 
     def draw_filter(self, context, layout):
         # Nothing much to say here, it's usual UI code...
