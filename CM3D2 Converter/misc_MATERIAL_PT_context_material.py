@@ -60,7 +60,7 @@ class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
 
                 row = compat.layout_split(layout, factor=1 / 3)
                 row.label(text="種類:")
-                row.label(text=type_name, icon=icon)
+                row.operator('material.change_shader', text=type_name, icon=icon)
                 layout.prop(mate, 'name', icon='SORTALPHA', text="マテリアル名")
                 layout.prop(mate, '["shader1"]', icon='MATERIAL', text="シェーダー1")
                 layout.prop(mate, '["shader2"]', icon='SHADING_RENDERED', text="シェーダー2")
@@ -173,6 +173,7 @@ class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
 class new_mate_opr():
     is_decorate: bpy.props.BoolProperty(name="種類に合わせてマテリアルを装飾", default=True)
     # is_replace_cm3d2_tex: bpy.props.BoolProperty(name="テクスチャを探す", default=False, description="CM3D2本体のインストールフォルダからtexファイルを探して開きます")
+    asis_if_exists: bpy.props.BoolProperty(name="存在するノードはパラメータそのままにする", default=False)
 
     @classmethod
     def poll(cls, context):
@@ -466,25 +467,25 @@ class new_mate_opr():
             f_list.append(_RimShift)
         
         texpath_dict = common.get_texpath_dict()
-        slot_index = 0
-        
+
         for data in tex_list:
             key = data[0]
             tex_name = data[1]
             cm3d2path = data[2]
             # prefsから初期値を取得
             tex_map = prefs.new_mate_tex_offset[:2] + prefs.new_mate_tex_scale[:2]
-            tex = common.create_tex(context, mate, key, tex_name, cm3d2path, cm3d2path, tex_map, False, slot_index)
+            tex = common.create_tex(context, mate, key, tex_name, cm3d2path, cm3d2path, tex_map, False,
+                                    asis_if_exists=self.asis_if_exists)
 
             # tex探し
             if prefs.is_replace_cm3d2_tex:
-                replaced = common.replace_cm3d2_tex(tex.image, texpath_dict=texpath_dict, reload_path=False)
+                common.replace_cm3d2_tex(tex.image, texpath_dict=texpath_dict, reload_path=False)
 
         for data in col_list:
-            node = common.create_col(context, mate, data[0], data[1][:4], slot_index)
+            common.create_col(context, mate, data[0], data[1][:4], asis_if_exists=self.asis_if_exists)
 
         for data in f_list:
-            node = common.create_float(context, mate, data[0], data[1], slot_index)
+            common.create_float(context, mate, data[0], data[1], asis_if_exists=self.asis_if_exists)
 
         cm3d2_data.align_nodes(mate)
         common.decorate_material(mate, self.is_decorate)
@@ -510,6 +511,65 @@ class CNV_OT_new_com3d2(bpy.types.Operator, new_mate_opr):
     bl_options = {'REGISTER', 'UNDO'}
 
     shader_type: bpy.props.EnumProperty(items=cm3d2_data.Handler.create_comshader_items(), name="種類", default='CM3D2/Toony_Lighted_Outline')
+
+
+@compat.BlRegister()
+class CNV_OT_change_shader(bpy.types.Operator, new_mate_opr):
+    bl_idname = 'material.change_shader'
+    bl_label = "CM3D2/COM3D2用シェーダーを変更"
+    bl_description = "Blender-CM3D2-Converterで使用できるマテリアルのシェーダーを変更します"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    shader_type: bpy.props.EnumProperty(items=cm3d2_data.Handler.create_shader_all_items(), name="種類")
+    remove_unused: bpy.props.BoolProperty(name="不使用ノードを削除", default=False, description="変更前のシェーダーで使用していたノードのうち、変更後のシェーダーで使用しないものを削除します")
+    asis_if_exists: bpy.props.BoolProperty(name="存在するノードはパラメータそのままにする", default=True)  # override
+
+    @classmethod
+    def poll(cls, context):
+        return True
+
+    def invoke(self, context, event):
+        ob = context.active_object
+        mate = ob.active_material
+        self.shader_type = mate.get('shader1')
+        return context.window_manager.invoke_props_dialog(self)
+
+    def draw(self, context):
+        self.layout.prop(self, 'shader_type', icon='MATERIAL')
+
+        # ModelVersionによる適格性の警告
+        ob = context.active_object
+        model_ver = ob.get('ModelVersion')
+        is_com_mode = model_ver and model_ver >= 2000
+        if not is_com_mode and self.shader_type not in cm3d2_data.SHADER_NAMES_CM3D2:
+            row = self.layout.row(align=True)
+            row.label(text=f'この種類はmodelバージョン({model_ver})に不適格です', icon='ERROR')
+
+        self.layout.prop(self, 'remove_unused', icon='TRASH')
+        box = self.layout.box()
+        col = box.column(align=True)
+        col.label(text='ご注意', icon='ERROR')
+        col.label(text='『不使用ノードを削除』は変更後のシェーダーで使用')
+        col.label(text='しなくなるノードを削除します。')
+        col.label(text='削除されると元のシェーダーに戻しても以前の調整値')
+        col.label(text='は失われデフォルト値になります。')
+        col.label(text='また、不使用ノードを残していても mate や model の')
+        col.label(text='エクスポート時には除外されます。')
+
+    def execute(self, context):
+        ob = context.active_object
+        mate = ob.active_material
+        shader_prop = cm3d2_data.Handler.get_shader_prop(self.shader_type)
+        names = shader_prop['tex_list'] + shader_prop['col_list'] + shader_prop['f_list']
+        all_names = cm3d2_data.PROPS.keys()
+        # 不使用となるノードを削除
+        if self.remove_unused:
+            for node in mate.node_tree.nodes:
+                if node.name in all_names and node.name not in names:
+                    mate.node_tree.nodes.remove(node)
+        # ノード作り直し(存在してない場合だけ新規作成)
+        super().execute(context)
+        return {'FINISHED'}
 
 
 @compat.BlRegister()

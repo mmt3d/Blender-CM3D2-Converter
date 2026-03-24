@@ -445,6 +445,21 @@ class DataHandler:
         return items
 
     @classmethod
+    def create_shader_all_items(cls) -> list:
+        _inst = cls.instance()
+        items = []
+        idx = 0
+        support_both = set(SHADER_NAMES_CM3D2) & set(SHADER_NAMES_COM3D2)
+
+        for name in SHADER_NAMES_COM3D2:
+            item = _inst.shader_dict.get(name)
+            if item:
+                support_desc = '' if name in support_both else ' (COM3D2 only)'
+                items.append((name, f"{item['type_name']}{support_desc}", '', item['icon'], idx))
+                idx += 1
+        return items
+
+    @classmethod
     def get_shader_prop(cls, name):
         _inst = cls.instance()
         shader_prop = _inst.shader_dict.get(name)

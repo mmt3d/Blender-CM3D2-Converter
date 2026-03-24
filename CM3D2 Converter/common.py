@@ -10,6 +10,7 @@ import mathutils
 from . import fileutil
 from . import compat
 from .cm3d2_shader import toon_vector_node_tree, com3d2_shader_node_tree, bind_light_switch, bind_use_transparent
+from .cm3d2_data import Handler
 
 
 # アドオン情報
@@ -166,8 +167,16 @@ def decorate_material(mate, enable=True):
     mate.node_tree.links.new(mate_out.inputs.get('Surface'), com3d2_shader_ng.outputs.get('Shader'))
 
     # インポートされたマテリアル内各要素ノードからの接続
+    shader_prop = Handler.get_shader_prop(mate.get('shader1'))
+    names = shader_prop['tex_list'] + shader_prop['col_list'] + shader_prop['f_list']
     for key, node in mate.node_tree.nodes.items():
         if not key.startswith('_'):
+            continue
+        # 指定シェーダーに関係ないノードがあればリンクを外す
+        if key not in names:
+            for output in node.outputs:
+                for link in list(output.links):
+                    mate.node_tree.links.remove(link)
             continue
         # 画像ノードの場合
         if type(node) == bpy.types.ShaderNodeTexImage:
@@ -488,7 +497,7 @@ def load_cm3d2tex(path, skip_data=False):
         return version, tex_format, uv_rects, data
 
 
-def create_tex(context, mate, node_name, tex_name=None, filepath=None, cm3d2path=None, tex_map_data=None, replace_tex=False, slot_index=-1):
+def create_tex(context, mate, node_name, tex_name=None, filepath=None, cm3d2path=None, tex_map_data=None, replace_tex=False, asis_if_exists=False):
     if isinstance(context, bpy.types.Context):
         context = context.copy()
 
@@ -502,6 +511,8 @@ def create_tex(context, mate, node_name, tex_name=None, filepath=None, cm3d2path
         tex.show_texture = True
         # 特にtoonテクスチャではベクトル0や1がリピート画像の境界で色補完の影響があるため、延長にする
         tex.extension = 'EXTEND'
+    elif asis_if_exists:
+        return tex
 
     if tex_name:
         if tex.image is None:
@@ -539,7 +550,7 @@ def create_tex(context, mate, node_name, tex_name=None, filepath=None, cm3d2path
     return tex
 
 
-def create_col(context, mate, node_name, color, slot_index=-1):
+def create_col(context, mate, node_name, color, asis_if_exists=False):
     if isinstance(context, bpy.types.Context):
         context = context.copy()
 
@@ -547,12 +558,14 @@ def create_col(context, mate, node_name, color, slot_index=-1):
     if node is None:
         node = mate.node_tree.nodes.new(type='ShaderNodeRGB')
         node.name = node.label = node_name
+    elif asis_if_exists:
+        return node
     node.outputs[0].default_value = color
 
     return node
 
 
-def create_float(context, mate, node_name, value, slot_index=-1):
+def create_float(context, mate, node_name, value, asis_if_exists=False):
     if isinstance(context, bpy.types.Context):
         context = context.copy()
 
@@ -560,6 +573,8 @@ def create_float(context, mate, node_name, value, slot_index=-1):
     if node is None:
         node = mate.node_tree.nodes.new(type='ShaderNodeValue')
         node.name = node.label = node_name
+    elif asis_if_exists:
+        return node
     node.outputs[0].default_value = value
 
     return node
