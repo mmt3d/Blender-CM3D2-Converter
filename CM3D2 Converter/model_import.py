@@ -1081,37 +1081,6 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             unknown_color = create_unknown_color(data)
             set_shape_key_data(shape_key, normals_color, unknown_color)
 
-
-    def create_mateprop_old(self, context: bpy.types.Context, me, tex_set, mate, mate_idx, data: list):
-        # create_matepropとの違いは、slot_indexの有無、nodeの接続・配置処理のみ
-
-        prefs = common.preferences()
-        # テクスチャ追加
-        slot_index = 0
-        for tex_data in data['data']:
-            if prefs.mate_unread_same_value:
-                if tex_data['name'] in tex_set:
-                    continue
-                tex_set.add(tex_data['name'])
-
-            node_name = tex_data['name']
-            if tex_data['type'] == 'tex':
-                path = tex_data['path']
-                tex_map_data = tex_data['tex_map']
-                common.create_tex(context, mate, node_name, tex_data['name2'], path, path, tex_map_data, prefs.is_replace_cm3d2_tex, slot_index)
-
-            elif tex_data['type'] == 'col':
-                col = tex_data['color']
-                common.create_col(context, mate, node_name, col, slot_index)
-
-            elif tex_data['type'] == 'f':
-                f = tex_data['float']
-                common.create_f(context, mate, node_name, f, slot_index)
-
-            slot_index += 1
-
-            self.progress(context)
-
     def create_mateprop(self, context: bpy.types.Context, me, tex_set, mate, mate_idx, data: list):
         if mate.use_nodes is False:
             mate.use_nodes = True
