@@ -29,3 +29,7 @@ f_       = __format_with_translation_function( _      )
 f_iface_ = __format_with_translation_function( iface_ )
 f_tip_   = __format_with_translation_function( tip_   )
 f_data_  = __format_with_translation_function( data_  )
+
+__all__ = [
+    "_", "iface_", "tip_", "data_", "f_", "f_iface_", "f_tip_", "f_data_"
+]
