@@ -215,10 +215,11 @@ class CNV_OT_align_to_cm3d2_base_bone(bpy.types.Operator):
 
 
     def bone_data_report_cancel(self):
-        source_name = self.bl_rna.properties['bone_info_mode']        \
-                      and source_name.enum_items[self.bone_info_mode] \
-                      and source_name.name                            \
-                      or self.bone_info_mode
+        try:
+            prop = self.bl_rna.properties['bone_info_mode']
+            source_name = prop.enum_items[self.bone_info_mode].name
+        except:
+            source_name = self.bone_info_mode
         self.report(
             type    = {'ERROR'},
             message = f_tip_(
