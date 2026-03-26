@@ -1,7 +1,4 @@
 import bpy
-import math
-import mathutils
-import struct
 from . import common
 from . import compat
 from . import menu_file
@@ -26,26 +23,18 @@ class CM3D2MENU_UL_command_list(bpy.types.UIList):
     #   flt_flag is the result of the filtering process for this item.
     #   Note: as index and flt_flag are optional arguments, you do not have to use/declare them here if you don't
     #         need them.
-    def draw_item(self, context, layout, data, item, icon, active_data, active_propname):
+    def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index = 0, flt_flag = 0):
         command_prop = item.dereference(data)
-        # draw_item must handle the three layout types... Usually 'DEFAULT' and 'COMPACT' can share the same code.
-        if self.layout_type in {'DEFAULT', 'COMPACT'}:
-            # You should always start your row layout by a label (icon + text), or a non-embossed text field,
-            # this will also make the row easily selectable in the list! The later also enables ctrl-click rename.
-            # We use icon_value of label, as our given icon is an integer value, not an enum ID.
-            # Note "data" names should never be translated!
-            if command_prop:
-                command_enum_info = menu_file.get_command_enum_info(command_prop.command)
-                icon = 'NONE'
-                if command_enum_info:
-                    icon = command_enum_info[3]
-                layout.label(text=command_prop.name, icon=icon)
-            else:
-                layout.label(text="", translate=False, icon_value=icon)
-        # 'GRID' layout type should be as compact as possible (typically a single icon!).
-        elif self.layout_type in {'GRID'}:
-            layout.alignment = 'CENTER'
-            layout.label(text="", icon_value=icon)
+        # You should always start your row layout by a label (icon + text), or a non-embossed text field,
+        # this will also make the row easily selectable in the list! The later also enables ctrl-click rename.
+        # We use icon_value of label, as our given icon is an integer value, not an enum ID.
+        # Note "data" names should never be translated!
+        if command_prop:
+            command_name, icon = menu_file.get_command_enum_name(command_prop.command)
+            # ラベルは整形済みのほうを使う
+            layout.label(text=command_prop.label, icon=icon)
+        else:
+            layout.label(text="", translate=False, icon_value=icon)
 
 
 @compat.BlRegister()
@@ -198,8 +187,7 @@ class CM3D2MENU_OT_command_add(bpy.types.Operator):
     bl_description = "Adds a new CM3D2MenuCommand to the active CM3D2Menu"
     bl_options     = {'REGISTER', 'UNDO'}
 
-    command_type_enums = menu_file.COMMAND_ENUMS.copy()
-    command_type_enums.append( ('NONE', 'Custom', 'Some other manually entered miscillaneous command', 'GREASEPENCIL', -1) )
+    command_type_enums = menu_file.COMMAND_ENUMS + [menu_file.COMMAND_CUSTOM_ENUM]
     type: bpy.props.EnumProperty(items=command_type_enums, name="Type", default='NONE')
     
     string: bpy.props.StringProperty(name="String", default="newcommand")

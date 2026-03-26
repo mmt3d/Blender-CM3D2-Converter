@@ -1,6 +1,5 @@
 import bpy
 import math
-import mathutils
 import struct
 from . import common
 from . import compat
@@ -80,11 +79,16 @@ COMMAND_ENUMS = [
 
     ('', "Misc.", ''),
     ('setstr'       , "Set String"             , "Unused"     , 'BLANK1'               , 170),
-    ('onclickmenu'  , "onclickmenu"            , "Decorative" , 'NONE'                 , 200),
-    ('属性追加'         , "addattribute"           , "Decorative" , 'NONE'                 , 201)                 
+    ('onclickmenu'  , "onclickmenu"            , "Decorative" , 'INFO'                 , 200),
+    ('属性追加'       , "addattribute"           , "Decorative" , 'FILE_TEXT'           , 201),
+    ('消去node設定開始', "Hide-Node Start"       , "Decorative"  , 'INFO'                , 202),
+    ('消去node設定終了', "Hide-Node End"         , "Decorative"  , 'INFO'                , 203),
 ]
 
-COMMAND_TYPE_LIST = dict() # filled by the CM3D2MenuCommand decorator
+COMMAND_CUSTOM_ENUM = (
+    'NONE', 'Custom', 'Some other manually entered miscillaneous command', 'GREASEPENCIL', -1
+)
+
 
 def get_command_enum_info(enum_string, enum_items=COMMAND_ENUMS):
     if enum_string == '':
@@ -96,11 +100,10 @@ def get_command_enum_info(enum_string, enum_items=COMMAND_ENUMS):
 
 def get_command_enum_name(enum_string, enum_items=COMMAND_ENUMS):
     if enum_string == '':
-        return ''
-    for enum_info in enum_items:
-        if enum_info[0] == enum_string:
-            return enum_info[1]
-    return enum_string
+        return '', ''
+    # 辞書にないコマンドはカスタムコマンドとみなす
+    enum_info = next(filter(lambda x: x[0] == enum_string, enum_items), COMMAND_CUSTOM_ENUM)
+    return enum_info[1], enum_info[3]
 
 
 
@@ -126,99 +129,45 @@ class MISCCOMMAND_PG_Param(bpy.types.PropertyGroup):
     def _s(self, value):
         self.name = value
 
+    def _g(self):
+        return self.name
+
     #name: bpy.props.StringProperty(name="Name", options=PROP_OPTS, get=lambda self : self.value)
     name: bpy.props.StringProperty(name="Name", default="param", options={'HIDDEN'})
-    value: bpy.props.StringProperty(name="Slot Name", options={'SKIP_SAVE'}, default="param", set=_s, get=lambda self: self.name)
+    value: bpy.props.StringProperty(name="Slot Name", options={'SKIP_SAVE'}, default="param", set=_s, get=_g)
 
 
+class MenuCommandBase(bpy.types.PropertyGroup):
+    command: bpy.props.StringProperty(name="Command", options=PROP_OPTS, description="The command of this menu file command-chunk")
+    index: bpy.props.IntProperty(name="Index", options=PROP_OPTS)
 
+    def _parse_list(self, string_list):
+        raise NotImplementedError("Subclasses of MenuCommandBase must implement _parse_list()")
 
-''' Decorator for CM3D2 Menu Command Classes '''
-class CM3D2MenuCommand():
-    def __init__(self, *args, name="{command_name}"):
-        self.name_template = name
-        self.command_enums = set()
-        for command in args:
-            for enum_info in COMMAND_ENUMS:
-                if enum_info[0] == command:
-                    self.command_enums.add(enum_info)
-                    break
-            continue
-    
-    def __call__(self, cls):
-        cls.name_template = self.name_template
-        cls.command_enums = self.command_enums
-        # Associate the class with its command in COMMAND_CLASSES
-        for enum in cls.command_enums:
-            COMMAND_TYPE_LIST[enum[0]] = cls
+    def _pack_into(self, buffer):
+        raise NotImplementedError("Subclasses of MenuCommandBase must implement _pack_into()")
 
-        # define command property
-        if len(cls.command_enums) > 0:
-            cls.command: bpy.props.EnumProperty(
-                items   = cls.command_enums,
-                name    = "Command",
-                options = PROP_OPTS,
-                default = next(iter(cls.command_enums))[0],
-                description = "The command of this menu file command-chunk"
-            )
-        else:
-            cls.command: bpy.props.StringProperty(
-                name    = "Command",
-                options = PROP_OPTS,
-                default = "command",
-                description = "The command of this menu file command-chunk"
-            )
+    def _throw_wrap(self, e, gerund):
+        msg = f_tip_("Error {gerund} `{command}`: {error}", gerund=gerund, command=self.command, error=e.args[0])
+        raise type(e)(msg) from e
 
-        cls.index: bpy.props.IntProperty(name="Index", options=PROP_OPTS)
-        #cls.initalized: bpy.props.BoolProperty(name="Index", options={'SKIP_SAVE'}, default=False)
+    def parse_list(self, string_list):
+        try:
+            return self._parse_list(string_list)
+        except ValueError as e:
+            self._throw_wrap(e, gerund='parsing')
 
-        attributes = dir(cls)
-        cls.name_format_attributes = set()
-        for attr in attributes:
-            if "{"+attr+"}" in cls.name_template:
-                cls.name_format_attributes.add(attr)
-
-        def format_name(self):
-            params = { attr : getattr(self, attr) for attr in cls.name_format_attributes }
-            if len(cls.command_enums) > 0:
-                params['command_name'] = get_command_enum_name(self.command, enum_items=cls.command_enums)
-            else:
-                params['command_name'] = get_command_enum_name(self.command)
-            return cls.name_template.format(**params)
-        
-        cls.format_name = format_name
-        
-        # define name property
-        cls.name: bpy.props.StringProperty(
-            name    = "Name"                 ,
-            options = {'HIDDEN', 'SKIP_SAVE'},
-            get     = cls.format_name
-        )
-
-        # add catch and rethrow for functions
-        def catch_throw_wrap(func, gerund, catch_type, throw_type=None):
-            throw_type = throw_type or catch_type
-            prefix = f_tip_("Error {gerund} {bl_idname}: ", gerund=gerund, bl_idname=cls.bl_idname) + "{message}"
-            def _f(*args, **kwargs):
-                try:
-                    return func(*args, **kwargs)
-                except catch_type as e:
-                    raise throw_type(prefix.format(message=e.args[0]))
-            return _f
-
-        cls.parse_list = catch_throw_wrap(cls.parse_list, "parsing", ValueError)
-        cls.pack_into  = catch_throw_wrap(cls.pack_into , "packing", ValueError)
-
-        return cls
-
-
+    def pack_into(self, buffer):
+        try:
+            return self._pack_into(buffer)
+        except ValueError as e:
+            self._throw_wrap(e, gerund='packing')
 
 
 ''' CM3D2 Menu Command Classes '''
 
 @compat.BlRegister()
-@CM3D2MenuCommand('アタッチポイントの設定', name="{command_name} : {point_name}")
-class CM3D2MENU_PG_AttachPointCommand(bpy.types.PropertyGroup):
+class CM3D2MENU_PG_AttachPointCommand(MenuCommandBase):
     bl_idname = 'CM3D2MenuAttachPointCommand'
     '''
     アタッチポイントの設定
@@ -234,7 +183,12 @@ class CM3D2MENU_PG_AttachPointCommand(bpy.types.PropertyGroup):
     location: bpy.props.FloatVectorProperty(name="Location", default=(0, 0, 0), description="Location of the attatchment relative to the base bone", options=PROP_OPTS, subtype='TRANSLATION')
     rotation: bpy.props.FloatVectorProperty(name="Rotation", default=(0, 0, 0), description="Rotation of the attatchment relative to the base bone", options=PROP_OPTS, subtype='EULER')
 
-    def parse_list(self, string_list):
+    @property
+    def label(self):
+        command_name, icon = get_command_enum_name(self.command)
+        return f'{_(command_name)} : {self.point_name}'
+
+    def _parse_list(self, string_list):
         self.command = string_list[0]
         self.point_name  = string_list[1]
         self.location.x = float(string_list[2])
@@ -243,8 +197,8 @@ class CM3D2MENU_PG_AttachPointCommand(bpy.types.PropertyGroup):
         self.rotation.x = float(string_list[5]) * math.pi/180
         self.rotation.y = float(string_list[6]) * math.pi/180
         self.rotation.z = float(string_list[7]) * math.pi/180
-    
-    def pack_into(self, buffer):
+
+    def _pack_into(self, buffer):
         buffer = buffer + struct.pack('<B', 1 + 1 + 3 + 3)
         buffer = common.pack_str(buffer, self.command   )
         buffer = common.pack_str(buffer, self.point_name)
@@ -258,12 +212,11 @@ class CM3D2MENU_PG_AttachPointCommand(bpy.types.PropertyGroup):
         return buffer
 
     def draw(self, context, layout):
-        layout.label(text=self.name)
+        command_name, icon = get_command_enum_name(self.command)
+        layout.label(text=command_name, icon=icon)
 
         col = layout.column()
-        col.alignment = 'RIGHT'
-        col.prop(self, 'command', translate=False)
-        col.label(text=self.command + "     ", translate=False)
+        col.prop(self, 'command', translate=False, emboss=False)
 
         col = layout.column()
         col.prop(self, 'point_name')
@@ -276,8 +229,7 @@ class CM3D2MENU_PG_AttachPointCommand(bpy.types.PropertyGroup):
 
 
 @compat.BlRegister()
-@CM3D2MenuCommand('prop', name="{command_name} : {prop_name} = {value}")
-class CM3D2MENU_PG_PropertyCommand(bpy.types.PropertyGroup):
+class CM3D2MENU_PG_PropertyCommand(MenuCommandBase):
     bl_idname = 'CM3D2PropertyMenuCommand'
     '''
     prop
@@ -286,13 +238,18 @@ class CM3D2MENU_PG_PropertyCommand(bpy.types.PropertyGroup):
     '''
     prop_name: bpy.props.StringProperty(name="Property Name" , default="prop name", description="Name of the property to set on load" , options=PROP_OPTS)
     value: bpy.props.FloatProperty(name="Property Value", default=50, description="Value of the property to set on load", options=PROP_OPTS)
-    
-    def parse_list(self, string_list):
+
+    @property
+    def label(self):
+        command_name, icon = get_command_enum_name(self.command)
+        return f'{_(command_name)} : {self.prop_name} = {self.value}'
+
+    def _parse_list(self, string_list):
         self.command    = string_list[0]
         self.prop_name  = string_list[1]
         self.value      = float(string_list[2])
-    
-    def pack_into(self, buffer):
+
+    def _pack_into(self, buffer):
         buffer = buffer + struct.pack('<B', 1 + 1 + 1)
         buffer = common.pack_str(buffer, self.command    )
         buffer = common.pack_str(buffer, self.prop_name  )
@@ -301,20 +258,19 @@ class CM3D2MENU_PG_PropertyCommand(bpy.types.PropertyGroup):
         return buffer
 
     def draw(self, context, layout):
-        col = layout.column()
-        col.alignment = 'RIGHT'
-        col.prop(self, 'command', translate=False)
-        col.label(text=self.command + "     ", translate=False)
+        command_name, icon = get_command_enum_name(self.command)
+        layout.label(text=command_name, icon=icon)
 
         col = layout.column()
-        col.label(text=self.command, translate=False)
+        col.prop(self, 'command', translate=False, emboss=False)
+
+        col = layout.column()
         col.prop(self, 'prop_name')
         col.prop(self, 'value'    )
 
 
 @compat.BlRegister()
-@CM3D2MenuCommand(name="{command_name}")
-class CM3D2MENU_PG_MiscCommand(bpy.types.PropertyGroup):
+class CM3D2MENU_PG_MiscCommand(MenuCommandBase):
     bl_idname = 'CM3D2MenuMiscCommand'
     '''
     command
@@ -326,10 +282,14 @@ class CM3D2MENU_PG_MiscCommand(bpy.types.PropertyGroup):
       └ child_n
     '''
     params: bpy.props.CollectionProperty(name="Parameters", options=PROP_OPTS, type=MISCCOMMAND_PG_Param)
-    
     active_index: bpy.props.IntProperty(options={'HIDDEN'})
 
-    search: bpy.props.BoolProperty(name="Search", default=False, description="Search for suggestions", options=PROP_OPTS)
+    @property
+    def label(self):
+        command_name, icon = get_command_enum_name(self.command)
+        if command_name == COMMAND_CUSTOM_ENUM[1]:
+            return f'{_(command_name)} : {self.command}'
+        return command_name
 
     def new_param(self):
         new_param = self.params.add()
@@ -342,14 +302,14 @@ class CM3D2MENU_PG_MiscCommand(bpy.types.PropertyGroup):
     def move_param(self, old_index, new_index):
         return self.params.move(old_index, new_index)
 
-    def parse_list(self, string_list):
+    def _parse_list(self, string_list):
         self.command = string_list[0]
         for param in string_list[1:]:
             new_param = self.params.add()
             new_param.value = param
             new_param.name  = param
 
-    def pack_into(self, buffer):
+    def _pack_into(self, buffer):
         buffer = buffer + struct.pack('<B', 1 + len(self.params))
         buffer = common.pack_str(buffer, self.command)
         for param in self.params:
@@ -357,20 +317,15 @@ class CM3D2MENU_PG_MiscCommand(bpy.types.PropertyGroup):
         return buffer
     
     def draw(self, context, layout):
-        enum_info = get_command_enum_info(self.command)
-        if enum_info:
-            layout.label(text=enum_info[1], icon=enum_info[3])
+        command_name, icon = get_command_enum_name(self.command)
+        layout.label(text=command_name, icon=icon)
+
+        # カスタムコマンドのみコマンド文字列編集可とする
+        layout.prop(self, 'command', translate=False, emboss=(command_name == COMMAND_CUSTOM_ENUM[1]))
 
         row = layout.row(align=True)
         row.use_property_split = False
-        if self.search:
-            search_data = bpy.ops.cm3d2menu.command_add.get_rna_type().properties.get('type')
-            row.prop_search(self, 'command', search_data, 'enum_items', text="", translate=True, icon='VIEWZOOM')
-        else:
-            row.prop(self, 'command', text="")
-        row.prop(self, 'search', text='', icon='ZOOM_OUT' if self.search else 'VIEWZOOM')
-        
-        
+
         row = layout.row()
         row.template_list('UI_UL_list', 'CM3D2MENU_UL_misc_command_children',
             self, 'params'      ,
@@ -393,44 +348,7 @@ class CM3D2MENU_PG_MiscCommand(bpy.types.PropertyGroup):
 
 ''' CM3D2 Menu Class '''
 
-# This generates OBJECT_PG_CM3D2Menu.command_type_collections
-def generate_command_type_collections(cls):
-    prop_example = bpy.props.CollectionProperty(type=bpy.types.PropertyGroup)
-    cls.command_type_collections = {}
-
-    for prop_name in dir(cls):
-        if prop_name == "commands":
-            continue
-
-        prop = getattr(cls, prop_name)
-        command_class = None
-        if type(prop) != type(prop_example):
-            continue
-        if "len" in dir(prop):
-            if len(prop)  != len(prop_example) :
-                continue
-            if prop[0]    != prop_example[0]   :
-                continue
-            command_class = prop[1]["type"]
-
-        # Fix for Blender 2.93
-        elif "function" in dir(prop) and "keywords" in dir(prop) and "type" in prop.keywords.keys(): 
-            if prop.function != prop_example.function:
-                continue
-            command_class = prop.keywords["type"]
-        else:
-            continue
-
-        if command_class == CM3D2MENU_PG_CommandPointer:
-            continue
-
-        cls.command_type_collections[command_class.bl_idname] = prop_name
-        #print(cls.bl_idname+".command_type_collections[\""+prop_name+"\"]", "=", prop)
-    
-    return cls
-
 @compat.BlRegister()
-@generate_command_type_collections
 class OBJECT_PG_CM3D2Menu(bpy.types.PropertyGroup):
     bl_idname = 'CM3D2Menu'
 
@@ -447,13 +365,10 @@ class OBJECT_PG_CM3D2Menu(bpy.types.PropertyGroup):
     commands: bpy.props.CollectionProperty(name="Commands", type=CM3D2MENU_PG_CommandPointer, options=PROP_OPTS)
     active_index: bpy.props.IntProperty(name="Active Command Index", options=PROP_OPTS, default=0)
     
-    # NOTE : This dictionary is generated by @generate_command_type_collections
-    #command_type_collections = {
-    #    'CM3D2MenuAttachPointCommand'   : 'attach_point_commands',
-    #    'CM3D2MenuPropertyCommand'      : 'property_commands'    ,
-    #    ...
-    #    for all Collection Properties (except 'commands')
-    #}
+    command_type_collections = {
+        'アタッチポイントの設定': 'attach_point_commands',
+        'prop': 'property_commands' ,
+    }
 
     updated: bpy.props.BoolProperty(options={'HIDDEN', 'SKIP_SAVE'}, default=False)
 
@@ -470,10 +385,7 @@ class OBJECT_PG_CM3D2Menu(bpy.types.PropertyGroup):
         return command_pointer.dereference(self)
 
     def new_command(self, command: str):
-        command_type = COMMAND_TYPE_LIST.get(command)
-        collection_name = 'misc_commands'
-        if command_type:
-            collection_name = self.command_type_collections.get(command_type.bl_idname) or collection_name
+        collection_name = self.command_type_collections.get(command, 'misc_commands')
         
         collection = getattr(self, collection_name)
         new_command = collection.add()
