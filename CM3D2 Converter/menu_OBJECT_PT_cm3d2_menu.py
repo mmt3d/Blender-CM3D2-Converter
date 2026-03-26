@@ -214,7 +214,6 @@ class CM3D2MENU_OT_command_add(bpy.types.Operator):
             self.string = self.type
 
         cm3d2_menu.new_command(self.string)
-        cm3d2_menu.active_index = len(cm3d2_menu.commands) - 1
 
         return {'FINISHED'}
 
@@ -237,8 +236,6 @@ class CM3D2MENU_OT_command_remove(bpy.types.Operator):
         ob = context.object
         cm3d2_menu = ob.cm3d2_menu
         cm3d2_menu.remove_command(cm3d2_menu.active_index)
-        if cm3d2_menu.active_index >= len(cm3d2_menu.commands):
-            cm3d2_menu.active_index = len(cm3d2_menu.commands) - 1
 
         return {'FINISHED'}
 

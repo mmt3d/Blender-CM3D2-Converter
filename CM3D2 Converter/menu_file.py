@@ -376,7 +376,7 @@ class OBJECT_PG_CM3D2Menu(bpy.types.PropertyGroup):
         for index, command_pointer in enumerate(self.commands):
             command = command_pointer.dereference(self)
             command.index = index
-        updated = True
+        self.updated = True
 
     def get_active_command(self):
         if len(self.commands) <= self.active_index:
@@ -397,6 +397,8 @@ class OBJECT_PG_CM3D2Menu(bpy.types.PropertyGroup):
 
         new_command.index = len(self.commands) - 1
 
+        self.active_index = new_command.index
+
         return new_command
 
     def remove_command(self, index: int):
@@ -415,7 +417,7 @@ class OBJECT_PG_CM3D2Menu(bpy.types.PropertyGroup):
             self.commands[c.index].prop_index = i
 
         if self.active_index >= len(self.commands):
-            self.active_index = len(self.commands) - 1
+            self.active_index = max(len(self.commands) - 1, 0)
 
     def move_command(self, old_index, new_index, update=True):
         self.commands.move(old_index, new_index)
