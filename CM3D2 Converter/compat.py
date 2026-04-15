@@ -12,6 +12,7 @@ IS_LT40 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 0)
 IS_LT41 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 1)
 IS_LT42 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 2)
 IS_LT50 = not hasattr(bpy.app, 'version') or bpy.app.version < (5, 0)
+IS_LT51 = not hasattr(bpy.app, 'version') or bpy.app.version < (5, 1)
 
 UILayoutDrawer = bpy.types.Header | bpy.types.Menu | bpy.types.Panel
 
@@ -376,11 +377,17 @@ def map_shader_node(type, inputs: dict = None):
 
 def set_transparent(mate: bpy.types.Material, transparent: bool):
     """透過モード切り替えの互換性サポート"""
-    if IS_LT42:
-        mate.blend_method = 'BLEND' if transparent else 'OPAQUE'
+    if transparent:
+        # 5.1 で透過BSDF＋main/shadow塗分け・光沢BSDFの組み合わせで不透明部が黒や赤になる事象があり、やむを得ずディザとする
+        mate.blend_method = 'BLEND' if IS_LT51 else 'HASHED'
     else:
-        mate.blend_method = 'BLEND'
-        mate.use_transparency_overlap = transparent
+        mate.blend_method = 'OPAQUE' if IS_LT42 else 'BLEND'
+
+    # モード関係なく透過重ね合わせは基本的にONにしておき、透過ソート問題が起きる時のみ手動でOFFにしてもらう方針
+    if IS_LT42:
+        mate.show_transparent_back = True
+    else:
+        mate.use_transparency_overlap = True
 
 
 def get_fcurves(action: bpy.types.Action, anim_data: bpy.types.AnimData):

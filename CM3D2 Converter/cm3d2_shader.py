@@ -33,6 +33,31 @@ def toon_vector_node_tree():
     return nt.node_tree
 
 
+def alpha_mixer_node_tree():
+    """透過表現をサポートするノードツリーを作成する"""
+    if (nt := NodeTreeHelper.get_or_create(name='Alpha Mixer', type='ShaderNodeTree')).is_exists:
+        return nt.node_tree
+
+    # Set interfaces
+    nt.socket('Shader', 'OUTPUT', 'NodeSocketShader')
+    nt.socket('Alpha', 'INPUT', 'NodeSocketFloat')
+    nt.socket('Shader', 'INPUT', 'NodeSocketShader')
+
+    # Set nodes
+    group_output = nt.node('Group Output', type='NodeGroupOutput', location=(440.0, 0.0))
+    group_input = nt.node('Group Input', type='NodeGroupInput', location=(0.0, -40.0))
+    trans_bsdf = nt.node('Transparent BSDF', type='ShaderNodeBsdfTransparent', location=(0.0, 60.0))
+    shader_mix = nt.node('Shader Mix', type='ShaderNodeMixShader', location=(220.0, 0.0), inputs={'Factor': 1.0})
+
+    # Set links
+    nt.link(group_input.outputs('Alpha'), shader_mix.inputs('Factor'))
+    nt.link(trans_bsdf.outputs('BSDF'), shader_mix.inputs('Shader', 0))
+    nt.link(group_input.outputs('Shader'), shader_mix.inputs('Shader', 1))
+    nt.link(shader_mix.outputs('Shader'), group_output.inputs('Shader'))
+
+    return nt.node_tree
+
+
 def com3d2_shader_node_tree():
     """COM3D2のシェーダーを再現するノードツリーを作成する"""
     if (nt := NodeTreeHelper.get_or_create(name='COM3D2 Shader', type='ShaderNodeTree')).is_exists:
@@ -41,7 +66,6 @@ def com3d2_shader_node_tree():
     # Set interfaces
     nt.socket('Shader', 'OUTPUT', 'NodeSocketShader')
     nt.socket('MainTex', 'INPUT', 'NodeSocketColor')
-    nt.socket('MainTexAlpha', 'INPUT', 'NodeSocketFloat')
     nt.socket('ToonRamp', 'INPUT', 'NodeSocketColor', default=(1.0, 1.0, 1.0, 1.0))
     nt.socket('ShadowTex', 'INPUT', 'NodeSocketColor')
     nt.socket('ShadowRateToon', 'INPUT', 'NodeSocketColor', default=(1.0, 1.0, 1.0, 1.0))
@@ -57,10 +81,9 @@ def com3d2_shader_node_tree():
     nt.socket('RimShift', 'INPUT', 'NodeSocketFloat')
     nt.socket('HiRate', 'INPUT', 'NodeSocketFloat')
     nt.socket('HiPow', 'INPUT', 'NodeSocketFloat')
-    nt.socket('UseTransparent', 'INPUT', 'NodeSocketFloat', default=0.0)
 
     # Set nodes
-    group_output = nt.node('Group Output', type='NodeGroupOutput', location=(1760.0, 400.0))
+    group_output = nt.node('Group Output', type='NodeGroupOutput', location=(1760.0, 300.0))
     group_input = nt.node('Group Input', type='NodeGroupInput', location=(-960.0, 40.0))
 
     geometry = nt.node('Geometry', type='ShaderNodeNewGeometry', location=(-960.0, 400.0))
@@ -77,8 +100,6 @@ def com3d2_shader_node_tree():
     mix_high = nt.node('Mix High', type='ShaderNodeMix', location=(900.0, 300.0), blend_type='ADD', data_type='RGBA')
     mix_final = nt.node('Mix Final', type='ShaderNodeMix', location=(1140.0, 300.0), blend_type='MIX', data_type='RGBA')
     toon_bsdf = nt.node('Toon BSDF', type='ShaderNodeBsdfToon', location=(1340.0, 300.0), component='DIFFUSE')
-    trans_bsdf = nt.node('Transparent BSDF', type='ShaderNodeBsdfTransparent', location=(1340.0, 400.0))
-    shader_mix = nt.node('Shader Mix', type='ShaderNodeMixShader', location=(1560.0, 400.0), inputs={'Factor': 1.0})
 
     mix_outline = nt.node('Mix Outline', type='ShaderNodeMix', location=(640.0, -20.0), blend_type='SCREEN', data_type='RGBA')
     mix_outline_toon = nt.node('Mix Outline Toon', type='ShaderNodeMix', location=(900.0, -20.0), blend_type='MULTIPLY', data_type='RGBA')
@@ -123,11 +144,7 @@ def com3d2_shader_node_tree():
     nt.link(geometry.outputs('Backfacing'), mix_final.inputs('Factor'))
     nt.link(mix_high.outputs('Result'), mix_final.inputs('A'))
     nt.link(mix_final.outputs('Result'), toon_bsdf.inputs('Color'))
-    nt.link(toon_bsdf.outputs('BSDF'), shader_mix.inputs('Shader', 1))
-    nt.link(group_input.outputs('MainTexAlpha'), shader_mix.inputs('Factor'))
-    nt.link(group_input.outputs('UseTransparent'), trans_bsdf.inputs('Color'))
-    nt.link(trans_bsdf.outputs('BSDF'), shader_mix.inputs('Shader', 0))
-    nt.link(shader_mix.outputs('Shader'), group_output.inputs('Shader'))
+    nt.link(toon_bsdf.outputs('BSDF'), group_output.inputs('Shader'))
 
     nt.link(group_input.outputs('HiRate'), mix_high.inputs('Factor'))
     nt.link(group_input.outputs('HiPow'), high_map_range.inputs('Value'))
@@ -178,21 +195,6 @@ def bind_light_switch(socket):
     target.id_type = 'OBJECT'
     target.id = light
     target.data_path = 'hide_render'
-    socket.id_data.update_tag()
-
-
-def bind_use_transparent(socket, material):
-    """透過の使用を制御するドライバをソケットに設定する"""
-    driver = socket.driver_add('default_value').driver
-    driver.type = 'SCRIPTED'
-    driver.expression = 'use_transparent'
-    var = driver.variables.new()
-    var.name = 'use_transparent'
-    var.type = 'SINGLE_PROP'
-    target = var.targets[0]
-    target.id_type = 'MATERIAL'
-    target.id = material
-    target.data_path = 'use_transparency_overlap'
     socket.id_data.update_tag()
 
 

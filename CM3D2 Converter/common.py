@@ -9,7 +9,7 @@ import bmesh
 import mathutils
 from . import fileutil
 from . import compat
-from .cm3d2_shader import toon_vector_node_tree, com3d2_shader_node_tree, bind_light_switch, bind_use_transparent
+from .cm3d2_shader import toon_vector_node_tree, com3d2_shader_node_tree, alpha_mixer_node_tree, bind_light_switch
 from .cm3d2_data import Handler
 
 
@@ -140,7 +140,8 @@ def decorate_material(mate, enable=True):
     mate.preview_render_type  = 'FLAT'
     mate.use_backface_culling = 'Outline' not in shader
     mate.use_nodes = True
-    compat.set_transparent(mate, any(x in shader for x in ['Trans', 'Cutout']))
+    is_transparent = any(x in shader for x in ['Trans', 'Cutout'])
+    compat.set_transparent(mate, is_transparent)
 
     # Toon Vector ノードグループ
     toon_vector_ng = mate.node_tree.nodes.new('ShaderNodeGroup')
@@ -156,15 +157,22 @@ def decorate_material(mate, enable=True):
     com3d2_shader_ng.location = (0,320)
     com3d2_shader_ng.width = 180
 
-    # 透過モードのバインド
-    bind_use_transparent(com3d2_shader_ng.inputs.get('UseTransparent'), mate)
-
     # マテリアル出力ノード
     mate_out = mate.node_tree.nodes.new('ShaderNodeOutputMaterial')
-    mate_out.location = (300,320)
+    mate_out.location = (440, 350)
 
-    # COM3D2 Shader => マテリアル出力
-    mate.node_tree.links.new(mate_out.inputs.get('Surface'), com3d2_shader_ng.outputs.get('Shader'))
+    # 透過モードのノードグループ指定と接続
+    if is_transparent:
+        alpha_mixer_ng = mate.node_tree.nodes.new('ShaderNodeGroup')
+        alpha_mixer_ng.node_tree = alpha_mixer_node_tree()
+        alpha_mixer_ng.location = (240, 430)
+        main_tex = mate.node_tree.nodes.get('_MainTex')
+        if main_tex:
+            mate.node_tree.links.new(alpha_mixer_ng.inputs.get('Alpha'), main_tex.outputs.get('Alpha'))
+        mate.node_tree.links.new(alpha_mixer_ng.inputs.get('Shader'), com3d2_shader_ng.outputs.get('Shader'))
+        mate.node_tree.links.new(mate_out.inputs.get('Surface'), alpha_mixer_ng.outputs.get('Shader'))
+    else:
+        mate.node_tree.links.new(mate_out.inputs.get('Surface'), com3d2_shader_ng.outputs.get('Shader'))
 
     # インポートされたマテリアル内各要素ノードからの接続
     shader_prop = Handler.get_shader_prop(mate.get('shader1'))
@@ -187,9 +195,6 @@ def decorate_material(mate, enable=True):
             # Toon Calculation(Toon Mapping UV) => 画像ノードベクトル入力 (Toon画像であれば)
             if 'Toon' in node.name:
                 mate.node_tree.links.new(node.inputs.get('Vector'), toon_vector_ng.outputs.get('Toon Vector'))
-            alpha = com3d2_shader_ng.inputs.get(f'{key[1:]}Alpha')
-            if alpha:
-                mate.node_tree.links.new(alpha, node.outputs.get('Alpha'))
         else:
             # 他Color/Valueノード => COM3D2 Shader (同名のソケットがあれば)
             input_socket = com3d2_shader_ng.inputs.get(key[1:])
