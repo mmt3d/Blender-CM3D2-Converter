@@ -202,6 +202,8 @@ class AddonPreferences(bpy.types.AddonPreferences):
     show_bone_group_colors: bpy.props.BoolProperty(name="Show Bone Group Colors", default=True , description="Display bone group colors"              )
     show_bone_in_front: bpy.props.BoolProperty(name="Show Bones in Front"   , default=True , description="Make the object draw in front of others")
 
+    console_utf8: bpy.props.BoolProperty(default=False, update=lambda self, _: self.apply_console_code())
+
     def draw(self, context):
         self.layout.prop(self, 'cm3d2_path', icon_value=common.kiss_icon())
         self.layout.prop(self, 'backup_ext', icon='FILE_BACKUP')
@@ -281,11 +283,29 @@ class AddonPreferences(bpy.types.AddonPreferences):
         row.prop(self, 'custom_normal_blend', icon='SNAP_NORMAL')
         row.prop(self, 'skip_shapekey', icon='SHAPEKEY_DATA')
         row.prop(self, 'is_apply_modifiers', icon='MODIFIER')
+
+        box = self.layout.box()
+        box.label(text="コンソール", icon='CONSOLE')
+        row = box.row()
+        row.prop(self, "console_utf8", text="コンソール文字コードをUTF8にする (日本語文字化け対策)")
+        col = box.column(align=True)
+        col.label(text='   このアドオン以外のコンソール出力にも影響を及ぼす可能性があります。')
+        col.label(text='   一度ONにするとOFFに戻してもBlender再起動しないと戻りません。')
+
         # row = box.row()
         row = self.layout.row()
         row.operator('script.update_cm3d2_converter', icon='FILE_REFRESH')
         row.menu('INFO_MT_help_CM3D2_Converter_RSS', icon='INFO')
 
+    def apply_console_code(self):
+        # システムコンソール上の出力された日本語が文字化けしないようにする
+        if self.console_utf8:
+            import platform
+            if platform.system() == "Windows":
+                os.system('chcp 65001 > nul')
+                print(f"[{bl_info['name']}] Console code page set to UTF-8.")
+        else:
+            print(f"[{bl_info['name']}] Console code page set to default. (requires restart blender)")
 
 # プラグインをインストールしたときの処理
 def register():
@@ -354,6 +374,10 @@ def register():
     
     bpy.types.DOPESHEET_MT_editor_menus.append(misc_DOPESHEET_MT_editor_menus.menu_func)
     bpy.types.GRAPH_MT_editor_menus.append(misc_DOPESHEET_MT_editor_menus.menu_func)
+
+    prefs = common.preferences()
+    if prefs.console_utf8:
+        prefs.apply_console_code()
 
     translations.register(__name__)
     
