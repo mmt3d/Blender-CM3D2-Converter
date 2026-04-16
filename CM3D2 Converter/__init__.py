@@ -127,6 +127,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
     model_default_path: bpy.props.StringProperty(name="modelファイル置き場", subtype='DIR_PATH', description="設定すれば、modelを扱う時は必ずここからファイル選択を始めます")
     model_import_path: bpy.props.StringProperty(name="modelインポート時のデフォルトパス", subtype='FILE_PATH', description="modelインポート時に最初はここが表示されます、インポート毎に保存されます")
     model_export_path: bpy.props.StringProperty(name="modelエクスポート時のデフォルトパス", subtype='FILE_PATH', description="modelエクスポート時に最初はここが表示されます、エクスポート毎に保存されます")
+    hide_armature: bpy.props.BoolProperty(name="インポート後のアーマチュアを非表示", default=False, description="インポート後のアーマチュアを非表示にします")
 
     anm_default_path: bpy.props.StringProperty(name="anmファイル置き場", subtype='DIR_PATH', description="設定すれば、anmを扱う時は必ずここからファイル選択を始めます")
     anm_import_path: bpy.props.StringProperty(name="anmインポート時のデフォルトパス", subtype='FILE_PATH', description="anmインポート時に最初はここが表示されます、インポート毎に保存されます")
@@ -213,6 +214,8 @@ class AddonPreferences(bpy.types.AddonPreferences):
         row = box.row()
         row.prop(self, 'scale', icon='ARROW_LEFTRIGHT')
         row.prop(self, 'is_convert_bone_weight_names', icon='BLENDER')
+        row = box.row()
+        row.prop(self, 'hide_armature')
         box.prop(self, 'model_default_path', icon='FILEBROWSER', text="ファイル選択時の初期フォルダ")
 
         box = self.layout.box()

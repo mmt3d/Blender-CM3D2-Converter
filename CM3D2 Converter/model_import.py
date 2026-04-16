@@ -114,7 +114,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         sub_box.prop(self , 'is_armature_clean', icon='X')
         sub_box.prop(self , 'is_convert_bone_weight_names', icon='BLENDER', text="ボーン名をBlender用に変換")
         sub_box.prop(prefs, 'show_bone_in_front', icon='HIDE_OFF', text="Show Bones in Front")
-        sub_box.prop(self, 'hide_armature', icon='HIDE_ON', text="アーマチュアを非表示にする")
+        sub_box.prop(prefs, 'hide_armature', icon='HIDE_ON', text="アーマチュアを非表示にする")
         row = sub_box.row()
         row.prop(self , 'is_custom_bones', icon='BONE_DATA', text="Use Selected as Bone Shape")
         row.enabled = bool(context.object)
@@ -660,7 +660,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                 for pose_bone in arm_ob.pose.bones:
                     pose_bone.custom_shape = custom_bone_ob
             # アーマチュアを非表示にする場合
-            if self.hide_armature:
+            if prefs.hide_armature:
                 arm_ob.hide_set(True)
         context.window_manager.progress_update(2)
 
