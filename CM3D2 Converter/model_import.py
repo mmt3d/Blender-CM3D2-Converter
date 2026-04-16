@@ -1,5 +1,4 @@
 import os
-import math
 import struct
 import time
 import traceback
@@ -15,15 +14,23 @@ from .translations.pgettext_functions import *
 from .misc_OBJECT_PT_transform import CNV_OT_align_to_cm3d2_base_bone
 
 
+@compat.BlRegister()
+class CNV_FilePathItem(bpy.types.PropertyGroup):
+    name: bpy.props.StringProperty()
+
+
 # メインオペレーター
 @compat.BlRegister()
-#@bpy_extras.io_utils.orientation_helper(axis_forward='-Z', axis_up='Y')
 class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHelper):
     bl_idname = 'import_mesh.import_cm3d2_model'
     bl_label = "CM3D2モデル (.model)"
     bl_description = "カスタムメイド3D2のmodelファイルを読み込みます"
     bl_options = {'REGISTER'}
 
+    # 複数ファイル選択用
+    filepaths: bpy.props.CollectionProperty(type=CNV_FilePathItem)
+
+    # 単一ファイル選択用
     filepath: bpy.props.StringProperty(subtype='FILE_PATH')
     filename_ext = ".model"
     filter_glob: bpy.props.StringProperty(default="*.model", options={'HIDDEN'})
@@ -62,10 +69,12 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
 
     def invoke(self, context, event):
         prefs = common.preferences()
-        if prefs.model_default_path:
-            self.filepath = common.default_cm3d2_dir(prefs.model_default_path, None, "model")
-        else:
-            self.filepath = common.default_cm3d2_dir(prefs.model_import_path, None, "model")
+        if not self.filepath:
+            if len(self.filepaths) > 0:
+                self.filepath = self.filepaths[0].name
+            else:
+                self.filepath = common.default_cm3d2_dir(
+                    prefs.model_default_path or prefs.model_import_path, None, "model")
         self.scale = prefs.scale
         self.is_convert_bone_weight_names = prefs.is_convert_bone_weight_names
         context.window_manager.fileselect_add(self)
@@ -131,6 +140,17 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
 
     @common.with_finally(cleanup)
     def execute(self, context):
+        if len(self.filepaths) > 0:
+            filepaths = [f.name for f in self.filepaths]
+        else:
+            filepaths = [self.filepath]
+        for i, filepath in enumerate(filepaths):
+            self.filepath = filepath
+            self.import_one(context)
+            bpy.ops.wm.redraw_timer(type='DRAW_WIN_SWAP', iterations=1)
+        return {'FINISHED'}
+
+    def import_one(self, context):
         start_time = time.time()
 
         prefs = common.preferences()
@@ -1150,3 +1170,103 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
 # メニューを登録する関数
 def menu_func(self, context):
     self.layout.operator(CNV_OT_import_cm3d2_model.bl_idname, icon_value=common.kiss_icon())
+
+
+# Blender4.1以降はファイルドロップ利用が可能
+if not compat.IS_LT41:
+
+    @compat.BlRegister()
+    class CNV_OT_ModelDropManager(bpy.types.Operator):
+        """
+        ファイルドロップ時の中継オペレーター, ダイアログメニューをコールする
+        """
+        bl_idname = "object.drop_import_cm3d2_model_manager"
+        bl_label = "CM3D2 Model Drop Manager"
+
+        files: bpy.props.CollectionProperty(type=bpy.types.OperatorFileListElement)
+        directory: bpy.props.StringProperty(subtype="DIR_PATH")
+
+        filepaths = []
+
+        def invoke(self, context, event):
+            filepaths = [{'name': os.path.join(self.directory, f.name)} for f in self.files]
+
+            props = common.scene_properties()
+
+            # Shiftが押されていたら「次回から確認しない」フラグを強制的にオフにする
+            if event and event.shift:
+                props.model_import_last_mode = 'ASK'
+                self.report({'INFO'}, "Shiftドロップインポート: メニュー表示を再有効化しました")
+
+            # 次回から確認しない場合、前回のモードでインポートする
+            if props.model_import_last_mode != 'ASK':
+                self.report({'INFO'}, "Shift+ファイルドロップでメニュー表示を再有効化できます")
+                bpy.ops.wm.redraw_timer(type='DRAW_WIN_SWAP', iterations=1)
+                mode = props.model_import_last_mode
+                ctype = 'EXEC_DEFAULT' if mode == 'DIRECT' else 'INVOKE_DEFAULT'
+                bpy.ops.import_mesh.import_cm3d2_model(ctype, filepaths=filepaths)
+                return {'FINISHED'}
+
+            CNV_OT_ModelDropManager.filepaths = filepaths
+            bpy.ops.wm.call_menu(name=VIEW3D_MT_ModelDropMenu.bl_idname)
+            return {'FINISHED'}
+
+
+    @compat.BlRegister()
+    class CNV_OT_ModelDropSelector(bpy.types.Operator):
+        bl_idname = "object.drop_import_cm3d2_model_selector"
+        bl_label = "CM3D2 Model Drop Selector"
+
+        mode: bpy.props.StringProperty()
+
+        def invoke(self, context, event):
+            # Shiftが押されていたら、選択内容を記憶して次回からメニュー表示をスキップする
+            if event.shift:
+                props = common.scene_properties()
+                props.model_import_last_mode = self.mode
+                self.report({'INFO'}, "ドロップインポート: 方法選択メニュー表示を無効化しました (Shift+ドロップで再有効化)")
+            return self.execute(context)
+
+        def execute(self, context):
+            bpy.ops.wm.redraw_timer(type='DRAW_WIN_SWAP', iterations=1)
+            ctype = 'EXEC_DEFAULT' if self.mode == 'DIRECT' else 'INVOKE_DEFAULT'
+            bpy.ops.import_mesh.import_cm3d2_model(ctype, filepaths=CNV_OT_ModelDropManager.filepaths)
+            return {'FINISHED'}
+
+
+    @compat.BlRegister()
+    class VIEW3D_MT_ModelDropMenu(bpy.types.Menu):
+        """
+        ファイルドロップ時のダイアログメニュー
+        """
+        bl_idname = "VIEW3D_MT_ModelDropMenu"
+        bl_label = "CM3D2 Model Drop Menu"
+
+        def draw(self, context):
+            count = len(CNV_OT_ModelDropManager.filepaths)
+
+            layout = self.layout
+            if count > 1:
+                layout.label(text=f"{count}個のファイルをインポートします", icon='DOCUMENTS')
+            layout.label(text="Shift+クリックでこの選択を記憶", icon='LIGHT')
+
+            icon = common.kiss_icon()
+            operator = CNV_OT_ModelDropSelector.bl_idname
+            layout.operator_context = 'INVOKE_DEFAULT'
+            layout.operator(operator, text="デフォルト設定でインポート", icon_value=icon).mode = 'DIRECT'
+            layout.operator(operator, text="設定を指定してインポート...", icon_value=icon).mode = 'OPTION'
+
+
+    @compat.BlRegister()
+    class VIEW3D_FH_ModelDropHandler(bpy.types.FileHandler):
+        """
+        ビューポートに.modelファイルがドロップされたときのハンドラー
+        """
+        bl_idname = "VIEW3D_FH_ModelDropHandler"
+        bl_label = "Model File Drop Handler"
+        bl_file_extensions = ".model"
+        bl_import_operator = CNV_OT_ModelDropManager.bl_idname
+
+        @classmethod
+        def poll_drop(cls, context):
+            return context and context.area and context.area.type == 'VIEW_3D'

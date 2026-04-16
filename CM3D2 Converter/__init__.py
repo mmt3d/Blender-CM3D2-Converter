@@ -310,6 +310,13 @@ class AddonPreferences(bpy.types.AddonPreferences):
         else:
             print(f"[{bl_info['name']}] Console code page set to default. (requires restart blender)")
 
+
+# Scene中で記憶しておくタイプの設定
+@compat.BlRegister()
+class SceneProperties(bpy.types.PropertyGroup):
+    model_import_last_mode: bpy.props.EnumProperty(items=[('ASK', '', ''), ('DIRECT', '', ''), ('OPTION', '', '')], default='ASK')
+
+
 # プラグインをインストールしたときの処理
 def register():
     pcoll = bpy.utils.previews.new()
@@ -383,6 +390,9 @@ def register():
         prefs.apply_console_code()
 
     translations.register(__name__)
+
+    # Scene に一時的に記録するプロパティ
+    bpy.types.Scene.cm3d2_converter = bpy.props.PointerProperty(type=SceneProperties)
     
     # Change wiki_url based on locale (only works in legacy version)
     locale = translations.get_locale()

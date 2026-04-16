@@ -64,6 +64,10 @@ def preferences():
     return PREFS
 
 
+def scene_properties():
+    return bpy.context.scene.cm3d2_converter
+
+
 def kiss_icon():
     global KISS_ICON
     if KISS_ICON is None:
@@ -293,7 +297,7 @@ def get_com3d2_dir():
 
 
 # CM3D2のインストールフォルダを取得＋α
-def default_cm3d2_dir(base_dir: str, file_name: str, new_ext: str):
+def default_cm3d2_dir(base_dir: str, file_name: str|None, new_ext: str):
     new_ext = new_ext.strip('.')
     if not base_dir:
         prefs = preferences()
