@@ -148,10 +148,10 @@ class AddonPreferences(bpy.types.AddonPreferences):
     
     is_replace_cm3d2_tex: bpy.props.BoolProperty(name="基本的にtexファイルを探す", default=True, description="texファイルを探すかどうかのオプションのデフォルト値を設定します")
     search_tex_path_scope: bpy.props.EnumProperty(items=[('NONE', '指定なし', ''), ('SAME', '同ディレクトリ以下', ''), ('PARENT', '親ディレクトリ以下', '')], name='相対探索範囲', default='SAME', description="インポート対象からの相対ディレクトリ以下を探索対象に加えます")
-    default_tex_path0: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します")
-    default_tex_path1: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します")
-    default_tex_path2: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します")
-    default_tex_path3: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します")
+    default_tex_path0: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=common.clear_texpath_default_dict)
+    default_tex_path1: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=common.clear_texpath_default_dict)
+    default_tex_path2: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=common.clear_texpath_default_dict)
+    default_tex_path3: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=common.clear_texpath_default_dict)
 
     custom_normal_blend: bpy.props.FloatProperty(name="CM3D2用法線のブレンド率", default=0.5, min=0, max=1, soft_min=0, soft_max=1, step=3, precision=3)
     skip_shapekey: bpy.props.BoolProperty(name="無変更シェイプキーをスキップ", default=True, description="ベースと同じシェイプキーを出力しない")
@@ -315,6 +315,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
 @compat.BlRegister()
 class SceneProperties(bpy.types.PropertyGroup):
     model_import_last_mode: bpy.props.EnumProperty(items=[('ASK', '', ''), ('DIRECT', '', ''), ('OPTION', '', '')], default='ASK')
+    import_filepaths: bpy.props.CollectionProperty(type=common.CNV_FilePathItem)
 
 
 # プラグインをインストールしたときの処理

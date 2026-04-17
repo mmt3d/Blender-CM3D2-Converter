@@ -25,6 +25,7 @@ KISS_ICON = None
 PREFS = None
 preview_collections = {}
 texpath_dict = {}
+texpath_default_dict = {}
 COM3D2_SHADER_REV = 1
 
 
@@ -377,16 +378,39 @@ def get_default_tex_paths():
             setattr(prefs, 'default_tex_path' + str(index), path)
     else:
         tex_dirs = [getattr(prefs, 'default_tex_path' + str(i)) for i in range(4) if getattr(prefs, 'default_tex_path' + str(i))]
-    # 同梱のtoon画像フォルダを先頭に追加
-    tex_base_dirs = [os.path.join(os.path.dirname(__file__), "toon")]
-    # models 以下フォルダ・親フォルダ以下の追加
-    if 'cm3d2_converter_import_filepath' in bpy.context.scene:
-        base_dir = os.path.dirname(bpy.context.scene['cm3d2_converter_import_filepath'])
+
+    # 同梱のtoon画像フォルダを追加
+    tex_dirs.append(os.path.join(str(os.path.dirname(__file__)), "toon"))
+
+    return tex_dirs
+
+
+def add_extra_tex_path(path):
+    """
+    相対パス系のパスリストを追加する
+    """
+    props = scene_properties()
+    props.import_filepaths.add().name = path
+
+
+def get_extra_tex_paths():
+    """
+    相対パス系のパスリストを返す
+    """
+    base_dirs = []
+    prefs = preferences()
+    props = scene_properties()
+    # models/mate 以下フォルダ・親フォルダ以下の指定
+    for filepath in props.import_filepaths:
+        base_dir = os.path.dirname(filepath.name)
         if prefs.search_tex_path_scope == 'SAME':
-            tex_base_dirs.append(base_dir)
+            if base_dir not in base_dirs:
+                base_dirs.append(base_dir)
         elif prefs.search_tex_path_scope == 'PARENT':
-            tex_base_dirs.append(os.path.dirname(base_dir))
-    return tex_base_dirs + tex_dirs
+            parent_dir = os.path.dirname(base_dir)
+            if parent_dir not in base_dirs:
+                base_dirs.append(parent_dir)
+    return base_dirs
 
 
 # テクスチャ置き場の全ファイルを返す
@@ -400,17 +424,60 @@ def get_tex_storage_files():
 
 
 def get_texpath_dict(reload=False):
-    if reload or len(texpath_dict) == 0:
+    """
+    利用可能な全tex/pngファイルdictを返却 (探索パス指定は永続キャッシュ、相対探索は一時キャッシュ扱い)
+    """
+    global texpath_default_dict, texpath_dict
+    if reload:
+        texpath_default_dict.clear()
         texpath_dict.clear()
-        tex_dirs = get_default_tex_paths()
-        for tex_dir in tex_dirs:
-            for path in find_tex_all_files(tex_dir):
-                path = bpy.path.abspath(path)
-                file_name = os.path.basename(path).lower()
-                # 先に見つけたファイルを優先
-                if file_name not in texpath_dict:
-                    texpath_dict[file_name] = path
+    if texpath_dict:
+        return texpath_dict
+    if not texpath_default_dict:
+        texpath_default_dict = build_texpath_dict(get_default_tex_paths())
+    if not texpath_dict:
+        texpath_dict = texpath_default_dict | build_texpath_dict(get_extra_tex_paths())
     return texpath_dict
+
+
+def build_texpath_dict(tex_dirs: list):
+    """
+    指定ディレクトリパスリストから全tex/pngファイルdictを生成
+    """
+    path_dict: dict = {}
+    for tex_dir in tex_dirs:
+        for path in find_tex_all_files(tex_dir):
+            path = bpy.path.abspath(path)
+            file_name = os.path.basename(path).lower()
+            # 先に見つけたファイルを優先
+            if file_name not in path_dict:
+                path_dict[file_name] = path
+    return path_dict
+
+
+def use_texpath_cache(func):
+    """
+    modelやmateなどインポート時にテクスチャ探索を必要とする処理メソッド用のデコレータ
+    """
+    def wrapper(self, context, *args, **kwargs):
+        global texpath_dict
+        texpath_dict.clear()
+        props = scene_properties()
+        props.import_filepaths.clear()
+        try:
+            return func(self, context, *args, **kwargs)
+        finally:
+            texpath_dict.clear()
+            props.import_filepaths.clear()
+    return wrapper
+
+
+def clear_texpath_default_dict(self, context):
+    """
+    設定で探索パスを変更した際に呼ぶキャッシュクリア処理
+    """
+    global texpath_default_dict
+    texpath_default_dict.clear()
 
 
 def reload_png(img, texpath_dict, png_name):
@@ -1107,6 +1174,9 @@ class CNV_SelectorItem(bpy.types.PropertyGroup):
     sort3: bpy.props.FloatProperty(name="Sort 3", default=0.0)
 
 
+@compat.BlRegister()
+class CNV_FilePathItem(bpy.types.PropertyGroup):
+    name: bpy.props.StringProperty()
 
 
 # luvoid : for loop helper returns values with matching keys
@@ -1207,15 +1277,3 @@ def is_descendant_of(bone, ancestor) -> bool:
         if bone.name == ancestor.name:
             return True
     return False
-
-
-def with_finally(finally_func):
-    """対象メソッドまるごとtry/finallyでラップするデコレータ"""
-    def decorator(func):
-        def wrapper(self, context, *args, **kwargs):
-            try:
-                return func(self, context, *args, **kwargs)
-            finally:
-                finally_func(self, context)
-        return wrapper
-    return decorator

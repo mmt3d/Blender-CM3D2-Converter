@@ -281,6 +281,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
                 return ret
 
             context.window_manager.progress_update(10)
+            ob_source['LatestFilePath'] = self.filepath
             diff_time = time.time() - start_time
             self.report(type={'INFO'}, message=f_tip_("modelのエクスポートが完了しました。{:.2f} 秒 file={}", diff_time, self.filepath))
             return ret

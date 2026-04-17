@@ -14,11 +14,6 @@ from .translations.pgettext_functions import *
 from .misc_OBJECT_PT_transform import CNV_OT_align_to_cm3d2_base_bone
 
 
-@compat.BlRegister()
-class CNV_FilePathItem(bpy.types.PropertyGroup):
-    name: bpy.props.StringProperty()
-
-
 # メインオペレーター
 @compat.BlRegister()
 class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHelper):
@@ -28,7 +23,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
     bl_options = {'REGISTER'}
 
     # 複数ファイル選択用
-    filepaths: bpy.props.CollectionProperty(type=CNV_FilePathItem)
+    filepaths: bpy.props.CollectionProperty(type=common.CNV_FilePathItem)
 
     # 単一ファイル選択用
     filepath: bpy.props.StringProperty(subtype='FILE_PATH')
@@ -134,11 +129,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         box.prop(self, 'is_bone_data_obj_property', icon='OBJECT_DATA')
         box.prop(self, 'is_bone_data_arm_property', icon='ARMATURE_DATA')
 
-    def cleanup(self, context):
-        if 'cm3d2_converter_import_filepath' in context.scene:
-            del context.scene['cm3d2_converter_import_filepath']
-
-    @common.with_finally(cleanup)
+    @common.use_texpath_cache
     def execute(self, context):
         if len(self.filepaths) > 0:
             filepaths = [f.name for f in self.filepaths]
@@ -172,7 +163,8 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             return {'CANCELLED'}
 
         with reader:
-            context.scene['cm3d2_converter_import_filepath'] = self.filepath
+            common.add_extra_tex_path(self.filepath)
+
             self.texpath_dict = common.get_texpath_dict(reload=self.reload_tex_cache)
 
             # ヘッダー
@@ -791,6 +783,9 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                 compat.set_active(context, arm_ob)
                 bpy.ops.object.parent_set(type='OBJECT', keep_transform=True)
                 compat.set_active(context, ob)
+
+            ob['LatestFilePath'] = self.filepath
+
         context.window_manager.progress_update(8)
 
         # マテリアル情報のテキスト埋め込み

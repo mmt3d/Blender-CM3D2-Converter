@@ -40,6 +40,7 @@ class CNV_OT_import_cm3d2_mate(bpy.types.Operator):
         prefs = common.preferences()
         self.layout.prop(prefs, 'is_replace_cm3d2_tex', icon='BORDERMOVE')
 
+    @common.use_texpath_cache
     def execute(self, context):
         prefs = common.preferences()
         prefs.mate_import_path = self.filepath
@@ -64,6 +65,11 @@ class CNV_OT_import_cm3d2_mate(bpy.types.Operator):
         mate = context.blend_data.materials.new(name=mat_data.name)
         context.material_slot.material = mate
         common.setup_material(mate)
+
+        common.add_extra_tex_path(self.filepath)
+        # インポート先オブジェクトにmodelファイル配置パスがあれば検索対象に加える
+        if 'LatestFilePath' in context.active_object:
+            common.add_extra_tex_path(context.active_object['LatestFilePath'])
 
         cm3d2_data.MaterialHandler.apply_to(context, mate, mat_data, prefs.is_replace_cm3d2_tex)
         common.decorate_material(mate, self.is_decorate)
