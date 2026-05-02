@@ -11,6 +11,7 @@ IS_LT34 = not hasattr(bpy.app, 'version') or bpy.app.version < (3, 4)
 IS_LT40 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 0)
 IS_LT41 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 1)
 IS_LT42 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 2)
+IS_LT44 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 4)
 IS_LT50 = not hasattr(bpy.app, 'version') or bpy.app.version < (5, 0)
 IS_LT51 = not hasattr(bpy.app, 'version') or bpy.app.version < (5, 1)
 
@@ -390,17 +391,38 @@ def set_transparent(mate: bpy.types.Material, transparent: bool):
         mate.use_transparency_overlap = True
 
 
-def get_fcurves(action: bpy.types.Action, anim_data: bpy.types.AnimData):
+def get_fcurves(action: bpy.types.Action, slot_name: str, clear: bool = False):
     """Fカーブリスト取得の互換性サポート"""
-    if IS_LT50:
-        return action.fcurves
+    if IS_LT44:
+        fcurves = action.fcurves
+        if clear:
+            for fcurve in fcurves:
+                fcurves.remove(fcurve)
+        return fcurves
     else:
-        return bpy_extras.anim_utils.action_ensure_channelbag_for_slot(action, anim_data.action_slot).fcurves
+        if clear:
+            for slot in action.slots:
+                action.slots.remove(slot)
+        slot = action.slots.get(slot_name)
+        if not slot:
+            slot = action.slots.new(name=slot_name, id_type='OBJECT')
+        from bpy_extras import anim_utils
+        cb = anim_utils.action_get_channelbag_for_slot(action, slot)
+        if not cb:
+            if IS_LT50:
+                layer = action.layers[0] if action.layers else action.layers.new(name=slot_name)
+                strip = layer.strips[0] if layer.strips else layer.strips.new()
+                cb = strip.channelbag(slot, ensure=True)
+            else:
+                cb = anim_utils.action_ensure_channelbag_for_slot(action, slot)
+        return cb.fcurves
 
 
 def fcurves_new(fcurves: bpy.types.FCurve, data_path: str, index: int = 0, group_name: str = ''):
     """Fカーブ生成の互換性サポート"""
-    if IS_LT50:
+    if IS_LT44:
         return fcurves.new(data_path=data_path, index=index, action_group=group_name)
+    elif IS_LT50:
+        return fcurves.new(data_path=data_path, index=index)
     else:
         return fcurves.new(data_path=data_path, index=index, group_name=group_name)

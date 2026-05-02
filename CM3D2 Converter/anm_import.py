@@ -163,13 +163,10 @@ class AnmImporter:
         if not action:
             action = context.blend_data.actions.new(acion_name)
             anim.action = action
-            fcurves = compat.get_fcurves(action, anim)
+            fcurves = compat.get_fcurves(action, ob.name)
         else:
             action.name = os.path.basename(acion_name)
-            fcurves = compat.get_fcurves(action, anim)
-            if self.remove_pre_animation:
-                for fcurve in fcurves:
-                    fcurves.remove(fcurve)
+            fcurves = compat.get_fcurves(action, ob.name, clear=self.remove_pre_animation)
 
         max_frame = 0
         bpy.ops.object.mode_set(mode='OBJECT')
@@ -523,8 +520,10 @@ class AnmImporter:
                         tangents['out'][:] = tangent_out[:]
 
                     _apply_tangents(scl_fcurves, scl_keyframes, scl_tangents)
-            
-            
+
+        # 特に4.4/4.5は再代入しないと反映されないため
+        anim.action = action
+
         if found_tangents:
             self.reporter.report(type={'INFO'}, message="Found the following tangent values:")
             for f1, f2 in found_tangents:
@@ -746,6 +745,7 @@ class AnmImporter:
             for keyframe, data in zip(fcurve.keyframe_points, keyframe_data):
                 keyframe.co   = data[0]
                 keyframe.type = data[1]
+            fcurve.update()
         self._keyframe_queue.clear()
             
 
