@@ -87,7 +87,7 @@ def serialize_to_file(data: ICM3D2Serializable, file: io.BufferedWriter):
     file.write(bytes(memory_stream.GetBuffer())[:memory_stream.Length])
 
 TCM3D2Serializable = TypeVar('TCM3D2Serializable', bound=ICM3D2Serializable)
-def deserialize_from_file(file_type: type[TCM3D2Serializable], file: io.BufferedWriter) -> TCM3D2Serializable:
+def deserialize_from_file(file_type: type[TCM3D2Serializable], file: io.BufferedReader) -> TCM3D2Serializable:
     serializer = CM3D2Serializer()
     memory_stream = MemoryStream(file.read())
     return serializer.Deserialize[file_type](memory_stream)

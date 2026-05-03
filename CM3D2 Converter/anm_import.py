@@ -2,7 +2,6 @@ from __future__ import annotations
 import re
 import struct
 import math
-import io
 from typing import Literal
 import bpy
 import mathutils
@@ -86,10 +85,8 @@ class CNV_OT_import_cm3d2_anm(bpy.types.Operator):
         prefs.scale = self.scale
 
         try:
-            with open(self.filepath, 'rb') as file:
-                action_name = os.path.basename(self.filepath)
-                anm_importer = self.get_anm_importer()
-                anm_importer.import_anm(context, file, action_name)
+            anm_importer = self.get_anm_importer()
+            anm_importer.import_anm(context, self.filepath)
         except IOError:
             self.report(type={'ERROR'}, message=f_tip_("ファイルを開くのに失敗しました、アクセス不可かファイルが存在しません。file={}", self.filepath))
             return {'CANCELLED'}
@@ -134,14 +131,23 @@ class AnmImporter:
         self.is_tangents             = False
 
         self._keyframe_queue: dict[bpy.types.FCurve, list[tuple[tuple[float, float], str]]] = {}
-    
-    
-    def import_anm(self, context: bpy.types.Context, file: io.BufferedReader, acion_name: str):
-        # ヘッダー
 
-        anm_data = self.read_anm_data(file)
+    def import_anm(self, context: bpy.types.Context, filepath: str):
+        anm_data = self.read_anm_data(filepath)
+        action_name = os.path.basename(filepath)
 
+        # Outlinerで複数選択中のアーマチュア全てを対象にする
+        scr = bpy.context.screen
+        areas = [area for area in scr.areas if area.type == 'OUTLINER']
+        regions = [region for region in areas[0].regions if region.type == 'WINDOW']
+        with context.temp_override(area=areas[0], region=regions[0], screen=scr):
+            for ob in context.selected_ids:
+                if ob.type != 'ARMATURE':
+                    continue
+                with context.temp_override(active_object=ob):
+                    self._import_anm(context, anm_data, action_name)
 
+    def _import_anm(self, context: bpy.types.Context, anm_data: dict, acion_name: str):
         if self.is_anm_data_text:
             self.import_anm_data_to_text(context, anm_data)
 
@@ -698,11 +704,12 @@ class AnmImporter:
                 break
         return anm_data
 
-    def read_anm_data(self, file):
+    def read_anm_data(self, filepath: str):
         anm_data = {}
         
         try:
-            anm = deserialize_from_file(Anm, file)
+            with open(filepath, 'rb') as file:
+                anm = deserialize_from_file(Anm, file)
         except FormatException as ex:  # type: ignore
             raise CM3D2ImportError(ex.Message) from ex  # type: ignore
         
