@@ -648,10 +648,19 @@ class AnmImporter:
             txt.clear()
         else:
             txt = context.blend_data.texts.new("AnmData")
-            
+
+        # json変換不能なキーが含まれているための調整
+        serializable_anm_data =  {}
+        for bone, data in anm_data.items():
+            new_data = dict(data)
+            if 'channels' in new_data:
+                ch = new_data['channels']
+                new_data['channels'] = {str(c): v for c, v in ch.items()}
+            serializable_anm_data[bone] = new_data
+
         import json
         # XXX : CAUTION : XXX : This is EXTREMELY SLOW!!!
-        txt.write( json.dumps(anm_data, ensure_ascii=False, indent=2) )
+        txt.write( json.dumps(serializable_anm_data, ensure_ascii=False, indent=2) )
 
     def read_anm_data_OLD(self, file):
         ext = common.read_str(file)
