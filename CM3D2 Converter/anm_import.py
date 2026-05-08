@@ -165,14 +165,16 @@ class AnmImporter:
         anim = ob.animation_data
         if not anim:
             anim = ob.animation_data_create()
-        action = anim.action
+        # anm名をアクション名としてアクションを用意する
+        action = context.blend_data.actions.get(acion_name)
         if not action:
             action = context.blend_data.actions.new(acion_name)
-            anim.action = action
             fcurves = compat.get_fcurves(action, ob.name)
         else:
+            # 同名アクションが存在すれば中身をクリアして使いまわす
             action.name = os.path.basename(acion_name)
             fcurves = compat.get_fcurves(action, ob.name, clear=self.remove_pre_animation)
+        anim.action = action
 
         max_frame = 0
         bpy.ops.object.mode_set(mode='OBJECT')
