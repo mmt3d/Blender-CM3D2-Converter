@@ -426,3 +426,20 @@ def fcurves_new(fcurves: bpy.types.FCurve, data_path: str, index: int = 0, group
         return fcurves.new(data_path=data_path, index=index)
     else:
         return fcurves.new(data_path=data_path, index=index, group_name=group_name)
+
+
+def get_selected_pose_bones(context: bpy.types.Context):
+    """選択ポーズボーン取得の互換性サポート"""
+    if IS_LT50:
+        return context.selected_pose_bones
+    else:
+        return [b for o in context.selected_objects for b in o.pose.bones if b.select]
+
+
+def set_select_pose_bones(bones: list[bpy.types.PoseBone], select: bool = True):
+    """ポーズボーン選択の互換性サポート"""
+    for bone in bones:
+        if IS_LT50:
+            bone.bone.select = select
+        else:
+            bone.select = select

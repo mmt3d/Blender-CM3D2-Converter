@@ -54,10 +54,10 @@ class CNV_OT_copy_prime_field(bpy.types.Operator):
         pose = target_ob.pose
         arm = target_ob.data
 
-        pre_selected_pose_bones = context.selected_pose_bones
         pre_mode = target_ob.mode
         
         bpy.ops.object.mode_set(mode='POSE')
+        pre_selected_pose_bones = compat.get_selected_pose_bones(context)
         bpy.ops.pose.select_all(action='SELECT')
         bpy.ops.pose.constraints_clear()
 
@@ -144,9 +144,7 @@ class CNV_OT_copy_prime_field(bpy.types.Operator):
         target_ob.animation_data_clear()
 
         bpy.ops.pose.select_all(action='DESELECT')
-        if pre_selected_pose_bones:
-            for bone in pre_selected_pose_bones:
-                arm.bones[bone.name].select = True
+        compat.set_select_pose_bones(pre_selected_pose_bones)
 
         if pre_mode: 
             bpy.ops.object.mode_set(mode=pre_mode)
@@ -201,9 +199,10 @@ class CNV_OT_apply_prime_field(bpy.types.Operator):
         progress = 0
 
         pre_selected_objects = context.selected_objects
-        pre_selected_pose_bones = context.selected_pose_bones
         pre_mode = ob.mode
         pre_frame = context.scene.frame_current
+        bpy.ops.object.mode_set(mode='POSE')
+        pre_selected_pose_bones = compat.get_selected_pose_bones(context)
 
         bpy.ops.object.mode_set(mode='OBJECT')
         bpy.ops.object.select_all(action='DESELECT')
@@ -323,9 +322,7 @@ class CNV_OT_apply_prime_field(bpy.types.Operator):
         
         bpy.ops.object.mode_set(mode='POSE')
         bpy.ops.pose.select_all(action='DESELECT')
-        if pre_selected_pose_bones:
-            for bone in pre_selected_pose_bones:
-                arm.bones[bone.name].select = True
+        compat.set_select_pose_bones(pre_selected_pose_bones)
 
         if pre_selected_objects:
             for o in pre_selected_objects:
