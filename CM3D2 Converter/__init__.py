@@ -376,6 +376,7 @@ def register():
     bpy.types.OBJECT_PT_transform.append(misc_OBJECT_PT_transform.menu_func)
     bpy.types.TEXT_HT_header.append(misc_TEXT_HT_header.menu_func)
     bpy.types.VIEW3D_MT_pose_apply.append(misc_VIEW3D_MT_pose_apply.menu_func)
+    bpy.types.VIEW3D_MT_object_apply.append(misc_VIEW3D_MT_pose_apply.menu_func)
 
     setattr(bpy.types.Object, 'cm3d2_bone_morph' , bpy.props.PointerProperty(type=misc_DATA_PT_context_arm.CNV_PG_cm3d2_bone_morph ))
     setattr(bpy.types.Object, 'cm3d2_wide_slider', bpy.props.PointerProperty(type=misc_DATA_PT_context_arm.CNV_PG_cm3d2_wide_slider))
@@ -444,6 +445,7 @@ def unregister():
     bpy.types.OBJECT_PT_transform.remove(misc_OBJECT_PT_transform.menu_func)
     bpy.types.TEXT_HT_header.remove(misc_TEXT_HT_header.menu_func)
     bpy.types.VIEW3D_MT_pose_apply.remove(misc_VIEW3D_MT_pose_apply.menu_func)
+    bpy.types.VIEW3D_MT_object_apply.remove(misc_VIEW3D_MT_pose_apply.menu_func)
 
     if hasattr(bpy.types.Object, 'cm3d2_bone_morph'):
         delattr(bpy.types.Object, 'cm3d2_bone_morph')

@@ -1,4 +1,4 @@
-# 「3Dビュー」エリア → ポーズモード → Ctrl+A (ポーズ → 適用)
+# 「3Dビュー」エリア → ポーズモード or オブジェクトモード → Ctrl+A (ポーズ → 適用)
 import bpy
 import mathutils
 from . import common
@@ -54,6 +54,9 @@ class CNV_OT_transfer_pose(bpy.types.Operator):
         pre_selected_pose_bones = compat.get_selected_pose_bones(context)
         bpy.ops.pose.select_all(action='SELECT')
 
+        # ポーズモードで操作した場合のみ対象ボーンは選択のみとするのをデフォルトにする (REDOで変えられる)
+        if not self.properties.is_property_set('is_only_selected'):
+            self.is_only_selected = pre_mode == 'POSE'
         # 対象ボーンにコンストレイントを一時的に追加
         bones = pre_selected_pose_bones if self.is_only_selected else target_ob.pose.bones
         for bone in bones:
