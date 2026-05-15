@@ -103,9 +103,7 @@ def menu_func(self, context):
         row = col.row(align=True)
         
         sub_row = row.row(align=True)
-        sub_row.operator_context = 'EXEC_DEFAULT'
-        op = sub_row.operator('pose.apply_prime_field', icon='FILE_REFRESH', text="Swap Prime Field")
-        op.is_swap_prime_field = True
+        sub_row.operator('pose.revert_primed_pose', icon='LOOP_BACK')
 
 
 @compat.BlRegister()

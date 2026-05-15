@@ -10,6 +10,12 @@ def menu_func(self, context):
     self.layout.separator()
     self.layout.operator('pose.apply_prime_field', icon_value=common.kiss_icon())
     self.layout.operator('pose.copy_prime_field' , icon_value=common.kiss_icon())
+    row = self.layout.row()
+    row.operator('pose.revert_primed_pose', icon_value=common.kiss_icon())
+    ob = context.active_object
+    # チェック対象がexecuteで変更される関係でpollでチェックさせるとREDOできなくなるため、ここで有効無効を切り替える
+    if not ob or ob.type != 'ARMATURE' or not ob.data.get('is T Stance'):
+        row.enabled = False
 
 @compat.BlRegister()
 class CNV_OT_copy_prime_field(bpy.types.Operator):
@@ -147,22 +153,12 @@ class CNV_OT_copy_prime_field(bpy.types.Operator):
         return {'FINISHED'}
 
 
-@compat.BlRegister()
-class CNV_OT_apply_prime_field(bpy.types.Operator):
-    bl_idname = 'pose.apply_prime_field'
-    bl_label = "現在のポーズで素体化"
-    bl_description = "現在のポーズで衣装をモデリングしやすくする素体を作成します"
-    bl_options = {'REGISTER', 'UNDO'}
+class CNV_OT_base_apply_prime_field(bpy.types.Operator):
 
     is_apply_armature_modifier: bpy.props.BoolProperty(name="関係するメッシュのアーマチュアを適用", default=True)
     is_preserve_shape_key_values: bpy.props.BoolProperty(name="Preserve Shape Key Values", default=True , description="Ensure shape key values of child mesh objects are not changed")
     is_deform_preserve_volume: bpy.props.BoolProperty(name="アーマチュア適用は体積を維持", default=True)
-    is_keep_original: bpy.props.BoolProperty(name="Keep Original", default=True , description="If the armature is already primed, don't replace the base pose with the current rest pose")
-    is_swap_prime_field: bpy.props.BoolProperty(name="Swap Prime Field", default=False)
-    #is_bake_drivers: bpy.props.BoolProperty(name="Bake Drivers", default=False, description="Enable keyframing of driven properties, locking sliders and twist bones for final apply")
-    
-    
-    was_t_stance = False
+    revert_primed_pose: bpy.props.BoolProperty(default=False, options={'HIDDEN'})
 
     @classmethod
     def poll(cls, context):
@@ -172,10 +168,6 @@ class CNV_OT_apply_prime_field(bpy.types.Operator):
             return True
         return False
 
-    def invoke(self, context, event):
-        self.was_t_stance = context.object.data.get('is T Stance')
-        return context.window_manager.invoke_props_dialog(self)
-
     def draw(self, context):
         self.layout.prop(self, 'is_apply_armature_modifier')
 
@@ -184,30 +176,29 @@ class CNV_OT_apply_prime_field(bpy.types.Operator):
         col.prop(self , 'is_preserve_shape_key_values')
         col.prop(self , 'is_deform_preserve_volume'   )
 
-        self.layout.prop(self, 'is_bake_drivers')
-        if self.was_t_stance:
-            self.layout.prop(self, 'is_keep_original')
-
     def execute(self, context):
         ob = context.active_object
         arm = ob.data
-        pose = ob.pose
         progress = 0
 
-        pre_selected_objects = context.selected_objects
         pre_mode = ob.mode
-        pre_frame = context.scene.frame_current
         bpy.ops.object.mode_set(mode='POSE')
         pre_selected_pose_bones = compat.get_selected_pose_bones(context)
 
+        # 元のレストポーズに戻す場合
+        if self.revert_primed_pose:
+            # キーフレーム比較アクションは破棄する
+            action_name = f'{ob.name}_poses'
+            action = context.blend_data.actions.get(action_name)
+            if action:
+                context.blend_data.actions.remove(action)
+
+            # 元のレストポーズを現ポーズとしてコピー導入(カスタムプロパティからの再現)
+            copy_pose_from_property(ob)
+
+        # 現ポーズでのアーマチュアモディファイアの強制適用 ＆ 適用後用の新規アーマチュアモディファイア追加
         bpy.ops.object.mode_set(mode='OBJECT')
-        bpy.ops.object.select_all(action='DESELECT')
         compat.set_select(ob, True)
-
-        if self.is_swap_prime_field:
-            context.scene.frame_set(1)
-            bpy.context.view_layer.update()
-
         if self.is_apply_armature_modifier and ob.children:
             context.window_manager.progress_begin(0, len(ob.children)+1)
             for child in ob.children:
@@ -255,11 +246,6 @@ class CNV_OT_apply_prime_field(bpy.types.Operator):
         else:
             context.window_manager.progress_begin(0, 1)  
 
-        temp_ob = ob.copy()
-        temp_arm = arm.copy()
-        temp_ob.data = temp_arm
-        compat.link(context.scene, temp_ob)
-        
         compat.set_active(context, ob)
         bpy.ops.object.mode_set(mode='POSE')
         bpy.ops.pose.select_all(action='SELECT')
@@ -271,61 +257,122 @@ class CNV_OT_apply_prime_field(bpy.types.Operator):
             prime_scale.z *= bone_scale.z
             bone['prime_scale'] = prime_scale
             #bone['_RNA_UI']['prime_scale']['subtype'] = 'XYZ'
+
+        # 現ポーズをレストポーズに適用
         bpy.ops.pose.armature_apply()
-        bpy.ops.pose.constraints_clear()
-        ob.animation_data_clear()
-        
-        if arm.get("is T Stance") and self.is_keep_original and not self.is_swap_prime_field:
-            anim_data = temp_ob.animation_data
-            if anim_data and anim_data.drivers:
-                drivers = anim_data.drivers
-                for driver in drivers.values():
-                    drivers.remove(driver)
-            context.scene.frame_set(1)
-            bpy.ops.pose.user_transforms_clear()
-        else:
-            compat.set_active(context, temp_ob)
-            bpy.ops.object.mode_set(mode='POSE')
-            bpy.ops.pose.select_all(action='SELECT')
-            temp_ob.animation_data_clear()
-            bpy.ops.pose.transforms_clear()
-            bpy.ops.object.mode_set(mode='OBJECT')
-            compat.set_select(temp_ob, False)
-        
-        if self.is_swap_prime_field and arm.get('is T Stance'):
+
+        # 元のレストポーズに戻す場合
+        if self.revert_primed_pose:
+            # レストポーズ変更フラグを解除
             arm['is T Stance'] = False
-        else:
+        elif 'BoneData:0' in arm and 'LocalBoneData:0' in arm:
+            # レストポーズ変更フラグ
             arm['is T Stance'] = True
 
-        # CNV_OT_copy_prime_field.execute()
-        compat.set_select(temp_ob, True)
-        compat.set_active(context, ob)
-        bpy.context.view_layer.update()
-        response = bpy.ops.pose.copy_prime_field(is_only_selected=False, is_key_location=True, is_key_scale=True, is_apply_prime=(not self.is_swap_prime_field))#is_key_location=self.is_bake_drivers, is_key_scale=self.is_bake_drivers, is_apply_prime=True)
+            # 元のレストポーズを現ポーズとしてコピー導入(カスタムプロパティからの再現)
+            copy_pose_from_property(ob)
+
+            # キーフレーム利用の準備
+            if not ob.animation_data:
+                ob.animation_data_create()
+            # 専用のアクション名で用意する
+            action_name = f'{ob.name}_poses'
+            action = context.blend_data.actions.get(action_name)
+            if not action:
+                action = context.blend_data.actions.new(action_name)
+                action.use_fake_user = True
+            else:
+                # 既に存在している場合、フレーム付けなおしのため全fcurveをクリアする
+                _ = compat.get_fcurves(action=action, slot_name=ob.name, clear=True)
+            ob.animation_data.action = action
+
+            def insert_pose(ob, i):
+                for bone in ob.pose.bones:
+                    bone.keyframe_insert(data_path="location", frame=i, group=bone.name)
+                    bone.keyframe_insert(data_path="rotation_euler", frame=i, group=bone.name)
+                    bone.keyframe_insert(data_path="rotation_quaternion", frame=i, group=bone.name)
+                    bone.keyframe_insert(data_path='scale', frame=i, group=bone.name)
+
+            # 0フレームに元のレストポーズをポーズとして配置
+            insert_pose(ob, 0)
+            # 1フレームにレストポーズを配置
+            bpy.ops.pose.transforms_clear()
+            insert_pose(ob, 1)
+            # レストポーズフレームに移動
+            bpy.context.scene.frame_set(1)
 
         context.window_manager.progress_end()
 
-        if not 'FINISHED' in response:
-            return response
-
-        common.remove_data(temp_arm)
-        try:
-            common.remove_data(temp_ob)
-        except:
-            pass
-        
+        # 各種選択状態を戻す
         bpy.ops.object.mode_set(mode='POSE')
         bpy.ops.pose.select_all(action='DESELECT')
         compat.set_select_pose_bones(pre_selected_pose_bones)
-
-        if pre_selected_objects:
-            for o in pre_selected_objects:
-                compat.set_select(o, True)
-        compat.set_active(context, ob)
         bpy.ops.object.mode_set(mode=pre_mode)
 
-        context.scene.frame_set(pre_frame)
-
-
-
         return {'FINISHED'}
+
+
+@compat.BlRegister()
+class CNV_OT_apply_prime_field(CNV_OT_base_apply_prime_field):
+    bl_idname = 'pose.apply_prime_field'
+    bl_label = "現在のポーズで素体化"
+    bl_description = "現在のポーズで衣装をモデリングしやすくする素体を作成します"
+    bl_options = {'REGISTER', 'UNDO'}
+
+
+@compat.BlRegister()
+class CNV_OT_revert_primed_pose(CNV_OT_base_apply_prime_field):
+    bl_idname = "pose.revert_primed_pose"
+    bl_label = "元の素体ポーズに戻す"
+    bl_description = "カスタムプロパティのボーン情報を元に最初の素体ポーズを復元します"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    revert_primed_pose: bpy.props.BoolProperty(default=True, options={'HIDDEN'})
+
+    def invoke(self, context, event):
+        # Properties パネルからの呼び出し向け (REDOパネル出せないため)
+        return context.window_manager.invoke_props_dialog(self)
+
+
+def copy_pose_from_property(ob: bpy.types.Object):
+    """
+    指定のアーマチュアオブジェクトのカスタムプロパティのボーン情報から元のレストポーズをポーズとして復元する
+    """
+    arm = ob.data
+
+    import re
+    is_convert_bone_weight_names = any(
+        b for b in arm.bones if b.name.count('*') == 1 and re.search(r'\.([rRlL])$', b.name))
+
+    from .model_export import CNV_OT_export_cm3d2_model as export_model
+    bone_data = export_model.bone_data_parser(export_model.indexed_data_generator(arm, prefix="BoneData:"))
+
+    import_scale = arm.get('ImportScale', common.preferences().scale)
+
+    for data in bone_data:
+        if data['parent_index'] == -1:
+            continue
+        parent_name = bone_data[data['parent_index']]['name']
+        parent = ob.pose.bones.get(common.decode_bone_name(parent_name, is_convert_bone_weight_names))
+        if not parent:
+            continue
+
+        bone = ob.pose.bones.get(common.decode_bone_name(data['name'], is_convert_bone_weight_names))
+
+        local_co = mathutils.Vector(data['co'].copy()) * import_scale
+        local_rot = mathutils.Quaternion(data['rot'].copy())
+        local_co_mat = mathutils.Matrix.Translation(local_co)
+        local_rot_mat = local_rot.to_matrix().to_4x4()
+        local_mat = compat.mul(local_co_mat, local_rot_mat)
+        local_mat = compat.convert_cm_to_bl_bone_space(local_mat)
+        mat = compat.mul(parent.matrix, local_mat)
+        mat = compat.convert_cm_to_bl_bone_rotation(mat)
+
+        compat.set_bone_matrix(bone, mat)
+
+        if 'scale' in data:
+            bone['cm3d2_bone_scale'] = data['scale']
+            scale = mathutils.Vector(data['scale'])
+            scale *= import_scale * 0.01
+            bone.bbone_x = scale.x
+            bone.bbone_z = scale.z

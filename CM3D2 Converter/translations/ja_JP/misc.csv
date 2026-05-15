@@ -13,7 +13,7 @@
 "*","Armature State: Normal","Armature State: Normal"
 "*","Original","Original"
 "*","Pose data","Pose data"
-"*","Swap Prime Field","Swap Prime Field"
+"*","元の素体ポーズに戻す","Revert Primed Pose"
 # misc_DATA_PT_context_arm.?2
 # misc_DATA_PT_context_arm add_cm3d2_body_sliders
 "*","Add CM3D2 Twist Bones","Add CM3D2 Twist Bones"
@@ -355,7 +355,7 @@
 "*","Apply Armature Modifier","Apply Armature Modifier"
 "*","Preserve Volume","Preserve Volume"
 "*","Keep Original","Keep Original"
-"*","Swap Prime Field","Swap Prime Field"
+"*","元の素体ポーズに戻す","Revert Primed Pose"
 "*","Bake Drivers","Bake Drivers"
 "*","Enable keyframing of driven properties, locking sliders and twist bones for final apply","Enable keyframing of driven properties, locking sliders and twist bones for final apply"
 "*","Only Selected","Only Selected"
@@ -377,7 +377,7 @@
 "*","Enabling this will increase distortion","Enabling this will increase distortion"
 "*","Keep Original","Keep Original"
 "*","If the armature is already primed, don't replace the base pose with the current rest pose","If the armature is already primed, don't replace the base pose with the current rest pose"
-"*","Swap Prime Field","Swap Prime Field"
+"*","元の素体ポーズに戻す","Revert Primed Pose"
 "*","Bake Drivers","Bake Drivers"
 "*","Enable keyframing of driven properties, locking sliders and twist bones for final apply","Enable keyframing of driven properties, locking sliders and twist bones for final apply"
 "*","is T Stance","is T Stance"

@@ -115,7 +115,7 @@
 "Operator","Connect Twist Bones","ツイストボーンを接続する"
 "Operator","Original","元の"
 "Operator","Pose data","ポーズデータ"
-"Operator","Swap Prime Field","プライムフィールドを交換する"
+"Operator","元の素体ポーズに戻す","元の素体ポーズに戻す"
 "*","Weight","重量"
 "*","Bust","バスト"
 "*","Cup","カップ"

@@ -895,6 +895,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             arm['BaseBone'] = model_name2
             if model_ver >= 1000:
                 arm['ModelVersion'] = model_ver
+            arm['ImportScale'] = self.scale
         context.window_manager.progress_end()
 
         require_time = time.time() - start_time
