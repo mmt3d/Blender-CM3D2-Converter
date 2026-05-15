@@ -72,18 +72,18 @@ def menu_func(self, context):
         col.operator("object.add_cm3d2_twist_bones", text="Connect Twist Bones", icon='CONSTRAINT_BONE')
         col.operator("object.cleanup_scale_bones", text="Cleanup Scale Bones", icon='X')
         
-    if 'is T Stance' in arm:
+    if 'isPrimedPose' in arm:
         if not is_boxed:
             box = self.layout.box()
             box.label(text="CM3D2用", icon_value=common.kiss_icon())
 
         col = box.column(align=True)
-        if arm['is T Stance']:
+        if arm['isPrimedPose']:
             pose_text = "Armature State: Primed"
         else:
             pose_text = "Armature State: Normal"
         col.label(text=pose_text, icon='POSE_HLT')
-        col.enabled = arm['is T Stance']
+        col.enabled = arm['isPrimedPose']
 
         row = col.row(align=True)
         

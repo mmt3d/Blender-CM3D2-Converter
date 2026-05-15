@@ -14,7 +14,7 @@ def menu_func(self, context):
     row.operator('pose.revert_primed_pose', icon_value=common.kiss_icon())
     ob = context.active_object
     # チェック対象がexecuteで変更される関係でpollでチェックさせるとREDOできなくなるため、ここで有効無効を切り替える
-    if not ob or ob.type != 'ARMATURE' or not ob.data.get('is T Stance'):
+    if not ob or ob.type != 'ARMATURE' or not ob.data.get('isPrimedPose'):
         row.enabled = False
 
 
@@ -89,13 +89,13 @@ class CNV_OT_transfer_pose(bpy.types.Operator):
                 const.min_x = source_bone.scale.x
                 const.min_y = source_bone.scale.y
                 const.min_z = source_bone.scale.z
-                if source_ob.data.get("is T Stance"):
-                    source_prime_scale = mathutils.Vector(source_bone.get('prime_scale',(1,1,1)))
+                if source_ob.data.get("isPrimedPose"):
+                    source_prime_scale = mathutils.Vector(source_bone.get('prime_scale', (1, 1, 1)))
                     const.min_x *= source_prime_scale.x
                     const.min_y *= source_prime_scale.y
                     const.min_z *= source_prime_scale.z
-                if target_ob.data.get("is T Stance"):
-                    target_prime_scale = mathutils.Vector(bone.get('prime_scale', (1,1,1)))
+                if target_ob.data.get("isPrimedPose"):
+                    target_prime_scale = mathutils.Vector(bone.get('prime_scale', (1, 1, 1)))
                     const.min_x /= target_prime_scale.x
                     const.min_y /= target_prime_scale.y
                     const.min_z /= target_prime_scale.z
@@ -216,10 +216,10 @@ class CNV_OT_base_prime_pose_operator(bpy.types.Operator):
         # 元のレストポーズに戻す場合
         if self.revert_primed_pose:
             # レストポーズ変更フラグを解除
-            arm['is T Stance'] = False
+            arm['isPrimedPose'] = False
         elif 'BoneData:0' in arm and 'LocalBoneData:0' in arm:
             # レストポーズ変更フラグ
-            arm['is T Stance'] = True
+            arm['isPrimedPose'] = True
 
             # 元のレストポーズを現ポーズとしてコピー導入(カスタムプロパティからの再現)
             copy_pose_from_property(ob)
@@ -341,7 +341,7 @@ class CNV_OT_set_frame(bpy.types.Operator):
     def poll(cls, context):
         ob = context.active_object
         arm = ob.data
-        return arm.get('is T Stance') and context.scene.frame_current % 2 != cls.target_frame % 2
+        return arm.get('isPrimedPose') and context.scene.frame_current % 2 != cls.target_frame % 2
 
     def execute(self, context):
         context.scene.frame_set(self.target_frame)
