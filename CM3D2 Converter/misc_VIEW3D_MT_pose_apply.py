@@ -34,11 +34,11 @@ class CNV_OT_copy_prime_field(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        target_ob, source_ob = common.get_target_and_source_ob(context)
-        if target_ob and source_ob:
+        ob = context.active_object
+        selected = [o for o in context.selected_objects if o != ob]
+        if ob and ob.type == 'ARMATURE' and len(selected) == 1 and selected[0].type == 'ARMATURE':
             return True
-        else:
-            return False
+        return False
 
     def invoke(self, context, event):
         return context.window_manager.invoke_props_dialog(self)
@@ -50,7 +50,9 @@ class CNV_OT_copy_prime_field(bpy.types.Operator):
         self.layout.prop(self, 'is_key_scale'    )
 
     def execute(self, context):
-        target_ob, source_ob = common.get_target_and_source_ob(context)
+        target_ob = context.active_object
+        selected = [o for o in context.selected_objects if o != target_ob]
+        source_ob = selected[0]
         pose = target_ob.pose
         arm = target_ob.data
 
@@ -165,7 +167,8 @@ class CNV_OT_apply_prime_field(bpy.types.Operator):
     @classmethod
     def poll(cls, context):
         ob = context.active_object
-        if ob and ob.type == 'ARMATURE':
+        selected = [o for o in context.selected_objects if o != ob]
+        if ob and ob.type == 'ARMATURE' and ob.select_get() and len(selected) == 0:
             return True
         return False
 
