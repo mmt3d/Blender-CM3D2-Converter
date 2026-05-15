@@ -61,10 +61,6 @@ class CNV_OT_copy_prime_field(bpy.types.Operator):
         bpy.ops.pose.select_all(action='SELECT')
         bpy.ops.pose.constraints_clear()
 
-        if not target_ob.pose_library:
-             bpy.ops.poselib.new()
-             poselib = target_ob.pose_library
-
         consts = []
         bones = pre_selected_pose_bones if self.is_only_selected else pose.bones
         for bone in bones:
@@ -108,7 +104,6 @@ class CNV_OT_copy_prime_field(bpy.types.Operator):
 
         for i in range(2):
             is_prime_frame = not bool(i % 2) if arm.get("is T Stance") else bool(i % 2)
-            pose_name = '__prime_field_pose' if is_prime_frame else '__base_field_pose'
             if self.is_apply_prime:
                 is_prime_frame = not is_prime_frame
             
@@ -137,11 +132,9 @@ class CNV_OT_copy_prime_field(bpy.types.Operator):
                     bone.keyframe_insert(data_path='rotation_quaternion', frame=i, group=bone.name)
                 if self.is_key_scale: # and not is_prime_frame:
                     bone.keyframe_insert(data_path='scale'              , frame=i, group=bone.name)
-                bpy.ops.poselib.pose_add(frame=i, name=pose_name)
 
         bpy.ops.pose.constraints_clear()
         bpy.ops.pose.transforms_clear()
-        target_ob.animation_data_clear()
 
         bpy.ops.pose.select_all(action='DESELECT')
         compat.set_select_pose_bones(pre_selected_pose_bones)
@@ -209,8 +202,7 @@ class CNV_OT_apply_prime_field(bpy.types.Operator):
         compat.set_select(ob, True)
 
         if self.is_swap_prime_field:
-            #context.scene.frame_set(1)
-            bpy.ops.poselib.apply_pose(pose_index=1)
+            context.scene.frame_set(1)
             bpy.context.view_layer.update()
 
         if self.is_apply_armature_modifier and ob.children:
@@ -286,9 +278,8 @@ class CNV_OT_apply_prime_field(bpy.types.Operator):
                 drivers = anim_data.drivers
                 for driver in drivers.values():
                     drivers.remove(driver)
-            #context.scene.frame_set(1)
+            context.scene.frame_set(1)
             bpy.ops.pose.user_transforms_clear()
-            bpy.ops.poselib.apply_pose(pose_index=1)
         else:
             compat.set_active(context, temp_ob)
             bpy.ops.object.mode_set(mode='POSE')
