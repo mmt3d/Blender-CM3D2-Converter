@@ -17,6 +17,7 @@ def menu_func(self, context):
     if not ob or ob.type != 'ARMATURE' or not ob.data.get('is T Stance'):
         row.enabled = False
 
+
 @compat.BlRegister()
 class CNV_OT_transfer_pose(bpy.types.Operator):
     bl_idname = 'pose.transfer_pose'
@@ -169,51 +170,33 @@ class CNV_OT_base_prime_pose_operator(bpy.types.Operator):
         bpy.ops.object.mode_set(mode='OBJECT')
         compat.set_select(ob, True)
         if self.is_apply_armature_modifier and ob.children:
-            context.window_manager.progress_begin(0, len(ob.children)+1)
+            backup_attrs = ['name', 'show_expanded', 'show_in_editmode', 'show_on_cage', 'show_render',
+                            'show_viewport', 'use_apply_on_spline', 'invert_vertex_group', 'use_bone_envelopes',
+                            'use_vertex_groups', 'vertex_group']
+            context.window_manager.progress_begin(0, len(ob.children) + 1)
             for child in ob.children:
                 with context.temp_override(object=child, active_object=child):
                     if child.type == 'MESH' and len(child.modifiers) and bpy.ops.object.forced_modifier_apply.poll():
+                        backup = {}
                         for mod in child.modifiers:
                             if mod.type == 'ARMATURE':
                                 mod.use_deform_preserve_volume = self.is_deform_preserve_volume
-                                if not mod.object == ob:
-                                    had_armature = False
-                                else:
-                                    had_armature = True
-                                    old_name                = mod.name
-                                    old_show_expanded       = mod.show_expanded
-                                    old_show_in_editmode    = mod.show_in_editmode
-                                    old_show_on_cage        = mod.show_on_cage
-                                    old_show_render         = mod.show_render
-                                    old_show_viewport       = mod.show_viewport
-                                    old_use_apply_on_spline = mod.use_apply_on_spline
-                                    old_invert_vertex_group = mod.invert_vertex_group
-                                    old_use_bone_envelopes  = mod.use_bone_envelopes
-                                    #old_use_multi_modifier  = mod.use_multi_modifier
-                                    old_use_vertex_groups   = mod.use_vertex_groups
-                                    old_vertex_group        = mod.vertex_group
-                        apply_results = bpy.ops.object.forced_modifier_apply(apply_viewport_visible=True, is_preserve_shape_key_values=self.is_preserve_shape_key_values, initial_progress=progress)
-                        if ('FINISHED' in apply_results) and had_armature:
-                            new_mod = child.modifiers.new(name=old_name, type='ARMATURE')
-                            new_mod.object              = ob
+                                if mod.object == ob:
+                                    for attr in backup_attrs:
+                                        backup[attr] = getattr(mod, attr)
+                        apply_results = bpy.ops.object.forced_modifier_apply(apply_viewport_visible=True,
+                                                                             is_preserve_shape_key_values=self.is_preserve_shape_key_values,
+                                                                             initial_progress=progress)
+                        if ('FINISHED' in apply_results) and backup:
+                            new_mod = child.modifiers.new(name=backup['name'], type='ARMATURE')
+                            new_mod.object = ob
                             new_mod.use_deform_preserve_volume = self.is_deform_preserve_volume
-                            new_mod.show_expanded       = old_show_expanded
-                            new_mod.show_in_editmode    = old_show_in_editmode
-                            new_mod.show_on_cage        = old_show_on_cage
-                            new_mod.show_render         = old_show_render
-                            new_mod.show_viewport       = old_show_viewport
-                            new_mod.use_apply_on_spline = old_use_apply_on_spline
-                            new_mod.invert_vertex_group = old_invert_vertex_group
-                            new_mod.use_bone_envelopes  = old_use_bone_envelopes
-                            #new_mod.use_multi_modifier  = old_use_multi_modifier
-                            new_mod.use_vertex_groups   = old_use_vertex_groups
-                            new_mod.vertex_group        = old_vertex_group
-                
+                            for attr in backup_attrs:
+                                setattr(new_mod, attr, backup[attr])
                 progress += 1
                 context.window_manager.progress_update(progress)
-
         else:
-            context.window_manager.progress_begin(0, 1)  
+            context.window_manager.progress_begin(0, 1)
 
         compat.set_active(context, ob)
         bpy.ops.object.mode_set(mode='POSE')
