@@ -31,6 +31,11 @@ csv.register_dialect('cm3d2_converter',
     strict           = True         
 )
 
+fallback_lang_map = {
+    'zh_CN': 'zh_HANS',
+    'zh_TW': 'zh_HANT',
+}
+
 
 i18n_contexts = { identifer: getattr(bpy.app.translations.contexts, identifer) for identifer in bpy.app.translations.contexts_C_to_py.values() }
 '''
@@ -222,6 +227,13 @@ def register(__name__=__name__):
     # Any special translations that use another as a base should handle that here
     
     # End special translations
+
+    # Blenderバージョンによりサポート言語タグが異なることがあり、その場合は代替言語タグに差し替える
+    missing_lang = set(DICT.keys()) - set(bpy.app.translations.locales)
+    for lang in missing_lang:
+        fallback_lang = fallback_lang_map.get(lang)
+        if fallback_lang:
+            DICT[fallback_lang] = DICT[lang]
 
     handled_locales = { lang for lang in DICT.keys() }
 
