@@ -9,7 +9,7 @@ from . import compat
 def menu_func(self, context):
     self.layout.separator()
     self.layout.operator('pose.transfer_pose' , icon_value=common.kiss_icon())
-    self.layout.operator('pose.apply_prime_field', icon_value=common.kiss_icon())
+    self.layout.operator('pose.prime_pose', icon_value=common.kiss_icon())
     row = self.layout.row()
     row.operator('pose.revert_primed_pose', icon_value=common.kiss_icon())
     ob = context.active_object
@@ -119,7 +119,7 @@ class CNV_OT_transfer_pose(bpy.types.Operator):
         return {'FINISHED'}
 
 
-class CNV_OT_base_apply_prime_field(bpy.types.Operator):
+class CNV_OT_base_prime_pose_operator(bpy.types.Operator):
 
     is_apply_armature_modifier: bpy.props.BoolProperty(name="関係するメッシュのアーマチュアを適用", default=True)
     is_preserve_shape_key_values: bpy.props.BoolProperty(name="Preserve Shape Key Values", default=True , description="Ensure shape key values of child mesh objects are not changed")
@@ -285,15 +285,15 @@ class CNV_OT_base_apply_prime_field(bpy.types.Operator):
 
 
 @compat.BlRegister()
-class CNV_OT_apply_prime_field(CNV_OT_base_apply_prime_field):
-    bl_idname = 'pose.apply_prime_field'
+class CNV_OT_prime_pose(CNV_OT_base_prime_pose_operator):
+    bl_idname = 'pose.prime_pose'
     bl_label = "現在のポーズで素体化"
     bl_description = "現在のポーズで衣装をモデリングしやすくする素体を作成します"
     bl_options = {'REGISTER', 'UNDO'}
 
 
 @compat.BlRegister()
-class CNV_OT_revert_primed_pose(CNV_OT_base_apply_prime_field):
+class CNV_OT_revert_primed_pose(CNV_OT_base_prime_pose_operator):
     bl_idname = "pose.revert_primed_pose"
     bl_label = "元の素体ポーズに戻す"
     bl_description = "カスタムプロパティのボーン情報を元に最初の素体ポーズを復元します"
