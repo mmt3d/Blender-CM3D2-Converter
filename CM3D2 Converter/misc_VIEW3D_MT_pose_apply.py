@@ -331,3 +331,36 @@ def copy_pose_from_property(ob: bpy.types.Object):
             scale *= import_scale * 0.01
             bone.bbone_x = scale.x
             bone.bbone_z = scale.z
+
+
+class CNV_OT_set_frame(bpy.types.Operator):
+
+    target_frame = 1
+
+    @classmethod
+    def poll(cls, context):
+        ob = context.active_object
+        arm = ob.data
+        return arm.get('is T Stance') and context.scene.frame_current % 2 != cls.target_frame % 2
+
+    def execute(self, context):
+        context.scene.frame_set(self.target_frame)
+        return {'FINISHED'}
+
+
+@compat.BlRegister()
+class CNV_OT_set_original_rest_frame(CNV_OT_set_frame):
+    bl_idname = "pose.set_original_rest_frame"
+    bl_label = "Original Rest"
+    bl_description = "Moves to original rest pose frame"
+    bl_options = {'REGISTER', 'UNDO'}
+    target_frame = 0
+
+
+@compat.BlRegister()
+class CNV_OT_set_current_rest_frame(CNV_OT_set_frame):
+    bl_idname = "pose.set_current_rest_frame"
+    bl_label = "Current Rest"
+    bl_description = "Moves to current rest pose frame"
+    bl_options = {'REGISTER', 'UNDO'}
+    target_frame = 1

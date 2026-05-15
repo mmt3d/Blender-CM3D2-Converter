@@ -11,8 +11,8 @@
 "*","CM3D2用","CM3D2用"
 "*","Armature State: Primed","Armature State: Primed"
 "*","Armature State: Normal","Armature State: Normal"
-"*","Original","Original"
-"*","Pose data","Pose data"
+"*","Original Rest","元レスト"
+"*","Current Rest","現レスト"
 "*","元の素体ポーズに戻す","Revert Primed Pose"
 # misc_DATA_PT_context_arm.?2
 # misc_DATA_PT_context_arm add_cm3d2_body_sliders

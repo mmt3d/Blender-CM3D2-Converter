@@ -76,7 +76,6 @@ def menu_func(self, context):
         if not is_boxed:
             box = self.layout.box()
             box.label(text="CM3D2用", icon_value=common.kiss_icon())
-            is_boxed = True
 
         col = box.column(align=True)
         if arm['is T Stance']:
@@ -84,22 +83,16 @@ def menu_func(self, context):
         else:
             pose_text = "Armature State: Normal"
         col.label(text=pose_text, icon='POSE_HLT')
-        col.enabled = bpy.ops.poselib.apply_pose.poll()
+        col.enabled = arm['is T Stance']
 
         row = col.row(align=True)
         
         sub_row = row.row(align=True)
-        op = sub_row.operator('poselib.apply_pose', icon='ARMATURE_DATA', text="Original")#, depress=(context.scene.frame_current % 2 == arm['is T Stance']))
-        op.pose_index = arm['is T Stance']
-        #if context.scene.frame_current % 2 == op.value:
-        #    sub_row.enabled = False
-        
+        sub_row.operator('pose.set_current_rest_frame', icon='ARMATURE_DATA')
+
         sub_row = row.row(align=True)
-        op = sub_row.operator('poselib.apply_pose', icon='OUTLINER_DATA_ARMATURE', text="Pose data")#, depress=(context.scene.frame_current % 2 != arm['is T Stance']))
-        op.pose_index = not arm['is T Stance']
-        #if context.scene.frame_current % 2 == op.value:
-        #    sub_row.enabled = False
-        
+        sub_row.operator('pose.set_original_rest_frame', icon='OUTLINER_DATA_ARMATURE')
+
         row = col.row(align=True)
         
         sub_row = row.row(align=True)
