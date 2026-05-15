@@ -124,6 +124,7 @@ class CNV_OT_base_apply_prime_field(bpy.types.Operator):
     is_apply_armature_modifier: bpy.props.BoolProperty(name="関係するメッシュのアーマチュアを適用", default=True)
     is_preserve_shape_key_values: bpy.props.BoolProperty(name="Preserve Shape Key Values", default=True , description="Ensure shape key values of child mesh objects are not changed")
     is_deform_preserve_volume: bpy.props.BoolProperty(name="アーマチュア適用は体積を維持", default=True)
+    keyframe_range: bpy.props.IntProperty(name="配置するキーフレームの範囲", description="比較用に元のレストポーズと交互に配置するキーフレームの範囲", default=10, min=2)
     revert_primed_pose: bpy.props.BoolProperty(default=False, options={'HIDDEN'})
 
     @classmethod
@@ -141,6 +142,8 @@ class CNV_OT_base_apply_prime_field(bpy.types.Operator):
         col.enabled = self.is_apply_armature_modifier
         col.prop(self , 'is_preserve_shape_key_values')
         col.prop(self , 'is_deform_preserve_volume'   )
+        if not self.revert_primed_pose:
+            col.prop(self, 'keyframe_range')
 
     def execute(self, context):
         ob = context.active_object
@@ -259,11 +262,14 @@ class CNV_OT_base_apply_prime_field(bpy.types.Operator):
                     bone.keyframe_insert(data_path="rotation_quaternion", frame=i, group=bone.name)
                     bone.keyframe_insert(data_path='scale', frame=i, group=bone.name)
 
-            # 0フレームに元のレストポーズをポーズとして配置
-            insert_pose(ob, 0)
-            # 1フレームにレストポーズを配置
+            keys = range(self.keyframe_range)
+            # 偶数フレームに元のレストポーズをポーズとして配置
+            for i in filter(lambda x: x % 2 == 0, keys):
+                insert_pose(ob, i)
+            # 奇数フレームにレストポーズを配置
             bpy.ops.pose.transforms_clear()
-            insert_pose(ob, 1)
+            for i in filter(lambda x: x % 2 != 0, keys):
+                insert_pose(ob, i)
             # レストポーズフレームに移動
             bpy.context.scene.frame_set(1)
 
