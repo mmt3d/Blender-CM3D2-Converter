@@ -8,8 +8,8 @@ from . import compat
 # メニュー等に項目追加
 def menu_func(self, context):
     self.layout.separator()
+    self.layout.operator('pose.transfer_pose' , icon_value=common.kiss_icon())
     self.layout.operator('pose.apply_prime_field', icon_value=common.kiss_icon())
-    self.layout.operator('pose.copy_prime_field' , icon_value=common.kiss_icon())
     row = self.layout.row()
     row.operator('pose.revert_primed_pose', icon_value=common.kiss_icon())
     ob = context.active_object
@@ -18,25 +18,16 @@ def menu_func(self, context):
         row.enabled = False
 
 @compat.BlRegister()
-class CNV_OT_copy_prime_field(bpy.types.Operator):
-    bl_idname = 'pose.copy_prime_field'
-    bl_label = "Copy Prime Field"
-    bl_description = "Copies the visual pose of the selected object to the prime field of the active object"
+class CNV_OT_transfer_pose(bpy.types.Operator):
+    bl_idname = 'pose.transfer_pose'
+    bl_label = "Transfer Pose"
+    bl_description = "Transfers the visual pose of the selected object to the active object"
     bl_options = {'REGISTER', 'UNDO'}
 
-    #is_apply_armature_modifier = bpy.props.BoolProperty(name="Apply Armature Modifier", default=True )
-    #is_deform_preserve_volume  = bpy.props.BoolProperty(name="Preserve Volume"        , default=True )
-    #is_keep_original           = bpy.props.BoolProperty(name="Keep Original"          , default=True )
-    #is_swap_prime_field        = bpy.props.BoolProperty(name="Swap Prime Field"       , default=False)
-    #is_bake_drivers            = bpy.props.BoolProperty(name="Bake Drivers"           , default=False, description="Enable keyframing of driven properties, locking sliders and twist bones for final apply")
-    
     is_only_selected: bpy.props.BoolProperty(name="Only Selected", default=True)
     is_key_location: bpy.props.BoolProperty(name="Key Location", default=True)
     is_key_rotation: bpy.props.BoolProperty(name="Key Rotation", default=True)
     is_key_scale: bpy.props.BoolProperty(name="Key Scale", default=True)
-    is_apply_prime: bpy.props.BoolProperty(name="Apply Prime", default=False, options={'HIDDEN'})
-    
-
 
     @classmethod
     def poll(cls, context):
@@ -45,9 +36,6 @@ class CNV_OT_copy_prime_field(bpy.types.Operator):
         if ob and ob.type == 'ARMATURE' and len(selected) == 1 and selected[0].type == 'ARMATURE':
             return True
         return False
-
-    def invoke(self, context, event):
-        return context.window_manager.invoke_props_dialog(self)
 
     def draw(self, context):
         self.layout.prop(self, 'is_only_selected')
@@ -59,96 +47,71 @@ class CNV_OT_copy_prime_field(bpy.types.Operator):
         target_ob = context.active_object
         selected = [o for o in context.selected_objects if o != target_ob]
         source_ob = selected[0]
-        pose = target_ob.pose
-        arm = target_ob.data
 
         pre_mode = target_ob.mode
         
         bpy.ops.object.mode_set(mode='POSE')
         pre_selected_pose_bones = compat.get_selected_pose_bones(context)
         bpy.ops.pose.select_all(action='SELECT')
-        bpy.ops.pose.constraints_clear()
 
-        consts = []
-        bones = pre_selected_pose_bones if self.is_only_selected else pose.bones
+        # 対象ボーンにコンストレイントを一時的に追加
+        bones = pre_selected_pose_bones if self.is_only_selected else target_ob.pose.bones
         for bone in bones:
-            source_bone = source_ob.pose.bones.get(bone.name)
-            if source_bone:
-                if self.is_key_location or self.is_key_rotation:
-                    const = bone.constraints.new('COPY_TRANSFORMS')
-                    const.target = source_ob
-                    const.subtarget = source_bone.name
-                    consts.append(const)
-                if self.is_key_scale:
-                    const = bone.constraints.new('LIMIT_SCALE')
-                    const.owner_space = 'LOCAL'
-                    const.use_transform_limit = True
-                    const.use_min_x = True
-                    const.use_min_y = True
-                    const.use_min_z = True
-                    const.use_max_x = True
-                    const.use_max_y = True
-                    const.use_max_z = True
-                    const.min_x = source_bone.scale.x
-                    const.min_y = source_bone.scale.y
-                    const.min_z = source_bone.scale.z
-                    if source_ob.data.get("is T Stance"):
-                        source_prime_scale = mathutils.Vector(source_bone.get('prime_scale',(1,1,1)))
-                        const.min_x *= source_prime_scale.x
-                        const.min_y *= source_prime_scale.y
-                        const.min_z *= source_prime_scale.x
-                    if arm.get("is T Stance"):
-                        target_prime_scale = mathutils.Vector(bone.get('prime_scale', (1,1,1)))
-                        const.min_x /= target_prime_scale.x
-                        const.min_y /= target_prime_scale.y
-                        const.min_z /= target_prime_scale.z
-                    const.max_x = const.min_x
-                    const.max_y = const.min_y
-                    const.max_z = const.min_z
-                    consts.append(const)
+            # ターゲット側に同名のボーンがなければスキップ
+            if bone.name not in source_ob.data.bones:
+                continue
+            # すでに同名のコンストレイントがある場合は削除しておく
+            for c in bone.constraints:
+                if c.name in ['TEMP_TRANSFORM', 'TEMP_SCALE']:
+                    bone.constraints.remove(c)
+            if self.is_key_location or self.is_key_rotation:
+                # コピー（変形）コンストレイントを追加、ターゲットのレストポーズを参照
+                const = bone.constraints.new('COPY_TRANSFORMS')
+                const.name = "TEMP_TRANSFORM"
+                const.target = source_ob
+                const.subtarget = bone.name
+            if self.is_key_scale:
+                source_bone = source_ob.pose.bones.get(bone.name)
+                const = bone.constraints.new('LIMIT_SCALE')
+                const.name = "TEMP_SCALE"
+                const.owner_space = 'LOCAL'
+                const.use_transform_limit = True
+                const.use_min_x = True
+                const.use_min_y = True
+                const.use_min_z = True
+                const.use_max_x = True
+                const.use_max_y = True
+                const.use_max_z = True
+                const.min_x = source_bone.scale.x
+                const.min_y = source_bone.scale.y
+                const.min_z = source_bone.scale.z
+                if source_ob.data.get("is T Stance"):
+                    source_prime_scale = mathutils.Vector(source_bone.get('prime_scale',(1,1,1)))
+                    const.min_x *= source_prime_scale.x
+                    const.min_y *= source_prime_scale.y
+                    const.min_z *= source_prime_scale.z
+                if target_ob.data.get("is T Stance"):
+                    target_prime_scale = mathutils.Vector(bone.get('prime_scale', (1,1,1)))
+                    const.min_x /= target_prime_scale.x
+                    const.min_y /= target_prime_scale.y
+                    const.min_z /= target_prime_scale.z
+                const.max_x = const.min_x
+                const.max_y = const.min_y
+                const.max_z = const.min_z
 
-        #if True:
-        #    return {'CANCELLED'}
+        # コンストレイントに沿ってポーズ適用
+        bpy.ops.pose.visual_transform_apply()
 
-        for i in range(2):
-            is_prime_frame = not bool(i % 2) if arm.get("is T Stance") else bool(i % 2)
-            if self.is_apply_prime:
-                is_prime_frame = not is_prime_frame
-            
-            #if self.is_key_scale and is_prime_frame:
-            #    for const in consts:
-            #        if const.type == 'LIMIT_SCALE':
-            #            const.mute = not is_prime_frame
-            #    bpy.ops.pose.visual_transform_apply()
-            #    for bone in pose.bones:
-            #        bone.keyframe_insert(data_path='scale', frame=i, group=bone.name)
-            #    for const in consts:
-            #        if const.type == 'LIMIT_SCALE':
-            #            const.mute = is_prime_frame
-            
-            for const in consts:
-                const.mute = not is_prime_frame
-            if is_prime_frame:
-                bpy.ops.pose.visual_transform_apply()
-            else:
-                bpy.ops.pose.transforms_clear()
-            for bone in pose.bones:
-                if self.is_key_location:
-                    bone.keyframe_insert(data_path='location'           , frame=i, group=bone.name)
-                if self.is_key_rotation:
-                    bone.keyframe_insert(data_path='rotation_euler'     , frame=i, group=bone.name)
-                    bone.keyframe_insert(data_path='rotation_quaternion', frame=i, group=bone.name)
-                if self.is_key_scale: # and not is_prime_frame:
-                    bone.keyframe_insert(data_path='scale'              , frame=i, group=bone.name)
+        # 一時的に作ったコンストレイントを削除
+        for bone in target_ob.pose.bones:
+            for c in bone.constraints:
+                if c.name in ['TEMP_TRANSFORM', 'TEMP_SCALE']:
+                    bone.constraints.remove(c)
 
-        bpy.ops.pose.constraints_clear()
-        bpy.ops.pose.transforms_clear()
-
+        # ボーン選択状態・モードを元に戻す
         bpy.ops.pose.select_all(action='DESELECT')
         compat.set_select_pose_bones(pre_selected_pose_bones)
-
-        if pre_mode: 
-            bpy.ops.object.mode_set(mode=pre_mode)
+        bpy.ops.object.mode_set(mode=pre_mode)
         
         return {'FINISHED'}
 

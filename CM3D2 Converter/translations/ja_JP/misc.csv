@@ -350,8 +350,8 @@
 # misc_VIEW3D_MT_edit_mesh_specials
 # misc_VIEW3D_MT_pose_apply
 # misc_VIEW3D_MT_pose_apply copy_prime_field
-"*","Copy Prime Field","Copy Prime Field"
-"*","Copies the visual pose of the selected object to the prime field of the active object","Copies the visual pose of the selected object to the prime field of the active object"
+"*","Transfer Pose","Transfer Pose"
+"*","Transfers the visual pose of the selected object to the active object","選択したオブジェクトのポーズをアクティブなオブジェクトに転送します"
 "*","Apply Armature Modifier","Apply Armature Modifier"
 "*","Preserve Volume","Preserve Volume"
 "*","Keep Original","Keep Original"

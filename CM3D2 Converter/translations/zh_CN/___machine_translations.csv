@@ -503,7 +503,8 @@ Context,Original,Translation,Comments
 "Operator","選択面の描画順を最背面に","所选曲面的绘制顺序在背面"
 # misc_VIEW3D_MT_pose_apply.py
 "Operator","現在のポーズで素体化","当前姿势的身体"
-"Operator","Copy Prime Field","复制主要字段"
+"Operator","Transfer Pose","转移姿势"
+"*","Transfers the visual pose of the selected object to the active object","将选定对象的视觉姿态传递到活动对象"
 # misc_VIEW3D_PT_tools_weightpaint.py
 "Operator","選択部の頂点グループをぼかす","模糊选择的顶点组"
 "Operator","選択部の頂点グループに四則演算","选择部分的顶点组上的四个算术运算"

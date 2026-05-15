@@ -152,7 +152,7 @@
 "Operator","BoneData (%d)","BoneData（％d）"
 "Operator","LocalBoneData (%d)","LocalBoneData（％d）"
 # misc_VIEW3D_MT_pose_apply.py
-"Operator","Copy Prime Field","プライムフィールドをコピーする"
+"Operator","Transfer Pose","ポーズを転送する"
 # model_export.py
 "*","Could not find whether bone with index {index} was used. See console for more info.","インデックス{index}のボーンが使用されたかどうかが見つかりませんでした。詳細については、コンソールを参照してください。"
 # model_import.py
