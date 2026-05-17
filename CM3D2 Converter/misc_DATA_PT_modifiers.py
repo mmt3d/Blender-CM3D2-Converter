@@ -442,7 +442,8 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
                     return {'FINISHED', 'CANCELLED'}
 
             for shape_index, deforms in enumerate(new_shape_deforms):
-                bpy.ops.object.shape_key_add(context.copy(), from_mix=False)
+                with context.temp_override(object=ob, active_object=ob):
+                    bpy.ops.object.shape_key_add(from_mix=False)
                 shape = ob.active_shape_key
                 shape.name = shape_names[shape_index]
 

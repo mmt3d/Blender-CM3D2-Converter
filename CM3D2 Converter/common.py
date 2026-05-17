@@ -574,9 +574,6 @@ def load_cm3d2tex(path, skip_data=False):
 
 
 def create_tex(context, mate, node_name, tex_name=None, filepath=None, cm3d2path=None, tex_map_data=None, replace_tex=False, asis_if_exists=False):
-    if isinstance(context, bpy.types.Context):
-        context = context.copy()
-
     # if mate.use_nodes is False:
     # 	mate.use_nodes = True
     nodes = mate.node_tree.nodes
@@ -596,7 +593,7 @@ def create_tex(context, mate, node_name, tex_name=None, filepath=None, cm3d2path
                 img = bpy.data.images.load(filepath)
                 img.name = tex_name
             else:
-                img = context['blend_data'].images.new(tex_name, 128, 128)
+                img = bpy.data.images.new(tex_name, 128, 128)
                 img.filepath = filepath
             img.source = 'FILE'
             tex.image = img
@@ -627,9 +624,6 @@ def create_tex(context, mate, node_name, tex_name=None, filepath=None, cm3d2path
 
 
 def create_col(context, mate, node_name, color, asis_if_exists=False):
-    if isinstance(context, bpy.types.Context):
-        context = context.copy()
-
     node = mate.node_tree.nodes.get(node_name)
     if node is None:
         node = mate.node_tree.nodes.new(type='ShaderNodeRGB')
@@ -642,9 +636,6 @@ def create_col(context, mate, node_name, color, asis_if_exists=False):
 
 
 def create_float(context, mate, node_name, value, asis_if_exists=False):
-    if isinstance(context, bpy.types.Context):
-        context = context.copy()
-
     node = mate.node_tree.nodes.get(node_name)
     if node is None:
         node = mate.node_tree.nodes.new(type='ShaderNodeValue')
