@@ -749,9 +749,12 @@ def remove_data(target_data):
         target_data = [target_data]
 
     for data in target_data:
-        if data.__class__.__name__ == 'Object':
-            if data.name in bpy.context.scene.collection.objects:
-                bpy.context.scene.collection.objects.unlink(data)
+        try:
+            if isinstance(data, bpy.types.Object):
+                if data.name in bpy.context.scene.collection.objects:
+                    bpy.context.scene.collection.objects.unlink(data)
+        except ReferenceError:
+            pass
 
     # https://developer.blender.org/T49837
     # によると、xxx.remove(data, do_unlink=True)で十分
