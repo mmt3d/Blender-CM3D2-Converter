@@ -10,6 +10,7 @@ from . import common
 from . import compat
 from . import cm3d2_data
 from .translations.pgettext_functions import *
+from .misc_VIEW3D_MT_pose_apply import copy_pose_from_property
 
 
 # メインオペレーター
@@ -46,6 +47,9 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         ('ARMATURE_PROPERTY', "アーマチュア内プロパティ", "", 'ARMATURE_DATA', 4),
     ]
     bone_info_mode: bpy.props.EnumProperty(items=items, name="ボーン情報元", default='OBJECT_PROPERTY', description="modelファイルに必要なボーン情報をどこから引っ張ってくるか選びます")
+    revert_primed_pose: bpy.props.BoolProperty(name="元の素体ポーズに一時的に戻す", default=True, description="素体化処理によって素体ポーズが変更されている場合、一時的に元の素体ポーズに戻してからエクスポートします")
+    is_preserve_shape_key_values: bpy.props.BoolProperty(name="Preserve Shape Key Values", default=True , description="Ensure shape key values of child mesh objects are not changed")
+    is_deform_preserve_volume: bpy.props.BoolProperty(name="アーマチュア適用は体積を維持", default=True)
 
     items_2 = [
         ('TEXT', "テキスト", "", 'FILE_TEXT', 1),
@@ -179,6 +183,18 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         prefs = common.preferences()
         
         box = self.layout.box()
+
+        col = box.column(align=True)
+        col.label(text="素体ポーズ変更対応", icon='ARMATURE_DATA')
+        col.prop(self, 'revert_primed_pose', icon='LOOP_BACK')
+        row = col.row(align=True)
+        row.prop(self, 'is_preserve_shape_key_values', icon='MESH_DATA')
+        row.enabled = self.revert_primed_pose
+        row = col.row(align=True)
+        row.prop(self, 'is_deform_preserve_volume', icon='MODIFIER')
+        row.enabled = self.revert_primed_pose
+        col.enabled = context.active_object.parent.data.get('isPrimedPose', False)
+
         col = box.column(align=True)
         col.label(text="ボーン情報元", icon='BONE_DATA')
         col.prop(self, 'bone_info_mode', icon='BONE_DATA', expand=True)
@@ -229,6 +245,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         selected_objs = context.selected_objects
         source_objs = []
         temp_meshes = []
+        temp_armatures = {}
         ob_source = None
         ob_name = None
         prev_mode = context.active_object.mode
@@ -265,7 +282,24 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
                         temp_meshes.append(ob_created.data)
                         if selected == ob_source:
                             ob_main = ob_created
-                        if prefs.is_apply_modifiers:
+                        arm_ob = selected.find_armature()
+                        if arm_ob.data.get('isPrimedPose'):
+                            # 所属アーマチュアが素体レストポーズ変更されている場合、元ポーズを復元するコピーを複製してモディファイア強制適用する
+                            temp_arm_ob = temp_armatures.get(arm_ob.name)
+                            if temp_arm_ob is None:
+                                temp_arm_ob = arm_ob.copy()
+                                copy_pose_from_property(temp_arm_ob)
+                                temp_armatures[arm_ob.name] = temp_arm_ob
+                            with context.temp_override(object=ob_created, active_object=ob_created):
+                                for mod in ob_created.modifiers:
+                                    if mod.type != 'ARMATURE':
+                                        continue
+                                    mod.object = temp_arm_ob
+                                    mod.use_deform_preserve_volume = self.is_deform_preserve_volume
+                                bpy.ops.object.forced_modifier_apply(
+                                    apply_viewport_visible=True,
+                                    is_preserve_shape_key_values=self.is_preserve_shape_key_values)
+                        elif prefs.is_apply_modifiers:
                             bpy.ops.object.forced_modifier_apply(apply_viewport_visible=True)
 
                         selected_count += 1
@@ -275,6 +309,10 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
                         compat.set_active(context, ob_main)
                     bpy.ops.object.join()
                     self.report(type={'INFO'}, message=f_tip_("{}個のオブジェクトをマージしました", selected_count))
+
+            # アーマチュアが素体ポーズ変更されている場合からの元ポーズ復元は実質プロパティからの復元となるためモード指定調整で対応する
+            if ob_main.parent.data.get('isPrimedPose') and self.bone_info_mode == 'ARMATURE':
+                self.bone_info_mode = 'ARMATURE_PROPERTY'
 
             ret = self.export(context, ob_main, selected_objs)
             if 'FINISHED' not in ret:
@@ -295,6 +333,9 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
             # join でリンクが外れ未使用となるmeshデータを削除
             for me in temp_meshes:
                 bpy.data.meshes.remove(me)
+
+            for arm_ob in temp_armatures.values():
+                bpy.data.objects.remove(arm_ob)
 
             for obj in source_objs:
                 compat.set_select(obj, True)
