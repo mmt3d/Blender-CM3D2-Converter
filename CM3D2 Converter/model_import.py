@@ -780,6 +780,10 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             if self.is_armature:
                 mod = ob.modifiers.new("Armature", 'ARMATURE')
                 mod.object = arm_ob
+                if prefs.enable_armature_modifier_in_edit:
+                    mod.show_on_cage = True
+                    mod.show_in_editmode = True
+                mod.use_deform_preserve_volume = prefs.use_deform_preserve_volume
                 compat.set_active(context, arm_ob)
                 bpy.ops.object.parent_set(type='OBJECT', keep_transform=True)
                 compat.set_active(context, ob)

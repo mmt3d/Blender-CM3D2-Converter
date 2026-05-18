@@ -128,6 +128,8 @@ class AddonPreferences(bpy.types.AddonPreferences):
     model_import_path: bpy.props.StringProperty(name="modelインポート時のデフォルトパス", subtype='FILE_PATH', description="modelインポート時に最初はここが表示されます、インポート毎に保存されます")
     model_export_path: bpy.props.StringProperty(name="modelエクスポート時のデフォルトパス", subtype='FILE_PATH', description="modelエクスポート時に最初はここが表示されます、エクスポート毎に保存されます")
     hide_armature: bpy.props.BoolProperty(name="インポート後のアーマチュアを非表示", default=False, description="インポート後のアーマチュアを非表示にします")
+    enable_armature_modifier_in_edit: bpy.props.BoolProperty(name="ポーズ変更していても編集時のメッシュを追従させる", default=False, description="インポート時のアーマチュアモディファイア追加で編集時のメッシュ追従オプションをONにします")
+    use_deform_preserve_volume: bpy.props.BoolProperty(name="アーマチュア適用は体積を維持", default=False, description="インポート時のアーマチュアモディファイア追加で体積を維持するオプションをONにします")
 
     anm_default_path: bpy.props.StringProperty(name="anmファイル置き場", subtype='DIR_PATH', description="設定すれば、anmを扱う時は必ずここからファイル選択を始めます")
     anm_import_path: bpy.props.StringProperty(name="anmインポート時のデフォルトパス", subtype='FILE_PATH', description="anmインポート時に最初はここが表示されます、インポート毎に保存されます")
@@ -216,6 +218,10 @@ class AddonPreferences(bpy.types.AddonPreferences):
         row.prop(self, 'is_convert_bone_weight_names', icon='BLENDER')
         row = box.row()
         row.prop(self, 'hide_armature')
+        row = box.row()
+        row.prop(self, 'enable_armature_modifier_in_edit')
+        row = box.row()
+        row.prop(self, 'use_deform_preserve_volume')
         box.prop(self, 'model_default_path', icon='FILEBROWSER', text="ファイル選択時の初期フォルダ")
 
         box = self.layout.box()
