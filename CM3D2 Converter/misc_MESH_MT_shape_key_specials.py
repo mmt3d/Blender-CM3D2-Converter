@@ -49,10 +49,11 @@ class transfer_shape_key_iter:
     source_shape_key_data = None
     target_shape_key_data = None
 
-    def __init__(self, target_ob, source_ob, binded_shape_key=None):
+    def __init__(self, target_ob, source_ob, binded_shape_key=None, only_selected=False):
         self.target_ob = target_ob
         self.source_ob = source_ob
         self.binded_shape_key = binded_shape_key or self.source_ob.data.shape_keys.key_blocks[0]
+        self.only_selected = only_selected
 
     def __iter__(self):
         self.index = -1
@@ -68,7 +69,10 @@ class transfer_shape_key_iter:
             #self.binded_shape_key_data.from_mesh(self.source_ob.data, use_shape_key=True, shape_key_index=binded_index)
             #self.binded_shape_key_data.verts.ensure_lookup_table()
             self.binded_shape_key_data = self.binded_shape_key.data
-            self.source_iter = iter(self.source_ob.data.shape_keys.key_blocks)
+            if self.only_selected and not compat.IS_LT51:
+                self.source_iter = iter(filter(lambda x: x.select, self.source_ob.data.shape_keys.key_blocks))
+            else:
+                self.source_iter = iter(self.source_ob.data.shape_keys.key_blocks)
         return self
 
     def __next__(self):
@@ -160,6 +164,7 @@ class shape_key_transfer_op(bpy.types.Operator):
     is_remove_empty: bpy.props.BoolProperty(name="変形のないシェイプキーを削除", default=True)
     is_bind_current_mix: bpy.props.BoolProperty(name="Bind to current source mix", default=False)
     subdivide_number: bpy.props.IntProperty(name="参照元の分割", default=1, min=0, max=10, soft_min=0, soft_max=10)
+    only_selected: bpy.props.BoolProperty(name="選択したシェイプキーのみ転送", default=True)
 
     target_ob: bpy.types.Object | None = None
     source_ob: bpy.types.Object | None = None
@@ -177,6 +182,8 @@ class shape_key_transfer_op(bpy.types.Operator):
 
     def draw(self, context):
         self.layout.prop(self, 'is_first_remove_all', icon='ERROR'        )
+        if not compat.IS_LT51:
+            self.layout.prop(self, 'only_selected', icon='KEY_MENU')
         self.layout.prop(self, 'subdivide_number'   , icon='LATTICE_DATA' )
         self.layout.prop(self, 'is_remove_empty'    , icon='X'            )
         self.layout.prop(self, 'is_bind_current_mix', icon='AUTOMERGE_OFF')
@@ -475,7 +482,7 @@ class CNV_OT_quick_shape_key_transfer(shape_key_transfer_op):
             near_co = compat.mul(self.target_ob.matrix_world, v.co) #v.co
             self.near_vert_indexs[v.index] = self.kd.find(near_co)[1]
         
-        self.my_iter = iter( transfer_shape_key_iter(self.target_ob, self.source_ob, self.binded_shape_key) )
+        self.my_iter = iter( transfer_shape_key_iter(self.target_ob, self.source_ob, self.binded_shape_key, self.only_selected) )
         context.window_manager.progress_begin( 0, len(source_me.shape_keys.key_blocks) * len(target_me.vertices) )
         context.window_manager.progress_update( 0 )
     
@@ -691,7 +698,7 @@ class CNV_OT_precision_shape_key_transfer(shape_key_transfer_op):
                 context.window_manager.progress_update(vert.index)
         context.window_manager.progress_end()
 
-        self.my_iter = iter(transfer_shape_key_iter(self.target_ob, self.source_ob, binded_shape_key=self.binded_shape_key))
+        self.my_iter = iter(transfer_shape_key_iter(self.target_ob, self.source_ob, binded_shape_key=self.binded_shape_key, only_selected=self.only_selected))
 
         #self.source_raw_data = numpy.ndarray(shape=(len(source_me.vertices), 3), dtype=float, order='C')
         #self.target_raw_data = numpy.ndarray(shape=(len(target_me.vertices), 3), dtype=float, order='C')
@@ -995,7 +1002,7 @@ class CNV_OT_weighted_shape_key_transfer(shape_key_transfer_op):
                 context.window_manager.progress_update(vert.index)
         context.window_manager.progress_end()
 
-        self.my_iter = iter(transfer_shape_key_iter(self.target_ob, self.source_ob, binded_shape_key=self.binded_shape_key))
+        self.my_iter = iter(transfer_shape_key_iter(self.target_ob, self.source_ob, binded_shape_key=self.binded_shape_key, only_selected=self.only_selected))
 
         #self.source_raw_data = numpy.ndarray(shape=(len(source_me.vertices), 3), dtype=float, order='C')
         #self.target_raw_data = numpy.ndarray(shape=(len(target_me.vertices), 3), dtype=float, order='C')
