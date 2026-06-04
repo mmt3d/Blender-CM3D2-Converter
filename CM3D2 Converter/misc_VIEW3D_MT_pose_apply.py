@@ -50,16 +50,23 @@ class CNV_OT_transfer_pose(bpy.types.Operator):
         source_ob = selected[0]
 
         pre_mode = target_ob.mode
-        
-        bpy.ops.object.mode_set(mode='POSE')
-        pre_selected_pose_bones = compat.get_selected_pose_bones(context)
-        bpy.ops.pose.select_all(action='SELECT')
 
         # ポーズモードで操作した場合のみ対象ボーンは選択のみとするのをデフォルトにする (REDOで変えられる)
         if not self.properties.is_property_set('is_only_selected'):
             self.is_only_selected = pre_mode == 'POSE'
+
+        # 対象ボーンの選定・トランスフォームクリア・選択状態バックアップ
+        with context.temp_override(object=target_ob, active_object=target_ob):
+            bpy.ops.object.mode_set(mode='POSE')
+            pre_selected_pose_bones = compat.get_selected_pose_bones(context)
+            if self.is_only_selected:
+                bones = pre_selected_pose_bones
+            else:
+                bpy.ops.pose.select_all(action='SELECT')
+                bones = target_ob.pose.bones
+            bpy.ops.pose.transforms_clear()
+
         # 対象ボーンにコンストレイントを一時的に追加
-        bones = pre_selected_pose_bones if self.is_only_selected else target_ob.pose.bones
         for bone in bones:
             # ターゲット側に同名のボーンがなければスキップ
             if bone.name not in source_ob.data.bones:
