@@ -1054,6 +1054,8 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         
         pre_active = compat.get_active(context)
         pre_mode = ob.mode
+        pre_hide = ob.hide_get()
+        ob.hide_set(False)
 
         compat.set_active(context, ob)
         bpy.ops.object.mode_set(mode='EDIT')
@@ -1144,6 +1146,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
             bone_data.append(data)
         
         bpy.ops.object.mode_set(mode=pre_mode)
+        ob.hide_set(pre_hide)
         compat.set_active(context, pre_active)
         return bone_data
 
