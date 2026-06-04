@@ -304,13 +304,14 @@ def copy_pose_from_property(ob: bpy.types.Object):
 
     import_scale = arm.get('ImportScale', common.preferences().scale)
 
+    global_fix_mat = mathutils.Matrix.Identity(4)
+
     for data in bone_data:
         if data['parent_index'] == -1:
-            continue
-        parent_name = bone_data[data['parent_index']]['name']
-        parent = ob.pose.bones.get(common.decode_bone_name(parent_name, is_convert_bone_weight_names))
-        if not parent:
-            continue
+            parent = None
+        else:
+            parent_name = bone_data[data['parent_index']]['name']
+            parent = ob.pose.bones.get(common.decode_bone_name(parent_name, is_convert_bone_weight_names))
 
         bone = ob.pose.bones.get(common.decode_bone_name(data['name'], is_convert_bone_weight_names))
 
@@ -320,8 +321,13 @@ def copy_pose_from_property(ob: bpy.types.Object):
         local_rot_mat = local_rot.to_matrix().to_4x4()
         local_mat = compat.mul(local_co_mat, local_rot_mat)
         local_mat = compat.convert_cm_to_bl_bone_space(local_mat)
-        mat = compat.mul(parent.matrix, local_mat)
+
+        parent_matrix = parent.matrix if parent else global_fix_mat
+        mat = compat.mul(parent_matrix, local_mat)
         mat = compat.convert_cm_to_bl_bone_rotation(mat)
+        if not parent:
+            mat = compat.fix_root_bone_rotation(mat)
+            mat.translation = compat.convert_cm_to_bl_local_space(local_co)
 
         compat.set_bone_matrix(bone, mat)
 

@@ -250,6 +250,14 @@ def convert_bl_to_cm_bone_rotation(x):
         return mul(x, BL_TO_CM_BONE_ROTATION_MAT4)
 
 
+FIX_ROOT_BONE_ROTATION_MAT4 = bpy_extras.io_utils.axis_conversion('Z', 'Y', 'Y', '-Z' ).to_4x4()
+def fix_root_bone_rotation(x):
+    if type(x) == mathutils.Quaternion:
+        raise TypeError('Quaternion space conversions not supported')
+    else:
+        return mul(x, FIX_ROOT_BONE_ROTATION_MAT4)
+
+
 #CM_TO_BL_BONE_SPACE_MAT4 = mul(
 #    bpy_extras.io_utils.axis_conversion(from_forward='-X', from_up='Y', to_forward='Y', to_up='Z').to_4x4(),
 #    mathutils.Matrix.Scale(-1, 4, (0, 0, 1))
