@@ -545,6 +545,74 @@ def __replace_cm3d2_tex(img, texpath_dict: dict) -> bool:
 # texファイルの読み込み
 def load_cm3d2tex(path, skip_data=False):
 
+    def _create_dds_header_dxt5(width: int, height: int, data_size: int):
+        """DXT5用の最小限 of DDSヘッダ(128バイト)を生成"""
+        FLAGS_REQUIRED = 0x00000007 | 0x00001000 | 0x00080000
+        CAPS_TEXTURE = 0x00001000
+
+        header = bytearray(128)
+        header[0:4] = b"DDS "
+        struct.pack_into("<I", header, 4, 124)
+        struct.pack_into("<I", header, 8, FLAGS_REQUIRED)
+        struct.pack_into("<I", header, 12, height)
+        struct.pack_into("<I", header, 16, width)
+        struct.pack_into("<I", header, 20, data_size)
+
+        struct.pack_into("<I", header, 76, 32)
+        struct.pack_into("<I", header, 80, 0x00000004)
+        header[84:88] = b"DXT5"
+
+        struct.pack_into("<I", header, 108, CAPS_TEXTURE)
+        return bytes(header)
+
+    def _dds_to_png(data: bytes, width: int, height: int) -> bytes:
+        import tempfile
+        import zlib
+        from py_dds import DDSImage
+        dds_header = _create_dds_header_dxt5(width, height, len(data))
+        full_dds_data = dds_header + data
+        tmp = tempfile.NamedTemporaryFile(suffix='.dss', delete=False)
+        try:
+            tmp.write(full_dds_data)
+            tmp.close()
+            dds_tex = DDSImage(tmp.name)
+            rgba = bytearray(width * height * 4)
+
+            def pixel_collect_callback(x, y, r, g, b, a):
+                idx = (y * width + x) * 4
+                rgba[idx] = r
+                rgba[idx + 1] = g
+                rgba[idx + 2] = b
+                rgba[idx + 3] = a
+
+            dds_tex.draw(pixel_collect_callback, mip=0)
+        finally:
+            if os.path.exists(tmp.name):
+                os.remove(tmp.name)
+        row_stride = width * 4
+        flipped_rows = []
+
+        for y in range(height - 1, -1, -1):
+            start = y * row_stride
+            end = start + row_stride
+            flipped_rows.append(b'\x00' + rgba[start:end])
+
+        scanlines = b''.join(flipped_rows)
+
+        # PNGチャンクの構築
+        png_signature = b'\x89PNG\r\n\x1a\n'
+
+        ihdr_data = struct.pack(">IIBBBBB", width, height, 8, 6, 0, 0, 0)
+        ihdr_chunk = b'IHDR' + ihdr_data
+        ihdr_chunk = struct.pack(">I", len(ihdr_data)) + ihdr_chunk + struct.pack(">I", zlib.crc32(ihdr_chunk))
+
+        idat_data = zlib.compress(scanlines)
+        idat_chunk = b'IDAT' + idat_data
+        idat_chunk = struct.pack(">I", len(idat_data)) + idat_chunk + struct.pack(">I", zlib.crc32(idat_chunk))
+
+        iend_chunk = struct.pack(">I", 0) + b'IEND' + struct.pack(">I", zlib.crc32(b'IEND'))
+        return png_signature + ihdr_chunk + idat_chunk + iend_chunk
+
     with open(path, 'rb') as file:
         header_ext = read_str(file)
         if header_ext != 'CM3D2_TEX':
@@ -566,8 +634,11 @@ def load_cm3d2tex(path, skip_data=False):
             width = struct.unpack('<i', file.read(4))[0]
             height = struct.unpack('<i', file.read(4))[0]
             tex_format = struct.unpack('<i', file.read(4))[0]
-            # if tex_format == 10 or tex_format == 12: return None
-        if not skip_data:
+            if tex_format == 12 and not skip_data:
+                png_size = struct.unpack('<i', file.read(4))[0]
+                data = file.read(png_size)
+                data = _dds_to_png(data, width, height)
+        if not data and  not skip_data:
             png_size = struct.unpack('<i', file.read(4))[0]
             data = file.read(png_size)
         return version, tex_format, uv_rects, data

@@ -4,6 +4,7 @@ This addon bundles the following third-party Python libraries under the MIT Lice
 - cffi
 - clr_loader
 - pycparser
+- py_dds
 
 These libraries are redistributed in accordance with the MIT License terms.
 The original copyright notices for each project are listed below.
@@ -16,6 +17,7 @@ Copyright (c)
 - cffi contributors
 - clr_loader contributors
 - pycparser contributors
+- py_dds contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

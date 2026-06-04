@@ -427,6 +427,7 @@ This addon bundles the following third-party Python libraries:
 - cffi
 - clr_loader
 - pycparser
+- py_dds (https://github.com/robertkist/py_dds) not PyPI package
 
 These libraries are redistributed under the terms of the **MIT License**.  
 To ensure stable operation inside Blender’s embedded Python environment—where `pip install` is not always available or reliable—the addon includes pre-built wheels and Python modules directly within its `vendor` directory.  
