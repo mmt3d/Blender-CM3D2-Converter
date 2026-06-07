@@ -34,7 +34,6 @@ class CNV_OT_import_cm3d2_anm(bpy.types.Operator):
 
     is_anm_data_text: bpy.props.BoolProperty(name="Anm Text (SLOW)", default=False, description="Output Data to a JSON file")
     
-    remove_pre_animation: bpy.props.BoolProperty(name="既にあるアニメーションを削除", default=True)
     set_frame: bpy.props.BoolProperty(name="フレーム開始・終了位置を調整", default=True)
     ignore_automatic_bone: bpy.props.BoolProperty(name="Twisterボーンを除外", default=True)
 
@@ -67,7 +66,6 @@ class CNV_OT_import_cm3d2_anm(bpy.types.Operator):
         self.layout.prop(self, 'is_anm_data_text', icon='TEXT')
 
         box = self.layout.box()
-        box.prop(self, 'remove_pre_animation', icon='DISCLOSURE_TRI_DOWN')
         box.prop(self, 'set_frame', icon='NEXT_KEYFRAME')
         box.prop(self, 'ignore_automatic_bone', icon='X')
 
@@ -103,7 +101,6 @@ class CNV_OT_import_cm3d2_anm(bpy.types.Operator):
         anm_importer.set_frame_rate          = self.set_frame_rate
         anm_importer.is_loop                 = self.is_loop
         anm_importer.is_anm_data_text        = self.is_anm_data_text
-        anm_importer.remove_pre_animation    = self.remove_pre_animation
         anm_importer.set_frame               = self.set_frame
         anm_importer.ignore_automatic_bone   = self.ignore_automatic_bone
         anm_importer.is_location             = self.is_location
@@ -122,7 +119,6 @@ class AnmImporter:
         self.set_frame_rate          = True
         self.is_loop                 = True
         self.is_anm_data_text        = False
-        self.remove_pre_animation    = True
         self.set_frame               = True
         self.ignore_automatic_bone   = True
         self.is_location             = True
@@ -165,15 +161,7 @@ class AnmImporter:
         anim = ob.animation_data
         if not anim:
             anim = ob.animation_data_create()
-        # anm名をアクション名としてアクションを用意する
-        action = context.blend_data.actions.get(acion_name)
-        if not action:
-            action = context.blend_data.actions.new(acion_name)
-            fcurves = compat.get_fcurves(action, ob.name)
-        else:
-            # 同名アクションが存在すれば中身をクリアして使いまわす
-            action.name = os.path.basename(acion_name)
-            fcurves = compat.get_fcurves(action, ob.name, clear=self.remove_pre_animation)
+        action, fcurves = compat.get_new_action_and_fcurves(acion_name, ob.name)
         anim.action = action
 
         max_frame = 0

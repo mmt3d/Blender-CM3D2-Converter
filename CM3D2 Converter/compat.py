@@ -399,21 +399,33 @@ def set_transparent(mate: bpy.types.Material, transparent: bool):
         mate.use_transparency_overlap = True
 
 
-def get_fcurves(action: bpy.types.Action, slot_name: str, clear: bool = False):
+def get_fcurves(action: bpy.types.Action, anim_data: bpy.types.AnimData):
     """Fカーブリスト取得の互換性サポート"""
     if IS_LT44:
-        fcurves = action.fcurves
-        if clear:
-            for fcurve in fcurves:
-                fcurves.remove(fcurve)
-        return fcurves
+        return action.fcurves
     else:
-        if clear:
-            for slot in action.slots:
+        return bpy_extras.anim_utils.action_ensure_channelbag_for_slot(action, anim_data.action_slot).fcurves
+
+
+def get_new_action_and_fcurves(action_name: str, slot_name: str):
+    """action・fcurves生成の互換性サポート"""
+    if IS_LT44:
+        # slotがないためアクション名＋スロット名(アーマチュア名)をキーにアクション管理し、使い回しせず毎回新規作成する
+        action_key = f'{action_name}:{slot_name}'
+        if action_key in bpy.data.actions:
+            bpy.data.actions.remove(bpy.data.actions[action_key], do_unlink=True)
+        action = bpy.data.actions.new(action_key)
+        return action, action.fcurves
+    else:
+        # anm名をアクション名としてアクションを用意する
+        if action_name in bpy.data.actions:
+            action = bpy.data.actions[action_name]
+        else:
+            action = bpy.data.actions.new(action_name)
+        for slot in action.slots[:]:
+            if slot.name_display == slot_name:
                 action.slots.remove(slot)
-        slot = action.slots.get(slot_name)
-        if not slot:
-            slot = action.slots.new(name=slot_name, id_type='OBJECT')
+        slot = action.slots.new(name=slot_name, id_type='OBJECT')
         from bpy_extras import anim_utils
         cb = anim_utils.action_get_channelbag_for_slot(action, slot)
         if not cb:
@@ -423,7 +435,7 @@ def get_fcurves(action: bpy.types.Action, slot_name: str, clear: bool = False):
                 cb = strip.channelbag(slot, ensure=True)
             else:
                 cb = anim_utils.action_ensure_channelbag_for_slot(action, slot)
-        return cb.fcurves
+        return action, cb.fcurves
 
 
 def fcurves_new(fcurves: bpy.types.FCurve, data_path: str, index: int = 0, group_name: str = ''):

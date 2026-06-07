@@ -241,13 +241,8 @@ class CNV_OT_base_prime_pose_operator(bpy.types.Operator):
                 ob.animation_data_create()
             # 専用のアクション名で用意する
             action_name = f'{ob.name}_poses'
-            action = context.blend_data.actions.get(action_name)
-            if not action:
-                action = context.blend_data.actions.new(action_name)
-                action.use_fake_user = True
-            else:
-                # 既に存在している場合、フレーム付けなおしのため全fcurveをクリアする
-                _ = compat.get_fcurves(action=action, slot_name=ob.name, clear=True)
+            action, _ = compat.get_new_action_and_fcurves(action_name, ob.name)
+            action.use_fake_user = True
             ob.animation_data.action = action
 
             def insert_pose(ob, i):
