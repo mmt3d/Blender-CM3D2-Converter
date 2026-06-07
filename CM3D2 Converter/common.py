@@ -297,21 +297,27 @@ def get_com3d2_dir():
         return None
 
 
+def get_pref_cm3d2_dir():
+    """
+    COM3D2/CM3D2インストールフォルダのパスを返す。設定値があればそれを優先し、なければレジストリから取得して設定値に保存する。
+    CM3D2よりCOM3D2を優先する
+    """
+    prefs = preferences()
+    if prefs.cm3d2_path:
+        return prefs.cm3d2_path
+    root_dir = get_com3d2_dir() or get_cm3d2_dir()
+    if root_dir:
+        prefs.cm3d2_path = root_dir
+    return root_dir
+
+
 # CM3D2のインストールフォルダを取得＋α
 def default_cm3d2_dir(base_dir: str, file_name: str|None, new_ext: str):
     new_ext = new_ext.strip('.')
     if not base_dir:
-        prefs = preferences()
-        if prefs.cm3d2_path:
-            base_dir = os.path.join(prefs.cm3d2_path, "GameData", "*." + new_ext)
-        else:
-            base_dir = get_cm3d2_dir()
-            if base_dir is None:
-                base_dir = get_com3d2_dir()
-
-            if base_dir:
-                prefs.cm3d2_path = base_dir
-                base_dir = os.path.join(base_dir, "GameData", "*." + new_ext)
+        cm3d2_path = get_pref_cm3d2_dir()
+        if cm3d2_path:
+            base_dir = os.path.join(cm3d2_path, "GameData", "*." + new_ext)
 
         if base_dir is None:
             base_dir = "."
@@ -354,9 +360,7 @@ def get_default_tex_paths():
     default_paths = [prefs.default_tex_path0, prefs.default_tex_path1, prefs.default_tex_path2, prefs.default_tex_path3]
     if not any(default_paths):
         target_dirs = []
-        cm3d2_dir = prefs.cm3d2_path
-        if not cm3d2_dir:
-            cm3d2_dir = get_cm3d2_dir()
+        cm3d2_dir = get_pref_cm3d2_dir()
 
         if cm3d2_dir:
             target_dirs.append(os.path.join(cm3d2_dir, "GameData", "texture"))
