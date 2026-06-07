@@ -1342,3 +1342,24 @@ def is_descendant_of(bone, ancestor) -> bool:
         if bone.name == ancestor.name:
             return True
     return False
+
+
+def get_outliner_selection(context: bpy.types.Context, object_type: str = '') -> tuple[list[bpy.types.Object], bpy.types.Object | None]:
+    """
+    Outliner上のhideオブジェクトも含めた選択オブジェクトの返却
+    """
+    selected_in_view = set(context.selected_objects)
+    active_in_view = context.active_object
+    scr = context.screen
+    areas = [area for area in scr.areas if area.type == 'OUTLINER']
+    regions = [region for region in areas[0].regions if region.type == 'WINDOW']
+    with context.temp_override(area=areas[0], region=regions[0], screen=scr):
+        selected_in_outliner = set(x for x in context.selected_ids if isinstance(x, bpy.types.Object))
+        selected = list(selected_in_view | selected_in_outliner)
+        active_in_outliner = context.active_object
+        active = active_in_view or active_in_outliner
+        if object_type:
+            selected = [x for x in selected if x.type == object_type]
+            if active and active.type != object_type:
+                active = None
+        return selected, active

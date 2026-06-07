@@ -12,9 +12,9 @@ def menu_func(self, context):
     self.layout.operator('pose.prime_pose', icon_value=common.kiss_icon())
     row = self.layout.row()
     row.operator('pose.revert_primed_pose', icon_value=common.kiss_icon())
-    ob = context.active_object
+    _, ob = common.get_outliner_selection(context, 'ARMATURE')
     # チェック対象がexecuteで変更される関係でpollでチェックさせるとREDOできなくなるため、ここで有効無効を切り替える
-    if not ob or ob.type != 'ARMATURE' or not ob.data.get('isPrimedPose'):
+    if not ob or not ob.data.get('isPrimedPose'):
         row.enabled = False
 
 
@@ -32,9 +32,9 @@ class CNV_OT_transfer_pose(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        ob = context.active_object
-        selected = [o for o in context.selected_objects if o != ob]
-        if ob and ob.type == 'ARMATURE' and len(selected) == 1 and selected[0].type == 'ARMATURE':
+        selected, ob = common.get_outliner_selection(context, 'ARMATURE')
+        selected = [o for o in selected if o != ob]
+        if ob and len(selected) == 1:
             return True
         return False
 
@@ -45,17 +45,19 @@ class CNV_OT_transfer_pose(bpy.types.Operator):
         self.layout.prop(self, 'is_key_scale'    )
 
     def execute(self, context):
-        target_ob = context.active_object
-        selected = [o for o in context.selected_objects if o != target_ob]
+        selected, target_ob = common.get_outliner_selection(context, 'ARMATURE')
+        selected = [o for o in selected if o != target_ob]
         source_ob = selected[0]
 
         pre_mode = target_ob.mode
+        pre_hide = target_ob.hide_get()
 
         # ポーズモードで操作した場合のみ対象ボーンは選択のみとするのをデフォルトにする (REDOで変えられる)
         if not self.properties.is_property_set('is_only_selected'):
             self.is_only_selected = pre_mode == 'POSE'
 
         # 対象ボーンの選定・トランスフォームクリア・選択状態バックアップ
+        target_ob.hide_set(False)
         with context.temp_override(object=target_ob, active_object=target_ob):
             bpy.ops.object.mode_set(mode='POSE')
             pre_selected_pose_bones = compat.get_selected_pose_bones(context)
@@ -123,6 +125,7 @@ class CNV_OT_transfer_pose(bpy.types.Operator):
         bpy.ops.pose.select_all(action='DESELECT')
         compat.set_select_pose_bones(pre_selected_pose_bones)
         bpy.ops.object.mode_set(mode=pre_mode)
+        target_ob.hide_set(pre_hide)
         
         return {'FINISHED'}
 
@@ -137,9 +140,9 @@ class CNV_OT_base_prime_pose_operator(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        ob = context.active_object
-        selected = [o for o in context.selected_objects if o != ob]
-        if ob and ob.type == 'ARMATURE' and ob.select_get() and len(selected) == 0:
+        selected, ob = common.get_outliner_selection(context, 'ARMATURE')
+        selected = [o for o in selected if o != ob]
+        if ob and ob.type == 'ARMATURE' and len(selected) == 0:
             return True
         return False
 
@@ -154,11 +157,13 @@ class CNV_OT_base_prime_pose_operator(bpy.types.Operator):
             col.prop(self, 'keyframe_range')
 
     def execute(self, context):
-        ob = context.active_object
+        _, ob = common.get_outliner_selection(context, 'ARMATURE')
         arm = ob.data
         progress = 0
 
         pre_mode = ob.mode
+        pre_hide = ob.hide_get()
+        ob.hide_set(False)
         bpy.ops.object.mode_set(mode='POSE')
         pre_selected_pose_bones = compat.get_selected_pose_bones(context)
 
@@ -270,6 +275,7 @@ class CNV_OT_base_prime_pose_operator(bpy.types.Operator):
         bpy.ops.pose.select_all(action='DESELECT')
         compat.set_select_pose_bones(pre_selected_pose_bones)
         bpy.ops.object.mode_set(mode=pre_mode)
+        ob.hide_set(pre_hide)
 
         return {'FINISHED'}
 
