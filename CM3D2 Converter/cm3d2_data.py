@@ -1,10 +1,14 @@
 """CM3D2/COM3D2用のデータ構造を扱うデータクラス"""
 import bpy
 import copy
+import glob
+import os
+import re
+import pickle
 import struct
 from . import common
-from . import compat
 from .translations.pgettext_functions import *
+
 
 SHADER_NAMES_CM3D2 = [
     'CM3D2/Toony_Lighted',
@@ -974,3 +978,403 @@ def align_nodes(mate):
                     node.location = (location_x, location_y)
                     node.hide = True
                     location_y -= 40
+
+
+class ArcHandler:
+    ARC_MAGIC = b'\x77\x61\x72\x63\xFF\xAA\x45\xF1\xE8\x03\x00\x00\x04\x00\x00\x00\x02\x00\x00\x00'
+
+    @classmethod
+    def decompress_data(cls, data: bytes, raw_size: int) -> bytes:
+        import zlib
+        try:
+            return zlib.decompress(data)
+        except zlib.error:
+            return zlib.decompress(data, -zlib.MAX_WBITS)
+
+    @classmethod
+    def parse_arc_file(cls, arc_path: str) -> list:
+        files_found = []
+        with open(arc_path, 'rb') as f:
+            magic = f.read(20)
+            if magic != cls.ARC_MAGIC:
+                # print(f"エラー: 有効なARCファイルではありません。({arc_path}) magic={magic}")
+                return []
+
+            footer_offset = struct.unpack('<q', f.read(8))[0]
+            base_offset = f.tell()
+            f.seek(base_offset + footer_offset)
+
+            utf16_hash_data = None
+            name_data = None
+
+            while utf16_hash_data is None or name_data is None:
+                block_type = struct.unpack('<i', f.read(4))[0]
+                block_size = struct.unpack('<q', f.read(8))[0]
+
+                if block_type == 0:
+                    utf16_hash_data = f.read(block_size)
+                elif block_type == 1:
+                    f.seek(block_size, os.SEEK_CUR)
+                elif block_type == 3:
+                    is_compressed = struct.unpack('<I', f.read(4))[0] == 1
+                    f.read(4)
+                    raw_size = struct.unpack('<I', f.read(4))[0]
+                    compressed_size = struct.unpack('<I', f.read(4))[0]
+
+                    raw_block_bytes = f.read(compressed_size)
+                    if is_compressed:
+                        name_data = cls.decompress_data(raw_block_bytes, raw_size)
+                    else:
+                        name_data = raw_block_bytes
+                else:
+                    break
+
+            name_lut = {}
+            ordered_names = []
+            if name_data:
+                n_offset = 0
+                while n_offset < len(name_data):
+                    if n_offset + 12 > len(name_data):
+                        break
+                    h_val = struct.unpack('<Q', name_data[n_offset:n_offset + 8])[0]
+                    str_len = struct.unpack('<i', name_data[n_offset + 8:n_offset + 12])[0]
+                    n_offset += 12
+
+                    if str_len < 0 or n_offset + (str_len * 2) > len(name_data):
+                        break
+
+                    name_bytes = name_data[n_offset: n_offset + (str_len * 2)]
+                    n_offset += str_len * 2
+                    # errors='ignore' にして、壊れたサロゲートペアだけを排除しつつ復元
+                    cleaned_name = name_bytes.decode('utf-16-le', errors='ignore').strip('\0')
+
+                    name_lut[h_val] = cleaned_name
+                    ordered_names.append(cleaned_name)
+
+            def parse_hash_table(stream_bytes, offset_ref):
+                if offset_ref[0] >= len(stream_bytes): return
+                offset_ref[0] += 8
+                struct.unpack('<Q', stream_bytes[offset_ref[0]:offset_ref[0] + 8])[0]
+                dir_count, file_count, depth, _ = struct.unpack('<IIII',
+                                                                stream_bytes[offset_ref[0] + 8:offset_ref[0] + 24])
+                offset_ref[0] += 24
+
+                dirs_info = []
+                for _ in range(dir_count):
+                    d_hash, d_offset = struct.unpack('<QQ', stream_bytes[offset_ref[0]:offset_ref[0] + 16])
+                    dirs_info.append((d_hash, d_offset))
+                    offset_ref[0] += 16
+
+                for _ in range(file_count):
+                    f_hash, f_offset = struct.unpack('<QQ', stream_bytes[offset_ref[0]:offset_ref[0] + 16])
+                    f_name = name_lut.get(f_hash, None)
+                    files_found.append({
+                        'name': f_name,
+                        'offset': f_offset + base_offset
+                    })
+                    offset_ref[0] += 16
+
+                offset_ref[0] += 8 * depth
+                for _ in dirs_info:
+                    parse_hash_table(stream_bytes, offset_ref)
+
+            if utf16_hash_data:
+                parse_hash_table(utf16_hash_data, [0])
+
+        return files_found
+
+    @classmethod
+    def extract(cls, arc_file_pattern: str, output_dir: str, target_files: list[str] | str, force: bool = False):
+        arc_path = common.default_cm3d2_dir('', '', '.arc')
+        file_pattern = re.compile(rf'.*\\{arc_file_pattern}')
+        target_pattern = re.compile(target_files) if isinstance(target_files, str) else None
+        arc_paths = [x for x in glob.glob(arc_path) if file_pattern.match(x)]
+        for arc_path in arc_paths:
+
+            # print(f"ARCファイルのパース中: {arc_path}")
+            file_entries = cls.parse_arc_file(arc_path)
+            if not file_entries:
+                continue
+
+            # print(f"合計 {len(file_entries)} 個のファイルが見つかりました。")
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
+
+            for entry in file_entries:
+                filename = entry['name']
+                if target_pattern:
+                    if not target_pattern.match(filename):
+                        continue
+                elif filename not in target_files:
+                    continue
+
+                out_path = os.path.join(output_dir, filename)
+                ext = os.path.splitext(out_path)[1]
+                if ext in ['.nei', '.ks']:
+                    out_path += '.pkl'
+                elif ext == '.tex':
+                    out_path = os.path.splitext(out_path)[0] + '.png'
+                if not force and os.path.exists(out_path):
+                    #                print(f"スキップ: {filename}")
+                    continue
+                print(f"抽出中: {filename}")
+
+                with open(arc_path, 'rb') as f:
+                    f.seek(entry['offset'])
+                    is_compressed = struct.unpack('<I', f.read(4))[0] == 1
+                    f.read(4)
+                    raw_size = struct.unpack('<I', f.read(4))[0]
+                    compressed_size = struct.unpack('<I', f.read(4))[0]
+
+                    file_bytes = f.read(compressed_size)
+                    if is_compressed:
+                        file_bytes = cls.decompress_data(file_bytes, raw_size)
+
+                if filename.endswith('.nei'):
+                    decrypted_nei = NeiHandler.decrypt_nei(file_bytes)
+                    data = NeiHandler.nei_to_list(decrypted_nei)
+                    with open(out_path, mode='wb') as f:
+                        pickle.dump(data, f)
+                elif filename.endswith('.ks'):
+                    ks = file_bytes.decode('cp932', errors='replace')
+                    data = KsHandler.ks_to_dict_list(ks)
+                    with open(out_path, mode='wb') as f:
+                        pickle.dump(data, f)
+                elif filename.endswith('.tex'):
+                    out_path2 = os.path.splitext(out_path)[0] + '.tex'
+                    with open(out_path2, mode='wb') as f:
+                        f.write(file_bytes)
+                    tex_data = common.load_cm3d2tex(out_path2)
+                    with open(out_path, 'wb') as f:
+                        f.write(tex_data[-1])
+                else:
+                    with open(out_path, mode='wb') as f:
+                        f.write(file_bytes)
+
+        #            print('done: ', filename)
+
+        print('extracted: ', arc_file_pattern)
+
+
+class KsHandler:
+    def ks_to_dict_list(script: str) -> dict:
+        arg_pattern = re.compile(r'(?:[^\s"]+|"[^"]*")+')
+        parsed_data = {}
+        current_section = None
+
+        for line_num, line in enumerate(script.split('\n')):
+            line = line.strip()
+            if not line or line.startswith(';'):
+                continue
+            if line.startswith('*'):
+                section_name = line.strip()
+                current_section = section_name
+                parsed_data[current_section] = {}
+            elif line.startswith('@'):
+                cmd_core = line.strip()
+                if not cmd_core:
+                    continue
+                tokens = arg_pattern.findall(cmd_core)
+                if not tokens:
+                    continue
+                cmd_name = tokens[0]
+                cmd_args = {}
+                for token in tokens[1:]:
+                    if '=' in token and token[0] != '"':
+                        key, value = token.split('=')
+                        cmd_args[key] = value
+                    else:
+                        cmd_args[token] = None
+                if current_section not in parsed_data:
+                    parsed_data[current_section] = {}
+                if cmd_name not in parsed_data[current_section]:
+                    parsed_data[current_section][cmd_name] = []
+                parsed_data[current_section][cmd_name].append(cmd_args)
+
+        return parsed_data
+
+
+class NeiHandler:
+    NEI_KEY = bytes([
+        0xAA, 0xC9, 0xD2, 0x35, 0x22, 0x87, 0x20, 0xF2,
+        0x40, 0xC5, 0x61, 0x7C, 0x01, 0xDF, 0x66, 0x54
+    ])
+    NEI_MAGIC = b'\x77\x73\x76\xFF'
+
+    @classmethod
+    def decrypt_nei(cls, encrypted_bytes: bytes) -> bytes:
+        if len(encrypted_bytes) < 5: return b""
+        extra_data_size = encrypted_bytes[-5] ^ encrypted_bytes[-4]
+        iv_seed = encrypted_bytes[-4:]
+        iv = cls._generate_iv(iv_seed)
+
+        # ここで Pure Python の AES デコーダを使用
+        cipher = AES128CBC(cls.NEI_KEY, iv)
+        decrypted_padded = cipher.decrypt(encrypted_bytes[:-5])
+
+        actual_size = len(encrypted_bytes) - extra_data_size - 5
+        return decrypted_padded[:actual_size]
+
+    @classmethod
+    def nei_to_list(cls, nei_data: bytes) -> list:
+        if len(nei_data) < 12 or nei_data[0:4] != cls.NEI_MAGIC:
+            return []
+        cols, rows = struct.unpack('<II', nei_data[4:12])
+        offset = 12
+        str_lengths = []
+        for _ in range(cols * rows):
+            offset += 4
+            str_len = struct.unpack('<I', nei_data[offset:offset + 4])[0]
+            str_lengths.append(str_len)
+            offset += 4
+
+        matrix = []
+        length_idx = 0
+        for r in range(rows):
+            current_row = []
+            for c in range(cols):
+                length = str_lengths[length_idx]
+                length_idx += 1
+                cell_bytes = nei_data[offset: offset + length]
+                offset += length
+                try:
+                    cell_val = cell_bytes.decode('cp932').strip('\0')
+                except UnicodeDecodeError:
+                    cell_val = cell_bytes.decode('cp932', errors='replace').strip('\0')
+                current_row.append(cell_val)
+            matrix.append(current_row)
+        return matrix
+
+    @classmethod
+    def _generate_iv(cls, iv_seed: bytes) -> bytes:
+        seed_last = struct.unpack('<I', iv_seed)[0] ^ 0xBFBFBFBF
+        seed = [0x075BCD15, 0x159A55E5, 0x1F123BB5, cls._to_u32(seed_last)]
+        for _ in range(4):
+            n = cls._to_u32(seed[0] ^ cls._to_u32(seed[0] << 11))
+            seed[0] = seed[1]
+            seed[1] = seed[2]
+            seed[2] = seed[3]
+            part1 = cls._to_u32(seed[3] >> 11)
+            part2 = cls._to_u32(cls._to_u32(n ^ part1) >> 8)
+            seed[3] = cls._to_u32(n ^ seed[3] ^ part2)
+        return struct.pack('<IIII', seed[0], seed[1], seed[2], seed[3])
+
+    @staticmethod
+    def _to_u32(val: int) -> int:
+        return val & 0xFFFFFFFF
+
+
+class AES128CBC:
+    SBOX = (
+        0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01, 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76,
+        0xCA, 0x82, 0xC9, 0x7D, 0xFA, 0x59, 0x47, 0xF0, 0xAD, 0xD4, 0xA2, 0xAF, 0x9C, 0xA4, 0x72, 0xC0,
+        0xB7, 0xFD, 0x93, 0x26, 0x36, 0x3F, 0xF7, 0xCC, 0x34, 0xA5, 0xE5, 0xF1, 0x71, 0xD8, 0x31, 0x15,
+        0x04, 0xC7, 0x23, 0xC3, 0x18, 0x96, 0x05, 0x9A, 0x07, 0x12, 0x80, 0xE2, 0xEB, 0x27, 0xB2, 0x75,
+        0x09, 0x83, 0x2C, 0x1A, 0x1B, 0x6E, 0x5A, 0xA0, 0x52, 0x3B, 0xD6, 0xB3, 0x29, 0xE3, 0x2F, 0x84,
+        0x53, 0xD1, 0x00, 0xED, 0x20, 0xFC, 0xB1, 0x5B, 0x6A, 0xCB, 0xBE, 0x39, 0x4A, 0x4C, 0x58, 0xCF,
+        0xD0, 0xEF, 0xAA, 0xFB, 0x43, 0x4D, 0x33, 0x85, 0x45, 0xF9, 0x02, 0x7F, 0x50, 0x3C, 0x9F, 0xA8,
+        0x51, 0xA3, 0x40, 0x8F, 0x92, 0x9D, 0x38, 0xF5, 0xBC, 0xB6, 0xDA, 0x21, 0x10, 0xFF, 0xF3, 0xD2,
+        0xCD, 0x0C, 0x13, 0xEC, 0x5F, 0x97, 0x44, 0x17, 0xC4, 0xA7, 0x7E, 0x3D, 0x64, 0x5D, 0x19, 0x73,
+        0x60, 0x81, 0x4F, 0xDC, 0x22, 0x2A, 0x90, 0x88, 0x46, 0xEE, 0xB8, 0x14, 0xDE, 0x5E, 0x0B, 0xDB,
+        0xE0, 0x32, 0x3A, 0x0A, 0x49, 0x06, 0x24, 0x5C, 0xC2, 0xD3, 0xAC, 0x62, 0x91, 0x95, 0xE4, 0x79,
+        0xE7, 0xC8, 0x37, 0x6D, 0x8D, 0xD5, 0x4E, 0xA9, 0x6C, 0x56, 0xF4, 0xEA, 0x65, 0x7A, 0xAE, 0x08,
+        0xBA, 0x78, 0x25, 0x2E, 0x1C, 0xA6, 0xB4, 0xC6, 0xE8, 0xDD, 0x74, 0x1F, 0x4B, 0xBD, 0x8B, 0x8A,
+        0x70, 0x3E, 0xB5, 0x66, 0x48, 0x03, 0xF6, 0x0E, 0x61, 0x35, 0x57, 0xB9, 0x86, 0xC1, 0x1D, 0x9E,
+        0xE1, 0xF8, 0x98, 0x11, 0x69, 0xD9, 0x8E, 0x94, 0x9B, 0x1E, 0x87, 0xE9, 0xCE, 0x55, 0x28, 0xDF,
+        0x8C, 0xA1, 0x89, 0x0D, 0xBF, 0xE6, 0x42, 0x68, 0x41, 0x99, 0x2D, 0x0F, 0xB0, 0x54, 0xBB, 0x16
+    )
+    INV_SBOX = (
+        0x52, 0x09, 0x6A, 0xD5, 0x30, 0x36, 0xA5, 0x38, 0xBF, 0x40, 0xA3, 0x9E, 0x81, 0xF3, 0xD7, 0xFB,
+        0x7C, 0xE3, 0x39, 0x82, 0x9B, 0x2F, 0xFF, 0x87, 0x34, 0x8E, 0x43, 0x44, 0xC4, 0xDE, 0xE9, 0xCB,
+        0x54, 0x7B, 0x94, 0x32, 0xA6, 0xC2, 0x23, 0x3D, 0xEE, 0x4C, 0x95, 0x0B, 0x42, 0xFA, 0xC3, 0x4E,
+        0x08, 0x2E, 0xA1, 0x66, 0x28, 0xD9, 0x24, 0xB2, 0x76, 0x5B, 0xA2, 0x49, 0x6D, 0x8B, 0xD1, 0x25,
+        0x72, 0xF8, 0xF6, 0x64, 0x86, 0x68, 0x98, 0x16, 0xD4, 0xA4, 0x5C, 0xCC, 0x5D, 0x65, 0xB6, 0x92,
+        0x6C, 0x70, 0x48, 0x50, 0xFD, 0xED, 0xB9, 0xDA, 0x5E, 0x15, 0x46, 0x57, 0xA7, 0x8D, 0x9D, 0x84,
+        0x90, 0xD8, 0xAB, 0x00, 0x8C, 0xBC, 0xD3, 0x0A, 0xF7, 0xE4, 0x58, 0x05, 0xB8, 0xB3, 0x45, 0x06,
+        0xD0, 0x2C, 0x1E, 0x8F, 0xCA, 0x3F, 0x0F, 0x02, 0xC1, 0xAF, 0xBD, 0x03, 0x01, 0x13, 0x8A, 0x6B,
+        0x3A, 0x91, 0x11, 0x41, 0x4F, 0x67, 0xDC, 0xEA, 0x97, 0xF2, 0xCF, 0xCE, 0xF0, 0xB4, 0xE6, 0x73,
+        0x96, 0xAC, 0x74, 0x22, 0xE7, 0xAD, 0x35, 0x85, 0xE2, 0xF9, 0x37, 0xE8, 0x1C, 0x75, 0xDF, 0x6E,
+        0x47, 0xF1, 0x1A, 0x71, 0x1D, 0x29, 0xC5, 0x89, 0x6F, 0xB7, 0x62, 0x0E, 0xAA, 0x18, 0xBE, 0x1B,
+        0xFC, 0x56, 0x3E, 0x4B, 0xC6, 0xD2, 0x79, 0x20, 0x9A, 0xDB, 0xC0, 0xFE, 0x78, 0xCD, 0x5A, 0xF4,
+        0x1F, 0xDD, 0xA8, 0x33, 0x88, 0x07, 0xC7, 0x31, 0xB1, 0x12, 0x10, 0x59, 0x27, 0x80, 0xEC, 0x5F,
+        0x60, 0x51, 0x7F, 0xA9, 0x19, 0xB5, 0x4A, 0x0D, 0x2D, 0xE5, 0x7A, 0x9F, 0x93, 0xC9, 0x9C, 0xEF,
+        0xA0, 0xE0, 0x3B, 0x4D, 0xAE, 0x2A, 0xF5, 0xB0, 0xC8, 0xEB, 0xBB, 0x3C, 0x83, 0x53, 0x99, 0x61,
+        0x17, 0x2B, 0x04, 0x7E, 0xBA, 0x77, 0xD6, 0x26, 0xE1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0C, 0x7D
+    )
+    RCON = (0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1B, 0x36)
+
+    def __init__(self, key: bytes, iv: bytes):
+        self.key = list(key)
+        self.iv = list(iv)
+        self.round_keys = self._expand_key(self.key)
+
+    def _expand_key(self, key):
+        rk = list(key)
+        for i in range(4, 4 * 11):
+            temp = rk[(i - 1) * 4: i * 4]
+            if i % 4 == 0:
+                temp = [self.SBOX[temp[1]], self.SBOX[temp[2]], self.SBOX[temp[3]], self.SBOX[temp[0]]]
+                temp[0] ^= self.RCON[i // 4]
+            for j in range(4):
+                rk.append(rk[(i - 4) * 4 + j] ^ temp[j])
+        return rk
+
+    def _inv_mix_columns(self, state):
+        for i in range(4):
+            c = state[i * 4: i * 4 + 4]
+            state[i * 4 + 0] = self._gmul(0x0e, c[0]) ^ self._gmul(0x0b, c[1]) ^ self._gmul(0x0d, c[2]) ^ self._gmul(0x09, c[3])
+            state[i * 4 + 1] = self._gmul(0x09, c[0]) ^ self._gmul(0x0e, c[1]) ^ self._gmul(0x0b, c[2]) ^ self._gmul(0x0d, c[3])
+            state[i * 4 + 2] = self._gmul(0x0d, c[0]) ^ self._gmul(0x09, c[1]) ^ self._gmul(0x0e, c[2]) ^ self._gmul(0x0b, c[3])
+            state[i * 4 + 3] = self._gmul(0x0b, c[0]) ^ self._gmul(0x0d, c[1]) ^ self._gmul(0x09, c[2]) ^ self._gmul(0x0e, c[3])
+
+    @staticmethod
+    def _gmul(a, b):
+        p = 0
+        for _ in range(8):
+            if b & 1: p ^= a
+            hi_bit_set = a & 0x80
+            a = (a << 1) & 0xFF
+            if hi_bit_set: a ^= 0x1B
+            b >>= 1
+        return p
+
+    def _decrypt_block(self, block):
+        state = list(block)
+
+        # AddRoundKey (Round 10)
+        for i in range(16): state[i] ^= self.round_keys[160 + i]
+
+        for round_idx in range(9, 0, -1):
+            # InvShiftRows
+            state[1], state[5], state[9], state[13] = state[13], state[1], state[5], state[9]
+            state[2], state[6], state[10], state[14] = state[10], state[14], state[2], state[6]
+            state[3], state[7], state[11], state[15] = state[7], state[11], state[15], state[3]
+            # InvSubBytes
+            for i in range(16): state[i] = self.INV_SBOX[state[i]]
+            # AddRoundKey
+            for i in range(16): state[i] ^= self.round_keys[round_idx * 16 + i]
+            # InvMixColumns
+            self._inv_mix_columns(state)
+
+        # Round 0
+        state[1], state[5], state[9], state[13] = state[13], state[1], state[5], state[9]
+        state[2], state[6], state[10], state[14] = state[10], state[14], state[2], state[6]
+        state[3], state[7], state[11], state[15] = state[7], state[11], state[15], state[3]
+        for i in range(16): state[i] = self.INV_SBOX[state[i]]
+        for i in range(16): state[i] ^= self.round_keys[i]
+
+        return state
+
+    def decrypt(self, data: bytes) -> bytes:
+        decrypted = bytearray()
+        prev_block = self.iv
+
+        for i in range(0, len(data), 16):
+            block = data[i:i + 16]
+            if len(block) < 16: break
+            dec_block = self._decrypt_block(block)
+            for j in range(16):
+                decrypted.append(dec_block[j] ^ prev_block[j])
+            prev_block = list(block)
+
+        return bytes(decrypted)
