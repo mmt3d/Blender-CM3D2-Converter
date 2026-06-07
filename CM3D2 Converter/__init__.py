@@ -84,6 +84,7 @@ if True:
     from . import misc_VIEW3D_MT_edit_mesh_split
     from . import misc_VIEW3D_MT_pose_apply
     from . import misc_VIEW3D_PT_tools_weightpaint
+    from . import misc_VIEW3D_PT_pose_change
     from . import misc_VIEW3D_PT_tools_mesh_shapekey
     from . import misc_DOPESHEET_MT_editor_menus
 
@@ -134,6 +135,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
     anm_default_path: bpy.props.StringProperty(name="anmファイル置き場", subtype='DIR_PATH', description="設定すれば、anmを扱う時は必ずここからファイル選択を始めます")
     anm_import_path: bpy.props.StringProperty(name="anmインポート時のデフォルトパス", subtype='FILE_PATH', description="anmインポート時に最初はここが表示されます、インポート毎に保存されます")
     anm_export_path: bpy.props.StringProperty(name="anmエクスポート時のデフォルトパス", subtype='FILE_PATH', description="anmエクスポート時に最初はここが表示されます、エクスポート毎に保存されます")
+    my_pose_path: bpy.props.StringProperty(name="MyPoseフォルダ", subtype='DIR_PATH', description="ポーズライブラリのMyPoseからポーズ選択できるようになります")
 
     tex_default_path: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="設定すれば、texを扱う時は必ずここからファイル選択を始めます")
     tex_import_path: bpy.props.StringProperty(name="texインポート時のデフォルトパス", subtype='FILE_PATH', description="texインポート時に最初はここが表示されます、インポート毎に保存されます")
@@ -210,6 +212,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
     def draw(self, context):
         self.layout.prop(self, 'cm3d2_path', icon_value=common.kiss_icon())
         self.layout.prop(self, 'backup_ext', icon='FILE_BACKUP')
+        self.layout.operator('pref.extract_cm3d2_resources', icon='IMPORT')
 
         box = self.layout.box()
         box.label(text="modelファイル", icon='MESH_ICOSPHERE')
@@ -227,6 +230,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
         box = self.layout.box()
         box.label(text="anmファイル", icon='POSE_HLT')
         box.prop(self, 'anm_default_path', icon='FILEBROWSER', text="ファイル選択時の初期フォルダ")
+        box.prop(self, 'my_pose_path', icon='FILEBROWSER', text="MyPoseフォルダ")
 
         box = self.layout.box()
         box.label(text="texファイル", icon='FILE_IMAGE')
@@ -317,6 +321,20 @@ class AddonPreferences(bpy.types.AddonPreferences):
             print(f"[{bl_info['name']}] Console code page set to default. (requires restart blender)")
 
 
+@compat.BlRegister()
+class CNV_OT_extract_cm3d2_resources(bpy.types.Operator):
+    bl_idname = "pref.extract_cm3d2_resources"
+    bl_label = "CM3D2リソースデータを抽出"
+    bl_description = "上記インストールフォルダよりリソースデータ(ポーズanm)を抽出してBlender datafilesフォルダに保存します"
+
+    def execute(self, context):
+        misc_VIEW3D_PT_pose_change.reload_pose_list('CM3D2_POSE', force=True)
+        for area in context.screen.areas:
+            if area.type == 'VIEW_3D':
+                area.tag_redraw()
+        return {'FINISHED'}
+
+
 # Scene中で記憶しておくタイプの設定
 @compat.BlRegister()
 class SceneProperties(bpy.types.PropertyGroup):
@@ -397,6 +415,8 @@ def register():
     if prefs.console_utf8:
         prefs.apply_console_code()
 
+    misc_VIEW3D_PT_pose_change.register()
+
     translations.register(__name__)
 
     # Scene に一時的に記録するプロパティ
@@ -466,6 +486,8 @@ def unregister():
 
     bpy.types.DOPESHEET_MT_editor_menus.remove(misc_DOPESHEET_MT_editor_menus.menu_func)
     bpy.types.GRAPH_MT_editor_menus.remove(misc_DOPESHEET_MT_editor_menus.menu_func)
+
+    misc_VIEW3D_PT_pose_change.unregister()
 
     for pcoll in common.preview_collections.values():
         bpy.utils.previews.remove(pcoll)

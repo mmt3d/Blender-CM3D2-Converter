@@ -28,6 +28,7 @@ texpath_dict = {}
 texpath_default_dict = {}
 COM3D2_SHADER_REV = 1
 
+POSE_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), ADDON_NAME, 'pose')
 
 re_png = re.compile(r"\.[Pp][Nn][Gg](\.\d{3})?$")
 re_serial = re.compile(r"(\.\d{3})$")
@@ -387,6 +388,16 @@ def get_default_tex_paths():
     tex_dirs.append(os.path.join(str(os.path.dirname(__file__)), "toon"))
 
     return tex_dirs
+
+
+def get_my_pose_path():
+    """
+    ゲーム内MyPoseパスを返す
+    """
+    cm3d2_dir = get_pref_cm3d2_dir()
+    if cm3d2_dir:
+        return os.path.join(cm3d2_dir, 'PhotoModeData', 'MyPose')
+    return None
 
 
 def add_extra_tex_path(path):
@@ -1367,3 +1378,21 @@ def get_outliner_selection(context: bpy.types.Context, object_type: str = '') ->
             if active and active.type != object_type:
                 active = None
         return selected, active
+
+
+def handler_append(handlers, func):
+    """
+    フック関数をハンドラに登録するヘルパー関数
+    """
+    handler_remove(handlers, func)
+    handlers.append(func)
+
+
+def handler_remove(handlers, func):
+    """
+    フック関数をハンドラから削除するヘルパー関数
+    """
+    func_name = func.__name__
+    for h in list(handlers):
+        if h.__name__ == func_name:
+            handlers.remove(h)
