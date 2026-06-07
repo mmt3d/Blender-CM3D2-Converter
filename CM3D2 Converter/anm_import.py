@@ -42,12 +42,12 @@ class CNV_OT_import_cm3d2_anm(bpy.types.Operator):
     is_scale: bpy.props.BoolProperty(name="拡縮", default=True)
     is_tangents: bpy.props.BoolProperty(name="Tangents", default=False)
 
+    apply_as_pose: bpy.props.BoolProperty(default=False, options={'HIDDEN'})
+
     @classmethod
     def poll(cls, context):
-        ob = context.active_object
-        if ob and ob.type == 'ARMATURE':
-            return True
-        return False
+        selected, _ = common.get_outliner_selection(context, 'ARMATURE')
+        return bool(selected)
 
     def invoke(self, context, event):
         prefs = common.preferences()
@@ -107,6 +107,7 @@ class CNV_OT_import_cm3d2_anm(bpy.types.Operator):
         anm_importer.is_rotation             = self.is_rotation
         anm_importer.is_scale                = self.is_scale
         anm_importer.is_tangents             = self.is_tangents
+        anm_importer.apply_as_pose           = self.apply_as_pose
 
         return anm_importer
 
@@ -125,23 +126,58 @@ class AnmImporter:
         self.is_rotation             = True
         self.is_scale                = False
         self.is_tangents             = False
+        self.apply_as_pose           = False
 
         self._keyframe_queue: dict[bpy.types.FCurve, list[tuple[tuple[float, float], str]]] = {}
 
     def import_anm(self, context: bpy.types.Context, filepath: str):
-        anm_data = self.read_anm_data(filepath)
-        action_name = os.path.basename(filepath)
-
-        # Outlinerで複数選択中のアーマチュア全てを対象にする
-        scr = bpy.context.screen
-        areas = [area for area in scr.areas if area.type == 'OUTLINER']
-        regions = [region for region in areas[0].regions if region.type == 'WINDOW']
-        with context.temp_override(area=areas[0], region=regions[0], screen=scr):
-            for ob in context.selected_ids:
-                if ob.type != 'ARMATURE':
-                    continue
+        target_objects, _ = common.get_outliner_selection(context, 'ARMATURE')
+        for i, ob in enumerate(target_objects):
+            # ポーズをいじった状態からインポートするとねじれが発生しうるのでレストポーズにクリアする
+            self._transforms_clear(ob)
+            if self.apply_as_pose:
+                # ポーズ適用の場合はanmインポート先をコピーされた一時オブジェクトにする
+                temp_ob = ob.copy()
+                temp_ob.hide_set(False)
+                compat.link(context.scene, temp_ob)
+                # フレーム増減調整をやめる
+                self.set_frame = False
+                anm_data = self.read_anm_data(filepath, only_first_frame=True)
+                with context.temp_override(active_object=temp_ob):
+                    self._import_anm(context, anm_data, '__temp_action')
+                # 適用した一時オブジェクトからポーズボーン情報をコピーする
+                self._transforms_copy(src=temp_ob, dst=ob)
+                # 一時オブジェクトを削除する
+                common.remove_data(temp_ob)
+            else:
+                # 通常のanmインポート
+                action_name = os.path.basename(filepath)
+                anm_data = self.read_anm_data(filepath)
                 with context.temp_override(active_object=ob):
                     self._import_anm(context, anm_data, action_name)
+
+    @staticmethod
+    def _transforms_clear(ob: bpy.types.Object):
+        # ポースモードを使わずtransforms_clear()するのと同等の処理
+        for bone in ob.pose.bones:
+            bone.location = (0.0, 0.0, 0.0)
+            if bone.rotation_mode == 'QUATERNION':
+                bone.rotation_quaternion = (1.0, 0.0, 0.0, 0.0)
+            elif bone.rotation_mode == 'AXIS_ANGLE':
+                bone.rotation_axis_angle = (0.0, 0.0, 1.0, 0.0)
+            else:
+                bone.rotation_euler = (0.0, 0.0, 0.0)
+            bone.scale = (1.0, 1.0, 1.0)
+
+        bpy.context.view_layer.update()
+
+    @staticmethod
+    def _transforms_copy(src: bpy.types.Object, dst: bpy.types.Object):
+        # 現在のポーズボーン情報を丸ごとコピー
+        for src_bone, dst_bone in zip(src.pose.bones, dst.pose.bones):
+            dst_bone.matrix_basis = src_bone.matrix_basis.copy()
+
+        bpy.context.view_layer.update()
 
     def _import_anm(self, context: bpy.types.Context, anm_data: dict, acion_name: str):
         if self.is_anm_data_text:
@@ -538,6 +574,8 @@ class AnmImporter:
             context.scene.frame_end = math.ceil(max_frame)
             context.scene.frame_set(0)
 
+        bpy.context.view_layer.update()
+
     def get_bone_keyframe_data(self, found_unknown, bone_data):
         locs = {}
         loc_tangents = {}
@@ -694,7 +732,7 @@ class AnmImporter:
                 break
         return anm_data
 
-    def read_anm_data(self, filepath: str):
+    def read_anm_data(self, filepath: str, only_first_frame: bool = False):
         anm_data = {}
         
         try:
@@ -719,7 +757,8 @@ class AnmImporter:
                 channel_id = channel.channelId
                 channel_id_str = channel_id
                 anm_data[base_bone_name]['channels'][channel_id_str] = []
-                for keyframe in channel.keyframes:
+                keyframes = [channel.keyframes[0]] if (only_first_frame and len(channel.keyframes)) else channel.keyframes
+                for keyframe in keyframes:
                     keyframe: Anm.Keyframe
                     anm_data[base_bone_name]['channels'][channel_id_str].append({
                         'frame': keyframe.time,
