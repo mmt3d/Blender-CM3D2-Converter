@@ -131,6 +131,8 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
 
     @common.use_texpath_cache
     def execute(self, context):
+        if not os.path.exists(common.TOON_DATA_DIR):
+            common.extract_toon_tex()
         if len(self.filepaths) > 0:
             filepaths = [f.name for f in self.filepaths]
         else:

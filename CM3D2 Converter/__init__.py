@@ -325,9 +325,10 @@ class AddonPreferences(bpy.types.AddonPreferences):
 class CNV_OT_extract_cm3d2_resources(bpy.types.Operator):
     bl_idname = "pref.extract_cm3d2_resources"
     bl_label = "CM3D2リソースデータを抽出"
-    bl_description = "上記インストールフォルダよりリソースデータ(ポーズanm)を抽出してBlender datafilesフォルダに保存します"
+    bl_description = "上記インストールフォルダよりリソースデータ(toon画像・ポーズanm)を抽出してBlender datafilesフォルダに保存します"
 
     def execute(self, context):
+        common.extract_toon_tex()
         misc_VIEW3D_PT_pose_change.reload_pose_list('CM3D2_POSE', force=True)
         for area in context.screen.areas:
             if area.type == 'VIEW_3D':

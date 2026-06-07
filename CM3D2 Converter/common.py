@@ -10,7 +10,7 @@ import mathutils
 from . import fileutil
 from . import compat
 from .cm3d2_shader import toon_vector_node_tree, com3d2_shader_node_tree, alpha_mixer_node_tree, bind_light_switch
-from .cm3d2_data import Handler
+from .cm3d2_data import Handler, ArcHandler
 
 
 # アドオン情報
@@ -29,6 +29,7 @@ texpath_default_dict = {}
 COM3D2_SHADER_REV = 1
 
 POSE_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), ADDON_NAME, 'pose')
+TOON_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), ADDON_NAME, 'toon')
 
 re_png = re.compile(r"\.[Pp][Nn][Gg](\.\d{3})?$")
 re_serial = re.compile(r"(\.\d{3})$")
@@ -384,8 +385,8 @@ def get_default_tex_paths():
     else:
         tex_dirs = [getattr(prefs, 'default_tex_path' + str(i)) for i in range(4) if getattr(prefs, 'default_tex_path' + str(i))]
 
-    # 同梱のtoon画像フォルダを追加
-    tex_dirs.append(os.path.join(str(os.path.dirname(__file__)), "toon"))
+    # toon画像フォルダを追加
+    tex_dirs.append(TOON_DATA_DIR)
 
     return tex_dirs
 
@@ -398,6 +399,13 @@ def get_my_pose_path():
     if cm3d2_dir:
         return os.path.join(cm3d2_dir, 'PhotoModeData', 'MyPose')
     return None
+
+
+def extract_toon_tex():
+    # for COM3D2
+    ArcHandler.extract('parts2?.arc', output_dir=TOON_DATA_DIR, target_files=r'toon.*\.tex')
+    # for CM3D2
+    ArcHandler.extract('texture[23]?.arc', output_dir=TOON_DATA_DIR, target_files=r'toon.*\.tex')
 
 
 def add_extra_tex_path(path):
