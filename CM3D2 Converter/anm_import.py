@@ -179,7 +179,7 @@ class AnmImporter:
 
         bpy.context.view_layer.update()
 
-    def _import_anm(self, context: bpy.types.Context, anm_data: dict, acion_name: str):
+    def _import_anm(self, context: bpy.types.Context, anm_data: dict, action_name: str):
         if self.is_anm_data_text:
             self.import_anm_data_to_text(context, anm_data)
 
@@ -197,7 +197,7 @@ class AnmImporter:
         anim = ob.animation_data
         if not anim:
             anim = ob.animation_data_create()
-        action, fcurves = compat.get_new_action_and_fcurves(acion_name, ob.name)
+        action, fcurves = compat.get_new_action_and_fcurves(action_name, ob.name)
         anim.action = action
 
         max_frame = 0
