@@ -39,7 +39,7 @@ class CNV_OT_export_cm3d2_anm(bpy.types.Operator):
         ('KEYED', "Only Export Keyframes", "Only export keyframes and their tangents (for more advance users)"   , 'KEYINGSET', 2),
         ('TEXT' , "From Anm Text JSON"   , "Export data from the JSON in the 'AnmData' text file"                , 'TEXT'     , 3)
     ]
-    export_method: bpy.props.EnumProperty(items=items, name="Export Method", default='ALL')
+    export_method: bpy.props.EnumProperty(items=items, name="Export Method", default='KEYED')
 
 
     frame_start: bpy.props.IntProperty(name="開始フレーム", default=0, min=0, max=99999, soft_min=0, soft_max=99999, step=1)
