@@ -661,16 +661,16 @@ class AnmBuilder:
         
         diff = a - b
         if isinstance(current_value, Vector):
-            is_mismatch = (   diff.x >= 1e-6
-                           or diff.y >= 1e-6
-                           or diff.z >= 1e-6)
+            is_mismatch = (   abs(diff.x) >= 1e-6
+                           or abs(diff.y) >= 1e-6
+                           or abs(diff.z) >= 1e-6)
         elif isinstance(current_value, Quaternion):
-            is_mismatch = (   diff.x >= 1e-6
-                           or diff.y >= 1e-6
-                           or diff.z >= 1e-6
-                           or diff.w >= 1e-6)
+            is_mismatch = (   abs(diff.x) >= 1e-6
+                           or abs(diff.y) >= 1e-6
+                           or abs(diff.z) >= 1e-6
+                           or abs(diff.w) >= 1e-6)
         else:
-            is_mismatch = diff >= 1e-6
+            is_mismatch = abs(diff) >= 1e-6
         
         new_keydict: dict[float, Vector | Quaternion] = {}
         if is_mismatch:
