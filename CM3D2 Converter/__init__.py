@@ -417,6 +417,7 @@ def register():
         prefs.apply_console_code()
 
     misc_VIEW3D_PT_pose_change.register()
+    misc_MESH_MT_shape_key_specials.register()
 
     translations.register(__name__)
 
@@ -489,6 +490,7 @@ def unregister():
     bpy.types.GRAPH_MT_editor_menus.remove(misc_DOPESHEET_MT_editor_menus.menu_func)
 
     misc_VIEW3D_PT_pose_change.unregister()
+    misc_MESH_MT_shape_key_specials.unregister()
 
     for pcoll in common.preview_collections.values():
         bpy.utils.previews.remove(pcoll)

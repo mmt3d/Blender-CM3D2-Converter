@@ -1342,3 +1342,37 @@ class CNV_OT_copy_shape_key_values(bpy.types.Operator):
             
         
         return {'FINISHED'}
+
+
+@bpy.app.handlers.persistent
+def shape_key_change_handler(scene, depsgraph):
+    """
+    シェイプキー値増減時に複数選択中の別メッシュの同名シェイプキーも変更するハンドラ
+    """
+    if not depsgraph.id_type_updated('KEY'):
+        return
+
+    active = bpy.context.active_object
+    if not active or active.type != 'MESH' or not active.data.shape_keys:
+        return
+
+    key = active.active_shape_key
+    if not key:
+        return
+
+    for ob in bpy.context.selected_objects:
+        if ob == active or ob.type != 'MESH' or not ob.data.shape_keys:
+            continue
+
+        target_keys = ob.data.shape_keys.key_blocks
+        if key.name in target_keys:
+            if target_keys[key.name].value != key.value:
+                target_keys[key.name].value = key.value
+
+
+def register():
+    common.handler_append(bpy.app.handlers.depsgraph_update_post, shape_key_change_handler)
+
+
+def unregister():
+    common.handler_remove(bpy.app.handlers.depsgraph_update_post, shape_key_change_handler)
