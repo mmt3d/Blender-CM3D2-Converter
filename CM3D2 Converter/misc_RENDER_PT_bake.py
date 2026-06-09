@@ -44,16 +44,15 @@ class CNV_OT_add_bake_image(bpy.types.Operator):
 
     image_name = bpy.props.StringProperty(name="画像名")
     items = [
-        ('128', "128 px", "", 'LAYER_USED', 1),
-        ('256', "256 px", "", 'LAYER_ACTIVE', 2),
-        ('512', "512 px", "", 'HAND', 3),
-        ('1024', "1024 px", "", 'FILE_TICK', 4),
-        ('2048', "2048 px", "", 'ERROR', 5),
-        ('4096', "4096 px", "", 'CANCEL', 6),
-        ]
-    image_width = bpy.props.EnumProperty(items=items, name="幅", default='1024')
-    image_height = bpy.props.EnumProperty(items=items, name="高", default='1024')
-    image_color = bpy.props.FloatVectorProperty(name="色", default=(1, 1, 1, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
+        ('128', '128 px', '', 'LAYER_USED', 1),
+        ('256', '256 px', '', 'LAYER_ACTIVE', 2),
+        ('512', '512 px', '', 'HAND', 3),
+        ('1024', '1024 px', '', 'FILE_TICK', 4),
+        ('2048', '2048 px', '', 'ERROR', 5),
+        ('4096', '4096 px', '', 'CANCEL', 6),
+    ]
+    image_width: bpy.props.EnumProperty(items=items, name="幅", default='1024')
+    image_height: bpy.props.EnumProperty(items=items, name="高", default='1024')
 
     @classmethod
     def poll(cls, context):
@@ -112,12 +111,12 @@ class CNV_OT_quick_ao_bake_image(bpy.types.Operator):
 
     image_name = bpy.props.StringProperty(name="画像名")
     items = [
-        ('128', "128 px", "", 'LAYER_USED', 1),
-        ('256', "256 px", "", 'LAYER_ACTIVE', 2),
-        ('512', "512 px", "", 'HAND', 3),
-        ('1024', "1024 px", "", 'FILE_TICK', 4),
-        ('2048', "2048 px", "", 'ERROR', 5),
-        ('4096', "4096 px", "", 'CANCEL', 6),
+        ('128', '128 px', '', 'LAYER_USED', 1),
+        ('256', '256 px', '', 'LAYER_ACTIVE', 2),
+        ('512', '512 px', '', 'HAND', 3),
+        ('1024', '1024 px', '', 'FILE_TICK', 4),
+        ('2048', '2048 px', '', 'ERROR', 5),
+        ('4096', '4096 px', '', 'CANCEL', 6),
     ]
     image_width = bpy.props.EnumProperty(items=items, name="幅", default='1024')
     image_height = bpy.props.EnumProperty(items=items, name="高", default='1024')
@@ -200,12 +199,12 @@ class CNV_OT_quick_dirty_bake_image(bpy.types.Operator):
 
     image_name = bpy.props.StringProperty(name="画像名")
     items = [
-        ('128', "128 px", "", 'LAYER_USED', 1),
-        ('256', "256 px", "", 'LAYER_ACTIVE', 2),
-        ('512', "512 px", "", 'HAND', 3),
-        ('1024', "1024 px", "", 'FILE_TICK', 4),
-        ('2048', "2048 px", "", 'ERROR', 5),
-        ('4096', "4096 px", "", 'CANCEL', 6),
+        ('128', '128 px', '', 'LAYER_USED', 1),
+        ('256', '256 px', '', 'LAYER_ACTIVE', 2),
+        ('512', '512 px', '', 'HAND', 3),
+        ('1024', '1024 px', '', 'FILE_TICK', 4),
+        ('2048', '2048 px', '', 'ERROR', 5),
+        ('4096', '4096 px', '', 'CANCEL', 6),
         ]
     image_width = bpy.props.EnumProperty(items=items, name="幅", default='1024')
     image_height = bpy.props.EnumProperty(items=items, name="高", default='1024')
@@ -267,11 +266,11 @@ class CNV_OT_quick_dirty_bake_image(bpy.types.Operator):
             elem.image = img
 
         temp_me = ob.to_mesh(scene=context.scene, apply_modifiers=True, settings='PREVIEW')
-        temp_ob = context.blend_data.objects.new("quick_dirty_bake_image_temp", temp_me)
+        temp_ob = context.blend_data.objects.new('quick_dirty_bake_image_temp', temp_me)
         compat.link(context.scene, temp_ob)
         for vc in temp_me.vertex_colors:
             temp_me.vertex_colors.remove(vc)
-        temp_vertex_color = temp_me.vertex_colors.new(name="quick_dirty_bake_image_temp")
+        temp_vertex_color = temp_me.vertex_colors.new(name='quick_dirty_bake_image_temp')
         compat.set_active(context, temp_ob)
         compat.set_select(temp_ob, True)
 
@@ -300,12 +299,12 @@ class CNV_OT_quick_hemi_bake_image(bpy.types.Operator):
 
     image_name = bpy.props.StringProperty(name="画像名")
     items = [
-        ('128', "128 px", "", 'LAYER_USED', 1),
-        ('256', "256 px", "", 'LAYER_ACTIVE', 2),
-        ('512', "512 px", "", 'HAND', 3),
-        ('1024', "1024 px", "", 'FILE_TICK', 4),
-        ('2048', "2048 px", "", 'ERROR', 5),
-        ('4096', "4096 px", "", 'CANCEL', 6),
+        ('128', '128 px', '', 'LAYER_USED', 1),
+        ('256', '256 px', '', 'LAYER_ACTIVE', 2),
+        ('512', '512 px', '', 'HAND', 3),
+        ('1024', '1024 px', '', 'FILE_TICK', 4),
+        ('2048', '2048 px', '', 'ERROR', 5),
+        ('4096', '4096 px', '', 'CANCEL', 6),
         ]
     image_width = bpy.props.EnumProperty(items=items, name="幅", default='1024')
     image_height = bpy.props.EnumProperty(items=items, name="高", default='1024')
@@ -372,13 +371,13 @@ class CNV_OT_quick_hemi_bake_image(bpy.types.Operator):
         material_restore = common.material_restore(ob)
 
         bpy.ops.object.material_slot_add(override)
-        temp_mate = context.blend_data.materials.new("quick_hemi_bake_image_temp")
+        temp_mate = context.blend_data.materials.new('quick_hemi_bake_image_temp')
         ob.material_slots[0].material = temp_mate
         temp_mate.diffuse_intensity = 1.0
         temp_mate.diffuse_color = (1, 1, 1)
 
-        temp_lamp = compat.get_lights(context.blend_data).new("quick_hemi_bake_image_temp", 'HEMI')
-        temp_ob = context.blend_data.objects.new("quick_hemi_bake_image_temp", temp_lamp)
+        temp_lamp = compat.get_lights(context.blend_data).new('quick_hemi_bake_image_temp', 'HEMI')
+        temp_ob = context.blend_data.objects.new('quick_hemi_bake_image_temp', temp_lamp)
         compat.link(context.scene, temp_ob)
         temp_lamp.energy = self.lamp_energy
 
@@ -409,12 +408,12 @@ class CNV_OT_quick_shadow_bake_image(bpy.types.Operator):
 
     image_name = bpy.props.StringProperty(name="画像名")
     items = [
-        ('128', "128 px", "", 'LAYER_USED', 1),
-        ('256', "256 px", "", 'LAYER_ACTIVE', 2),
-        ('512', "512 px", "", 'HAND', 3),
-        ('1024', "1024 px", "", 'FILE_TICK', 4),
-        ('2048', "2048 px", "", 'ERROR', 5),
-        ('4096', "4096 px", "", 'CANCEL', 6),
+        ('128', '128 px', '', 'LAYER_USED', 1),
+        ('256', '256 px', '', 'LAYER_ACTIVE', 2),
+        ('512', '512 px', '', 'HAND', 3),
+        ('1024', '1024 px', '', 'FILE_TICK', 4),
+        ('2048', '2048 px', '', 'ERROR', 5),
+        ('4096', '4096 px', '', 'CANCEL', 6),
         ]
     image_width = bpy.props.EnumProperty(items=items, name="幅", default='1024')
     image_height = bpy.props.EnumProperty(items=items, name="高", default='1024')
@@ -474,13 +473,13 @@ class CNV_OT_quick_shadow_bake_image(bpy.types.Operator):
         material_restore = common.material_restore(ob)
 
         bpy.ops.object.material_slot_add(override)
-        temp_mate = context.blend_data.materials.new("quick_shadow_bake_image_temp")
+        temp_mate = context.blend_data.materials.new('quick_shadow_bake_image_temp')
         ob.material_slots[0].material = temp_mate
 
         lights = compat.get_lights(context.blend_data)
         if self.is_shadow_only:
-            temp_hemi = lights.new("quick_hemi_bake_image_lamp_temp", 'HEMI')
-            temp_hemi_ob = context.blend_data.objects.new("quick_hemi_bake_image_lamp_temp", temp_hemi)
+            temp_hemi = lights.new('quick_hemi_bake_image_lamp_temp', 'HEMI')
+            temp_hemi_ob = context.blend_data.objects.new('quick_hemi_bake_image_lamp_temp', temp_hemi)
             compat.link(context.scene, temp_hemi_ob)
             temp_hemi.energy = 0.00001
 
@@ -493,9 +492,9 @@ class CNV_OT_quick_shadow_bake_image(bpy.types.Operator):
             for y_index in range(lamp_count):
                 y_angle = angle_interval * (y_index - self.lamp_count + 1)
 
-                temp_lamp = lights.new("quick_shadow_bake_image_temp", 'SUN')
+                temp_lamp = lights.new('quick_shadow_bake_image_temp', 'SUN')
                 temp_lamp.shadow_method = 'RAY_SHADOW'
-                temp_lamp_ob = context.blend_data.objects.new("quick_shadow_bake_image_temp", temp_lamp)
+                temp_lamp_ob = context.blend_data.objects.new('quick_shadow_bake_image_temp', temp_lamp)
                 compat.link(context.scene, temp_lamp_ob)
                 temp_lamp_ob.rotation_mode = 'XYZ'
                 temp_lamp_ob.rotation_euler = mathutils.Euler((x_angle, y_angle, 0), 'XYZ')
@@ -525,12 +524,12 @@ class CNV_OT_quick_side_shadow_bake_image(bpy.types.Operator):
 
     image_name = bpy.props.StringProperty(name="画像名")
     items = [
-        ('128', "128 px", "", 'LAYER_USED', 1),
-        ('256', "256 px", "", 'LAYER_ACTIVE', 2),
-        ('512', "512 px", "", 'HAND', 3),
-        ('1024', "1024 px", "", 'FILE_TICK', 4),
-        ('2048', "2048 px", "", 'ERROR', 5),
-        ('4096', "4096 px", "", 'CANCEL', 6),
+        ('128', '128 px', '', 'LAYER_USED', 1),
+        ('256', '256 px', '', 'LAYER_ACTIVE', 2),
+        ('512', '512 px', '', 'HAND', 3),
+        ('1024', '1024 px', '', 'FILE_TICK', 4),
+        ('2048', '2048 px', '', 'ERROR', 5),
+        ('4096', '4096 px', '', 'CANCEL', 6),
         ]
     image_width = bpy.props.EnumProperty(items=items, name="幅", default='1024')
     image_height = bpy.props.EnumProperty(items=items, name="高", default='1024')
@@ -589,21 +588,21 @@ class CNV_OT_quick_side_shadow_bake_image(bpy.types.Operator):
 
         material_restore = common.material_restore(ob)
 
-        blend_path = os.path.join(os.path.dirname(__file__), "append_data.blend")
+        blend_path = os.path.join(os.path.dirname(__file__), 'append_data.blend')
         with context.blend_data.libraries.load(blend_path) as (data_from, data_to):
-            data_to.materials = ["Side Shadow"]
+            data_to.materials = ['Side Shadow']
 
         bpy.ops.object.material_slot_add(override)
         temp_mate = data_to.materials[0]
         ob.material_slots[0].material = temp_mate
 
-        temp_lamp = compat.get_lights(context.blend_data).new("quick_side_shadow_bake_image_lamp_temp", 'HEMI')
-        temp_lamp_ob = context.blend_data.objects.new("quick_side_shadow_bake_image_lamp_temp", temp_lamp)
+        temp_lamp = compat.get_lights(context.blend_data).new('quick_side_shadow_bake_image_lamp_temp', 'HEMI')
+        temp_lamp_ob = context.blend_data.objects.new('quick_side_shadow_bake_image_lamp_temp', temp_lamp)
         compat.link(context.scene, temp_lamp_ob)
 
         pre_scene_camera = context.scene.camera
-        temp_camera = context.blend_data.cameras.new("quick_side_shadow_bake_image_camera_temp")
-        temp_camera_ob = context.blend_data.objects.new("quick_side_shadow_bake_image_camera_temp", temp_camera)
+        temp_camera = context.blend_data.cameras.new('quick_side_shadow_bake_image_camera_temp')
+        temp_camera_ob = context.blend_data.objects.new('quick_side_shadow_bake_image_camera_temp', temp_camera)
         compat.link(context.scene, temp_camera_ob)
         temp_camera_ob.rotation_euler[0] = 1.5708
         context.scene.camera = temp_camera_ob
@@ -646,12 +645,12 @@ class CNV_OT_quick_gradation_bake_image(bpy.types.Operator):
 
     image_name = bpy.props.StringProperty(name="画像名")
     items = [
-        ('128', "128 px", "", 'LAYER_USED', 1),
-        ('256', "256 px", "", 'LAYER_ACTIVE', 2),
-        ('512', "512 px", "", 'HAND', 3),
-        ('1024', "1024 px", "", 'FILE_TICK', 4),
-        ('2048', "2048 px", "", 'ERROR', 5),
-        ('4096', "4096 px", "", 'CANCEL', 6),
+        ('128', '128 px', '', 'LAYER_USED', 1),
+        ('256', '256 px', '', 'LAYER_ACTIVE', 2),
+        ('512', '512 px', '', 'HAND', 3),
+        ('1024', '1024 px', '', 'FILE_TICK', 4),
+        ('2048', '2048 px', '', 'ERROR', 5),
+        ('4096', '4096 px', '', 'CANCEL', 6),
         ]
     image_width = bpy.props.EnumProperty(items=items, name="幅", default='1024')
     image_height = bpy.props.EnumProperty(items=items, name="高", default='1024')
@@ -708,10 +707,10 @@ class CNV_OT_quick_gradation_bake_image(bpy.types.Operator):
         material_restore = common.material_restore(ob)
 
         bpy.ops.object.material_slot_add(override)
-        temp_mate = context.blend_data.materials.new("quick_gradation_bake_image_temp")
+        temp_mate = context.blend_data.materials.new('quick_gradation_bake_image_temp')
         ob.material_slots[0].material = temp_mate
         temp_slot = temp_mate.texture_slots.create(0)
-        temp_tex = context.blend_data.textures.new("quick_gradation_bake_image_temp", 'BLEND')
+        temp_tex = context.blend_data.textures.new('quick_gradation_bake_image_temp', 'BLEND')
         temp_slot.texture = temp_tex
         temp_tex.use_color_ramp = True
         temp_slot.mapping_y = 'Z'
@@ -742,12 +741,12 @@ class CNV_OT_quick_metal_bake_image(bpy.types.Operator):
 
     image_name = bpy.props.StringProperty(name="画像名")
     items = [
-        ('128', "128 px", "", 'LAYER_USED', 1),
-        ('256', "256 px", "", 'LAYER_ACTIVE', 2),
-        ('512', "512 px", "", 'HAND', 3),
-        ('1024', "1024 px", "", 'FILE_TICK', 4),
-        ('2048', "2048 px", "", 'ERROR', 5),
-        ('4096', "4096 px", "", 'CANCEL', 6),
+        ('128', '128 px', '', 'LAYER_USED', 1),
+        ('256', '256 px', '', 'LAYER_ACTIVE', 2),
+        ('512', '512 px', '', 'HAND', 3),
+        ('1024', '1024 px', '', 'FILE_TICK', 4),
+        ('2048', '2048 px', '', 'ERROR', 5),
+        ('4096', '4096 px', '', 'CANCEL', 6),
         ]
     image_width = bpy.props.EnumProperty(items=items, name="幅", default='1024')
     image_height = bpy.props.EnumProperty(items=items, name="高", default='1024')
@@ -807,25 +806,25 @@ class CNV_OT_quick_metal_bake_image(bpy.types.Operator):
         hide_render_restore = common.hide_render_restore()
         material_restore = common.material_restore(ob)
 
-        blend_path = os.path.join(os.path.dirname(__file__), "append_data.blend")
+        blend_path = os.path.join(os.path.dirname(__file__), 'append_data.blend')
         with context.blend_data.libraries.load(blend_path) as (data_from, data_to):
-            data_to.materials = ["Metal"]
+            data_to.materials = ['Metal']
 
         bpy.ops.object.material_slot_add(override)
         temp_mate = data_to.materials[0]
         ob.material_slots[0].material = temp_mate
         temp_mate.diffuse_color = self.mate_color[:]
         temp_mate.texture_slots[0].diffuse_color_factor = self.environment_strength
-        temp_mate.node_tree.nodes["Mix.001"].inputs[0].default_value = 1.0 - self.highlight_strength
+        temp_mate.node_tree.nodes['Mix.001'].inputs[0].default_value = 1.0 - self.highlight_strength
 
-        temp_lamp = compat.getlights(context.blend_data).new("quick_metal_bake_image_lamp_temp", 'HEMI')
-        temp_lamp_ob = context.blend_data.objects.new("quick_metal_bake_image_lamp_temp", temp_lamp)
+        temp_lamp = compat.getlights(context.blend_data).new('quick_metal_bake_image_lamp_temp', 'HEMI')
+        temp_lamp_ob = context.blend_data.objects.new('quick_metal_bake_image_lamp_temp', temp_lamp)
         compat.link(context.scene, temp_lamp_ob)
         #temp_lamp.energy = self.lamp_energy
 
         pre_scene_camera = context.scene.camera
-        temp_camera = context.blend_data.cameras.new("quick_metal_bake_image_camera_temp")
-        temp_camera_ob = context.blend_data.objects.new("quick_metal_bake_image_camera_temp", temp_camera)
+        temp_camera = context.blend_data.cameras.new('quick_metal_bake_image_camera_temp')
+        temp_camera_ob = context.blend_data.objects.new('quick_metal_bake_image_camera_temp', temp_camera)
         compat.link(context.scene, temp_camera_ob)
         temp_camera_ob.rotation_euler[0] = 1.5708
         context.scene.camera = temp_camera_ob
@@ -854,12 +853,12 @@ class CNV_OT_quick_hair_bake_image(bpy.types.Operator):
 
     image_name = bpy.props.StringProperty(name="画像名")
     items = [
-        ('128', "128 px", "", 'LAYER_USED', 1),
-        ('256', "256 px", "", 'LAYER_ACTIVE', 2),
-        ('512', "512 px", "", 'HAND', 3),
-        ('1024', "1024 px", "", 'FILE_TICK', 4),
-        ('2048', "2048 px", "", 'ERROR', 5),
-        ('4096', "4096 px", "", 'CANCEL', 6),
+        ('128', '128 px', '', 'LAYER_USED', 1),
+        ('256', '256 px', '', 'LAYER_ACTIVE', 2),
+        ('512', '512 px', '', 'HAND', 3),
+        ('1024', '1024 px', '', 'FILE_TICK', 4),
+        ('2048', '2048 px', '', 'ERROR', 5),
+        ('4096', '4096 px', '', 'CANCEL', 6),
         ]
     image_width = bpy.props.EnumProperty(items=items, name="幅", default='1024')
     image_height = bpy.props.EnumProperty(items=items, name="高", default='1024')
@@ -934,28 +933,28 @@ class CNV_OT_quick_hair_bake_image(bpy.types.Operator):
             hide_render_restore = common.hide_render_restore()
         material_restore = common.material_restore(ob)
 
-        temp_lamp = compat.get_lights(context.blend_data).new("quick_hemi_bake_image_lamp_temp", 'HEMI')
-        temp_lamp_ob = context.blend_data.objects.new("quick_hemi_bake_image_lamp_temp", temp_lamp)
+        temp_lamp = compat.get_lights(context.blend_data).new('quick_hemi_bake_image_lamp_temp', 'HEMI')
+        temp_lamp_ob = context.blend_data.objects.new('quick_hemi_bake_image_lamp_temp', temp_lamp)
         compat.link(context.scene, temp_lamp_ob)
         temp_lamp.energy = self.lamp_energy
 
         pre_scene_camera = context.scene.camera
-        temp_camera = context.blend_data.cameras.new("quick_hemi_bake_image_camera_temp")
-        temp_camera_ob = context.blend_data.objects.new("quick_hemi_bake_image_camera_temp", temp_camera)
+        temp_camera = context.blend_data.cameras.new('quick_hemi_bake_image_camera_temp')
+        temp_camera_ob = context.blend_data.objects.new('quick_hemi_bake_image_camera_temp', temp_camera)
         compat.link(context.scene, temp_camera_ob)
         temp_camera_ob.rotation_euler[0] = 1.5708
         context.scene.camera = temp_camera_ob
 
-        blend_path = os.path.join(os.path.dirname(__file__), "append_data.blend")
+        blend_path = os.path.join(os.path.dirname(__file__), 'append_data.blend')
         with context.blend_data.libraries.load(blend_path) as (data_from, data_to):
-            data_to.materials = ["CM3D2 Hair"]
+            data_to.materials = ['CM3D2 Hair']
 
         bpy.ops.object.material_slot_add(override)
         temp_mate = data_to.materials[0]
         ob.material_slots[0].material = temp_mate
 
         temp_mate.diffuse_color = self.mate_diffuse_color
-        temp_mate.node_tree.nodes["mate_angel_ring_factor"].inputs[0].default_value = self.mate_angel_ring_factor
+        temp_mate.node_tree.nodes['mate_angel_ring_factor'].inputs[0].default_value = self.mate_angel_ring_factor
 
         context.scene.world.light_settings.use_ambient_occlusion = self.use_ao
         if self.use_ao:
@@ -987,12 +986,12 @@ class CNV_OT_quick_uv_border_bake_image(bpy.types.Operator):
 
     image_name = bpy.props.StringProperty(name="画像名")
     items = [
-        ('128', "128 px", "", 'LAYER_USED', 1),
-        ('256', "256 px", "", 'LAYER_ACTIVE', 2),
-        ('512', "512 px", "", 'HAND', 3),
-        ('1024', "1024 px", "", 'FILE_TICK', 4),
-        ('2048', "2048 px", "", 'ERROR', 5),
-        ('4096', "4096 px", "", 'CANCEL', 6),
+        ('128', '128 px', '', 'LAYER_USED', 1),
+        ('256', '256 px', '', 'LAYER_ACTIVE', 2),
+        ('512', '512 px', '', 'HAND', 3),
+        ('1024', '1024 px', '', 'FILE_TICK', 4),
+        ('2048', '2048 px', '', 'ERROR', 5),
+        ('4096', '4096 px', '', 'CANCEL', 6),
         ]
     image_width = bpy.props.EnumProperty(items=items, name="幅", default='1024')
     image_height = bpy.props.EnumProperty(items=items, name="高", default='1024')
@@ -1067,7 +1066,7 @@ class CNV_OT_quick_uv_border_bake_image(bpy.types.Operator):
         material_restore = common.material_restore(ob)
 
         bpy.ops.object.material_slot_add(override)
-        temp_mate = context.blend_data.materials.new("quick_gradation_bake_image_temp")
+        temp_mate = context.blend_data.materials.new('quick_gradation_bake_image_temp')
         ob.material_slots[0].material = temp_mate
         temp_mate.diffuse_color = (1, 1, 1)
 
@@ -1120,9 +1119,9 @@ class CNV_OT_quick_uv_border_bake_image(bpy.types.Operator):
 
         bpy.ops.render.render()
 
-        render_img = context.blend_data.images["Render Result"]
+        render_img = context.blend_data.images['Render Result']
 
-        temp_png_path = os.path.join(bpy.app.tempdir, "temp.png")
+        temp_png_path = os.path.join(bpy.app.tempdir, 'temp.png')
         img_override = context.copy()
         img_override['object'] = render_img
         img_override['edit_image'] = render_img
@@ -1166,12 +1165,12 @@ class CNV_OT_quick_mesh_border_bake_image(bpy.types.Operator):
 
     image_name = bpy.props.StringProperty(name="画像名")
     items = [
-        ('128', "128 px", "", 'LAYER_USED', 1),
-        ('256', "256 px", "", 'LAYER_ACTIVE', 2),
-        ('512', "512 px", "", 'HAND', 3),
-        ('1024', "1024 px", "", 'FILE_TICK', 4),
-        ('2048', "2048 px", "", 'ERROR', 5),
-        ('4096', "4096 px", "", 'CANCEL', 6),
+        ('128', '128 px', '', 'LAYER_USED', 1),
+        ('256', '256 px', '', 'LAYER_ACTIVE', 2),
+        ('512', '512 px', '', 'HAND', 3),
+        ('1024', '1024 px', '', 'FILE_TICK', 4),
+        ('2048', '2048 px', '', 'ERROR', 5),
+        ('4096', '4096 px', '', 'CANCEL', 6),
         ]
     image_width = bpy.props.EnumProperty(items=items, name="幅", default='1024')
     image_height = bpy.props.EnumProperty(items=items, name="高", default='1024')
@@ -1223,11 +1222,11 @@ class CNV_OT_quick_mesh_border_bake_image(bpy.types.Operator):
             elem.image = img
 
         temp_me = ob.to_mesh(scene=context.scene, apply_modifiers=True, settings='PREVIEW')
-        temp_ob = context.blend_data.objects.new("quick_density_bake_image", temp_me)
+        temp_ob = context.blend_data.objects.new('quick_density_bake_image', temp_me)
         compat.link(context.scene, temp_ob)
         for vc in temp_me.vertex_colors:
             temp_me.vertex_colors.remove(vc)
-        temp_vertex_color = temp_me.vertex_colors.new(name="quick_density_bake_image")
+        temp_vertex_color = temp_me.vertex_colors.new(name='quick_density_bake_image')
         compat.set_active(context, temp_ob)
         compat.set_select(temp_ob, True)
 
@@ -1280,12 +1279,12 @@ class CNV_OT_quick_density_bake_image(bpy.types.Operator):
 
     image_name = bpy.props.StringProperty(name="画像名")
     items = [
-        ('128', "128 px", "", 'LAYER_USED', 1),
-        ('256', "256 px", "", 'LAYER_ACTIVE', 2),
-        ('512', "512 px", "", 'HAND', 3),
-        ('1024', "1024 px", "", 'FILE_TICK', 4),
-        ('2048', "2048 px", "", 'ERROR', 5),
-        ('4096', "4096 px", "", 'CANCEL', 6),
+        ('128', '128 px', '', 'LAYER_USED', 1),
+        ('256', '256 px', '', 'LAYER_ACTIVE', 2),
+        ('512', '512 px', '', 'HAND', 3),
+        ('1024', '1024 px', '', 'FILE_TICK', 4),
+        ('2048', '2048 px', '', 'ERROR', 5),
+        ('4096', '4096 px', '', 'CANCEL', 6),
         ]
     image_width = bpy.props.EnumProperty(items=items, name="幅", default='1024')
     image_height = bpy.props.EnumProperty(items=items, name="高", default='1024')
@@ -1341,11 +1340,11 @@ class CNV_OT_quick_density_bake_image(bpy.types.Operator):
             elem.image = img
 
         temp_me = ob.to_mesh(scene=context.scene, apply_modifiers=True, settings='PREVIEW')
-        temp_ob = context.blend_data.objects.new("quick_density_bake_image", temp_me)
+        temp_ob = context.blend_data.objects.new('quick_density_bake_image', temp_me)
         compat.link(context.scene, temp_ob)
         for vc in temp_me.vertex_colors:
             temp_me.vertex_colors.remove(vc)
-        temp_vertex_color = temp_me.vertex_colors.new(name="quick_density_bake_image")
+        temp_vertex_color = temp_me.vertex_colors.new(name='quick_density_bake_image')
         compat.set_active(context, temp_ob)
         compat.set_select(temp_ob, True)
 
@@ -1429,12 +1428,12 @@ class CNV_OT_quick_mesh_distance_bake_image(bpy.types.Operator):
 
     image_name = bpy.props.StringProperty(name="画像名")
     items = [
-        ('128', "128 px", "", 'LAYER_USED', 1),
-        ('256', "256 px", "", 'LAYER_ACTIVE', 2),
-        ('512', "512 px", "", 'HAND', 3),
-        ('1024', "1024 px", "", 'FILE_TICK', 4),
-        ('2048', "2048 px", "", 'ERROR', 5),
-        ('4096', "4096 px", "", 'CANCEL', 6),
+        ('128', '128 px', '', 'LAYER_USED', 1),
+        ('256', '256 px', '', 'LAYER_ACTIVE', 2),
+        ('512', '512 px', '', 'HAND', 3),
+        ('1024', '1024 px', '', 'FILE_TICK', 4),
+        ('2048', '2048 px', '', 'ERROR', 5),
+        ('4096', '4096 px', '', 'CANCEL', 6),
         ]
     image_width = bpy.props.EnumProperty(items=items, name="幅", default='1024')
     image_height = bpy.props.EnumProperty(items=items, name="高", default='1024')
@@ -1486,11 +1485,11 @@ class CNV_OT_quick_mesh_distance_bake_image(bpy.types.Operator):
             elem.image = img
 
         temp_me = target_ob.to_mesh(scene=context.scene, apply_modifiers=True, settings='PREVIEW')
-        temp_ob = context.blend_data.objects.new("quick_density_bake_image", temp_me)
+        temp_ob = context.blend_data.objects.new('quick_density_bake_image', temp_me)
         compat.link(context.scene, temp_ob)
         for vc in temp_me.vertex_colors:
             temp_me.vertex_colors.remove(vc)
-        temp_vertex_color = temp_me.vertex_colors.new(name="quick_density_bake_image")
+        temp_vertex_color = temp_me.vertex_colors.new(name='quick_density_bake_image')
         compat.set_active(context, temp_ob)
         compat.set_select(temp_ob, True)
 
@@ -1533,12 +1532,12 @@ class CNV_OT_quick_bulge_bake_image(bpy.types.Operator):
 
     image_name = bpy.props.StringProperty(name="画像名")
     items = [
-        ('128', "128 px", "", 'LAYER_USED', 1),
-        ('256', "256 px", "", 'LAYER_ACTIVE', 2),
-        ('512', "512 px", "", 'HAND', 3),
-        ('1024', "1024 px", "", 'FILE_TICK', 4),
-        ('2048', "2048 px", "", 'ERROR', 5),
-        ('4096', "4096 px", "", 'CANCEL', 6),
+        ('128', '128 px', '', 'LAYER_USED', 1),
+        ('256', '256 px', '', 'LAYER_ACTIVE', 2),
+        ('512', '512 px', '', 'HAND', 3),
+        ('1024', '1024 px', '', 'FILE_TICK', 4),
+        ('2048', '2048 px', '', 'ERROR', 5),
+        ('4096', '4096 px', '', 'CANCEL', 6),
         ]
     image_width = bpy.props.EnumProperty(items=items, name="幅", default='1024')
     image_height = bpy.props.EnumProperty(items=items, name="高", default='1024')
@@ -1586,11 +1585,11 @@ class CNV_OT_quick_bulge_bake_image(bpy.types.Operator):
             elem.image = img
 
         temp_me = ob.to_mesh(scene=context.scene, apply_modifiers=True, settings='PREVIEW')
-        temp_ob = context.blend_data.objects.new("quick_bulge_bake_image", temp_me)
+        temp_ob = context.blend_data.objects.new('quick_bulge_bake_image', temp_me)
         compat.link(context.scene, temp_ob)
         for vc in temp_me.vertex_colors:
             temp_me.vertex_colors.remove(vc)
-        temp_vertex_color = temp_me.vertex_colors.new(name="quick_bulge_bake_image")
+        temp_vertex_color = temp_me.vertex_colors.new(name='quick_bulge_bake_image')
         compat.set_active(context, temp_ob)
         compat.set_select(temp_ob, True)
 
@@ -1639,12 +1638,12 @@ class CNV_OT_quick_semen_bake_image(bpy.types.Operator):
 
     image_name = bpy.props.StringProperty(name="画像名")
     items = [
-        ('128', "128 px", "", 'LAYER_USED', 1),
-        ('256', "256 px", "", 'LAYER_ACTIVE', 2),
-        ('512', "512 px", "", 'HAND', 3),
-        ('1024', "1024 px", "", 'FILE_TICK', 4),
-        ('2048', "2048 px", "", 'ERROR', 5),
-        ('4096', "4096 px", "", 'CANCEL', 6),
+        ('128', '128 px', '', 'LAYER_USED', 1),
+        ('256', '256 px', '', 'LAYER_ACTIVE', 2),
+        ('512', '512 px', '', 'HAND', 3),
+        ('1024', '1024 px', '', 'FILE_TICK', 4),
+        ('2048', '2048 px', '', 'ERROR', 5),
+        ('4096', '4096 px', '', 'CANCEL', 6),
         ]
     image_width = bpy.props.EnumProperty(items=items, name="幅", default='1024')
     image_height = bpy.props.EnumProperty(items=items, name="高", default='1024')
@@ -1699,9 +1698,9 @@ class CNV_OT_quick_semen_bake_image(bpy.types.Operator):
 
         material_restore = common.material_restore(ob)
 
-        blend_path = os.path.join(os.path.dirname(__file__), "append_data.blend")
+        blend_path = os.path.join(os.path.dirname(__file__), 'append_data.blend')
         with context.blend_data.libraries.load(blend_path) as (data_from, data_to):
-            data_to.materials = ["精液"]
+            data_to.materials = ['精液']
 
         bpy.ops.object.material_slot_add(override)
         temp_mate = data_to.materials[0]

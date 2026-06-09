@@ -92,7 +92,7 @@ class CNV_OT_export_cm3d2_anm(bpy.types.Operator):
         self.is_backup = bool(prefs.backup_ext)
         self.key_frame_count = -1
 
-        if "BoneData:0" in arm:
+        if 'BoneData:0' in arm:
             self.bone_parent_from = 'ARMATURE_PROPERTY'
         else:
             self.bone_parent_from = 'ARMATURE'
@@ -211,10 +211,10 @@ class CNV_OT_export_cm3d2_anm(bpy.types.Operator):
         bone_parents = {}
         if self.bone_parent_from == 'ARMATURE_PROPERTY':
             for i in range(9999):
-                name = "BoneData:" + str(i)
+                name = 'BoneData:' + str(i)
                 if name not in arm:
                     continue
-                elems = arm[name].split(",")
+                elems = arm[name].split(',')
                 if len(elems) != 5:
                     continue
                 if elems[0] in arm.bones:
@@ -233,7 +233,7 @@ class CNV_OT_export_cm3d2_anm(bpy.types.Operator):
         copied_action = None
         if ob.animation_data and ob.animation_data.action:
             copied_action = ob.animation_data.action.copy()
-            copied_action.name = ob.animation_data.action.name + "__anm_export"
+            copied_action.name = ob.animation_data.action.name + '__anm_export'
             fcurves = copied_action.fcurves
             keyed_bones = {'location': [], 'rotation_quaternion': [], 'rotation_euler': []}
             for bone in arm.bones:
@@ -365,7 +365,7 @@ class CNV_OT_export_cm3d2_anm(bpy.types.Operator):
                 current_bone = bone_parents[current_bone.name]
 
             bone_names.reverse()
-            common.write_str(file, "/".join(bone_names))
+            common.write_str(file, '/'.join(bone_names))
             
             for channel_id, keyframes in sorted(anm_data[bone.name].items(), key=lambda x: x[0]):
                 file.write(struct.pack('<B', channel_id))
@@ -418,7 +418,7 @@ class CNV_OT_export_cm3d2_anm(bpy.types.Operator):
         file.write(struct.pack('<?', False))
 
     def write_animation_from_text(self, context, file):
-        txt = context.blend_data.texts.get("AnmData")
+        txt = context.blend_data.texts.get('AnmData')
         if not txt:
             raise common.CM3D2ExportError("There is no 'AnmData' text file.")
 
@@ -869,7 +869,7 @@ class AnmBuilder:
         if has_animation_action:
             if self.export_method == 'KEYED': # This method modifies the action, so copy it.
                 copied_action = obj.animation_data.action.copy()
-                copied_action.name = obj.animation_data.action.name + "__anm_export"
+                copied_action.name = obj.animation_data.action.name + '__anm_export'
                 fcurves = compat.get_fcurves(copied_action, obj.animation_data)
             else:
                 fcurves = compat.get_fcurves(obj.animation_data.action, obj.animation_data)
@@ -899,10 +899,10 @@ class AnmBuilder:
         bone_parents: dict[str, bpy.types.Bone] = {}
         if use_armature_property:
             for i in range(9999):
-                name = "BoneData:" + str(i)
+                name = 'BoneData:' + str(i)
                 if name not in arm:
                     continue
-                elems = arm[name].split(",")
+                elems = arm[name].split(',')
                 if len(elems) != 5:
                     continue
                 if elems[0] in arm.bones:

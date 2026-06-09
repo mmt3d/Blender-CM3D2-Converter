@@ -86,7 +86,7 @@ COMMAND_ENUMS = [
 ]
 
 COMMAND_CUSTOM_ENUM = (
-    'NONE', 'Custom', 'Some other manually entered miscillaneous command', 'GREASEPENCIL', -1
+    'NONE', "Custom", "Some other manually entered miscillaneous command", 'GREASEPENCIL', -1
 )
 
 
@@ -340,8 +340,8 @@ class CM3D2MENU_PG_MiscCommand(MenuCommandBase):
         #sub_col.menu("OBJECT_MT_cm3d2_menu_context_menu", icon='DOWNARROW_HLT', text="")
         if self.active_index < len(self.params):
             sub_col.separator()
-            sub_col.operator("cm3d2menu.param_move", icon='TRIA_UP'  , text="").direction = 'UP'  
-            sub_col.operator("cm3d2menu.param_move", icon='TRIA_DOWN', text="").direction = 'DOWN'
+            sub_col.operator('cm3d2menu.param_move', icon='TRIA_UP'  , text="").direction = 'UP'
+            sub_col.operator('cm3d2menu.param_move', icon='TRIA_DOWN', text="").direction = 'DOWN'
 
 
 

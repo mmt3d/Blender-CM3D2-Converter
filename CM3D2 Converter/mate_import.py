@@ -14,8 +14,8 @@ class CNV_OT_import_cm3d2_mate(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     filepath: bpy.props.StringProperty(subtype='FILE_PATH')
-    filename_ext = ".mate"
-    filter_glob: bpy.props.StringProperty(default="*.mate", options={'HIDDEN'})
+    filename_ext = '.mate'
+    filter_glob: bpy.props.StringProperty(default='*.mate', options={'HIDDEN'})
 
     is_decorate: bpy.props.BoolProperty(name="種類に合わせてマテリアルを装飾", default=True)
     is_replace_cm3d2_tex: bpy.props.BoolProperty(name="テクスチャを探す", default=True, description="CM3D2本体のインストールフォルダからtexファイルを探して開きます")
@@ -30,9 +30,9 @@ class CNV_OT_import_cm3d2_mate(bpy.types.Operator):
     def invoke(self, context, event):
         prefs = common.preferences()
         if prefs.mate_default_path:
-            self.filepath = common.default_cm3d2_dir(prefs.mate_default_path, None, "mate")
+            self.filepath = common.default_cm3d2_dir(prefs.mate_default_path, None, 'mate')
         else:
-            self.filepath = common.default_cm3d2_dir(prefs.mate_import_path, None, "mate")
+            self.filepath = common.default_cm3d2_dir(prefs.mate_import_path, None, 'mate')
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
 
@@ -86,8 +86,8 @@ class CNV_OT_import_cm3d2_mate_text(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     filepath: bpy.props.StringProperty(subtype='FILE_PATH')
-    filename_ext = ".mate"
-    filter_glob: bpy.props.StringProperty(default="*.mate", options={'HIDDEN'})
+    filename_ext = '.mate'
+    filter_glob: bpy.props.StringProperty(default='*.mate', options={'HIDDEN'})
 
     is_overwrite: bpy.props.BoolProperty(name="現在のテキストに上書き", default=False)
 
@@ -98,9 +98,9 @@ class CNV_OT_import_cm3d2_mate_text(bpy.types.Operator):
     def invoke(self, context, event):
         prefs = common.preferences()
         if prefs.mate_default_path:
-            self.filepath = common.default_cm3d2_dir(prefs.mate_default_path, None, "mate")
+            self.filepath = common.default_cm3d2_dir(prefs.mate_default_path, None, 'mate')
         else:
-            self.filepath = common.default_cm3d2_dir(prefs.mate_import_path, None, "mate")
+            self.filepath = common.default_cm3d2_dir(prefs.mate_import_path, None, 'mate')
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
 

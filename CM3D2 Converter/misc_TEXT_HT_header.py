@@ -17,14 +17,14 @@ def menu_func(self, context):
         for line in txt.as_string().split('\n'):
             if line:
                 line_count += 1
-        row.operator('text.show_text', icon='ARMATURE_DATA', text=f_iface_("BoneData ({})", line_count, msgctxt='Operator')).name = 'BoneData'
+        row.operator('text.show_text', icon='ARMATURE_DATA', text=f_iface_('BoneData ({})', line_count, msgctxt='Operator')).name = 'BoneData'
     if 'LocalBoneData' in text_keys:
         txt = bpy.data.texts['LocalBoneData']
         line_count = 0
         for line in txt.as_string().split('\n'):
             if line:
                 line_count += 1
-        row.operator('text.show_text', icon='BONE_DATA', text=f_iface_("LocalBoneData ({})", line_count, msgctxt='Operator')).name = 'LocalBoneData'
+        row.operator('text.show_text', icon='BONE_DATA', text=f_iface_('LocalBoneData ({})', line_count, msgctxt='Operator')).name = 'LocalBoneData'
     if 'BoneData' in text_keys and 'LocalBoneData' in text_keys:
         if 'BoneData' in texts:
             if 'BaseBone' not in texts['BoneData']:
@@ -32,12 +32,12 @@ def menu_func(self, context):
             row.prop(texts['BoneData'], '["BaseBone"]', text="")
         row.operator('text.copy_text_bone_data', icon='COPYDOWN', text="")
         row.operator('text.paste_text_bone_data', icon='PASTEDOWN', text="")
-    if "Material:0" in text_keys:
+    if 'Material:0' in text_keys:
         self.layout.label(text="", icon='MATERIAL_DATA')
         row = self.layout.row(align=True)
         pass_count = 0
         for i in range(99):
-            name = "Material:" + str(i)
+            name = 'Material:' + str(i)
             if name in text_keys:
                 sub_row = row.row(align=True)
                 sub_row.scale_x = 0.75
@@ -46,7 +46,7 @@ def menu_func(self, context):
                 pass_count += 1
             if 9 < pass_count:
                 break
-        if "Material:0" in text_keys:
+        if 'Material:0' in text_keys:
             row.operator('text.remove_all_material_texts', icon='X', text="")
 
 
@@ -83,15 +83,15 @@ class CNV_OT_copy_text_bone_data(bpy.types.Operator):
     def execute(self, context):
         output_text = ""
         if 'BaseBone' in context.blend_data.texts['BoneData']:
-            output_text += "BaseBone:" + context.blend_data.texts['BoneData']['BaseBone'] + "\n"
+            output_text += 'BaseBone:' + context.blend_data.texts['BoneData']['BaseBone'] + '\n'
         for line in context.blend_data.texts['BoneData'].as_string().split('\n'):
             if not line:
                 continue
-            output_text += "BoneData:" + line + "\n"
+            output_text += 'BoneData:' + line + '\n'
         for line in context.blend_data.texts['LocalBoneData'].as_string().split('\n'):
             if not line:
                 continue
-            output_text += "LocalBoneData:" + line + "\n"
+            output_text += 'LocalBoneData:' + line + '\n'
         context.window_manager.clipboard = output_text
         self.report(type={'INFO'}, message="ボーン情報をクリップボードにコピーしました")
         return {'FINISHED'}
@@ -107,22 +107,22 @@ class CNV_OT_paste_text_bone_data(bpy.types.Operator):
     @classmethod
     def poll(cls, context):
         clipboard = context.window_manager.clipboard
-        return "BoneData:" in clipboard and "LocalBoneData:" in clipboard
+        return 'BoneData:' in clipboard and 'LocalBoneData:' in clipboard
 
     def execute(self, context):
-        if "BoneData" in context.blend_data.texts:
-            bone_data_text = context.blend_data.texts["BoneData"]
+        if 'BoneData' in context.blend_data.texts:
+            bone_data_text = context.blend_data.texts['BoneData']
             bone_data_text.clear()
         else:
-            bone_data_text = context.blend_data.texts.new("BoneData")
-        if "LocalBoneData" in context.blend_data.texts:
-            local_bone_data_text = context.blend_data.texts["LocalBoneData"]
+            bone_data_text = context.blend_data.texts.new('BoneData')
+        if 'LocalBoneData' in context.blend_data.texts:
+            local_bone_data_text = context.blend_data.texts['LocalBoneData']
             local_bone_data_text.clear()
         else:
-            local_bone_data_text = context.blend_data.texts.new("LocalBoneData")
+            local_bone_data_text = context.blend_data.texts.new('LocalBoneData')
 
         clipboard = context.window_manager.clipboard
-        for line in clipboard.split("\n"):
+        for line in clipboard.split('\n'):
             if line.startswith('BaseBone:'):
                 info = line[9:]  # len('BaseData:') == 9
                 bone_data_text['BaseBone'] = info
@@ -130,11 +130,11 @@ class CNV_OT_paste_text_bone_data(bpy.types.Operator):
                 continue
             if line.startswith('BoneData:'):
                 if line.count(',') >= 4:
-                    bone_data_text.write(line[9:] + "\n")  # len('BoneData:') == 9
+                    bone_data_text.write(line[9:] + '\n')  # len('BoneData:') == 9
                 continue
             if line.startswith('LocalBoneData:'):
                 if line.count(',') == 1:
-                    local_bone_data_text.write(line[14:] + "\n")  # len('LocalBoneData:') == 14
+                    local_bone_data_text.write(line[14:] + '\n')  # len('LocalBoneData:') == 14
         bone_data_text.current_line_index = 0
         local_bone_data_text.current_line_index = 0
         self.report(type={'INFO'}, message="ボーン情報をクリップボードから貼付けました")
@@ -152,7 +152,7 @@ class CNV_OT_remove_all_material_texts(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return "Material:0" in context.blend_data.texts
+        return 'Material:0' in context.blend_data.texts
 
     def invoke(self, context, event):
         return context.window_manager.invoke_props_dialog(self)
@@ -164,7 +164,7 @@ class CNV_OT_remove_all_material_texts(bpy.types.Operator):
         remove_texts = []
         pass_count = 0
         for i in range(9999):
-            name = "Material:" + str(i)
+            name = 'Material:' + str(i)
             if name in context.blend_data.texts:
                 remove_texts.append(context.blend_data.texts[name])
             else:

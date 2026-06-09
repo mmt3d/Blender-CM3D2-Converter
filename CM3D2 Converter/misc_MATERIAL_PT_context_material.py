@@ -12,7 +12,7 @@ class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
     bl_context = 'material'
-    bl_label = 'CM3D2'
+    bl_label = "CM3D2"
     bl_idname = 'MATERIAL_PT_cm3d2_properties'
 
     @classmethod
@@ -47,11 +47,11 @@ class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
                 row.label(text="CM3D2用", icon_value=common.kiss_icon())
                 sub_row = row.row(align=True)
                 sub_row.operator('material.export_cm3d2_mate', icon='FILE_FOLDER', text="mateへ")
-                sub_row.operator('material.copy_material', icon='COPYDOWN', text="コピー")
-                opr = sub_row.operator('material.paste_material', icon='PASTEDOWN', text="貼付け")
+                sub_row.operator('material.copy_material', icon='COPYDOWN', text="Copy")
+                opr = sub_row.operator('material.paste_material', icon='PASTEDOWN', text="Paste")
                 opr.use_dialog = True
                 opr.is_create = False
-                sub_row.operator('material.rebuild_material', icon='FILE_REFRESH', text='再構成')
+                sub_row.operator('material.rebuild_material', icon='FILE_REFRESH', text="再構成")
 
                 shader1 = mate['shader1']
                 shader_prop = cm3d2_data.MaterialHandler.get_shader_prop_dynamic(mate) #cm3d2_data.Handler.get_shader_prop(shader1)
@@ -102,7 +102,7 @@ class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
                     for node in tex_list:
                         tex = node.image
                         if tex:
-                            name = common.remove_serial_number(tex.name).replace("_", "") + " "
+                            name = common.remove_serial_number(tex.name).replace('_', '') + ' '
 
                             row = box.row(align=True)
                             sub_row = compat.layout_split(row, factor=1 / 3, align=True)
@@ -150,7 +150,7 @@ class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
                     if '_ALPHAPREMULTIPLY_ON' in mate.keys():
                         row = box.row(align=True)
                         sub_row = compat.layout_split(row, factor=1 / 3, align=True)
-                        sub_row.label(text="_ALPHAPREMULTIPLY_ON", icon='CHECKBOX_HLT')
+                        sub_row.label(text='_ALPHAPREMULTIPLY_ON', icon='CHECKBOX_HLT')
                         sub_row.prop(mate, '["_ALPHAPREMULTIPLY_ON"]', icon='SHADING_RENDERED', text="Value", toggle=1)
                         row.label(text="", icon='BLANK1')
 
@@ -212,29 +212,29 @@ class new_mate_opr():
         base_path = common.BASE_PATH_TEX
         prefs = common.preferences()
 
-        _MainTex = ("_MainTex", ob_name, base_path + ob_name + ".png")
-        _ToonRamp = ("_ToonRamp", prefs.new_mate_toonramp_name, prefs.new_mate_toonramp_path)
-        _ShadowTex = ("_ShadowTex", ob_name + "_shadow", base_path + ob_name + "_shadow.png")
-        _ShadowRateToon = ("_ShadowRateToon", prefs.new_mate_shadowratetoon_name, prefs.new_mate_shadowratetoon_path)
-        _HiTex = ("_HiTex", ob_name + "_s", base_path + ob_name + "_s.png")
-        _OutlineTex = ("_OutlineTex", ob_name + "_line", base_path + ob_name + "_line.png")
-        _OutlineToonRamp = ("_OutlineToonRamp", prefs.new_mate_linetoonramp_name, prefs.new_mate_linetoonramp_path)
+        _MainTex = ('_MainTex', ob_name, base_path + ob_name + '.png')
+        _ToonRamp = ('_ToonRamp', prefs.new_mate_toonramp_name, prefs.new_mate_toonramp_path)
+        _ShadowTex = ('_ShadowTex', ob_name + '_shadow', base_path + ob_name + '_shadow.png')
+        _ShadowRateToon = ('_ShadowRateToon', prefs.new_mate_shadowratetoon_name, prefs.new_mate_shadowratetoon_path)
+        _HiTex = ('_HiTex', ob_name + '_s', base_path + ob_name + '_s.png')
+        _OutlineTex = ('_OutlineTex', ob_name + '_line', base_path + ob_name + '_line.png')
+        _OutlineToonRamp = ('_OutlineToonRamp', prefs.new_mate_linetoonramp_name, prefs.new_mate_linetoonramp_path)
 
-        _Color = ("_Color", prefs.new_mate_color)
-        _ShadowColor = ("_ShadowColor", prefs.new_mate_shadowcolor)
-        _RimColor = ("_RimColor", prefs.new_mate_rimcolor)
-        _OutlineColor = ("_OutlineColor", prefs.new_mate_outlinecolor)
+        _Color = ('_Color', prefs.new_mate_color)
+        _ShadowColor = ('_ShadowColor', prefs.new_mate_shadowcolor)
+        _RimColor = ('_RimColor', prefs.new_mate_rimcolor)
+        _OutlineColor = ('_OutlineColor', prefs.new_mate_outlinecolor)
 
-        _Shininess = ("_Shininess", prefs.new_mate_shininess)
-        _OutlineWidth = ("_OutlineWidth", prefs.new_mate_outlinewidth)
-        _RimPower = ("_RimPower", prefs.new_mate_rimpower)
-        _RimShift = ("_RimShift", prefs.new_mate_rimshift)
-        _HiRate = ("_HiRate", prefs.new_mate_hirate)
-        _HiPow = ("_HiPow", prefs.new_mate_hipow)
-        _Cutoff = ("_Cutoff", prefs.new_mate_cutoff)
-        _ZTest = ("_ZTest", prefs.new_mate_ztest)
-        _ZTest2 = ("_ZTest2", prefs.new_mate_ztest2)
-        _ZTest2Alpha = ("_ZTest2Alpha", prefs.new_mate_ztest2alpha)
+        _Shininess = ('_Shininess', prefs.new_mate_shininess)
+        _OutlineWidth = ('_OutlineWidth', prefs.new_mate_outlinewidth)
+        _RimPower = ('_RimPower', prefs.new_mate_rimpower)
+        _RimShift = ('_RimShift', prefs.new_mate_rimshift)
+        _HiRate = ('_HiRate', prefs.new_mate_hirate)
+        _HiPow = ('_HiPow', prefs.new_mate_hipow)
+        _Cutoff = ('_Cutoff', prefs.new_mate_cutoff)
+        _ZTest = ('_ZTest', prefs.new_mate_ztest)
+        _ZTest2 = ('_ZTest2', prefs.new_mate_ztest2)
+        _ZTest2Alpha = ('_ZTest2Alpha', prefs.new_mate_ztest2alpha)
 
         if False:
             pass
@@ -288,8 +288,8 @@ class new_mate_opr():
         elif self.shader_type == 'CM3D2/Mosaic':
             mate['shader1'] = 'CM3D2/Mosaic'
             mate['shader2'] = 'CM3D2__Mosaic'
-            tex_list.append(("_RenderTex", ""))
-            f_list.append(("_FloatValue1", 30))
+            tex_list.append(('_RenderTex', ''))
+            f_list.append(('_FloatValue1', 30))
         elif self.shader_type == 'Unlit/Texture':
             mate['shader1'] = 'Unlit/Texture'
             mate['shader2'] = 'Unlit__Texture'
@@ -309,8 +309,8 @@ class new_mate_opr():
             mate['shader1'] = 'CM3D2/Man'
             mate['shader2'] = 'CM3D2__Man'
             col_list.append(_Color)
-            f_list.append(("_FloatValue2", 0.5))
-            f_list.append(("_FloatValue3", 1))
+            f_list.append(('_FloatValue2', 0.5))
+            f_list.append(('_FloatValue3', 1))
         elif self.shader_type == 'Diffuse':
             mate['shader1'] = 'Legacy Shaders/Diffuse'
             mate['shader2'] = 'Legacy Shaders__Diffuse'
@@ -460,7 +460,7 @@ class new_mate_opr():
             col_list.append(_Color)
             col_list.append(_RimColor)
             col_list.append(_OutlineColor)
-            col_list.append(("_SpecColor", (1, 1, 1, 1)))
+            col_list.append(('_SpecColor', (1, 1, 1, 1)))
             f_list.append(_Shininess)
             f_list.append(_OutlineWidth)
             f_list.append(_RimPower)
@@ -543,7 +543,7 @@ class CNV_OT_change_shader(bpy.types.Operator, new_mate_opr):
         is_com_mode = model_ver and model_ver >= 2000
         if not is_com_mode and self.shader_type not in cm3d2_data.SHADER_NAMES_CM3D2:
             row = self.layout.row(align=True)
-            row.label(text=f'この種類はmodelバージョン({model_ver})に不適格です', icon='ERROR')
+            row.label(text=f_("この種類はmodelバージョン({})に不適格です", model_ver), icon='ERROR')
 
         self.layout.prop(self, 'remove_unused', icon='TRASH')
         box = self.layout.box()
@@ -1069,7 +1069,7 @@ def menu_mateprop_f(context, layout, node):
     if prop_info.get('dispExact'):
         split = compat.layout_split(box, factor=LAYOUT_FACTOR)
         split.label(text="正確な値: ")
-        split.label(text="{0:f}".format(node.outputs[0].default_value))
+        split.label(text='{0:f}'.format(node.outputs[0].default_value))
 
     # TODO expand
     desc = prop_info.get('desc')

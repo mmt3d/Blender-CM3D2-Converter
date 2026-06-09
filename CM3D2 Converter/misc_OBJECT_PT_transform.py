@@ -103,15 +103,15 @@ class CNV_OT_align_to_cm3d2_base_bone(bpy.types.Operator):
         #self.base_bone_name = ob_names[1] if len(ob_names) >= 2  else 'Auto'
 
         # ボーン情報元のデフォルトオプションを取得
-        if "BoneData" in context.blend_data.texts:
+        if 'BoneData' in context.blend_data.texts:
             self.bone_info_mode = 'TEXT'
-        if "BoneData:0" in ob:
+        if 'BoneData:0' in ob:
             self.bone_info_mode = 'OBJECT_PROPERTY'
         arm_ob = ob.find_armature()
         if (not arm_ob) and (ob.parent and ob.parent.type == 'ARMATURE'):
             arm_ob = ob.parent
         if arm_ob:
-            if "BoneData:0" in arm_ob.data:
+            if 'BoneData:0' in arm_ob.data:
                 self.bone_info_mode = 'ARMATURE_PROPERTY'
 
         self.scale = common.preferences().scale
@@ -137,9 +137,9 @@ class CNV_OT_align_to_cm3d2_base_bone(bpy.types.Operator):
         col = self.layout.column(align=True)
         col.label(text="Bone Data Source", icon='BONE_DATA')
         _prop_enum_row(col, self, 'bone_info_mode', 'ARMATURE'         , enabled=bool(arm_ob                                ))
-        _prop_enum_row(col, self, 'bone_info_mode', 'TEXT'             , enabled=bool("BoneData" in context.blend_data.texts))
-        _prop_enum_row(col, self, 'bone_info_mode', 'OBJECT_PROPERTY'  , enabled=bool("BoneData:0" in ob                    ))
-        _prop_enum_row(col, self, 'bone_info_mode', 'ARMATURE_PROPERTY', enabled=bool(arm_ob and "BoneData:0" in arm_ob.data))
+        _prop_enum_row(col, self, 'bone_info_mode', 'TEXT'             , enabled=bool('BoneData' in context.blend_data.texts))
+        _prop_enum_row(col, self, 'bone_info_mode', 'OBJECT_PROPERTY'  , enabled=bool('BoneData:0' in ob                    ))
+        _prop_enum_row(col, self, 'bone_info_mode', 'ARMATURE_PROPERTY', enabled=bool(arm_ob and 'BoneData:0' in arm_ob.data))
 
     @staticmethod
     def from_bone_data(ob: bpy.types.Object, bone_data, local_bone_data, base_bone_name, scale=5):
@@ -244,7 +244,7 @@ class CNV_OT_align_to_cm3d2_base_bone(bpy.types.Operator):
                 return self.bone_data_report_cancel()
             base_bone_name = arm_ob.data['BaseBone']
         if self.bone_info_mode == 'TEXT':
-            bone_data_text = context.blend_data.texts["BoneData"]
+            bone_data_text = context.blend_data.texts['BoneData']
             if not 'BaseBone' in bone_data_text:
                 return self.bone_data_report_cancel()
             base_bone_name = bone_data_text['BaseBone']
@@ -255,8 +255,8 @@ class CNV_OT_align_to_cm3d2_base_bone(bpy.types.Operator):
             if not 'BaseBone' in target:
                 return self.bone_data_report_cancel()
             base_bone_name = target['BaseBone']
-            bone_data = CNV_OT_export_cm3d2_model.bone_data_parser(CNV_OT_export_cm3d2_model.indexed_data_generator(target, prefix="BoneData:"))
-            local_bone_data = CNV_OT_export_cm3d2_model.local_bone_data_parser(CNV_OT_export_cm3d2_model.indexed_data_generator(target, prefix="LocalBoneData:"))
+            bone_data = CNV_OT_export_cm3d2_model.bone_data_parser(CNV_OT_export_cm3d2_model.indexed_data_generator(target, prefix='BoneData:'))
+            local_bone_data = CNV_OT_export_cm3d2_model.local_bone_data_parser(CNV_OT_export_cm3d2_model.indexed_data_generator(target, prefix='LocalBoneData:'))
         
         old_basis = ob.matrix_basis.copy()
         if bone_data:

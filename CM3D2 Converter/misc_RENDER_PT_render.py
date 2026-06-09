@@ -68,7 +68,7 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
 
         if 'render_cm3d2_icon_background_color' in context.scene:
             try:
-                color = str(context.scene['render_cm3d2_icon_background_color']).split(",")
+                color = str(context.scene['render_cm3d2_icon_background_color']).split(',')
                 if len(color) == 3:
                     self.background_color[0] = float(color[0])
                     self.background_color[1] = float(color[1])
@@ -107,11 +107,11 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
         row.prop(self, 'is_round_background', icon='CLIPUV_DEHLT')
 
         self.layout.separator()
-        self.layout.prop_search(self, 'layer_image', context.blend_data, "images", icon='MOD_UVPROJECT')
+        self.layout.prop_search(self, 'layer_image', context.blend_data, 'images', icon='MOD_UVPROJECT')
 
     def execute(self, context):
         c = self.background_color[:]
-        context.scene['render_cm3d2_icon_background_color'] = ",".join([str(c[0]), str(c[1]), str(c[2])])
+        context.scene['render_cm3d2_icon_background_color'] = ','.join([str(c[0]), str(c[1]), str(c[2])])
         context.scene['render_cm3d2_icon_background_color_layer_image'] = self.layer_image
 
         obs = context.selected_objects
@@ -125,7 +125,7 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
                 with context.temp_override(object=ob):
                     bpy.ops.object.material_slot_add()
                 if len(ob.material_slots) > 0:
-                    temp_mate = context.blend_data.materials.new("temp")
+                    temp_mate = context.blend_data.materials.new('temp')
                     ob.material_slots[0].material = temp_mate
                     temp_mates.append(temp_mate)
 
@@ -150,8 +150,8 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
 
         hide_render_restore = common.hide_render_restore()
         pre_scene_camera = context.scene.camera
-        temp_camera = context.blend_data.cameras.new("render_cm3d2_icon_temp")
-        temp_camera_ob = context.blend_data.objects.new("render_cm3d2_icon_temp", temp_camera)
+        temp_camera = context.blend_data.cameras.new('render_cm3d2_icon_temp')
+        temp_camera_ob = context.blend_data.objects.new('render_cm3d2_icon_temp', temp_camera)
         try:
             maxs = [-999, -999, -999]
             mins = [999, 999, 999]
@@ -209,7 +209,7 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
                 # TODO view_layersのactive取得方法
                 layer = context.scene.view_layers[0]
                 layer.freestyle_settings.crease_angle = 1.58825
-                temp_lineset = layer.freestyle_settings.linesets.new("temp")
+                temp_lineset = layer.freestyle_settings.linesets.new('temp')
                 temp_lineset.linestyle.color = self.line_color
 
             # コンポジットノード #
@@ -223,12 +223,12 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
 
             img_node = node_tree.nodes.new('CompositorNodeImage')
             img_node.location = (0, -300)
-            if "Icon Alpha" in context.blend_data.images:
-                icon_alpha_img = context.blend_data.images["Icon Alpha"]
+            if 'Icon Alpha' in context.blend_data.images:
+                icon_alpha_img = context.blend_data.images['Icon Alpha']
             else:
-                blend_path = os.path.join(os.path.dirname(__file__), "append_data.blend")
+                blend_path = os.path.join(os.path.dirname(__file__), 'append_data.blend')
                 with context.blend_data.libraries.load(blend_path) as (data_from, data_to):
-                    data_to.images = ["Icon Alpha"]
+                    data_to.images = ['Icon Alpha']
                 icon_alpha_img = data_to.images[0]
             img_node.image = icon_alpha_img
 
@@ -289,10 +289,10 @@ class CNV_OT_render_cm3d2_icon(bpy.types.Operator):
                 layer = context.scene.view_layers[0]
                 layer.freestyle_settings.linesets.remove(temp_lineset)
 
-            img = context.blend_data.images["Render Result"]
+            img = context.blend_data.images['Render Result']
             tex_basename = common.remove_serial_number(context.active_object.name.split('.')[0])
-            img['tex Name'] = tex_basename + "_i_.tex"
-            img['cm3d2_path'] = common.BASE_PATH_TEX + tex_basename + "_i_.png"
+            img['tex Name'] = tex_basename + '_i_.tex'
+            img['cm3d2_path'] = common.BASE_PATH_TEX + tex_basename + '_i_.png'
             area = common.get_request_area(context, 'IMAGE_EDITOR')
             common.set_area_space_attr(area, 'image', img)
 

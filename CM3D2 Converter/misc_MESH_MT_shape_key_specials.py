@@ -337,10 +337,10 @@ class shape_key_transfer_op(bpy.types.Operator):
             source_basis = source_me.shape_keys.key_blocks[0]
             
             old_basis = target_me.shape_keys and next(iter(target_me.shape_keys.key_blocks), False) or target_ob.shape_key_add()
-            old_basis.name = "__old_basis__" + old_basis.name
+            old_basis.name = '__old_basis__' + old_basis.name
             new_basis = target_ob.shape_key_add(name=source_basis.name)
 
-            self.binded_shape_key = source_ob.shape_key_add(name="__bind_shape_key", from_mix=True)
+            self.binded_shape_key = source_ob.shape_key_add(name='__bind_shape_key', from_mix=True)
             self.source_bind_data = self.binded_shape_key.data
             
             compat.set_active(context, target_ob)
@@ -814,8 +814,8 @@ class CNV_UL_vgroups_selector(bpy.types.UIList):
     def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index, flt_flag):
         # ユーザにはpreferredをチェック操作させ、結果はフィルタ反映したものをvalueで取得する想定
         row = layout.row(align=True)
-        row.prop(item, "preferred", text=item.name, icon_value=icon)
-        if self.order_mode == "IMPORTANCE":
+        row.prop(item, 'preferred', text=item.name, icon_value=icon)
+        if self.order_mode == 'IMPORTANCE':
             sub = row.row()
             sub.alignment = 'RIGHT'
             sub.label(text=f"{item.sort0:.4f}")
@@ -824,19 +824,19 @@ class CNV_UL_vgroups_selector(bpy.types.UIList):
         row = layout.row()
 
         subrow = row.row(align=True)
-        subrow.prop(self, "filter_name", text="", icon="VIEWZOOM")
+        subrow.prop(self, 'filter_name', text="", icon='VIEWZOOM')
         icon = 'ZOOM_OUT' if self.use_filter_name_reverse else 'ZOOM_IN'
-        subrow.prop(self, "use_filter_name_reverse", text="", icon=icon)
+        subrow.prop(self, 'use_filter_name_reverse', text="", icon=icon)
 
         subrow = row.row(align=True)
-        subrow.prop(self, "use_filter_deform", toggle=True)
+        subrow.prop(self, 'use_filter_deform', toggle=True)
         icon = 'ZOOM_OUT' if self.use_filter_deform_reverse else 'ZOOM_IN'
-        subrow.prop(self, "use_filter_deform_reverse", text="", icon=icon)
+        subrow.prop(self, 'use_filter_deform_reverse', text="", icon=icon)
 
         row = layout.row(align=True)
-        row.prop(self, "order_mode")
+        row.prop(self, 'order_mode')
         icon = 'TRIA_UP' if self.use_filter_orderby_invert else 'TRIA_DOWN'
-        row.prop(self, "use_filter_orderby_invert", text="", icon=icon)
+        row.prop(self, 'use_filter_orderby_invert', text="", icon=icon)
 
     def filter_items(self, context, data, propname):
         items = getattr(data, propname)
@@ -847,24 +847,24 @@ class CNV_UL_vgroups_selector(bpy.types.UIList):
         # 文字列検索
         if self.filter_name:
             flt_flags = helper_funcs.filter_items_by_name(
-                self.filter_name, self.bitflag_filter_item, items, "name",
+                self.filter_name, self.bitflag_filter_item, items, 'name',
                 reverse=self.use_filter_name_reverse)
 
         # Deform フィルタ
         if self.use_filter_deform:
             for i, it in enumerate(items):
-                if not (bool(getattr(it, "filter0", False)) ^ self.use_filter_deform_reverse):
+                if not (bool(getattr(it, 'filter0', False)) ^ self.use_filter_deform_reverse):
                     flt_flags[i] &= ~self.bitflag_filter_item
 
         # 並び替え
         if self.order_mode == 'NAME':
             sort_data = [(i, it) for i, it in enumerate(items)]
-            key = lambda x: (getattr(x[1], "name", "") or "").lower()
+            key = lambda x: (getattr(x[1], 'name', '') or '').lower()
             reverse = self.use_filter_orderby_invert
             flt_neworder = helper_funcs.sort_items_helper(sort_data, key=key, reverse=reverse)
         elif self.order_mode == 'IMPORTANCE':
             sort_data = [(i, it) for i, it in enumerate(items)]
-            key = lambda x: getattr(x[1], "sort0", 0.0)
+            key = lambda x: getattr(x[1], 'sort0', 0.0)
             reverse = not self.use_filter_orderby_invert
             flt_neworder = helper_funcs.sort_items_helper(sort_data, key=key, reverse=reverse)
 
@@ -910,10 +910,10 @@ class CNV_OT_weighted_shape_key_transfer(shape_key_transfer_op):
         self.matched_vgroups = common.values_of_matched_keys(target_ob.vertex_groups, source_ob.vertex_groups)
         armature_ob = target_ob.find_armature() or source_ob.find_armature()
         armature = armature_ob and armature_ob.data or False
-        bone_data_ob = (target_ob.get("LocalBoneData:0") and target_ob) or (source_ob.get("LocalBoneData:0") and source_ob) or None
+        bone_data_ob = (target_ob.get('LocalBoneData:0') and target_ob) or (source_ob.get('LocalBoneData:0') and source_ob) or None
         local_bone_names = []
         if bone_data_ob:
-            local_bone_data = model_export.CNV_OT_export_cm3d2_model.local_bone_data_parser(model_export.CNV_OT_export_cm3d2_model.indexed_data_generator(bone_data_ob, prefix="LocalBoneData:"))
+            local_bone_data = model_export.CNV_OT_export_cm3d2_model.local_bone_data_parser(model_export.CNV_OT_export_cm3d2_model.indexed_data_generator(bone_data_ob, prefix='LocalBoneData:'))
             local_bone_names = [ bone['name'] for bone in local_bone_data ]
 
         importance_map = {vg.index: [0.0, 0] for vg, _ in self.matched_vgroups}
@@ -941,7 +941,7 @@ class CNV_OT_weighted_shape_key_transfer(shape_key_transfer_op):
 
     def draw(self, context):
         CNV_OT_precision_shape_key_transfer.draw(self, context)
-        self.layout.template_list("CNV_UL_vgroups_selector", "", self, "using_vgroups", self, "active_vgroup")
+        self.layout.template_list('CNV_UL_vgroups_selector', "", self, 'using_vgroups', self, 'active_vgroup')
         self.layout.label(text="Show filters", icon='FILE_PARENT')
         
     def prepare(self, context):

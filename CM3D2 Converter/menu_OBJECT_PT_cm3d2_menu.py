@@ -42,7 +42,7 @@ class OBJECT_PT_cm3d2_menu(bpy.types.Panel):
     bl_space_type  = 'PROPERTIES'
     bl_region_type = 'WINDOW'
     bl_context     = 'object'
-    bl_label       = 'CM3D2 Menu'
+    bl_label       = "CM3D2 Menu"
     bl_idname      = 'OBJECT_PT_cm3d2_menu'
 
     @classmethod
@@ -78,11 +78,11 @@ class OBJECT_PT_cm3d2_menu(bpy.types.Panel):
         sub_col.operator('cm3d2menu.command_add'   , icon='ADD'   , text="")
         sub_col.operator('cm3d2menu.command_remove', icon='REMOVE', text="")
         #sub_col.separator()
-        #sub_col.menu("OBJECT_MT_cm3d2_menu_context_menu", icon='DOWNARROW_HLT', text="")
+        #sub_col.menu('OBJECT_MT_cm3d2_menu_context_menu', icon='DOWNARROW_HLT', text="")
         if active_command:
             sub_col.separator()
-            sub_col.operator("cm3d2menu.command_move", icon='TRIA_UP'  , text="").direction = 'UP'  
-            sub_col.operator("cm3d2menu.command_move", icon='TRIA_DOWN', text="").direction = 'DOWN'
+            sub_col.operator('cm3d2menu.command_move', icon='TRIA_UP'  , text="").direction = 'UP'
+            sub_col.operator('cm3d2menu.command_move', icon='TRIA_DOWN', text="").direction = 'DOWN'
         
         if active_command:
             box = self.layout.box()
@@ -190,7 +190,7 @@ class CM3D2MENU_OT_command_add(bpy.types.Operator):
     command_type_enums = menu_file.COMMAND_ENUMS + [menu_file.COMMAND_CUSTOM_ENUM]
     type: bpy.props.EnumProperty(items=command_type_enums, name="Type", default='NONE')
     
-    string: bpy.props.StringProperty(name="String", default="newcommand")
+    string: bpy.props.StringProperty(name="String", default='newcommand')
 
     @classmethod
     def poll(cls, context):
@@ -351,7 +351,7 @@ class CM3D2MENU_OT_align_selected_to_attach_point(bpy.types.Operator):
                 continue
             const = selected.constraints.get("CM3D2 Attachment")
             if not const:
-                const = selected.constraints.new("CHILD_OF")
+                const = selected.constraints.new('CHILD_OF')
                 const.name = "CM3D2 Attachment"
             const.target = arm_ob
             selected.matrix_basis = attach_basis

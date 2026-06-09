@@ -80,13 +80,13 @@ class CNV_OT_transfer_pose(bpy.types.Operator):
             if self.is_key_location or self.is_key_rotation:
                 # コピー（変形）コンストレイントを追加、ターゲットのレストポーズを参照
                 const = bone.constraints.new('COPY_TRANSFORMS')
-                const.name = "TEMP_TRANSFORM"
+                const.name = 'TEMP_TRANSFORM'
                 const.target = source_ob
                 const.subtarget = bone.name
             if self.is_key_scale:
                 source_bone = source_ob.pose.bones.get(bone.name)
                 const = bone.constraints.new('LIMIT_SCALE')
-                const.name = "TEMP_SCALE"
+                const.name = 'TEMP_SCALE'
                 const.owner_space = 'LOCAL'
                 const.use_transform_limit = True
                 const.use_min_x = True
@@ -98,12 +98,12 @@ class CNV_OT_transfer_pose(bpy.types.Operator):
                 const.min_x = source_bone.scale.x
                 const.min_y = source_bone.scale.y
                 const.min_z = source_bone.scale.z
-                if source_ob.data.get("isPrimedPose"):
+                if source_ob.data.get('isPrimedPose'):
                     source_prime_scale = mathutils.Vector(source_bone.get('prime_scale', (1, 1, 1)))
                     const.min_x *= source_prime_scale.x
                     const.min_y *= source_prime_scale.y
                     const.min_z *= source_prime_scale.z
-                if target_ob.data.get("isPrimedPose"):
+                if target_ob.data.get('isPrimedPose'):
                     target_prime_scale = mathutils.Vector(bone.get('prime_scale', (1, 1, 1)))
                     const.min_x /= target_prime_scale.x
                     const.min_y /= target_prime_scale.y
@@ -247,9 +247,9 @@ class CNV_OT_base_prime_pose_operator(bpy.types.Operator):
 
             def insert_pose(ob, i):
                 for bone in ob.pose.bones:
-                    bone.keyframe_insert(data_path="location", frame=i, group=bone.name)
-                    bone.keyframe_insert(data_path="rotation_euler", frame=i, group=bone.name)
-                    bone.keyframe_insert(data_path="rotation_quaternion", frame=i, group=bone.name)
+                    bone.keyframe_insert(data_path='location', frame=i, group=bone.name)
+                    bone.keyframe_insert(data_path='rotation_euler', frame=i, group=bone.name)
+                    bone.keyframe_insert(data_path='rotation_quaternion', frame=i, group=bone.name)
                     bone.keyframe_insert(data_path='scale', frame=i, group=bone.name)
 
             keys = range(self.keyframe_range)
@@ -285,7 +285,7 @@ class CNV_OT_prime_pose(CNV_OT_base_prime_pose_operator):
 
 @compat.BlRegister()
 class CNV_OT_revert_primed_pose(CNV_OT_base_prime_pose_operator):
-    bl_idname = "pose.revert_primed_pose"
+    bl_idname = 'pose.revert_primed_pose'
     bl_label = "元の素体ポーズに戻す"
     bl_description = "カスタムプロパティのボーン情報を元に最初の素体ポーズを復元します"
     bl_options = {'REGISTER', 'UNDO'}
@@ -308,7 +308,7 @@ def copy_pose_from_property(ob: bpy.types.Object):
         b for b in arm.bones if b.name.count('*') == 1 and re.search(r'\.([rRlL])$', b.name))
 
     from .model_export import CNV_OT_export_cm3d2_model as export_model
-    bone_data = export_model.bone_data_parser(export_model.indexed_data_generator(arm, prefix="BoneData:"))
+    bone_data = export_model.bone_data_parser(export_model.indexed_data_generator(arm, prefix='BoneData:'))
 
     import_scale = arm.get('ImportScale', common.preferences().scale)
 
@@ -364,7 +364,7 @@ class CNV_OT_set_frame(bpy.types.Operator):
 
 @compat.BlRegister()
 class CNV_OT_set_original_rest_frame(CNV_OT_set_frame):
-    bl_idname = "pose.set_original_rest_frame"
+    bl_idname = 'pose.set_original_rest_frame'
     bl_label = "Original Rest"
     bl_description = "Moves to original rest pose frame"
     bl_options = {'REGISTER', 'UNDO'}
@@ -373,7 +373,7 @@ class CNV_OT_set_original_rest_frame(CNV_OT_set_frame):
 
 @compat.BlRegister()
 class CNV_OT_set_current_rest_frame(CNV_OT_set_frame):
-    bl_idname = "pose.set_current_rest_frame"
+    bl_idname = 'pose.set_current_rest_frame'
     bl_label = "Current Rest"
     bl_description = "Moves to current rest pose frame"
     bl_options = {'REGISTER', 'UNDO'}

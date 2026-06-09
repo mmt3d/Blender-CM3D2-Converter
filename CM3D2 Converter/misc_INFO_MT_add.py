@@ -18,7 +18,7 @@ class misc_INFO_MT_add_cm3d2(bpy.types.Menu):
     bl_label = "CM3D2"
 
     def draw(self, context):
-        self.layout.operator('wm.append_cm3d2_figure', text="body001", icon_value=common.kiss_icon()).object_name = "body001.body"
+        self.layout.operator('wm.append_cm3d2_figure', text="body001", icon_value=common.kiss_icon()).object_name = 'body001.body'
         self.layout.separator()
         self.layout.operator('wm.append_cm3d2_figure', text="乳袋防止素体", icon='PIVOT_INDIVIDUAL').object_name = "乳袋防止素体"
         self.layout.separator()
@@ -45,7 +45,7 @@ class CNV_OT_append_cm3d2_figure(bpy.types.Operator):
         if bpy.ops.object.select_all.poll():
             bpy.ops.object.select_all(action='DESELECT')
 
-        blend_path = os.path.join(os.path.dirname(__file__), "append_data.blend")
+        blend_path = os.path.join(os.path.dirname(__file__), 'append_data.blend')
         with context.blend_data.libraries.load(blend_path) as (data_from, data_to):
             data_to.objects = [self.object_name]
 

@@ -13,8 +13,8 @@ class CNV_OT_import_cm3d2_tex(bpy.types.Operator):
     bl_options = {'REGISTER'}
 
     filepath: bpy.props.StringProperty(subtype='FILE_PATH')
-    filename_ext = ".tex;.png"
-    filter_glob: bpy.props.StringProperty(default="*.tex;*.png", options={'HIDDEN'})
+    filename_ext = '.tex;.png'
+    filter_glob: bpy.props.StringProperty(default='*.tex;*.png', options={'HIDDEN'})
 
     items = [
         ('PACK', "内部にパックする", "", 'PACKAGE', 1),
@@ -25,9 +25,9 @@ class CNV_OT_import_cm3d2_tex(bpy.types.Operator):
     def invoke(self, context, event):
         prefs = common.preferences()
         if prefs.tex_default_path:
-            self.filepath = common.default_cm3d2_dir(prefs.tex_default_path, None, "tex")
+            self.filepath = common.default_cm3d2_dir(prefs.tex_default_path, None, 'tex')
         else:
-            self.filepath = common.default_cm3d2_dir(prefs.tex_import_path, None, "tex")
+            self.filepath = common.default_cm3d2_dir(prefs.tex_import_path, None, 'tex')
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
 
@@ -53,16 +53,16 @@ class CNV_OT_import_cm3d2_tex(bpy.types.Operator):
                 return {'CANCELLED'}
 
             root, ext = os.path.splitext(self.filepath)
-            png_path = root + ".png"
+            png_path = root + '.png'
             is_png_overwrite = os.path.exists(png_path)
             if self.mode == 'PACK' and is_png_overwrite:
-                png_path += ".temp.png"
+                png_path += '.temp.png'
             with open(png_path, 'wb') as png_file:
                 png_file.write(tex_data[-1])
             bpy.ops.image.open(filepath=png_path)
             img = context.edit_image
             img.name = os.path.basename(self.filepath)
-            img['cm3d2_path'] = common.get_tex_cm3d2path(root + ".png")
+            img['cm3d2_path'] = common.get_tex_cm3d2path(root + '.png')
 
             if self.mode == 'PACK':
                 img.pack(as_png=True)

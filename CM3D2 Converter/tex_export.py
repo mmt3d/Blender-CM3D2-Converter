@@ -14,19 +14,19 @@ class CNV_OT_export_cm3d2_tex(bpy.types.Operator):
     bl_options = {'REGISTER'}
 
     filepath: bpy.props.StringProperty(subtype='FILE_PATH')
-    filename_ext = ".tex"
-    filter_glob: bpy.props.StringProperty(default="*.tex", options={'HIDDEN'})
+    filename_ext = '.tex'
+    filter_glob: bpy.props.StringProperty(default='*.tex', options={'HIDDEN'})
 
     is_backup: bpy.props.BoolProperty(name="ファイルをバックアップ", default=True, description="ファイルに上書きする場合にバックアップファイルを複製します")
 
     version: bpy.props.EnumProperty(
         name="ファイルバージョン",
         items=[
-            ('1011', '1011', 'COM3D2 1.13 or later', 'NONE', 0),
-            ('1010', '1010', 'CM3D2 1.49 ～ or COM3D2', 'NONE', 1),
-            ('1000', '1000', '旧フォーマット', 'NONE', 2),
+            ('1011', "1011", "COM3D2 1.13 or later", 'NONE', 0),
+            ('1010', "1010", "CM3D2 1.49 ～ or COM3D2", 'NONE', 1),
+            ('1000', "1000", "旧フォーマット", 'NONE', 2),
         ], default='1010')
-    path: bpy.props.StringProperty(name="パス", default=common.BASE_PATH_TEX + "/*.png")
+    path: bpy.props.StringProperty(name="パス", default=common.BASE_PATH_TEX + '/*.png')
 
     @classmethod
     def poll(cls, context):
@@ -42,9 +42,9 @@ class CNV_OT_export_cm3d2_tex(bpy.types.Operator):
         if img.filepath:
             prefs.tex_export_path = bpy.path.abspath(img.filepath)
         if prefs.tex_default_path:
-            self.filepath = common.default_cm3d2_dir(prefs.tex_default_path, common.remove_serial_number(img.name), "tex")
+            self.filepath = common.default_cm3d2_dir(prefs.tex_default_path, common.remove_serial_number(img.name), 'tex')
         else:
-            self.filepath = common.default_cm3d2_dir(prefs.tex_export_path, common.remove_serial_number(img.name), "tex")
+            self.filepath = common.default_cm3d2_dir(prefs.tex_export_path, common.remove_serial_number(img.name), 'tex')
         self.is_backup = bool(prefs.backup_ext)
         self.path = img.get('cm3d2_path')
         if self.path is None:
@@ -86,9 +86,9 @@ class CNV_OT_export_cm3d2_tex(bpy.types.Operator):
         # とりあえずpngで保存
         img = context.edit_image
         if img.source != 'VIEWER':
-            temp_path = self.filepath + ".temp.png"
+            temp_path = self.filepath + '.temp.png'
         else:
-            temp_path = os.path.splitext(self.filepath)[0] + ".png"
+            temp_path = os.path.splitext(self.filepath)[0] + '.png'
         pre_filepath = bpy.path.abspath(img.filepath)
         pre_source = img.source
         try:

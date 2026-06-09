@@ -44,8 +44,18 @@ class CNV_OT_vertices_count_checker(bpy.types.Operator):
         inner_count = len(alreadys)
         real_count = len(me.vertices)
         if inner_count <= 65535:
-            self.report(type={'INFO'}, message=f_tip_("○ 出力可能な頂点数です、あと約{}頂点ほど余裕があります (頂点数:{}(+{}) UV分割で増加:+{}％)", 65535 - inner_count, real_count, inner_count - real_count, int(inner_count / real_count * 100)))
+            self.report(type={'INFO'},
+                        message=f_tip_("○ 出力可能な頂点数です、あと約{remaining}頂点ほど余裕があります (頂点数:{vertices}(+{uv_split_incl}) UV分割で増加:+{uv_split_ratio}％)",
+                                       remaining=65535 - inner_count,
+                                       vertices=real_count,
+                                       uv_split_incr=inner_count - real_count,
+                                       uv_split_ratio=int(inner_count / real_count * 100)))
         else:
-            self.report(type={'ERROR'}, message=f_tip_("× 出力できない頂点数です、あと約{}頂点減らしてください (頂点数:{}(+{}) UV分割で増加:+{}％)", inner_count - 65535, real_count, inner_count - real_count, int(inner_count / real_count * 100)))
+            self.report(type={'ERROR'},
+                        message=f_tip_("× 出力できない頂点数です、あと約{remaining}頂点減らしてください (頂点数:{vertices}(+{uv_split_incr}) UV分割で増加:+{uv_split_ratio}％)",
+                                       remaining=inner_count - 65535,
+                                       vertices=real_count,
+                                       uv_split_incr=inner_count - real_count,
+                                       uv_split_ratio=int(inner_count / real_count * 100)))
 
         return {'FINISHED'}

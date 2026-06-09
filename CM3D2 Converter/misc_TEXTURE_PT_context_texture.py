@@ -56,7 +56,7 @@ def menu_func(self, context):
 
     box.prop(tex, 'name', icon='SORTALPHA', text="設定値名")
 
-    if slot_type == "tex":
+    if slot_type == 'tex':
         if tex.type == 'IMAGE':
             img = tex.image
             if img:
@@ -71,11 +71,11 @@ def menu_func(self, context):
                         img['cm3d2_path'] = common.get_tex_cm3d2path(img.filepath)
                     sub_box.prop(img, '["cm3d2_path"]', text="テクスチャパス")
 
-                    if base_name == "_ToonRamp":
+                    if base_name == '_ToonRamp':
                         sub_box.menu('TEXTURE_MT_context_texture_ToonRamp', icon='NLA')
-                    elif base_name == "_ShadowRateToon":
+                    elif base_name == '_ShadowRateToon':
                         sub_box.menu('TEXTURE_MT_context_texture_ShadowRateToon', icon='NLA')
-                    elif base_name == "_OutlineToonRamp":
+                    elif base_name == '_OutlineToonRamp':
                         sub_box.menu('TEXTURE_MT_context_texture_OutlineToonRamp', icon='NLA')
 
                     split = compat.layout_split(sub_box, factor=1 / 3, align=True)
@@ -97,7 +97,7 @@ def menu_func(self, context):
                     else:
                         row.operator('image.replace_cm3d2_tex', icon='BORDERMOVE')
 
-    elif slot_type == "col":
+    elif slot_type == 'col':
         sub_box = box.box()
 
         # row = compat.layout_split(sub_box, factor=0.7, align=True)
@@ -112,7 +112,7 @@ def menu_func(self, context):
         row.prop(tex_slot, 'diffuse_color_factor', icon='IMAGE_RGB_ALPHA', text="色の透明度", slider=True)
         row.operator('texture.set_color_value_old', text="", icon='TRIA_RIGHT').color = list(tex_slot.color) + [1]
 
-    elif slot_type == "f":
+    elif slot_type == 'f':
         sub_box = box.box()
         row = sub_box.row(align=True)
         row.prop(tex_slot, 'diffuse_color_factor', icon='ARROW_LEFTRIGHT', text="値")
@@ -247,7 +247,7 @@ class TEXTURE_MT_context_texture_values_ZTest(bpy.types.Menu):
     bl_idname = 'TEXTURE_MT_context_texture_values_ZTest'
     bl_label = "値リスト"
 
-    node_name: bpy.props.StringProperty(name='NodeName')
+    node_name: bpy.props.StringProperty(options={'HIDDEN', 'SKIP_SAVE'})
 
     @classmethod
     def poll(cls, context):
@@ -385,7 +385,7 @@ class CNV_OT_set_default_toon_textures(bpy.types.Operator, common.NodeHandler):
                 node.image.source = 'FILE'
             # 見つからない場合でも、テクスチャ名、ファイルパスに変更を反映
             node.image.name = self.tex_name
-            node.image.filepath = self.tex_name + ".png"
+            node.image.filepath = self.tex_name + '.png'
         else:
 
             if node.image is None:
@@ -433,7 +433,7 @@ class CNV_OT_auto_set_color_value(bpy.types.Operator):
     is_all: bpy.props.BoolProperty(name="全てが対象", default=True)
     saturation_multi: bpy.props.FloatProperty(name="彩度の乗算値", default=2.2, min=0, max=5, soft_min=0, soft_max=5, step=10, precision=2)
     value_multi: bpy.props.FloatProperty(name="明度の乗算値", default=0.3, min=0, max=5, soft_min=0, soft_max=5, step=10, precision=2)
-    node_name: bpy.props.StringProperty(name='NodeName')
+    node_name: bpy.props.StringProperty(options={'HIDDEN', 'SKIP_SAVE'})
 
     @classmethod
     def poll(cls, context):
@@ -559,7 +559,7 @@ class CNV_OT_quick_export_cm3d2_tex(bpy.types.Operator):
     bl_description = "テクスチャの画像を同フォルダにtexとして保存します"
     bl_options = {'REGISTER'}
 
-    node_name: bpy.props.StringProperty(name="NodeName")
+    node_name: bpy.props.StringProperty(options={'HIDDEN', 'SKIP_SAVE'})
 
     def execute(self, context):
         img = compat.get_tex_image(context, self.node_name)
@@ -567,7 +567,7 @@ class CNV_OT_quick_export_cm3d2_tex(bpy.types.Operator):
             self.report(type={'ERROR'}, message=f_tip_("イメージの取得に失敗しました。{}", self.node_name))
             return {'CANCELLED'}
 
-        filepath = os.path.splitext(bpy.path.abspath(img.filepath))[0] + ".tex"
+        filepath = os.path.splitext(bpy.path.abspath(img.filepath))[0] + '.tex'
         if 'cm3d2_path' in img:
             path = img['cm3d2_path']
         else:
@@ -620,7 +620,7 @@ class CNV_OT_set_value(bpy.types.Operator, common.NodeHandler):
     bl_description = "floatタイプの設定値を設定します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    value: bpy.props.FloatProperty(name='value')
+    value: bpy.props.FloatProperty(name="value")
 
     @classmethod
     def poll(cls, context):

@@ -42,8 +42,8 @@ def menu_func(self, context):
         else:
             sub_row.label(text="0", icon='CHECKBOX_DEHLT')
         row = col.row(align=True)
-        row.operator('object.copy_armature_bone_data_property', icon='COPYDOWN', text="コピー")
-        row.operator('object.paste_armature_bone_data_property', icon='PASTEDOWN', text="貼付け")
+        row.operator('object.copy_armature_bone_data_property', icon='COPYDOWN', text="Copy")
+        row.operator('object.paste_armature_bone_data_property', icon='PASTEDOWN', text="Paste")
         row.operator('object.remove_armature_bone_data_property', icon='X', text="")
 
     flag = False
@@ -69,8 +69,8 @@ def menu_func(self, context):
     if bone_data_count:
         col = box.column(align=True)
         col.label(text="Armature Operators", icon='OUTLINER_OB_ARMATURE')
-        col.operator("object.add_cm3d2_twist_bones", text="Connect Twist Bones", icon='CONSTRAINT_BONE')
-        col.operator("object.cleanup_scale_bones", text="Cleanup Scale Bones", icon='X')
+        col.operator('object.add_cm3d2_twist_bones', text="Connect Twist Bones", icon='CONSTRAINT_BONE')
+        col.operator('object.cleanup_scale_bones', text="Cleanup Scale Bones", icon='X')
         
     if 'isPrimedPose' in arm:
         if not is_boxed:
@@ -191,20 +191,20 @@ class CNV_OT_copy_armature_bone_data_property(bpy.types.Operator):
         ob = context.active_object.data
         pass_count = 0
         if 'BaseBone' in ob:
-            output_text += "BaseBone:" + ob['BaseBone'] + "\n"
+            output_text += 'BaseBone:' + ob['BaseBone'] + '\n'
         for i in range(99999):
-            name = "BoneData:" + str(i)
+            name = 'BoneData:' + str(i)
             if name in ob:
-                output_text += "BoneData:" + ob[name] + "\n"
+                output_text += 'BoneData:' + ob[name] + '\n'
             else:
                 pass_count += 1
             if 10 < pass_count:
                 break
         pass_count = 0
         for i in range(99999):
-            name = "LocalBoneData:" + str(i)
+            name = 'LocalBoneData:' + str(i)
             if name in ob:
-                output_text += "LocalBoneData:" + ob[name] + "\n"
+                output_text += 'LocalBoneData:' + ob[name] + '\n'
             else:
                 pass_count += 1
             if 10 < pass_count:
@@ -235,7 +235,7 @@ class CNV_OT_paste_armature_bone_data_property(bpy.types.Operator):
         ob = context.active_object.data
         pass_count = 0
         for i in range(99999):
-            name = "BoneData:" + str(i)
+            name = 'BoneData:' + str(i)
             if name in ob:
                 del ob[name]
             else:
@@ -244,7 +244,7 @@ class CNV_OT_paste_armature_bone_data_property(bpy.types.Operator):
                 break
         pass_count = 0
         for i in range(99999):
-            name = "LocalBoneData:" + str(i)
+            name = 'LocalBoneData:' + str(i)
             if name in ob:
                 del ob[name]
             else:
@@ -253,21 +253,21 @@ class CNV_OT_paste_armature_bone_data_property(bpy.types.Operator):
                 break
         bone_data_count = 0
         local_bone_data_count = 0
-        for line in context.window_manager.clipboard.split("\n"):
+        for line in context.window_manager.clipboard.split('\n'):
             if line.startswith('BaseBone:'):
                 ob['BaseBone'] = line[9:]  # len('BaseData:') == 9
                 continue
 
             if line.startswith('BoneData:'):
                 if line.count(',') >= 4:
-                    name = "BoneData:" + str(bone_data_count)
+                    name = 'BoneData:' + str(bone_data_count)
                     ob[name] = line[9:]  # len('BoneData:') == 9
                     bone_data_count += 1
                 continue
 
             if line.startswith('LocalBoneData:'):
                 if line.count(',') == 1:
-                    name = "LocalBoneData:" + str(local_bone_data_count)
+                    name = 'LocalBoneData:' + str(local_bone_data_count)
                     ob[name] = line[14:]  # len('LocalBoneData:') == 14
                     local_bone_data_count += 1
 
@@ -304,7 +304,7 @@ class CNV_OT_remove_armature_bone_data_property(bpy.types.Operator):
         if 'BaseBone' in ob:
             del ob['BaseBone']
         for i in range(99999):
-            name = "BoneData:" + str(i)
+            name = 'BoneData:' + str(i)
             if name in ob:
                 del ob[name]
             else:
@@ -313,7 +313,7 @@ class CNV_OT_remove_armature_bone_data_property(bpy.types.Operator):
                 break
         pass_count = 0
         for i in range(99999):
-            name = "LocalBoneData:" + str(i)
+            name = 'LocalBoneData:' + str(i)
             if name in ob:
                 del ob[name]
             else:
@@ -354,7 +354,7 @@ class CNV_OT_add_cm3d2_twist_bones(bpy.types.Operator):
             arm = ob.data
         else:
             arm = None
-        has_arm  = arm and isinstance(arm, bpy.types.Armature) and ("Bip01" in arm.bones)
+        has_arm  = arm and isinstance(arm, bpy.types.Armature) and ('Bip01' in arm.bones)
         can_edit = (ob and ob.data == arm) or (arm and arm.is_editmode)
         return has_arm and can_edit
 
@@ -368,10 +368,10 @@ class CNV_OT_add_cm3d2_twist_bones(bpy.types.Operator):
         #self.layout.prop(self, 'is_drive_shape_keys')
 
     def getPoseBone(self, ob, boneName, flip=False):
-        side = "R" if flip else "L"
+        side = 'R' if flip else 'L'
         
         poseBoneList = ob.pose.bones
-        poseBone = poseBoneList.get(boneName.replace("?",side)) or poseBoneList.get(boneName.replace("?","*")+"."+side)
+        poseBone = poseBoneList.get(boneName.replace('?',side)) or poseBoneList.get(boneName.replace('?','*')+'.'+side)
         
         if not poseBone:
             print("WARNING: Could not find bone \""+boneName+"\"")
@@ -551,8 +551,8 @@ class CNV_OT_add_cm3d2_twist_bones(bpy.types.Operator):
 
 
         # MoveMomoniku() : 'TBody.cs' line 2841
-        self.driveTwistBone(ob, 'momoniku_?', flip=False, expression=("", "", "min(0,max(-8, self.id_data.pose.bones['{0}'].matrix.col[2].xyz.dot( (0,0,-1) ) *  10 * (pi/180) ))"), infulencers=('Bip01 ? Thigh'))
-        self.driveTwistBone(ob, 'momoniku_?', flip=True , expression=("", "", "min(8,max( 0, self.id_data.pose.bones['{0}'].matrix.col[2].xyz.dot( (0,0,-1) ) * -10 * (pi/180) ))"), infulencers=('Bip01 ? Thigh'))
+        self.driveTwistBone(ob, 'momoniku_?', flip=False, expression=("", "", 'min(0,max(-8, self.id_data.pose.bones["{0}"].matrix.col[2].xyz.dot( (0,0,-1) ) *  10 * (pi/180) ))'), infulencers=('Bip01 ? Thigh'))
+        self.driveTwistBone(ob, 'momoniku_?', flip=True , expression=("", "", 'min(8,max( 0, self.id_data.pose.bones["{0}"].matrix.col[2].xyz.dot( (0,0,-1) ) * -10 * (pi/180) ))'), infulencers=('Bip01 ? Thigh'))
         self.constrainTwistBone(ob, 'Hip_?',
             type  = 'LIMIT_ROTATION',
             space = 'LOCAL'         ,
@@ -724,9 +724,9 @@ class CNV_PG_cm3d2_bone_morph(bpy.types.PropertyGroup):
         self.private_hip    = 65 + self.koshi * 0.3  + self.RegFat * 0.025 + self.RegMeet * 0.025
              
         if   num13 <   80:
-            self.private_cup = "A"
+            self.private_cup = 'A'
         elif num13 >= 110:
-            self.private_cup = "N"
+            self.private_cup = 'N'
         else:
             cup_sizes = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
             self.private_cup = cup_sizes[int((num13 - 80) / 2.5)]
@@ -756,28 +756,28 @@ class CNV_PG_cm3d2_bone_morph(bpy.types.PropertyGroup):
         else:
             self.__calcMeasurements(context)
 
-    HeadX:      bpy.props.FloatProperty(name="HeadX"     , description="Size of face (left to right)", default=  50, min=   0, max= 100, step=100, precision=0)
-    HeadY:      bpy.props.FloatProperty(name="HeadY"     , description="Size of face (up and down)"  , default=  50, min=   0, max= 100, step=100, precision=0, update=__calcMeasurements)
-    DouPer:     bpy.props.FloatProperty(name="DouPer"    , description="Leg length"                  , default=  50, min=-100, max= 500, step=100, precision=0, update=__calcMeasurements)
-    sintyou:    bpy.props.FloatProperty(name="sintyou"   , description="Height"                      , default=  50, min=-300, max= 100, step=100, precision=0, update=__calcMeasurements)
-    BreastSize: bpy.props.FloatProperty(name="BreastSize", description="Breast size"                 , default=  50, min= -30, max= 195, step=100, precision=0, update=__calcMune        )
-    MuneTare:   bpy.props.FloatProperty(name="MuneTare"  , description="Breast sagging level"        , default=  50, min=   0, max= 195, step=100, precision=0, update=__calcMuneTare    )
-    MuneUpDown: bpy.props.FloatProperty(name="MuneUpDown", description="Position of the nipple"      , default=  10, min= -50, max= 300, step=100, precision=0)
-    MuneYori:   bpy.props.FloatProperty(name="MuneYori"  , description="Direction of breast"         , default=  40, min= -50, max= 200, step=100, precision=0)
-    west:       bpy.props.FloatProperty(name="west"      , description="Waist"                       , default=  50, min= -30, max= 100, step=100, precision=0, update=__calcMeasurements)
-    Hara:       bpy.props.FloatProperty(name="Hara"      , description="Belly"                       , default=  20, min=   0, max= 200, step=100, precision=0, update=__calcMeasurements)
-    kata:       bpy.props.FloatProperty(name="kata"      , description="Shoulder width"              , default=  50, min=-400, max= 100, step=100, precision=0, update=__calcMeasurements)
-    ArmL:       bpy.props.FloatProperty(name="ArmL"      , description="Size of arms"                , default=  20, min=   0, max= 100, step=100, precision=0, update=__calcMeasurements)
-    UdeScl:     bpy.props.FloatProperty(name="UdeScl"    , description="Length of arms"              , default=  50, min=   0, max= 100, step=100, precision=0, update=__calcMeasurements)
-    KubiScl:    bpy.props.FloatProperty(name="KubiScl"   , description="Length of neck"              , default=  50, min=   0, max= 200, step=100, precision=0, update=__calcMeasurements)
-    koshi:      bpy.props.FloatProperty(name="koshi"     , description="Hip"                         , default=  50, min=-160, max= 200, step=100, precision=0, update=__calcMeasurements)
-    RegFat:     bpy.props.FloatProperty(name="RegFat"    , description="Leg thickness"               , default=  40, min=   0, max= 100, step=100, precision=0, update=__calcMeasurements)
-    RegMeet:    bpy.props.FloatProperty(name="RegMeet"   , description="Leg definition"              , default=  40, min=   0, max= 100, step=100, precision=0, update=__calcMeasurements)
-    MuneL:      bpy.props.FloatProperty(name="MuneL"     , description="munel shapekey value"        , default=  50, min=   0)
-    MuneS:      bpy.props.FloatProperty(name="MuneS"     , description="munes shapekey value"        , default=   0, min=   0)
+    HeadX:      bpy.props.FloatProperty(name='HeadX'     , description="Size of face (left to right)", default=  50, min=   0, max= 100, step=100, precision=0)
+    HeadY:      bpy.props.FloatProperty(name='HeadY'     , description="Size of face (up and down)"  , default=  50, min=   0, max= 100, step=100, precision=0, update=__calcMeasurements)
+    DouPer:     bpy.props.FloatProperty(name='DouPer'    , description="Leg length"                  , default=  50, min=-100, max= 500, step=100, precision=0, update=__calcMeasurements)
+    sintyou:    bpy.props.FloatProperty(name='sintyou'   , description="Height"                      , default=  50, min=-300, max= 100, step=100, precision=0, update=__calcMeasurements)
+    BreastSize: bpy.props.FloatProperty(name='BreastSize', description="Breast size"                 , default=  50, min= -30, max= 195, step=100, precision=0, update=__calcMune        )
+    MuneTare:   bpy.props.FloatProperty(name='MuneTare'  , description="Breast sagging level"        , default=  50, min=   0, max= 195, step=100, precision=0, update=__calcMuneTare    )
+    MuneUpDown: bpy.props.FloatProperty(name='MuneUpDown', description="Position of the nipple"      , default=  10, min= -50, max= 300, step=100, precision=0)
+    MuneYori:   bpy.props.FloatProperty(name='MuneYori'  , description="Direction of breast"         , default=  40, min= -50, max= 200, step=100, precision=0)
+    west:       bpy.props.FloatProperty(name='west'      , description="Waist"                       , default=  50, min= -30, max= 100, step=100, precision=0, update=__calcMeasurements)
+    Hara:       bpy.props.FloatProperty(name='Hara'      , description="Belly"                       , default=  20, min=   0, max= 200, step=100, precision=0, update=__calcMeasurements)
+    kata:       bpy.props.FloatProperty(name='kata'      , description="Shoulder width"              , default=  50, min=-400, max= 100, step=100, precision=0, update=__calcMeasurements)
+    ArmL:       bpy.props.FloatProperty(name='ArmL'      , description="Size of arms"                , default=  20, min=   0, max= 100, step=100, precision=0, update=__calcMeasurements)
+    UdeScl:     bpy.props.FloatProperty(name='UdeScl'    , description="Length of arms"              , default=  50, min=   0, max= 100, step=100, precision=0, update=__calcMeasurements)
+    KubiScl:    bpy.props.FloatProperty(name='KubiScl'   , description="Length of neck"              , default=  50, min=   0, max= 200, step=100, precision=0, update=__calcMeasurements)
+    koshi:      bpy.props.FloatProperty(name='koshi'     , description="Hip"                         , default=  50, min=-160, max= 200, step=100, precision=0, update=__calcMeasurements)
+    RegFat:     bpy.props.FloatProperty(name='RegFat'    , description="Leg thickness"               , default=  40, min=   0, max= 100, step=100, precision=0, update=__calcMeasurements)
+    RegMeet:    bpy.props.FloatProperty(name='RegMeet'   , description="Leg definition"              , default=  40, min=   0, max= 100, step=100, precision=0, update=__calcMeasurements)
+    MuneL:      bpy.props.FloatProperty(name='MuneL'     , description="munel shapekey value"        , default=  50, min=   0)
+    MuneS:      bpy.props.FloatProperty(name='MuneS'     , description="munes shapekey value"        , default=   0, min=   0)
 
     # 初回計算用フラグ
-    is_initialized: bpy.props.BoolProperty(name="is_initialized", options={'HIDDEN'}, default=False)
+    is_initialized: bpy.props.BoolProperty(name='is_initialized', options={'HIDDEN'}, default=False)
 
     def initialize(self):
         self.is_initialized = True
@@ -792,19 +792,19 @@ class CNV_PG_cm3d2_bone_morph(bpy.types.PropertyGroup):
             return getattr(self, attr)
         return __getter
 
-    private_height: bpy.props.FloatProperty (name="private_height", options={'HIDDEN'})
-    private_weight: bpy.props.FloatProperty (name="private_weight", options={'HIDDEN'})
-    private_bust:   bpy.props.FloatProperty (name="private_bust"  , options={'HIDDEN'})
-    private_waist:  bpy.props.FloatProperty (name="private_waist" , options={'HIDDEN'})
-    private_hip:    bpy.props.FloatProperty (name="private_hip"   , options={'HIDDEN'})
-    private_cup:    bpy.props.StringProperty(name="private_cup"   , options={'HIDDEN'})
-                                                     
-    height: bpy.props.FloatProperty (name="height", precision=3, unit='LENGTH', set=__measurementSetter, get=__newGetter('private_height'))
-    weight: bpy.props.FloatProperty (name="weight", precision=3, unit='MASS'  , set=__measurementSetter, get=__newGetter('private_weight'))
-    bust:   bpy.props.FloatProperty (name="bust"  , precision=3, unit='LENGTH', set=__measurementSetter, get=__newGetter('private_bust'  ))
-    waist:  bpy.props.FloatProperty (name="waist" , precision=3, unit='LENGTH', set=__measurementSetter, get=__newGetter('private_waist' ))
-    hip:    bpy.props.FloatProperty (name="hip"   , precision=3, unit='LENGTH', set=__measurementSetter, get=__newGetter('private_hip'   ))
-    cup:    bpy.props.StringProperty(name="cup"   ,                             set=__measurementSetter, get=__newGetter('private_cup'   ))
+    private_height: bpy.props.FloatProperty (name='private_height', options={'HIDDEN'})
+    private_weight: bpy.props.FloatProperty (name='private_weight', options={'HIDDEN'})
+    private_bust:   bpy.props.FloatProperty (name='private_bust'  , options={'HIDDEN'})
+    private_waist:  bpy.props.FloatProperty (name='private_waist' , options={'HIDDEN'})
+    private_hip:    bpy.props.FloatProperty (name='private_hip'   , options={'HIDDEN'})
+    private_cup:    bpy.props.StringProperty(name='private_cup'   , options={'HIDDEN'})
+
+    height: bpy.props.FloatProperty (name="Height", precision=3, unit='LENGTH', set=__measurementSetter, get=__newGetter('private_height'))
+    weight: bpy.props.FloatProperty (name="Weight", precision=3, unit='MASS'  , set=__measurementSetter, get=__newGetter('private_weight'))
+    bust:   bpy.props.FloatProperty (name="Bust"  , precision=3, unit='LENGTH', set=__measurementSetter, get=__newGetter('private_bust'  ))
+    waist:  bpy.props.FloatProperty (name="Waist" , precision=3, unit='LENGTH', set=__measurementSetter, get=__newGetter('private_waist' ))
+    hip:    bpy.props.FloatProperty (name="Hip"   , precision=3, unit='LENGTH', set=__measurementSetter, get=__newGetter('private_hip'   ))
+    cup:    bpy.props.StringProperty(name="Cup"   ,                             set=__measurementSetter, get=__newGetter('private_cup'   ))
                                                      
     def GetArmature(self, override=None):
         override = override or bpy.context.copy()
@@ -847,29 +847,29 @@ class CNV_PG_cm3d2_bone_morph(bpy.types.PropertyGroup):
         #    return None, None
         #
         #if False:
-        #    print("\n")
+        #    print('\n')
         #    for k,v in override.items():
         #        print(k)
-        #    print("\n")
+        #    print('\n')
         #return armature, override
 
     def GetPoseBone(self, boneName, flip=False, override=None):
         context = bpy.context
         
-        side = "L" if flip else "R"
+        side = 'L' if flip else 'R'
         armature, override = self.GetArmature()
         if not armature:
             return
         
         poseBoneList = armature.pose.bones
-        poseBone = poseBoneList.get(boneName.replace("?",side)) or poseBoneList.get(boneName.replace("?","*")+"."+side)
+        poseBone = poseBoneList.get(boneName.replace('?',side)) or poseBoneList.get(boneName.replace('?','*')+'.'+side)
 
         # check if _SCL_ bone needs to be created
-        if not poseBone and "_SCL_" in boneName:
+        if not poseBone and '_SCL_' in boneName:
             boneList = armature.data.edit_bones
             bpy.ops.object.mode_set(mode='EDIT')
             print("Make Scale Bone: "+boneName)
-            copyBone = boneList.get(boneName.replace("_SCL_","").replace("?",side)) or boneList.get(boneName.replace("_SCL_","").replace("?","*")+"."+side)
+            copyBone = boneList.get(boneName.replace('_SCL_','').replace('?',side)) or boneList.get(boneName.replace('_SCL_','').replace('?','*')+'.'+side)
             if copyBone:
                 #bpy.ops.armature.select_all(override, action='DESELECT')
                 #for v in context.selected_bones:
@@ -881,7 +881,7 @@ class CNV_PG_cm3d2_bone_morph(bpy.types.PropertyGroup):
                 #copyBone.select_tail = True
                 #boneList.active = copyBone
                 #bpy.ops.armature.duplicate(override)
-                new_name = copyBone.basename+"_SCL_" + ("."+side if ("."+side) in copyBone.name else "")
+                new_name = copyBone.basename+'_SCL_' + ('.'+side if ('.'+side) in copyBone.name else '')
                 bone = armature.data.edit_bones.new(new_name)
                 bone.parent = copyBone
                 bone.head = copyBone.head
@@ -900,10 +900,10 @@ class CNV_PG_cm3d2_bone_morph(bpy.types.PropertyGroup):
                             vertexGroup.name = bone.name
         
         bpy.ops.object.mode_set(mode='POSE')
-        poseBone = poseBone or poseBoneList.get(boneName.replace("?", side)) or poseBoneList.get(boneName.replace("?","*")+"."+side)
+        poseBone = poseBone or poseBoneList.get(boneName.replace('?', side)) or poseBoneList.get(boneName.replace('?','*')+'.'+side)
         
         if not poseBone:
-            print("WARNING: Could not find bone \""+boneName+"\"")
+            print("WARNING: Could not find bone \""+boneName+'\"')
             return
 
         return poseBone
@@ -927,37 +927,37 @@ class CNV_PG_cm3d2_bone_morph(bpy.types.PropertyGroup):
             return
         
         driver = drivers[axis]
-        prefix = " + "
+        prefix = ' + '
         
         if not driver:
-            driver = bone.driver_add("location", axis).driver
+            driver = bone.driver_add('location', axis).driver
             driver.type = 'SCRIPTED'
             
             parent_length_var = driver.variables.new()
             parent_length_var.type = 'SINGLE_PROP'
-            parent_length_var.name = "parent_length"
+            parent_length_var.name = 'parent_length'
             
             driver_target = parent_length_var.targets[0]
             driver_target.id_type = 'ARMATURE'
             driver_target.id = bone.parent.bone.id_data
-            driver_target.data_path = bone.parent.bone.path_from_id("length")
+            driver_target.data_path = bone.parent.bone.path_from_id('length')
 
             head_var = driver.variables.new()
             head_var.type = 'SINGLE_PROP'
-            head_var.name = "head"
+            head_var.name = 'head'
 
             driver_target = head_var.targets[0]
             driver_target.id_type = 'OBJECT'
             driver_target.id = bone.id_data
-            driver_target.data_path = bone.path_from_id("head") + f"[{axis}]"
+            driver_target.data_path = bone.path_from_id('head') + f'[{axis}]'
             
             if axis == 1: # if y axis, include parent bone's length, because head coords are based on parent's tail
-                driver.expression = "(parent_length+head)_"
+                driver.expression = '(parent_length+head)_'
             else:
-                driver.expression = "head_"
-            prefix = " * ("
+                driver.expression = 'head_'
+            prefix = ' * ('
             
-            #driver.expression = "-{direction} + {direction}", direction=rest_value
+            #driver.expression = '-{direction} + {direction}', direction=rest_value
 
         driver_var = driver.variables.get(prop)
         if not driver_var:
@@ -972,7 +972,7 @@ class CNV_PG_cm3d2_bone_morph(bpy.types.PropertyGroup):
         
         # if prop isn't already a factor
         if not prop in driver.expression:
-            driver.expression = driver.expression[:-1] + prefix + f"({prop}-{default})*{value/(100-default)})"
+            driver.expression = driver.expression[:-1] + prefix + f'({prop}-{default})*{value/(100-default)})'
             
         return
 
@@ -985,9 +985,9 @@ class CNV_PG_cm3d2_bone_morph(bpy.types.PropertyGroup):
         
         # if just created
         if not driver:
-            driver = bone.driver_add("scale", axis).driver
+            driver = bone.driver_add('scale', axis).driver
             driver.type = 'SCRIPTED'
-            driver.expression = "(1)"
+            driver.expression = '(1)'
 
         driver_var = driver.variables.get(prop) 
         if not driver_var:
@@ -1002,7 +1002,7 @@ class CNV_PG_cm3d2_bone_morph(bpy.types.PropertyGroup):
         
         # if prop isn't already a factor
         if not prop in driver.expression:
-            driver.expression = driver.expression[:-1] + f" + ({prop}-{default})*{value/(100-default)})"
+            driver.expression = driver.expression[:-1] + f' + ({prop}-{default})*{value/(100-default)})'
  
         return
 
@@ -1108,43 +1108,43 @@ class CNV_PG_cm3d2_wide_slider(bpy.types.PropertyGroup):
     
     enable_all: bpy.props.BoolProperty(name="Enable All", description="Enable all sliders, even ones without a GUI in-game", default=False)
 
-    HIPPOS:     bpy.props.FloatVectorProperty(name="HIPPOS"    , description="Hips Position"         , default=(0,0,0), min=-100, max= 200, precision=2, subtype='XYZ'        , unit='NONE')
-    THIPOS:     bpy.props.FloatVectorProperty(name="THIPOS"    , description="Legs Position"         , default=(0,0,0), min=-100, max= 200, precision=2, subtype='XYZ'        , unit='NONE')
-    MTWPOS:     bpy.props.FloatVectorProperty(name="MTWPOS"    , description="Thigh Position"        , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
-    MMNPOS:     bpy.props.FloatVectorProperty(name="MMNPOS"    , description="Rear Thigh Position"   , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
-    THI2POS:    bpy.props.FloatVectorProperty(name="THI2POS"   , description="Knee Position"         , default=(0,0,0), min=-100, max= 200, precision=2, subtype='XYZ'        , unit='NONE')
-    SKTPOS:     bpy.props.FloatVectorProperty(name="SKTPOS"    , description="Skirt Position"        , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
-    SPIPOS:     bpy.props.FloatVectorProperty(name="SPIPOS"    , description="Lower Abdomen Position", default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
-    S0APOS:     bpy.props.FloatVectorProperty(name="S0APOS"    , description="Upper Abdomen Position", default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
-    S1POS:      bpy.props.FloatVectorProperty(name="S1POS"     , description="Lower Chest Position"  , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
-    S1APOS:     bpy.props.FloatVectorProperty(name="S1APOS"    , description="Upper Chest Position"  , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
-    MUNEPOS:    bpy.props.FloatVectorProperty(name="MUNEPOS"   , description="Breasts Position"      , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
-    MUNESUBPOS: bpy.props.FloatVectorProperty(name="MUNESUBPOS", description="Breasts Sub-Position"  , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
-    NECKPOS:    bpy.props.FloatVectorProperty(name="NECKPOS"   , description="Neck Position"         , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
-    CLVPOS:     bpy.props.FloatVectorProperty(name="CLVPOS"    , description="Clavicle Position"     , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
-                                                                                                
-    PELSCL:     bpy.props.FloatVectorProperty(name="PELSCL"    , description="Pelvis Scale"          , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    HIPSCL:     bpy.props.FloatVectorProperty(name="HIPSCL"    , description="Hips Scale"            , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    THISCL:     bpy.props.FloatVectorProperty(name="THISCL"    , description="Legs Scale"            , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    MTWSCL:     bpy.props.FloatVectorProperty(name="MTWSCL"    , description="Thigh Scale"           , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    MMNSCL:     bpy.props.FloatVectorProperty(name="MMNSCL"    , description="Rear Thigh Scale"      , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    THISCL2:    bpy.props.FloatVectorProperty(name="THISCL2"   , description="Knee Scale"            , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    CALFSCL:    bpy.props.FloatVectorProperty(name="CALFSCL"   , description="Calf Scale"            , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    FOOTSCL:    bpy.props.FloatVectorProperty(name="FOOTSCL"   , description="Foot Scale"            , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    SKTSCL:     bpy.props.FloatVectorProperty(name="SKTSCL"    , description="Skirt Scale"           , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    SPISCL:     bpy.props.FloatVectorProperty(name="SPISCL"    , description="Lower Abdomen Scale"   , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    S0ASCL:     bpy.props.FloatVectorProperty(name="S0ASCL"    , description="Upper Abdomen Scale"   , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    S1_SCL:     bpy.props.FloatVectorProperty(name="S1_SCL"    , description="Lower Chest Scale"     , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    S1ASCL:     bpy.props.FloatVectorProperty(name="S1ASCL"    , description="Upper Chest Scale"     , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    S1ABASESCL: bpy.props.FloatVectorProperty(name="S1ABASESCL", description="Upper Torso Scale"     , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    MUNESCL:    bpy.props.FloatVectorProperty(name="MUNESCL"   , description="Breasts Scale"         , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    MUNESUBSCL: bpy.props.FloatVectorProperty(name="MUNESUBSCL", description="Breasts Sub-Scale"     , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    NECKSCL:    bpy.props.FloatVectorProperty(name="NECKSCL"   , description="Neck Scale"            , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    CLVSCL:     bpy.props.FloatVectorProperty(name="CLVSCL"    , description="Clavicle Scale"        , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    KATASCL:    bpy.props.FloatVectorProperty(name="KATASCL"   , description="Shoulders Scale"       , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    UPARMSCL:   bpy.props.FloatVectorProperty(name="UPARMSCL"  , description="Upper Arm Scale"       , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    FARMSCL:    bpy.props.FloatVectorProperty(name="FARMSCL"   , description="Forearm Scale"         , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
-    HANDSCL:    bpy.props.FloatVectorProperty(name="HANDSCL"   , description="Hand Scale"            , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    HIPPOS:     bpy.props.FloatVectorProperty(name='HIPPOS'    , description="Hips Position"         , default=(0,0,0), min=-100, max= 200, precision=2, subtype='XYZ'        , unit='NONE')
+    THIPOS:     bpy.props.FloatVectorProperty(name='THIPOS'    , description="Legs Position"         , default=(0,0,0), min=-100, max= 200, precision=2, subtype='XYZ'        , unit='NONE')
+    MTWPOS:     bpy.props.FloatVectorProperty(name='MTWPOS'    , description="Thigh Position"        , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
+    MMNPOS:     bpy.props.FloatVectorProperty(name='MMNPOS'    , description="Rear Thigh Position"   , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
+    THI2POS:    bpy.props.FloatVectorProperty(name='THI2POS'   , description="Knee Position"         , default=(0,0,0), min=-100, max= 200, precision=2, subtype='XYZ'        , unit='NONE')
+    SKTPOS:     bpy.props.FloatVectorProperty(name='SKTPOS'    , description="Skirt Position"        , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
+    SPIPOS:     bpy.props.FloatVectorProperty(name='SPIPOS'    , description="Lower Abdomen Position", default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
+    S0APOS:     bpy.props.FloatVectorProperty(name='S0APOS'    , description="Upper Abdomen Position", default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
+    S1POS:      bpy.props.FloatVectorProperty(name='S1POS'     , description="Lower Chest Position"  , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
+    S1APOS:     bpy.props.FloatVectorProperty(name='S1APOS'    , description="Upper Chest Position"  , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
+    MUNEPOS:    bpy.props.FloatVectorProperty(name='MUNEPOS'   , description="Breasts Position"      , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
+    MUNESUBPOS: bpy.props.FloatVectorProperty(name='MUNESUBPOS', description="Breasts Sub-Position"  , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
+    NECKPOS:    bpy.props.FloatVectorProperty(name='NECKPOS'   , description="Neck Position"         , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
+    CLVPOS:     bpy.props.FloatVectorProperty(name='CLVPOS'    , description="Clavicle Position"     , default=(0,0,0), min=-1.0, max= 1.0, precision=2, subtype='XYZ'        , unit='NONE')
+
+    PELSCL:     bpy.props.FloatVectorProperty(name='PELSCL'    , description="Pelvis Scale"          , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    HIPSCL:     bpy.props.FloatVectorProperty(name='HIPSCL'    , description="Hips Scale"            , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    THISCL:     bpy.props.FloatVectorProperty(name='THISCL'    , description="Legs Scale"            , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    MTWSCL:     bpy.props.FloatVectorProperty(name='MTWSCL'    , description="Thigh Scale"           , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    MMNSCL:     bpy.props.FloatVectorProperty(name='MMNSCL'    , description="Rear Thigh Scale"      , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    THISCL2:    bpy.props.FloatVectorProperty(name='THISCL2'   , description="Knee Scale"            , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    CALFSCL:    bpy.props.FloatVectorProperty(name='CALFSCL'   , description="Calf Scale"            , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    FOOTSCL:    bpy.props.FloatVectorProperty(name='FOOTSCL'   , description="Foot Scale"            , default=(1,1,1), min= 0.1, max= 2.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    SKTSCL:     bpy.props.FloatVectorProperty(name='SKTSCL'    , description="Skirt Scale"           , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    SPISCL:     bpy.props.FloatVectorProperty(name='SPISCL'    , description="Lower Abdomen Scale"   , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    S0ASCL:     bpy.props.FloatVectorProperty(name='S0ASCL'    , description="Upper Abdomen Scale"   , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    S1_SCL:     bpy.props.FloatVectorProperty(name='S1_SCL'    , description="Lower Chest Scale"     , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    S1ASCL:     bpy.props.FloatVectorProperty(name='S1ASCL'    , description="Upper Chest Scale"     , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    S1ABASESCL: bpy.props.FloatVectorProperty(name='S1ABASESCL', description="Upper Torso Scale"     , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    MUNESCL:    bpy.props.FloatVectorProperty(name='MUNESCL'   , description="Breasts Scale"         , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    MUNESUBSCL: bpy.props.FloatVectorProperty(name='MUNESUBSCL', description="Breasts Sub-Scale"     , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    NECKSCL:    bpy.props.FloatVectorProperty(name='NECKSCL'   , description="Neck Scale"            , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    CLVSCL:     bpy.props.FloatVectorProperty(name='CLVSCL'    , description="Clavicle Scale"        , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    KATASCL:    bpy.props.FloatVectorProperty(name='KATASCL'   , description="Shoulders Scale"       , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    UPARMSCL:   bpy.props.FloatVectorProperty(name='UPARMSCL'  , description="Upper Arm Scale"       , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    FARMSCL:    bpy.props.FloatVectorProperty(name='FARMSCL'   , description="Forearm Scale"         , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
+    HANDSCL:    bpy.props.FloatVectorProperty(name='HANDSCL'   , description="Hand Scale"            , default=(1,1,1), min= 0.1, max= 3.0, precision=2, subtype='XYZ_LENGTH' , unit='NONE')
 
     def GetArmature(self, override=None):
         return CNV_PG_cm3d2_bone_morph.GetArmature(self, override=override)
@@ -1163,11 +1163,11 @@ class CNV_PG_cm3d2_wide_slider(bpy.types.PropertyGroup):
         driver = drivers[axis]
 
         if not driver:
-            driver = bone.driver_add("location",axis).driver
+            driver = bone.driver_add('location',axis).driver
             driver.type = 'SCRIPTED'
-            driver.expression = "0"
+            driver.expression = '0'
 
-        prop_var = prop + f"_{index}_"
+        prop_var = prop + f'_{index}_'
         driver_var = driver.variables.get(prop_var) 
         if not driver_var:
             driver_var = driver.variables.new()
@@ -1177,12 +1177,12 @@ class CNV_PG_cm3d2_wide_slider(bpy.types.PropertyGroup):
             driver_target = driver_var.targets[0]
             driver_target.id_type = 'OBJECT'
             driver_target.id = bone.id_data
-            driver_target.data_path = bone.id_data.cm3d2_wide_slider.path_from_id(prop) + f"[{index}]"
+            driver_target.data_path = bone.id_data.cm3d2_wide_slider.path_from_id(prop) + f'[{index}]'
 
               
         # if prop isn't already a factor
         if not prop_var in driver.expression:
-            driver.expression = driver.expression + f" + {prop_var}*{value}"
+            driver.expression = driver.expression + f' + {prop_var}*{value}'
                 
         return
               
@@ -1193,11 +1193,11 @@ class CNV_PG_cm3d2_wide_slider(bpy.types.PropertyGroup):
               
         driver = drivers[axis]
         if not driver:
-            driver = bone.driver_add("scale", axis).driver
+            driver = bone.driver_add('scale', axis).driver
             driver.type = 'SCRIPTED'
-            driver.expression = "1"
+            driver.expression = '1'
         
-        prop_var = f"{prop}_{index}_"
+        prop_var = f'{prop}_{index}_'
         driver_var = driver.variables.get(prop_var) 
         if not driver_var:
             driver_var = driver.variables.new()
@@ -1207,12 +1207,12 @@ class CNV_PG_cm3d2_wide_slider(bpy.types.PropertyGroup):
             driver_target = driver_var.targets[0]
             driver_target.id_type = 'OBJECT'
             driver_target.id = bone.id_data
-            driver_target.data_path = bone.id_data.cm3d2_wide_slider.path_from_id(prop) + f"[{index}]"
+            driver_target.data_path = bone.id_data.cm3d2_wide_slider.path_from_id(prop) + f'[{index}]'
 
               
         # if prop isn't already a factor
         if not prop_var in driver.expression:
-            driver.expression = driver.expression + f" * {prop_var}"
+            driver.expression = driver.expression + f' * {prop_var}'
                 
         return
               
@@ -1221,12 +1221,12 @@ class CNV_PG_cm3d2_wide_slider(bpy.types.PropertyGroup):
         #value = value or [default, default, default]
         #object[prop] = not RESET_SETTINGS and object.get(prop) or value
         #object['_RNA_UI'][prop] = {
-        #    "description": "",
-        #    "default": default,
-        #    "min": min,
-        #    "max": max,
-        #    "soft_min": min,
-        #    "soft_max": max,
+        #    'description': "",
+        #    'default': default,
+        #    'min': min,
+        #    'max': max,
+        #    'soft_min': min,
+        #    'soft_max': max,
         #}     
         return
     
@@ -1345,7 +1345,7 @@ class CNV_OT_add_cm3d2_body_sliders(bpy.types.Operator):
             arm = ob.data
         else:
             arm = None
-        has_arm  = arm and isinstance(arm, bpy.types.Armature) and ("Bip01" in arm.bones)
+        has_arm  = arm and isinstance(arm, bpy.types.Armature) and ('Bip01' in arm.bones)
         can_edit = (ob and ob.data == arm) or (arm and arm.is_editmode)
         return has_arm and can_edit
 
@@ -1380,7 +1380,7 @@ class CNV_OT_add_cm3d2_body_sliders(bpy.types.Operator):
         if set_max:
             shapekey.slider_max = set_max
 
-    def driveTwistBone(self, bone, prop='rotation_euler', axis=0, expression=""):
+    def driveTwistBone(self, bone, prop='rotation_euler', axis=0, expression=''):
         if not bone:
             return
         driver = bone.driver_add(prop, axis).driver
@@ -1406,151 +1406,151 @@ class CNV_OT_add_cm3d2_body_sliders(bpy.types.Operator):
 
 
 
-        #BoneMorph.SetPosition("KubiScl", "Bip01 Neck"        , 0.95, 1   , 1   , 1.05, 1   , 1   )
-        #BoneMorph.SetPosition("KubiScl", "Bip01 Head"        , 0.8 , 1   , 1   , 1.2 , 1   , 1   )
-        #BoneMorph.SetScale   ("UdeScl" , "Bip01 ? UpperArm"  , 0.85, 1   , 1   , 1.15, 1   , 1   )
-        #BoneMorph.SetScale   ("EyeSclX", "Eyepos_L"          , 1   , 1   , 0.92, 1   , 1   , 1.08)
-        #BoneMorph.SetScale   ("EyeSclX", "Eyepos_R"          , 1   , 1   , 0.92, 1   , 1   , 1.08)
-        #BoneMorph.SetScale   ("EyeSclY", "Eyepos_L"          , 1   , 0.92, 1   , 1   , 1.08, 1   )
-        #BoneMorph.SetScale   ("EyeSclY", "Eyepos_R"          , 1   , 0.92, 1   , 1   , 1.08, 1   )
-        #BoneMorph.SetPosition("EyePosX", "Eyepos_R"          , 1   , 1   , 0.9 , 1   , 1   , 1.1 )
-        #BoneMorph.SetPosition("EyePosX", "Eyepos_L"          , 1   , 1   , 0.9 , 1   , 1   , 1.1 )
-        #BoneMorph.SetPosition("EyePosY", "Eyepos_R"          , 1   , 0.93, 1   , 1   , 1.07, 1   )
-        #BoneMorph.SetPosition("EyePosY", "Eyepos_L"          , 1   , 0.93, 1   , 1   , 1.07, 1   )
-        #BoneMorph.SetScale   ("HeadX"  , "Bip01 Head"        , 1   , 0.9 , 0.8 , 1   , 1.1 , 1.2 )
-        #BoneMorph.SetScale   ("HeadY"  , "Bip01 Head"        , 0.8 , 0.9 , 1   , 1.2 , 1.1 , 1   )
-        #BoneMorph.SetPosition("DouPer" , "Bip01 Spine"       , 1   , 1   , 0.94, 1   , 1   , 1.06)
-        #BoneMorph.SetPosition("DouPer" , "Bip01 Spine0a"     , 0.88, 1   , 1   , 1.12, 1   , 1   )
-        #BoneMorph.SetPosition("DouPer" , "Bip01 Spine1"      , 0.88, 1   , 1   , 1.12, 1   , 1   )
-        #BoneMorph.SetPosition("DouPer" , "Bip01 Spine1a"     , 0.88, 1   , 1   , 1.12, 1   , 1   )
-        #BoneMorph.SetPosition("DouPer" , "Bip01 Neck"        , 1.03, 1   , 1   , 0.97, 1   , 1   )
-        #BoneMorph.SetPosition("DouPer" , "Bip01 ? Calf"      , 0.87, 1   , 1   , 1.13, 1   , 1   )
-        #BoneMorph.SetPosition("DouPer" , "Bip01 ? Foot"      , 0.87, 1   , 1   , 1.13, 1   , 1   )
-        #BoneMorph.SetScale   ("DouPer" , "Bip01 ? Thigh_SCL_", 0.87, 1   , 1   , 1.13, 1   , 1   )
-        #BoneMorph.SetScale   ("DouPer" , "momotwist_?"       , 0.87, 1   , 1   , 1.13, 1   , 1   )
-        #BoneMorph.SetScale   ("DouPer" , "Bip01 ? Calf_SCL_" , 0.87, 1   , 1   , 1.13, 1   , 1   )
-        #BoneMorph.SetScale   ("DouPer" , "Bip01 ? UpperArm"  , 0.98, 1   , 1   , 1.02, 1   , 1   )
-        #BoneMorph.SetPosition("sintyou", "Bip01 Spine"       , 1   , 1   , 0.85, 1   , 1   , 1.15)
-        #BoneMorph.SetPosition("sintyou", "Bip01 Spine0a"     , 0.88, 1   , 1   , 1.12, 1   , 1   )
-        #BoneMorph.SetPosition("sintyou", "Bip01 Spine1"      , 0.88, 1   , 1   , 1.12, 1   , 1   )
-        #BoneMorph.SetPosition("sintyou", "Bip01 Spine1a"     , 0.88, 1   , 1   , 1.12, 1   , 1   )
-        #BoneMorph.SetPosition("sintyou", "Bip01 Neck"        , 0.97, 1   , 1   , 1.03, 1   , 1   )
-        #BoneMorph.SetPosition("sintyou", "Bip01 Head"        , 0.9 , 1   , 1   , 1.1 , 1   , 1   )
-        #BoneMorph.SetPosition("sintyou", "Bip01 ? Calf"      , 0.87, 1   , 1   , 1.13, 1   , 1   )
-        #BoneMorph.SetPosition("sintyou", "Bip01 ? Foot"      , 0.87, 1   , 1   , 1.13, 1   , 1   )
-        #BoneMorph.SetScale   ("sintyou", "Bip01 ? UpperArm"  , 0.9 , 1   , 1   , 1.1 , 1   , 1   )
-        #BoneMorph.SetScale   ("sintyou", "Bip01 ? Thigh_SCL_", 0.87, 1   , 1   , 1.13, 1   , 1   )
-        #BoneMorph.SetScale   ("sintyou", "momotwist_?"       , 0.87, 1   , 1   , 1.13, 1   , 1   )
-        #BoneMorph.SetScale   ("sintyou", "Bip01 ? Calf_SCL_" , 0.87, 1   , 1   , 1.13, 1   , 1   )
-        #BoneMorph.SetScale   ("koshi"  , "Bip01 Pelvis_SCL_" , 1   , 0.8 , 0.92, 1   , 1.2 , 1.08)
-        #BoneMorph.SetScale   ("koshi"  , "Bip01 Spine_SCL_"  , 1   , 1   , 1   , 1   , 1   , 1   )
-        #BoneMorph.SetScale   ("koshi"  , "Hip_?"             , 1   , 0.96, 0.9 , 1   , 1.04, 1.1 )
-        #BoneMorph.SetScale   ("koshi"  , "Skirt"             , 1   , 0.85, 0.88, 1   , 1.2 , 1.12)
-        #BoneMorph.SetPosition("kata"   , "Bip01 ? Clavicle"  , 0.98, 1   , 0.5 , 1.02, 1   , 1.5 )
-        #BoneMorph.SetScale   ("kata"   , "Bip01 Spine1a_SCL_", 1   , 1   , 0.95, 1   , 1   , 1.05)
-        #BoneMorph.SetScale   ("west"   , "Bip01 Spine_SCL_"  , 1   , 0.95, 0.9 , 1   , 1.05, 1.1 )
-        #BoneMorph.SetScale   ("west"   , "Bip01 Spine0a_SCL_", 1   , 0.85, 0.7 , 1   , 1.15, 1.3 )
-        #BoneMorph.SetScale   ("west"   , "Bip01 Spine1_SCL_" , 1   , 0.9 , 0.85, 1   , 1.1 , 1.15)
-        #BoneMorph.SetScale   ("west"   , "Bip01 Spine1a_SCL_", 1   , 0.95, 0.95, 1   , 1.05, 1.05)
-        #BoneMorph.SetScale   ("west"   , "Skirt"             , 1   , 0.92, 0.88, 1   , 1.08, 1.12)
+        #BoneMorph.SetPosition('KubiScl', 'Bip01 Neck'        , 0.95, 1   , 1   , 1.05, 1   , 1   )
+        #BoneMorph.SetPosition('KubiScl', 'Bip01 Head'        , 0.8 , 1   , 1   , 1.2 , 1   , 1   )
+        #BoneMorph.SetScale   ('UdeScl' , 'Bip01 ? UpperArm'  , 0.85, 1   , 1   , 1.15, 1   , 1   )
+        #BoneMorph.SetScale   ('EyeSclX', 'Eyepos_L'          , 1   , 1   , 0.92, 1   , 1   , 1.08)
+        #BoneMorph.SetScale   ('EyeSclX', 'Eyepos_R'          , 1   , 1   , 0.92, 1   , 1   , 1.08)
+        #BoneMorph.SetScale   ('EyeSclY', 'Eyepos_L'          , 1   , 0.92, 1   , 1   , 1.08, 1   )
+        #BoneMorph.SetScale   ('EyeSclY', 'Eyepos_R'          , 1   , 0.92, 1   , 1   , 1.08, 1   )
+        #BoneMorph.SetPosition('EyePosX', 'Eyepos_R'          , 1   , 1   , 0.9 , 1   , 1   , 1.1 )
+        #BoneMorph.SetPosition('EyePosX', 'Eyepos_L'          , 1   , 1   , 0.9 , 1   , 1   , 1.1 )
+        #BoneMorph.SetPosition('EyePosY', 'Eyepos_R'          , 1   , 0.93, 1   , 1   , 1.07, 1   )
+        #BoneMorph.SetPosition('EyePosY', 'Eyepos_L'          , 1   , 0.93, 1   , 1   , 1.07, 1   )
+        #BoneMorph.SetScale   ('HeadX'  , 'Bip01 Head'        , 1   , 0.9 , 0.8 , 1   , 1.1 , 1.2 )
+        #BoneMorph.SetScale   ('HeadY'  , 'Bip01 Head'        , 0.8 , 0.9 , 1   , 1.2 , 1.1 , 1   )
+        #BoneMorph.SetPosition('DouPer' , 'Bip01 Spine'       , 1   , 1   , 0.94, 1   , 1   , 1.06)
+        #BoneMorph.SetPosition('DouPer' , 'Bip01 Spine0a'     , 0.88, 1   , 1   , 1.12, 1   , 1   )
+        #BoneMorph.SetPosition('DouPer' , 'Bip01 Spine1'      , 0.88, 1   , 1   , 1.12, 1   , 1   )
+        #BoneMorph.SetPosition('DouPer' , 'Bip01 Spine1a'     , 0.88, 1   , 1   , 1.12, 1   , 1   )
+        #BoneMorph.SetPosition('DouPer' , 'Bip01 Neck'        , 1.03, 1   , 1   , 0.97, 1   , 1   )
+        #BoneMorph.SetPosition('DouPer' , 'Bip01 ? Calf'      , 0.87, 1   , 1   , 1.13, 1   , 1   )
+        #BoneMorph.SetPosition('DouPer' , 'Bip01 ? Foot'      , 0.87, 1   , 1   , 1.13, 1   , 1   )
+        #BoneMorph.SetScale   ('DouPer' , 'Bip01 ? Thigh_SCL_', 0.87, 1   , 1   , 1.13, 1   , 1   )
+        #BoneMorph.SetScale   ('DouPer' , 'momotwist_?'       , 0.87, 1   , 1   , 1.13, 1   , 1   )
+        #BoneMorph.SetScale   ('DouPer' , 'Bip01 ? Calf_SCL_' , 0.87, 1   , 1   , 1.13, 1   , 1   )
+        #BoneMorph.SetScale   ('DouPer' , 'Bip01 ? UpperArm'  , 0.98, 1   , 1   , 1.02, 1   , 1   )
+        #BoneMorph.SetPosition('sintyou', 'Bip01 Spine'       , 1   , 1   , 0.85, 1   , 1   , 1.15)
+        #BoneMorph.SetPosition('sintyou', 'Bip01 Spine0a'     , 0.88, 1   , 1   , 1.12, 1   , 1   )
+        #BoneMorph.SetPosition('sintyou', 'Bip01 Spine1'      , 0.88, 1   , 1   , 1.12, 1   , 1   )
+        #BoneMorph.SetPosition('sintyou', 'Bip01 Spine1a'     , 0.88, 1   , 1   , 1.12, 1   , 1   )
+        #BoneMorph.SetPosition('sintyou', 'Bip01 Neck'        , 0.97, 1   , 1   , 1.03, 1   , 1   )
+        #BoneMorph.SetPosition('sintyou', 'Bip01 Head'        , 0.9 , 1   , 1   , 1.1 , 1   , 1   )
+        #BoneMorph.SetPosition('sintyou', 'Bip01 ? Calf'      , 0.87, 1   , 1   , 1.13, 1   , 1   )
+        #BoneMorph.SetPosition('sintyou', 'Bip01 ? Foot'      , 0.87, 1   , 1   , 1.13, 1   , 1   )
+        #BoneMorph.SetScale   ('sintyou', 'Bip01 ? UpperArm'  , 0.9 , 1   , 1   , 1.1 , 1   , 1   )
+        #BoneMorph.SetScale   ('sintyou', 'Bip01 ? Thigh_SCL_', 0.87, 1   , 1   , 1.13, 1   , 1   )
+        #BoneMorph.SetScale   ('sintyou', 'momotwist_?'       , 0.87, 1   , 1   , 1.13, 1   , 1   )
+        #BoneMorph.SetScale   ('sintyou', 'Bip01 ? Calf_SCL_' , 0.87, 1   , 1   , 1.13, 1   , 1   )
+        #BoneMorph.SetScale   ('koshi'  , 'Bip01 Pelvis_SCL_' , 1   , 0.8 , 0.92, 1   , 1.2 , 1.08)
+        #BoneMorph.SetScale   ('koshi'  , 'Bip01 Spine_SCL_'  , 1   , 1   , 1   , 1   , 1   , 1   )
+        #BoneMorph.SetScale   ('koshi'  , 'Hip_?'             , 1   , 0.96, 0.9 , 1   , 1.04, 1.1 )
+        #BoneMorph.SetScale   ('koshi'  , 'Skirt'             , 1   , 0.85, 0.88, 1   , 1.2 , 1.12)
+        #BoneMorph.SetPosition('kata'   , 'Bip01 ? Clavicle'  , 0.98, 1   , 0.5 , 1.02, 1   , 1.5 )
+        #BoneMorph.SetScale   ('kata'   , 'Bip01 Spine1a_SCL_', 1   , 1   , 0.95, 1   , 1   , 1.05)
+        #BoneMorph.SetScale   ('west'   , 'Bip01 Spine_SCL_'  , 1   , 0.95, 0.9 , 1   , 1.05, 1.1 )
+        #BoneMorph.SetScale   ('west'   , 'Bip01 Spine0a_SCL_', 1   , 0.85, 0.7 , 1   , 1.15, 1.3 )
+        #BoneMorph.SetScale   ('west'   , 'Bip01 Spine1_SCL_' , 1   , 0.9 , 0.85, 1   , 1.1 , 1.15)
+        #BoneMorph.SetScale   ('west'   , 'Bip01 Spine1a_SCL_', 1   , 0.95, 0.95, 1   , 1.05, 1.05)
+        #BoneMorph.SetScale   ('west'   , 'Skirt'             , 1   , 0.92, 0.88, 1   , 1.08, 1.12)
 
 
 
-        morph.SetPosition("KubiScl", "Bip01 Neck"         , 1.05, 1   , 1   )
-        morph.SetPosition("KubiScl", "Bip01 Head"         , 1.2 , 1   , 1   )
+        morph.SetPosition('KubiScl', 'Bip01 Neck'         , 1.05, 1   , 1   )
+        morph.SetPosition('KubiScl', 'Bip01 Head'         , 1.2 , 1   , 1   )
                                                                       
-        morph.SetScale   ("UdeScl" , "Bip01 ? UpperArm"   , 1.15, 1   , 1   )
+        morph.SetScale   ('UdeScl' , 'Bip01 ? UpperArm'   , 1.15, 1   , 1   )
                                                                       
-        morph.SetScale   ("HeadX"  , "Bip01 Head"         , 1   , 1.1 , 1.2 )
-        morph.SetScale   ("HeadY"  , "Bip01 Head"         , 1.2 , 1.1 , 1   )
+        morph.SetScale   ('HeadX'  , 'Bip01 Head'         , 1   , 1.1 , 1.2 )
+        morph.SetScale   ('HeadY'  , 'Bip01 Head'         , 1.2 , 1.1 , 1   )
         
-        morph.SetPosition("sintyou", "Bip01 Spine"        , 1   , 1   , 1.15)
-        morph.SetPosition("sintyou", "Bip01 Spine0a"      , 1.12, 1   , 1   )
-        morph.SetPosition("sintyou", "Bip01 Spine1"       , 1.12, 1   , 1   )
-        morph.SetPosition("sintyou", "Bip01 Spine1a"      , 1.12, 1   , 1   )
-        morph.SetPosition("sintyou", "Bip01 Neck"         , 1.03, 1   , 1   )
-        morph.SetPosition("sintyou", "Bip01 Head"         , 1.1 , 1   , 1   )
-        morph.SetPosition("sintyou", "Bip01 ? Calf"       , 1.13, 1   , 1   )
-        morph.SetPosition("sintyou", "Bip01 ? Foot"       , 1.13, 1   , 1   )
-        morph.SetScale   ("sintyou", "Bip01 ? UpperArm"   , 1.1 , 1   , 1   )
-        morph.SetScale   ("sintyou", "Bip01 ? Thigh_SCL_" , 1.13, 1   , 1   )
-        morph.SetScale   ("sintyou", "momotwist_?"        , 1.13, 1   , 1   )
-        morph.SetScale   ("sintyou", "Bip01 ? Calf_SCL_"  , 1.13, 1   , 1   )
+        morph.SetPosition('sintyou', 'Bip01 Spine'        , 1   , 1   , 1.15)
+        morph.SetPosition('sintyou', 'Bip01 Spine0a'      , 1.12, 1   , 1   )
+        morph.SetPosition('sintyou', 'Bip01 Spine1'       , 1.12, 1   , 1   )
+        morph.SetPosition('sintyou', 'Bip01 Spine1a'      , 1.12, 1   , 1   )
+        morph.SetPosition('sintyou', 'Bip01 Neck'         , 1.03, 1   , 1   )
+        morph.SetPosition('sintyou', 'Bip01 Head'         , 1.1 , 1   , 1   )
+        morph.SetPosition('sintyou', 'Bip01 ? Calf'       , 1.13, 1   , 1   )
+        morph.SetPosition('sintyou', 'Bip01 ? Foot'       , 1.13, 1   , 1   )
+        morph.SetScale   ('sintyou', 'Bip01 ? UpperArm'   , 1.1 , 1   , 1   )
+        morph.SetScale   ('sintyou', 'Bip01 ? Thigh_SCL_' , 1.13, 1   , 1   )
+        morph.SetScale   ('sintyou', 'momotwist_?'        , 1.13, 1   , 1   )
+        morph.SetScale   ('sintyou', 'Bip01 ? Calf_SCL_'  , 1.13, 1   , 1   )
                                                                             
         # for DouPer, any bone not a thigh or a decendant of one, it's values are inverted
-        morph.SetPosition("DouPer" , "Bip01 Spine"        , 1, 1, (1-1.06)+1)
-        morph.SetPosition("DouPer" , "Bip01 Spine0a"      , (1-1.12)+1, 1, 1)
-        morph.SetPosition("DouPer" , "Bip01 Spine1"       , (1-1.12)+1, 1, 1)
-        morph.SetPosition("DouPer" , "Bip01 Spine1a"      , (1-1.12)+1, 1, 1)
-        morph.SetPosition("DouPer" , "Bip01 Neck"         , (1-0.97)+1, 1, 1)
-        morph.SetScale   ("DouPer" , "Bip01 ? UpperArm"   , (1-1.02)+1, 1, 1)
-        morph.SetPosition("DouPer" , "Bip01 ? Calf"       ,       1.13, 1, 1)
-        morph.SetPosition("DouPer" , "Bip01 ? Foot"       ,       1.13, 1, 1)
-        morph.SetScale   ("DouPer" , "Bip01 ? Thigh_SCL_" ,       1.13, 1, 1)
-        morph.SetScale   ("DouPer" , "momotwist_?"        ,       1.13, 1, 1)
-        morph.SetScale   ("DouPer" , "Bip01 ? Calf_SCL_"  ,       1.13, 1, 1)
+        morph.SetPosition('DouPer' , 'Bip01 Spine'        , 1, 1, (1-1.06)+1)
+        morph.SetPosition('DouPer' , 'Bip01 Spine0a'      , (1-1.12)+1, 1, 1)
+        morph.SetPosition('DouPer' , 'Bip01 Spine1'       , (1-1.12)+1, 1, 1)
+        morph.SetPosition('DouPer' , 'Bip01 Spine1a'      , (1-1.12)+1, 1, 1)
+        morph.SetPosition('DouPer' , 'Bip01 Neck'         , (1-0.97)+1, 1, 1)
+        morph.SetScale   ('DouPer' , 'Bip01 ? UpperArm'   , (1-1.02)+1, 1, 1)
+        morph.SetPosition('DouPer' , 'Bip01 ? Calf'       ,       1.13, 1, 1)
+        morph.SetPosition('DouPer' , 'Bip01 ? Foot'       ,       1.13, 1, 1)
+        morph.SetScale   ('DouPer' , 'Bip01 ? Thigh_SCL_' ,       1.13, 1, 1)
+        morph.SetScale   ('DouPer' , 'momotwist_?'        ,       1.13, 1, 1)
+        morph.SetScale   ('DouPer' , 'Bip01 ? Calf_SCL_'  ,       1.13, 1, 1)
 
         # This has some issues            
-        morph.SetScale   ("koshi"  , "Bip01 Pelvis_SCL_"  , 1   , 1.2 , 1.08)
-        morph.SetScale   ("koshi"  , "Bip01 Spine_SCL_"   , 1   , 1   , 1   )
-        morph.SetScale   ("koshi"  , "Hip_?"              , 1   , 1.04, 1.1 )
-        morph.SetScale   ("koshi"  , "Skirt"              , 1   , 1.2 , 1.12)
+        morph.SetScale   ('koshi'  , 'Bip01 Pelvis_SCL_'  , 1   , 1.2 , 1.08)
+        morph.SetScale   ('koshi'  , 'Bip01 Spine_SCL_'   , 1   , 1   , 1   )
+        morph.SetScale   ('koshi'  , 'Hip_?'              , 1   , 1.04, 1.1 )
+        morph.SetScale   ('koshi'  , 'Skirt'              , 1   , 1.2 , 1.12)
                                      
-        #morph.SetPosition("kata"   , "Bip01 ? Clavicle"   , 1.02, 1   , 1.5, default=0)
-        morph.SetPosition("kata"   , "Bip01 ? Clavicle"   , 1.02, 1   , 1.5 , default=50)
-        morph.SetScale   ("kata"   , "Bip01 Spine1a_SCL_" , 1   , 1   , 1.05, default=50)
+        #morph.SetPosition('kata'   , 'Bip01 ? Clavicle'   , 1.02, 1   , 1.5, default=0)
+        morph.SetPosition('kata'   , 'Bip01 ? Clavicle'   , 1.02, 1   , 1.5 , default=50)
+        morph.SetScale   ('kata'   , 'Bip01 Spine1a_SCL_' , 1   , 1   , 1.05, default=50)
                                         
-        morph.SetScale   ("west"   , "Bip01 Spine_SCL_"   , 1   , 1.05, 1.1 )
-        morph.SetScale   ("west"   , "Bip01 Spine0a_SCL_" , 1   , 1.15, 1.3 )
-        morph.SetScale   ("west"   , "Bip01 Spine1_SCL_"  , 1   , 1.1 , 1.15)
-        morph.SetScale   ("west"   , "Bip01 Spine1a_SCL_" , 1   , 1.05, 1.05)
-        morph.SetScale   ("west"   , "Skirt"              , 1   , 1.08, 1.12)
+        morph.SetScale   ('west'   , 'Bip01 Spine_SCL_'   , 1   , 1.05, 1.1 )
+        morph.SetScale   ('west'   , 'Bip01 Spine0a_SCL_' , 1   , 1.15, 1.3 )
+        morph.SetScale   ('west'   , 'Bip01 Spine1_SCL_'  , 1   , 1.1 , 1.15)
+        morph.SetScale   ('west'   , 'Bip01 Spine1a_SCL_' , 1   , 1.05, 1.05)
+        morph.SetScale   ('west'   , 'Skirt'              , 1   , 1.08, 1.12)
         
         # WideSlider functions MUST be called AFTER all BoneMorph calls
-        sliders.SetPosition("THIPOS"    , "Bip01 ? Thigh"     ,  0    ,  0.001,  0.001, axisFlip=2, axisOrder=[1, 2, 0]) #axisFlip=2 #axisFlip=0
-        sliders.SetPosition("THI2POS"   , "Bip01 ? Thigh_SCL_",  0.001,  0.001,  0.001, axisFlip=2, axisOrder=[1, 2, 0]) #axisFlip=2 #axisFlip=0
-        sliders.SetPosition("HIPPOS"    , "Hip_?"             ,  0.001,  0.001,  0.001, axisFlip=2, axisOrder=[1, 2, 0]) #axisFlip=2 #axisFlip=0
-        sliders.SetPosition("MTWPOS"    , "momotwist_?"       ,  0.1  ,  0.1  , -0.1  , axisFlip=2                     ) #axisFlip=2 #axisFlip=2
-        sliders.SetPosition("MMNPOS"    , "momoniku_?"        ,  0.1  ,  0.1  , -0.1  , axisFlip=1                     ) #axisFlip=1 #axisFlip=1
-        sliders.SetPosition("SKTPOS"    , "Skirt"             , -0.1  , -0.1  ,  0.1  ,             axisOrder=[2, 1, 0]) #           #          
-        sliders.SetPosition("SPIPOS"    , "Bip01 Spine"       , -0.1  ,  0.1  ,  0.1                                   ) #           #          
-        sliders.SetPosition("S0APOS"    , "Bip01 Spine0a"     , -0.1  ,  0.1  ,  0.1                                   ) #           #          
-        sliders.SetPosition("S1POS"     , "Bip01 Spine1"      , -0.1  ,  0.1  ,  0.1                                   ) #           #          
-        sliders.SetPosition("S1APOS"    , "Bip01 Spine1a"     , -0.1  ,  0.1  ,  0.1                                   ) #           #          
-        sliders.SetPosition("NECKPOS"   , "Bip01 Neck"        , -0.1  ,  0.1  ,  0.1                                   ) #           #          
-        sliders.SetPosition("CLVPOS"    , "Bip01 ? Clavicle"  , -0.1  ,  0.1  , -0.1  , axisFlip=2                     ) #axisFlip=2 #axisFlip=2
-        sliders.SetPosition("MUNESUBPOS", "Mune_?_sub"        , -0.1  ,  0.1  ,  0.1  , axisFlip=1, axisOrder=[2, 1, 0]) #axisFlip=1 #axisFlip=2
-        sliders.SetPosition("MUNEPOS"   , "Mune_?"            ,  0.1  , -0.1  , -0.1  , axisFlip=2, axisOrder=[1, 2, 0]) #axisFlip=2 #axisFlip=0
+        sliders.SetPosition('THIPOS'    , 'Bip01 ? Thigh'     ,  0    ,  0.001,  0.001, axisFlip=2, axisOrder=[1, 2, 0]) #axisFlip=2 #axisFlip=0
+        sliders.SetPosition('THI2POS'   , 'Bip01 ? Thigh_SCL_',  0.001,  0.001,  0.001, axisFlip=2, axisOrder=[1, 2, 0]) #axisFlip=2 #axisFlip=0
+        sliders.SetPosition('HIPPOS'    , 'Hip_?'             ,  0.001,  0.001,  0.001, axisFlip=2, axisOrder=[1, 2, 0]) #axisFlip=2 #axisFlip=0
+        sliders.SetPosition('MTWPOS'    , 'momotwist_?'       ,  0.1  ,  0.1  , -0.1  , axisFlip=2                     ) #axisFlip=2 #axisFlip=2
+        sliders.SetPosition('MMNPOS'    , 'momoniku_?'        ,  0.1  ,  0.1  , -0.1  , axisFlip=1                     ) #axisFlip=1 #axisFlip=1
+        sliders.SetPosition('SKTPOS'    , 'Skirt'             , -0.1  , -0.1  ,  0.1  ,             axisOrder=[2, 1, 0]) #           #
+        sliders.SetPosition('SPIPOS'    , 'Bip01 Spine'       , -0.1  ,  0.1  ,  0.1                                   ) #           #
+        sliders.SetPosition('S0APOS'    , 'Bip01 Spine0a'     , -0.1  ,  0.1  ,  0.1                                   ) #           #
+        sliders.SetPosition('S1POS'     , 'Bip01 Spine1'      , -0.1  ,  0.1  ,  0.1                                   ) #           #
+        sliders.SetPosition('S1APOS'    , 'Bip01 Spine1a'     , -0.1  ,  0.1  ,  0.1                                   ) #           #
+        sliders.SetPosition('NECKPOS'   , 'Bip01 Neck'        , -0.1  ,  0.1  ,  0.1                                   ) #           #
+        sliders.SetPosition('CLVPOS'    , 'Bip01 ? Clavicle'  , -0.1  ,  0.1  , -0.1  , axisFlip=2                     ) #axisFlip=2 #axisFlip=2
+        sliders.SetPosition('MUNESUBPOS', 'Mune_?_sub'        , -0.1  ,  0.1  ,  0.1  , axisFlip=1, axisOrder=[2, 1, 0]) #axisFlip=1 #axisFlip=2
+        sliders.SetPosition('MUNEPOS'   , 'Mune_?'            ,  0.1  , -0.1  , -0.1  , axisFlip=2, axisOrder=[1, 2, 0]) #axisFlip=2 #axisFlip=0
                                                                                                                                      
-        sliders.SetScale   ("THISCL"    , "Bip01 ? Thigh"     , axisOrder=[0, 1, -1])
-        sliders.SetScale   ("MTWSCL"    , "momotwist_?"       )
-        sliders.SetScale   ("MMNSCL"    , "momoniku_?"        )
-        sliders.SetScale   ("PELSCL"    , "Bip01 Pelvis_SCL_" )
-        sliders.SetScale   ("THISCL2"   , "Bip01 ? Thigh_SCL_")#, axisOrder=[0, 1, -1])
-        sliders.SetScale   ("CALFSCL"   , "Bip01 ? Calf"      )#, axisOrder=[0, 1, -1])
-        sliders.SetScale   ("FOOTSCL"   , "Bip01 ? Foot"      )
-        sliders.SetScale   ("SKTSCL"    , "Skirt"             )
-        sliders.SetScale   ("SPISCL"    , "Bip01 Spine_SCL_"  )
-        sliders.SetScale   ("S0ASCL"    , "Bip01 Spine0a_SCL_")
-        sliders.SetScale   ("S1_SCL"    , "Bip01 Spine1_SCL_" )
-        sliders.SetScale   ("S1ASCL"    , "Bip01 Spine1a_SCL_")
-        sliders.SetScale   ("S1ABASESCL", "Bip01 Spine1a"     )#, axisOrder=[0, 1, -1]))
-        sliders.SetScale   ("KATASCL"   , "Kata_?"            )
-        sliders.SetScale   ("UPARMSCL"  , "Bip01 ? UpperArm"  )
-        sliders.SetScale   ("FARMSCL"   , "Bip01 ? Forearm"   )
-        sliders.SetScale   ("HANDSCL"   , "Bip01 ? Hand"      )
-        sliders.SetScale   ("CLVSCL"    , "Bip01 ? Clavicle"  )
-        sliders.SetScale   ("MUNESCL"   , "Mune_?"            )
-        sliders.SetScale   ("MUNESUBSCL", "Mune_?_sub"        )
-        sliders.SetScale   ("NECKSCL"   , "Bip01 Neck_SCL_"   )
-        sliders.SetScale   ("HIPSCL"    , "Hip_?"             )
-        sliders.SetScale   ("PELSCL"    , "Hip_?"             ) # hips are also scaled with pelvis
+        sliders.SetScale   ('THISCL'    , 'Bip01 ? Thigh'     , axisOrder=[0, 1, -1])
+        sliders.SetScale   ('MTWSCL'    , 'momotwist_?'       )
+        sliders.SetScale   ('MMNSCL'    , 'momoniku_?'        )
+        sliders.SetScale   ('PELSCL'    , 'Bip01 Pelvis_SCL_' )
+        sliders.SetScale   ('THISCL2'   , 'Bip01 ? Thigh_SCL_')#, axisOrder=[0, 1, -1])
+        sliders.SetScale   ('CALFSCL'   , 'Bip01 ? Calf'      )#, axisOrder=[0, 1, -1])
+        sliders.SetScale   ('FOOTSCL'   , 'Bip01 ? Foot'      )
+        sliders.SetScale   ('SKTSCL'    , 'Skirt'             )
+        sliders.SetScale   ('SPISCL'    , 'Bip01 Spine_SCL_'  )
+        sliders.SetScale   ('S0ASCL'    , 'Bip01 Spine0a_SCL_')
+        sliders.SetScale   ('S1_SCL'    , 'Bip01 Spine1_SCL_' )
+        sliders.SetScale   ('S1ASCL'    , 'Bip01 Spine1a_SCL_')
+        sliders.SetScale   ('S1ABASESCL', 'Bip01 Spine1a'     )#, axisOrder=[0, 1, -1]))
+        sliders.SetScale   ('KATASCL'   , 'Kata_?'            )
+        sliders.SetScale   ('UPARMSCL'  , 'Bip01 ? UpperArm'  )
+        sliders.SetScale   ('FARMSCL'   , 'Bip01 ? Forearm'   )
+        sliders.SetScale   ('HANDSCL'   , 'Bip01 ? Hand'      )
+        sliders.SetScale   ('CLVSCL'    , 'Bip01 ? Clavicle'  )
+        sliders.SetScale   ('MUNESCL'   , 'Mune_?'            )
+        sliders.SetScale   ('MUNESUBSCL', 'Mune_?_sub'        )
+        sliders.SetScale   ('NECKSCL'   , 'Bip01 Neck_SCL_'   )
+        sliders.SetScale   ('HIPSCL'    , 'Hip_?'             )
+        sliders.SetScale   ('PELSCL'    , 'Hip_?'             ) # hips are also scaled with pelvis
         
         if self.is_fix_thigh:
-            bone = morph.GetPoseBone("momoniku_?")
+            bone = morph.GetPoseBone('momoniku_?')
             bone.rotation_quaternion[0] = 0.997714
             bone.rotation_quaternion[3] = -0.06758
-            bone = morph.GetPoseBone("momoniku_?", flip=True)
+            bone = morph.GetPoseBone('momoniku_?', flip=True)
             bone.rotation_quaternion[0] = 0.997714
             bone.rotation_quaternion[3] = 0.06758
             
@@ -1558,13 +1558,13 @@ class CNV_OT_add_cm3d2_body_sliders(bpy.types.Operator):
             for child in ob.children:
                 if child.type == 'MESH':
                     sks = child.data.shape_keys.key_blocks
-                    self.driveShapeKey(sks.get('arml'    ), morph, 'ArmL'    , "ArmL     * 0.01")
-                    self.driveShapeKey(sks.get('hara'    ), morph, 'Hara'    , "Hara     * 0.01")
-                    self.driveShapeKey(sks.get('munel'   ), morph, 'MuneL'   , "MuneL    * 0.01", set_max=2)
-                    self.driveShapeKey(sks.get('munes'   ), morph, 'MuneS'   , "MuneS    * 0.01")
-                    self.driveShapeKey(sks.get('munetare'), morph, 'MuneTare', "MuneTare * 0.01", set_max=2)
-                    self.driveShapeKey(sks.get('regfat'  ), morph, 'RegFat'  , "RegFat   * 0.01")
-                    self.driveShapeKey(sks.get('regmeet' ), morph, 'RegMeet' , "RegMeet  * 0.01")
+                    self.driveShapeKey(sks.get('arml'    ), morph, 'ArmL'    , 'ArmL     * 0.01')
+                    self.driveShapeKey(sks.get('hara'    ), morph, 'Hara'    , 'Hara     * 0.01')
+                    self.driveShapeKey(sks.get('munel'   ), morph, 'MuneL'   , 'MuneL    * 0.01', set_max=2)
+                    self.driveShapeKey(sks.get('munes'   ), morph, 'MuneS'   , 'MuneS    * 0.01')
+                    self.driveShapeKey(sks.get('munetare'), morph, 'MuneTare', 'MuneTare * 0.01', set_max=2)
+                    self.driveShapeKey(sks.get('regfat'  ), morph, 'RegFat'  , 'RegFat   * 0.01')
+                    self.driveShapeKey(sks.get('regmeet' ), morph, 'RegMeet' , 'RegMeet  * 0.01')
 
         if True:
             bones = ob.pose.bones
@@ -1575,10 +1575,10 @@ class CNV_OT_add_cm3d2_body_sliders(bpy.types.Operator):
             if Mune_R:                  
                 Mune_R.rotation_mode = 'XYZ'
             
-            self.driveTwistBone(Mune_R, axis=0, expression="-(self.id_data.cm3d2_bone_morph.MuneUpDown-50) * self.id_data.cm3d2_bone_morph.MuneL * (pi/180) * 0.00060")
-            self.driveTwistBone(Mune_L, axis=0, expression="+(self.id_data.cm3d2_bone_morph.MuneUpDown-50) * self.id_data.cm3d2_bone_morph.MuneL * (pi/180) * 0.00060")
-            self.driveTwistBone(Mune_R, axis=2, expression="-(self.id_data.cm3d2_bone_morph.MuneYori  -50) * self.id_data.cm3d2_bone_morph.MuneL * (pi/180) * 0.00025")
-            self.driveTwistBone(Mune_L, axis=2, expression="-(self.id_data.cm3d2_bone_morph.MuneYori  -50) * self.id_data.cm3d2_bone_morph.MuneL * (pi/180) * 0.00025")
+            self.driveTwistBone(Mune_R, axis=0, expression='-(self.id_data.cm3d2_bone_morph.MuneUpDown-50) * self.id_data.cm3d2_bone_morph.MuneL * (pi/180) * 0.00060')
+            self.driveTwistBone(Mune_L, axis=0, expression='+(self.id_data.cm3d2_bone_morph.MuneUpDown-50) * self.id_data.cm3d2_bone_morph.MuneL * (pi/180) * 0.00060')
+            self.driveTwistBone(Mune_R, axis=2, expression='-(self.id_data.cm3d2_bone_morph.MuneYori  -50) * self.id_data.cm3d2_bone_morph.MuneL * (pi/180) * 0.00025')
+            self.driveTwistBone(Mune_L, axis=2, expression='-(self.id_data.cm3d2_bone_morph.MuneYori  -50) * self.id_data.cm3d2_bone_morph.MuneL * (pi/180) * 0.00025')
 
 
 
@@ -1595,7 +1595,7 @@ class DATA_PT_cm3d2_sliders(bpy.types.Panel):
     bl_space_type  = 'PROPERTIES'
     bl_region_type = 'WINDOW'
     bl_context     = 'data'
-    bl_label       = 'CM3D2 Sliders'
+    bl_label       = "CM3D2 Sliders"
     bl_idname      = 'DATA_PT_cm3d2_sliders'
 
     @classmethod
@@ -1605,7 +1605,7 @@ class DATA_PT_cm3d2_sliders(bpy.types.Panel):
             arm = ob.data
         else:
             arm = None
-        return arm and isinstance(arm, bpy.types.Armature) and ("Bip01" in arm.bones)
+        return arm and isinstance(arm, bpy.types.Armature) and ('Bip01' in arm.bones)
 
     def draw(self, context):
         ob = context.object
@@ -1634,11 +1634,11 @@ class DATA_PT_cm3d2_sliders(bpy.types.Panel):
                                 
         row = self.layout.row()
         #row.enabled = bpy.ops.object.add_cm3d2_body_sliders.poll(context.copy())
-        op = row.operator("object.add_cm3d2_body_sliders", text="Connect Sliders", icon='CONSTRAINT_BONE')
+        op = row.operator('object.add_cm3d2_body_sliders', text="Connect Sliders", icon='CONSTRAINT_BONE')
         
         row = self.layout.row()
         #row.enabled = bpy.ops.object.cleanup_scale_bones.poll(context.copy())
-        op = row.operator("object.cleanup_scale_bones", text="Cleanup Scale Bones", icon='X')
+        op = row.operator('object.cleanup_scale_bones', text="Cleanup Scale Bones", icon='X')
 
 
 
@@ -1648,7 +1648,7 @@ class DATA_PT_cm3d2_body_sliders(bpy.types.Panel):
     bl_space_type  = 'PROPERTIES'
     bl_region_type = 'WINDOW'
     bl_context     = 'data'
-    bl_label       = 'Body Sliders'
+    bl_label       = "Body Sliders"
     bl_idname      = 'DATA_PT_cm3d2_body_sliders'
     bl_parent_id   = 'DATA_PT_cm3d2_sliders'
     bl_options     = {'DEFAULT_CLOSED'}
@@ -1688,7 +1688,7 @@ class DATA_PT_cm3d2_wide_sliders(bpy.types.Panel):
     bl_space_type  = 'PROPERTIES'
     bl_region_type = 'WINDOW'
     bl_context     = 'data'
-    bl_label       = 'Wide Sliders'
+    bl_label       = "Wide Sliders"
     bl_idname      = 'DATA_PT_cm3d2_wide_sliders'
     bl_parent_id   = 'DATA_PT_cm3d2_sliders'
     bl_options     = {'DEFAULT_CLOSED'}
@@ -1704,7 +1704,7 @@ class DATA_PT_cm3d2_wide_sliders(bpy.types.Panel):
 
         row = self.layout.row()
         row.use_property_decorate = False
-        row.prop(sliders, "enable_all", text="Enable All Sliders")
+        row.prop(sliders, 'enable_all', text="Enable All Sliders")
 
         flow = self.layout.grid_flow(row_major=True)
         flow.scale_x = 0.5
@@ -1739,14 +1739,14 @@ class DATA_PT_cm3d2_wide_sliders(bpy.types.Panel):
                     
                     axis_name = axis_names[i]
                     if i == 0:
-                        axis_name = type_name + " " + axis_name
+                        axis_name = type_name + ' ' + axis_name
                         if not used_name:
-                            axis_name = name + " " + axis_name
+                            axis_name = name + ' ' + axis_name
                             used_name = True
 
                     row.prop(
                         sliders                                , 
-                        prop_id if not is_disabled else "empty", 
+                        prop_id if not is_disabled else 'empty',
                         text   = axis_name                     , 
                         slider = not is_disabled               ,
                         emboss = not is_disabled               ,
@@ -1754,33 +1754,33 @@ class DATA_PT_cm3d2_wide_sliders(bpy.types.Panel):
                     )
 
             if pos_prop:
-                _vec_prop(iface_("Position"), pos_prop, pos_enabled, ("X", "Y", "Z"))
+                _vec_prop(iface_("Position"), pos_prop, pos_enabled, ('X', 'Y', 'Z'))
             if scl_prop:
-                _vec_prop(iface_("Scale"   ), scl_prop, scl_enabled, ("X", "Y", "Z"))
+                _vec_prop(iface_("Scale"   ), scl_prop, scl_enabled, ('X', 'Y', 'Z'))
 
 
-        _transform_prop("Pelvis"       , None        , "PELSCL"                                                                           )
-        _transform_prop("Hips"         , "HIPPOS"    , "HIPSCL"                                                                           )
-        _transform_prop("Legs"         , "THIPOS"    , "THISCL"    , pos_enabled=(True , None , True ), scl_enabled=(True , True , None ) )
-        _transform_prop("Thigh"        , "MTWPOS"    , "MTWSCL"                                                                           )
-        _transform_prop("Rear Thigh"   , "MMNPOS"    , "MMNSCL"                                                                           )
-        _transform_prop("Knee"         , "THI2POS"   , "THISCL2"                                      , scl_enabled=(True , True , False) )
-        _transform_prop("Calf"         , None        , "CALFSCL"                                      , scl_enabled=(True , True , False) )
-        _transform_prop("Foot"         , None        , "FOOTSCL"                                                                          )
-        _transform_prop("Skirt"        , "SKTPOS"    , "SKTSCL"    , pos_enabled=(False, False, True )                                    )
-        _transform_prop("Lower Abdomen", "SPIPOS"    , "SPISCL"    , pos_enabled=(True , False, True )                                    )
-        _transform_prop("Upper Abdomen", "S0APOS"    , "S0ASCL"    , pos_enabled=(True , True , False)                                    )
-        _transform_prop("Lower Chest"  , "S1POS"     , "S1_SCL"    , pos_enabled=(True , True , False)                                    )
-        _transform_prop("Upper Chest"  , "S1APOS"    , "S1ASCL"    , pos_enabled=(True , True , False)                                    )
-        _transform_prop("Upper Torso"  , None        , "S1ABASESCL"                                   , scl_enabled=(True , True , False) )
-        _transform_prop("Breasts"      , "MUNEPOS"   , "MUNESCL"                                                                          )
-        _transform_prop("Breasts Sub"  , "MUNESUBPOS", "MUNESUBSCL"                                                                       )
-        _transform_prop("Neck"         , "NECKPOS"   , "NECKSCL"                                                                          )
-        _transform_prop("Clavicle"     , "CLVPOS"    , "CLVSCL"                                                                           )
-        _transform_prop("Shoulders"    , None        , "KATASCL"                                                                          )
-        _transform_prop("Upper Arm"    , None        , "UPARMSCL"                                                                         )
-        _transform_prop("Forearm"      , None        , "FARMSCL"                                                                          )
-        _transform_prop("Hand"         , None        , "HANDSCL"                                                                          )              
+        _transform_prop("Pelvis"       , None        , 'PELSCL'                                                                           )
+        _transform_prop("Hips"         , 'HIPPOS'    , 'HIPSCL'                                                                           )
+        _transform_prop("Legs"         , 'THIPOS'    , 'THISCL'    , pos_enabled=(True , None , True ), scl_enabled=(True , True , None ) )
+        _transform_prop("Thigh"        , 'MTWPOS'    , 'MTWSCL'                                                                           )
+        _transform_prop("Rear Thigh"   , 'MMNPOS'    , 'MMNSCL'                                                                           )
+        _transform_prop("Knee"         , 'THI2POS'   , 'THISCL2'                                      , scl_enabled=(True , True , False) )
+        _transform_prop("Calf"         , None        , 'CALFSCL'                                      , scl_enabled=(True , True , False) )
+        _transform_prop("Foot"         , None        , 'FOOTSCL'                                                                          )
+        _transform_prop("Skirt"        , 'SKTPOS'    , 'SKTSCL'    , pos_enabled=(False, False, True )                                    )
+        _transform_prop("Lower Abdomen", 'SPIPOS'    , 'SPISCL'    , pos_enabled=(True , False, True )                                    )
+        _transform_prop("Upper Abdomen", 'S0APOS'    , 'S0ASCL'    , pos_enabled=(True , True , False)                                    )
+        _transform_prop("Lower Chest"  , 'S1POS'     , 'S1_SCL'    , pos_enabled=(True , True , False)                                    )
+        _transform_prop("Upper Chest"  , 'S1APOS'    , 'S1ASCL'    , pos_enabled=(True , True , False)                                    )
+        _transform_prop("Upper Torso"  , None        , 'S1ABASESCL'                                   , scl_enabled=(True , True , False) )
+        _transform_prop("Breasts"      , 'MUNEPOS'   , 'MUNESCL'                                                                          )
+        _transform_prop("Breasts Sub"  , 'MUNESUBPOS', 'MUNESUBSCL'                                                                       )
+        _transform_prop("Neck"         , 'NECKPOS'   , 'NECKSCL'                                                                          )
+        _transform_prop("Clavicle"     , 'CLVPOS'    , 'CLVSCL'                                                                           )
+        _transform_prop("Shoulders"    , None        , 'KATASCL'                                                                          )
+        _transform_prop("Upper Arm"    , None        , 'UPARMSCL'                                                                         )
+        _transform_prop("Forearm"      , None        , 'FARMSCL'                                                                          )
+        _transform_prop("Hand"         , None        , 'HANDSCL'                                                                          )
 
                                                            
 
@@ -1829,7 +1829,7 @@ class CNV_OT_cleanup_scale_bones(bpy.types.Operator):
                 continue
             if self.is_keep_bones_with_children and len(bone.children) > 0:
                 continue
-            parent = edit_bones.get(bone.name.replace("_SCL_","")) or bone.parent
+            parent = edit_bones.get(bone.name.replace('_SCL_','')) or bone.parent
             if parent:
                 parent['cm3d2_scl_bone'] = True
                 deleted_bones[bone.name] = parent.name
@@ -1880,7 +1880,7 @@ class CNV_OT_save_cm3d2_body_sliders_to_menu(bpy.types.Operator):
 
         def add_menu_prop_command(prop_name):
             menu_file_data.parse_list(
-                ["prop",
+                ['prop',
                     prop_name,
                     str(int( getattr(morph, prop_name) ))
                 ]
@@ -1890,18 +1890,18 @@ class CNV_OT_save_cm3d2_body_sliders_to_menu(bpy.types.Operator):
             menu_file_data.clear()
 
             menu_file_data.version     = 1000
-            menu_file_data.path        = os.path.relpath(bpy.data.filepath, start=bpy.path.abspath("//.."))
+            menu_file_data.path        = os.path.relpath(bpy.data.filepath, start=bpy.path.abspath('//..'))
             menu_file_data.name        = f'{ob.name} {data_("Body")}'
-            menu_file_data.category    = "set_body"
+            menu_file_data.category    = 'set_body'
             menu_file_data.description = data_("Generated in blender using body sliders")
                                                                                             
-            menu_file_data.parse_list(["メニューフォルダ", "system"                                 ])                               
-            menu_file_data.parse_list(["category", "set_body"                               ])
-            menu_file_data.parse_list(["priority", "100"                                    ])
-            menu_file_data.parse_list(["icons"   , "_i_set_body_1_.tex"                     ])
-            menu_file_data.parse_list([data_("属性追加")    , data_("クリックしても選択状態にしない")                        ])                      
-            menu_file_data.parse_list(["name"    , menu_file_data.name                      ])
-            menu_file_data.parse_list(["setumei" , data_("Generated in blender using body sliders")])
+            menu_file_data.parse_list(['メニューフォルダ', 'system'                                 ])
+            menu_file_data.parse_list(['category', 'set_body'                               ])
+            menu_file_data.parse_list(['priority', '100'                                    ])
+            menu_file_data.parse_list(['icons'   , '_i_set_body_1_.tex'                     ])
+            menu_file_data.parse_list(['属性追加' , 'クリックしても選択状態にしない'               ])
+            menu_file_data.parse_list(['name'    , menu_file_data.name                      ])
+            menu_file_data.parse_list(['setumei' , data_("Generated in blender using body sliders")])
 
         add_menu_prop_command('HeadX'     )
         add_menu_prop_command('HeadY'     )

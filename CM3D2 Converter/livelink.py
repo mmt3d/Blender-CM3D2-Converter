@@ -51,9 +51,9 @@ if TYPE_CHECKING:
             pass
         def SendString(self, value):
             pass
-        def StartClient(self, address = "com3d2.livelink"):
+        def StartClient(self, address = 'com3d2.livelink'):
             pass
-        def StartServer(self, address = "com3d2.livelink"):
+        def StartServer(self, address = 'com3d2.livelink'):
             pass
         def TryReadMessage(self, message):
             pass
@@ -157,7 +157,7 @@ class VIEW3D_PT_com3d2_livelink(bpy.types.Panel):
 @compat.BlRegister()
 class COM3D2LIVELINK_OT_start_server(bpy.types.Operator):
     """Start the LiveLink server"""
-    bl_idname = "com3d2livelink.start_server"
+    bl_idname = 'com3d2livelink.start_server'
     bl_label = "Start LiveLink"
     bl_options = {'REGISTER'}
 
@@ -249,7 +249,7 @@ class COM3D2LIVELINK_OT_wait_for_connection(bpy.types.Operator):
 @compat.BlRegister()
 class COM3D2LIVELINK_OT_send_animation(bpy.types.Operator):
     """Send an animation to connected LiveLink client"""
-    bl_idname = "com3d2livelink.send_animation"
+    bl_idname = 'com3d2livelink.send_animation'
     bl_label = "Send Animation"
     bl_options = {'REGISTER'}
     

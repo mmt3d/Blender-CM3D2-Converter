@@ -38,21 +38,19 @@ class CNV_UL_modifier_selector(common.CNV_UL_generic_selector):
     #did_force_values = False
 
     force_values: bpy.props.BoolProperty(
-        name="force_values",
         default=False,
-        options=set(),
+        options={'HIDDEN', 'SKIP_SAVE'},
     )
 
     did_force_values: bpy.props.BoolProperty(
-        name="force_values",
         default=False,
-        options=set(),
+        options={'HIDDEN', 'SKIP_SAVE'},
     )
 
     # This allows us to have mutually exclusive options, which are also all disable-able!
     def _gen_force_values(self, context):
-        setattr(self, "force_values", True)
-        setattr(self, "did_force_values", False)
+        setattr(self, 'force_values', True)
+        setattr(self, 'did_force_values', False)
         print("SET TRUE force_values =", self.force_values)
     
     def _gen_visible_update(name1, name2):
@@ -66,14 +64,14 @@ class CNV_UL_modifier_selector(common.CNV_UL_generic_selector):
         default=False,
         options=set(),
         description="Only enable modifiers visible in viewport",
-        update=_gen_visible_update("use_filter_viewport_visible", "use_filter_renderer_visible"),
+        update=_gen_visible_update('use_filter_viewport_visible', 'use_filter_renderer_visible'),
     )
     use_filter_renderer_visible: bpy.props.BoolProperty(
         name="Renderer",
         default=False,
         options=set(),
         description="Only enable modifiers visible in renderer",
-        update=_gen_visible_update("use_filter_renderer_visible", "use_filter_viewport_visible"),
+        update=_gen_visible_update('use_filter_renderer_visible', 'use_filter_viewport_visible'),
     )
     use_filter_reversed_visible: bpy.props.BoolProperty(
         name="Reverse Visible Filter",
@@ -99,7 +97,7 @@ class CNV_UL_modifier_selector(common.CNV_UL_generic_selector):
     use_order_name: bpy.props.BoolProperty(
         name="Name", default=False, options=set(),
         description="Sort groups by their name (case-insensitive)",
-        update=_gen_order_update("use_order_name", "use_order_importance"),
+        update=_gen_order_update('use_order_name', 'use_order_importance'),
     )
     use_filter_orderby_invert: bpy.props.BoolProperty(
         name="Order by Invert",
@@ -113,10 +111,10 @@ class CNV_UL_modifier_selector(common.CNV_UL_generic_selector):
         row = layout.row()
         row.label(text="Visible in:")
         subrow = row.row(align=True)
-        subrow.prop(self, "use_filter_viewport_visible", toggle=True)
-        subrow.prop(self, "use_filter_renderer_visible", toggle=True)
+        subrow.prop(self, 'use_filter_viewport_visible', toggle=True)
+        subrow.prop(self, 'use_filter_renderer_visible', toggle=True)
         icon = 'ZOOM_OUT' if self.use_filter_reversed_visible else 'ZOOM_IN'
-        subrow.prop(self, "use_filter_reversed_visible", text="", icon=icon)
+        subrow.prop(self, 'use_filter_reversed_visible', text="", icon=icon)
 
         super(CNV_UL_modifier_selector, self).draw_filter(context, layout)
 
@@ -231,7 +229,7 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
         #    except:
         #        self.layout.prop(self, 'is_applies', text=mod.name, index=index, icon='MODIFIER')
         
-        self.layout.template_list("CNV_UL_modifier_selector", "", self, "is_applies", self, "active_modifier")
+        self.layout.template_list('CNV_UL_modifier_selector', "", self, 'is_applies', self, 'active_modifier')
         self.layout.label(text="Show filters", icon='FILE_PARENT')
 
     def execute(self, context):
@@ -351,7 +349,7 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
                         if bpy.ops.object.decode_cm3d2_vertex_group_names.poll():
                             self.report(type={'WARNING'}, message="Vertex groups are not in blender naming style. Mirror modifier results may not be as expected")
                         for vg in ob.vertex_groups[:]:
-                            replace_list = ((r'\.L$', ".R"), (r'\.R$', ".L"), (r'\.l$', ".r"), (r'\.r$', ".l"), (r'_L$', "_R"), (r'_R$', "_L"), (r'_l$', "_r"), (r'_r$', "_l"))
+                            replace_list = ((r'\.L$', '.R'), (r'\.R$', '.L'), (r'\.l$', '.r'), (r'\.r$', '.l'), (r'_L$', '_R'), (r'_R$', '_L'), (r'_l$', '_r'), (r'_r$', '_l'))
                             for before, after in replace_list:
                                 mirrored_name = re.sub(before, after, vg.name)
                                 if mirrored_name not in ob.vertex_groups:

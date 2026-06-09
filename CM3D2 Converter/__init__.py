@@ -2,16 +2,16 @@
 
 # アドオン情報
 bl_info = {
-    "name": "CM3D2 Converter",
-    "author": "@saidenka_cm3d2, @trzrz, @luvoid",
-    "version": ("luv", 2023, 9, 23),
-    "blender": (3, 3, 0),
-    "location": "ファイル > インポート/エクスポート > CM3D2 Model (.model)",
-    "description": "カスタムメイド3D2/カスタムオーダーメイド3D2専用ファイルのインポート/エクスポートを行います",
-    "warning": "",
-    "wiki_url": "https://github.com/luvoid/Blender-CM3D2-Converter/blob/bl_28/README.md",
-    "tracker_url": "https://github.com/luvoid/Blender-CM3D2-Converter",
-    "category": "Import-Export"
+    'name': "CM3D2 Converter",
+    'author': '@saidenka_cm3d2, @trzrz, @luvoid',
+    'version': ('luv', 2023, 9, 23),
+    'blender': (3, 3, 0),
+    'location': "ファイル > インポート/エクスポート > CM3D2 Model (.model)",
+    'description': "カスタムメイド3D2/カスタムオーダーメイド3D2専用ファイルのインポート/エクスポートを行います",
+    'warning': "",
+    'wiki_url': 'https://github.com/luvoid/Blender-CM3D2-Converter/blob/bl_28/README.md',
+    'tracker_url': 'https://github.com/luvoid/Blender-CM3D2-Converter',
+    'category': 'Import-Export'
 }
 
 DEBUG = False
@@ -20,7 +20,7 @@ DEBUG = False
 import sys
 import os
 addon_dir = os.path.dirname(__file__)
-vendor_path = os.path.join(addon_dir, "vendor")
+vendor_path = os.path.join(addon_dir, 'vendor')
 if vendor_path not in sys.path:
     sys.path.insert(0, vendor_path)
 
@@ -151,7 +151,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
     menu_export_path: bpy.props.StringProperty(name=".menu Default Export Path", subtype='FILE_PATH', description="When exporting a .menu file. The file selection prompt will begin here.")
     
     is_replace_cm3d2_tex: bpy.props.BoolProperty(name="基本的にtexファイルを探す", default=True, description="texファイルを探すかどうかのオプションのデフォルト値を設定します")
-    search_tex_path_scope: bpy.props.EnumProperty(items=[('NONE', '指定なし', ''), ('SAME', '同ディレクトリ以下', ''), ('PARENT', '親ディレクトリ以下', '')], name='相対探索範囲', default='SAME', description="インポート対象からの相対ディレクトリ以下を探索対象に加えます")
+    search_tex_path_scope: bpy.props.EnumProperty(items=[('NONE', "指定なし", ""), ('SAME', "同ディレクトリ以下", ""), ('PARENT', "親ディレクトリ以下", "")], name="相対探索範囲", default='SAME', description="インポート対象からの相対ディレクトリ以下を探索対象に加えます")
     default_tex_path0: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=common.clear_texpath_default_dict)
     default_tex_path1: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=common.clear_texpath_default_dict)
     default_tex_path2: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=common.clear_texpath_default_dict)
@@ -164,48 +164,48 @@ class AddonPreferences(bpy.types.AddonPreferences):
     new_mate_tex_offset: bpy.props.FloatVectorProperty(name="テクスチャのオフセット", default=(0, 0), min=-1, max=1, soft_min=-1, soft_max=1, step=10, precision=3, size=2)
     new_mate_tex_scale: bpy.props.FloatVectorProperty(name="テクスチャのスケール", default=(1, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=3, size=2)
 
-    new_mate_toonramp_name: bpy.props.StringProperty(name="_ToonRamp 名前", default="toonGrayA1")
-    new_mate_toonramp_path: bpy.props.StringProperty(name="_ToonRamp パス", default=common.BASE_PATH_TEX + "toon/toonGrayA1.png")
+    new_mate_toonramp_name: bpy.props.StringProperty(name="_ToonRamp 名前", default='toonGrayA1')
+    new_mate_toonramp_path: bpy.props.StringProperty(name="_ToonRamp パス", default=common.BASE_PATH_TEX + 'toon/toonGrayA1.png')
 
-    new_mate_shadowratetoon_name: bpy.props.StringProperty(name="_ShadowRateToon 名前", default="toonDress_shadow")
-    new_mate_shadowratetoon_path: bpy.props.StringProperty(name="_ShadowRateToon パス", default=common.BASE_PATH_TEX + "toon/toonDress_shadow.png")
+    new_mate_shadowratetoon_name: bpy.props.StringProperty(name="_ShadowRateToon 名前", default='toonDress_shadow')
+    new_mate_shadowratetoon_path: bpy.props.StringProperty(name="_ShadowRateToon パス", default=common.BASE_PATH_TEX + 'toon/toonDress_shadow.png')
 
-    new_mate_linetoonramp_name: bpy.props.StringProperty(name="_OutlineToonRamp 名前", default="toonGrayA1")
-    new_mate_linetoonramp_path: bpy.props.StringProperty(name="_OutlineToonRamp パス", default=common.BASE_PATH_TEX + "toon/toonGrayA1.png")
+    new_mate_linetoonramp_name: bpy.props.StringProperty(name="_OutlineToonRamp 名前", default='toonGrayA1')
+    new_mate_linetoonramp_path: bpy.props.StringProperty(name="_OutlineToonRamp パス", default=common.BASE_PATH_TEX + 'toon/toonGrayA1.png')
 
-    new_mate_color: bpy.props.FloatVectorProperty(name="_Color", default=(1, 1, 1, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
-    new_mate_shadowcolor: bpy.props.FloatVectorProperty(name="_ShadowColor", default=(0, 0, 0, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
-    new_mate_rimcolor: bpy.props.FloatVectorProperty(name="_RimColor", default=(0.5, 0.5, 0.5, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
-    new_mate_outlinecolor: bpy.props.FloatVectorProperty(name="_OutlineColor", default=(0, 0, 0, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
+    new_mate_color: bpy.props.FloatVectorProperty(name='_Color', default=(1, 1, 1, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
+    new_mate_shadowcolor: bpy.props.FloatVectorProperty(name='_ShadowColor', default=(0, 0, 0, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
+    new_mate_rimcolor: bpy.props.FloatVectorProperty(name='_RimColor', default=(0.5, 0.5, 0.5, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
+    new_mate_outlinecolor: bpy.props.FloatVectorProperty(name='_OutlineColor', default=(0, 0, 0, 1), min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2, subtype='COLOR', size=4)
 
-    new_mate_shininess: bpy.props.FloatProperty(name="_Shininess", default=0, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
-    new_mate_outlinewidth: bpy.props.FloatProperty(name="_OutlineWidth", default=0.0015, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
-    new_mate_rimpower: bpy.props.FloatProperty(name="_RimPower", default=25, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
-    new_mate_rimshift: bpy.props.FloatProperty(name="_RimShift", default=0, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
-    new_mate_hirate: bpy.props.FloatProperty(name="_HiRate", default=0.5, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
-    new_mate_hipow: bpy.props.FloatProperty(name="_HiPow", default=0.001, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
-    new_mate_cutoff: bpy.props.FloatProperty(name="_Cutoff", default=0.5, min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2)
-    new_mate_cutout: bpy.props.FloatProperty(name="_Cutout", default=0.482143, min=0, max=1, soft_min=0, soft_max=1, step=10, precision=6)
-    new_mate_ztest: bpy.props.FloatProperty(name="_ZTest", default=4, min=0, max=8, soft_min=0, soft_max=8, step=1)
-    new_mate_ztest2: bpy.props.FloatProperty(name="_ZTest2", default=1, min=0, max=1, soft_min=0, soft_max=1, step=1)
-    new_mate_ztest2alpha: bpy.props.FloatProperty(name="_ZTest2Alpha", default=0.8, min=0, max=1, soft_min=0, soft_max=1, step=1, precision=2)
+    new_mate_shininess: bpy.props.FloatProperty(name='_Shininess', default=0, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
+    new_mate_outlinewidth: bpy.props.FloatProperty(name='_OutlineWidth', default=0.0015, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
+    new_mate_rimpower: bpy.props.FloatProperty(name='_RimPower', default=25, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
+    new_mate_rimshift: bpy.props.FloatProperty(name='_RimShift', default=0, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
+    new_mate_hirate: bpy.props.FloatProperty(name='_HiRate', default=0.5, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
+    new_mate_hipow: bpy.props.FloatProperty(name='_HiPow', default=0.001, min=-100, max=100, soft_min=-100, soft_max=100, step=1, precision=2)
+    new_mate_cutoff: bpy.props.FloatProperty(name='_Cutoff', default=0.5, min=0, max=1, soft_min=0, soft_max=1, step=10, precision=2)
+    new_mate_cutout: bpy.props.FloatProperty(name='_Cutout', default=0.482143, min=0, max=1, soft_min=0, soft_max=1, step=10, precision=6)
+    new_mate_ztest: bpy.props.FloatProperty(name='_ZTest', default=4, min=0, max=8, soft_min=0, soft_max=8, step=1)
+    new_mate_ztest2: bpy.props.FloatProperty(name='_ZTest2', default=1, min=0, max=1, soft_min=0, soft_max=1, step=1)
+    new_mate_ztest2alpha: bpy.props.FloatProperty(name='_ZTest2Alpha', default=0.8, min=0, max=1, soft_min=0, soft_max=1, step=1, precision=2)
 
     bone_display_type: bpy.props.EnumProperty(
         items=[
-            ('OCTAHEDRAL', "Octahedral", "Display bones as octahedral shape (default)."                            ),
-            ('STICK'     , "Stick"     , "Display bones as simple 2D lines with dots."                             ),
-            ('BBONE'     , "B-Bone"    , "Display bones as boxes, showing subdivision and B-Splines."              ),
-            ('ENVELOPE'  , "Envelope"  , "Display bones as extruded spheres, showing deformation influence volume."),
-            ('WIRE'      , "Wire"      , "Display bones as thin wires, showing subdivision and B-Splines."         ),
+            ('OCTAHEDRAL', "Octahedral", "Display bones as octahedral shape (default)"                            ),
+            ('STICK'     , "Stick"     , "Display bones as simple 2D lines with dots"                             ),
+            ('BBONE'     , "B-Bone"    , "Display bones as boxes, showing subdivision and B-Splines"              ),
+            ('ENVELOPE'  , "Envelope"  , "Display bones as extruded spheres, showing deformation influence volume"),
+            ('WIRE'      , "Wire"      , "Display bones as thin wires, showing subdivision and B-Splines"         ),
         ],
-        name="Display Type",
+        name="Display As",
         default='STICK',
     )
-    show_bone_names: bpy.props.BoolProperty(name="Show Bone Names"       , default=False, description="Display bone names"                     )
-    show_bone_axes: bpy.props.BoolProperty(name="Show Bone Axes"        , default=False, description="Display bone axes"                      )
-    show_bone_custom_shapes: bpy.props.BoolProperty(name="Show Bone Shapes"      , default=True , description="Display bones with their custom shapes" )
-    show_bone_group_colors: bpy.props.BoolProperty(name="Show Bone Group Colors", default=True , description="Display bone group colors"              )
-    show_bone_in_front: bpy.props.BoolProperty(name="Show Bones in Front"   , default=True , description="Make the object draw in front of others")
+    show_bone_names: bpy.props.BoolProperty(name="Names", default=False, description="Display bone names")
+    show_bone_axes: bpy.props.BoolProperty(name="Axes", default=False, description="Display bone axes")
+    show_bone_custom_shapes: bpy.props.BoolProperty(name="Shapes", default=True , description="Display bones with their custom shapes")
+    show_bone_group_colors: bpy.props.BoolProperty(name="Bone Colors", default=True , description="Display bone colors")
+    show_bone_in_front: bpy.props.BoolProperty(name="In Front", default=True , description="Make the object display in front of others")
 
     console_utf8: bpy.props.BoolProperty(default=False, update=lambda self, _: self.apply_console_code())
 
@@ -250,7 +250,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
         box.prop(self, 'is_replace_cm3d2_tex', icon='VIEWZOOM')
         row = box.row()
         row.label(text="相対探索範囲")
-        row.prop(self, "search_tex_path_scope", expand=True)
+        row.prop(self, 'search_tex_path_scope', expand=True)
         box.prop(self, 'default_tex_path0', icon='LAYER_ACTIVE', text="探索パス1")
         box.prop(self, 'default_tex_path1', icon='LAYER_ACTIVE', text="探索パス2")
         box.prop(self, 'default_tex_path2', icon='LAYER_ACTIVE', text="探索パス3")
@@ -282,13 +282,13 @@ class AddonPreferences(bpy.types.AddonPreferences):
 
         box = self.layout.box()
         box.label(text="Default Armature Settings", icon='ARMATURE_DATA')
-        box.prop(self, "bone_display_type", text="Display As")
+        box.prop(self, 'bone_display_type')
         row = box.row()
-        row.prop(self, "show_bone_names",         text="Names"       )
-        row.prop(self, "show_bone_axes",          text="Axes"        )
-        row.prop(self, "show_bone_custom_shapes", text="Shapes"      )
-        row.prop(self, "show_bone_group_colors",  text="Group Colors")
-        row.prop(self, "show_bone_in_front",      text="In Front"    )
+        row.prop(self, 'show_bone_names')
+        row.prop(self, 'show_bone_axes')
+        row.prop(self, 'show_bone_custom_shapes')
+        row.prop(self, 'show_bone_group_colors')
+        row.prop(self, 'show_bone_in_front')
 
         box = self.layout.box()
         box.label(text="各操作の初期パラメータ", icon='MATERIAL')
@@ -300,10 +300,10 @@ class AddonPreferences(bpy.types.AddonPreferences):
         box = self.layout.box()
         box.label(text="コンソール", icon='CONSOLE')
         row = box.row()
-        row.prop(self, "console_utf8", text="コンソール文字コードをUTF8にする (日本語文字化け対策)")
+        row.prop(self, 'console_utf8', text="コンソール文字コードをUTF8にする (日本語文字化け対策)")
         col = box.column(align=True)
-        col.label(text='   このアドオン以外のコンソール出力にも影響を及ぼす可能性があります。')
-        col.label(text='   一度ONにするとOFFに戻してもBlender再起動しないと戻りません。')
+        col.label(text="   このアドオン以外のコンソール出力にも影響を及ぼす可能性があります。")
+        col.label(text="   一度ONにするとOFFに戻してもBlender再起動しないと戻りません。")
 
         # row = box.row()
         row = self.layout.row()
@@ -314,7 +314,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
         # システムコンソール上の出力された日本語が文字化けしないようにする
         if self.console_utf8:
             import platform
-            if platform.system() == "Windows":
+            if platform.system() == 'Windows':
                 os.system('chcp 65001 > nul')
                 print(f"[{bl_info['name']}] Console code page set to UTF-8.")
         else:
@@ -323,7 +323,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
 
 @compat.BlRegister()
 class CNV_OT_extract_cm3d2_resources(bpy.types.Operator):
-    bl_idname = "pref.extract_cm3d2_resources"
+    bl_idname = 'pref.extract_cm3d2_resources'
     bl_label = "CM3D2リソースデータを抽出"
     bl_description = "上記インストールフォルダよりリソースデータ(toon画像・ポーズanm)を抽出してBlender datafilesフォルダに保存します"
 
@@ -339,7 +339,7 @@ class CNV_OT_extract_cm3d2_resources(bpy.types.Operator):
 # Scene中で記憶しておくタイプの設定
 @compat.BlRegister()
 class SceneProperties(bpy.types.PropertyGroup):
-    model_import_last_mode: bpy.props.EnumProperty(items=[('ASK', '', ''), ('DIRECT', '', ''), ('OPTION', '', '')], default='ASK')
+    model_import_last_mode: bpy.props.EnumProperty(items=[('ASK', "", ""), ('DIRECT', "", ""), ('OPTION', "", "")], default='ASK')
     import_filepaths: bpy.props.CollectionProperty(type=common.CNV_FilePathItem)
 
 
@@ -347,7 +347,7 @@ class SceneProperties(bpy.types.PropertyGroup):
 def register():
     pcoll = bpy.utils.previews.new()
     dir = os.path.dirname(__file__)
-    pcoll.load('KISS', os.path.join(dir, "kiss.png"), 'IMAGE')
+    pcoll.load('KISS', os.path.join(dir, 'kiss.png'), 'IMAGE')
     common.preview_collections['main'] = pcoll
     common.bl_info = bl_info
 
@@ -427,7 +427,7 @@ def register():
     # Change wiki_url based on locale (only works in legacy version)
     locale = translations.get_locale()
     if locale != 'ja_JP':   
-        bl_info['wiki_url'] = common.URL_REPOS + f"blob/bl_28/translations/{locale}/README.md"
+        bl_info['wiki_url'] = common.URL_REPOS + f'blob/bl_28/translations/{locale}/README.md'
 
 
 # プラグインをアンインストールしたときの処理

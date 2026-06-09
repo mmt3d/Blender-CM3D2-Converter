@@ -74,9 +74,10 @@ class CNV_PT_poselib_props(bpy.types.PropertyGroup):
 
 @compat.BlRegister()
 class CNV_OT_set_active_pose(bpy.types.Operator):
-    bl_idname = "pose.set_active_pose"
+    bl_idname = 'pose.set_active_pose'
     bl_label = "Set Active Pose"
     bl_options = {'INTERNAL'}
+    bl_description = "ポーズを適用します"
 
     index: bpy.props.IntProperty()
 

@@ -294,14 +294,14 @@ class CNV_OT_selected_mesh_vertex_group_calculation(bpy.types.Operator):
 
         calculation_text = "式： 元のウェイト "
         if self.calculation_mode == 'ADD':
-            calculation_text += "＋"
+            calculation_text += '＋'
         elif self.calculation_mode == 'SUB':
-            calculation_text += "－"
+            calculation_text += '－'
         elif self.calculation_mode == 'MULTI':
-            calculation_text += "×"
+            calculation_text += '×'
         elif self.calculation_mode == 'DIV':
-            calculation_text += "÷"
-        calculation_text += " " + str(round(self.calculation_value, 1))
+            calculation_text += '÷'
+        calculation_text += ' ' + str(round(self.calculation_value, 1))
         self.layout.label(text=calculation_text)
 
     def execute(self, context):

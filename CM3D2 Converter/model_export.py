@@ -22,8 +22,8 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
     bl_options = {'REGISTER'}
 
     filepath: bpy.props.StringProperty(subtype='FILE_PATH')
-    filename_ext = ".model"
-    filter_glob: bpy.props.StringProperty(default="*.model", options={'HIDDEN'})
+    filename_ext = '.model'
+    filter_glob: bpy.props.StringProperty(default='*.model', options={'HIDDEN'})
 
     scale: bpy.props.FloatProperty(name="倍率", default=0.2, min=0.01, max=100, soft_min=0.01, soft_max=100, step=10, precision=2, description="エクスポート時のメッシュ等の拡大率です")
 
@@ -32,10 +32,10 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
     version: bpy.props.EnumProperty(
         name="ファイルバージョン",
         items=[
-            ('AUTO', 'Auto', 'determine model version from object properties', 'NONE', 0),
-            ('1000', '1000', 'model version 1000 (available for cm3d2/com3d2)', 'NONE', 1000),
-            ('2000', '2000', 'model version 2000 (com3d2 version)', 'NONE', 2000),
-            ('2001', '2001', 'model version 2001 (available only for com3d2)', 'NONE', 2001),
+            ('AUTO', "Auto", "determine model version from object properties", 'NONE', 0),
+            ('1000', "1000", "model version 1000 (available for cm3d2/com3d2)", 'NONE', 1000),
+            ('2000', "2000", "model version 2000 (com3d2 version)", 'NONE', 2000),
+            ('2001', "2001", "model version 2001 (available only for com3d2)", 'NONE', 2001),
         ], default='AUTO')
     model_name: bpy.props.StringProperty(name="model名", default="*")
     base_bone_name: bpy.props.StringProperty(name="基点ボーン名", default="*")
@@ -134,14 +134,14 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
             arm_ob = None
 
         info_mode_was_armature = (self.bone_info_mode == 'ARMATURE')
-        if "BoneData" in context.blend_data.texts:
-            if "LocalBoneData" in context.blend_data.texts:
+        if 'BoneData' in context.blend_data.texts:
+            if 'LocalBoneData' in context.blend_data.texts:
                 self.bone_info_mode = 'TEXT'
-        if "BoneData:0" in ob:
-            ver = ob.get("ModelVersion")
+        if 'BoneData:0' in ob:
+            ver = ob.get('ModelVersion')
             if ver and ver >= 1000:
                 self.version = str(ver)
-            if "LocalBoneData:0" in ob:
+            if 'LocalBoneData:0' in ob:
                 self.bone_info_mode = 'OBJECT_PROPERTY'
         if arm_ob:
             if info_mode_was_armature:
@@ -152,9 +152,9 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         # エクスポート時のデフォルトパスを取得
         #if not self.filepath[-6:] == '.model':
         if common.preferences().model_default_path:
-            self.filepath = common.default_cm3d2_dir(common.preferences().model_default_path, self.model_name, "model")
+            self.filepath = common.default_cm3d2_dir(common.preferences().model_default_path, self.model_name, 'model')
         else:
-            self.filepath = common.default_cm3d2_dir(common.preferences().model_export_path, self.model_name, "model")
+            self.filepath = common.default_cm3d2_dir(common.preferences().model_export_path, self.model_name, 'model')
 
         # バックアップ関係
         self.is_backup = bool(common.preferences().backup_ext)
@@ -381,14 +381,14 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
                     return self.report_cancel("アーマチュアが見つかりません、親にするかモディファイアにして下さい")
                 arm_ob = arm_ob.object
         elif self.bone_info_mode == 'TEXT':
-            if "BoneData" not in context.blend_data.texts:
+            if 'BoneData' not in context.blend_data.texts:
                 return self.report_cancel("テキスト「BoneData」が見つかりません、中止します")
-            if "LocalBoneData" not in context.blend_data.texts:
+            if 'LocalBoneData' not in context.blend_data.texts:
                 return self.report_cancel("テキスト「LocalBoneData」が見つかりません、中止します")
         elif self.bone_info_mode == 'OBJECT_PROPERTY':
-            if "BoneData:0" not in ob:
+            if 'BoneData:0' not in ob:
                 return self.report_cancel("オブジェクトのカスタムプロパティにボーン情報がありません")
-            if "LocalBoneData:0" not in ob:
+            if 'LocalBoneData:0' not in ob:
                 return self.report_cancel("オブジェクトのカスタムプロパティにボーン情報がありません")
         elif self.bone_info_mode == 'ARMATURE_PROPERTY':
             arm_ob = ob.parent
@@ -400,16 +400,16 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
                 except StopIteration:
                     return self.report_cancel("アーマチュアが見つかりません、親にするかモディファイアにして下さい")
                 arm_ob = arm_ob.object
-            if "BoneData:0" not in arm_ob.data:
+            if 'BoneData:0' not in arm_ob.data:
                 return self.report_cancel("アーマチュアのカスタムプロパティにボーン情報がありません")
-            if "LocalBoneData:0" not in arm_ob.data:
+            if 'LocalBoneData:0' not in arm_ob.data:
                 return self.report_cancel("アーマチュアのカスタムプロパティにボーン情報がありません")
         else:
             return self.report_cancel("ボーン情報元のモードがおかしいです")
 
         if self.mate_info_mode == 'TEXT':
             for index, slot in enumerate(ob.material_slots):
-                if "Material:" + str(index) not in context.blend_data.texts:
+                if 'Material:' + str(index) not in context.blend_data.texts:
                     return self.report_cancel("マテリアル情報元のテキストが足りません")
         context.window_manager.progress_update(1)
 
@@ -427,7 +427,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
             bone_data = self.armature_bone_data_parser(context, arm_ob)
             base_bone_candidate = arm_ob.data['BaseBone']
         elif self.bone_info_mode == 'TEXT':
-            bone_data_text = context.blend_data.texts["BoneData"]
+            bone_data_text = context.blend_data.texts['BoneData']
             if 'BaseBone' in bone_data_text:
                 base_bone_candidate = bone_data_text['BaseBone']
             bone_data = self.bone_data_parser(l.body for l in bone_data_text.lines)
@@ -435,7 +435,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
             target = ob if self.bone_info_mode == 'OBJECT_PROPERTY' else arm_ob.data
             if 'BaseBone' in target:
                 base_bone_candidate = target['BaseBone']
-            bone_data = self.bone_data_parser(self.indexed_data_generator(target, prefix="BoneData:"))
+            bone_data = self.bone_data_parser(self.indexed_data_generator(target, prefix='BoneData:'))
         if len(bone_data) <= 0:
             return self.report_cancel("テキスト「BoneData」に有効なデータがありません")
 
@@ -461,11 +461,11 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         if self.bone_info_mode == 'ARMATURE':
             local_bone_data = self.armature_local_bone_data_parser(arm_ob)
         elif self.bone_info_mode == 'TEXT':
-            local_bone_data_text = context.blend_data.texts["LocalBoneData"]
+            local_bone_data_text = context.blend_data.texts['LocalBoneData']
             local_bone_data = self.local_bone_data_parser(l.body for l in local_bone_data_text.lines)
         elif self.bone_info_mode in ['OBJECT_PROPERTY', 'ARMATURE_PROPERTY']:
             target = ob if self.bone_info_mode == 'OBJECT_PROPERTY' else arm_ob.data
-            local_bone_data = self.local_bone_data_parser(self.indexed_data_generator(target, prefix="LocalBoneData:"))
+            local_bone_data = self.local_bone_data_parser(self.indexed_data_generator(target, prefix='LocalBoneData:'))
         if len(local_bone_data) <= 0:
             return self.report_cancel("テキスト「LocalBoneData」に有効なデータがありません")
         local_bone_name_indices = {bone['name']: index for index, bone in enumerate(local_bone_data)}
@@ -595,7 +595,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         # ファイル先頭
         common.write_str(writer, 'CM3D2_MESH')
         if self.version == 'AUTO':
-            self.version_num = max(ob.get("ModelVersion", 1000), 1000)
+            self.version_num = max(ob.get('ModelVersion', 1000), 1000)
         else:
             self.version_num = int(self.version)
         writer.write(struct.pack('<i', self.version_num))
@@ -722,7 +722,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
                 mat_data.write(writer, write_header=False)
 
             elif self.mate_info_mode == 'TEXT':
-                text = context.blend_data.texts["Material:" + str(slot_index)].as_string()
+                text = context.blend_data.texts['Material:' + str(slot_index)].as_string()
                 mat_data = cm3d2_data.MaterialHandler.parse_text(slot.material, self.is_arrange_name)
                 mat_data.write(writer, write_header=False)
 

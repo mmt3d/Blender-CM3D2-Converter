@@ -27,8 +27,8 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
 
     # 単一ファイル選択用
     filepath: bpy.props.StringProperty(subtype='FILE_PATH')
-    filename_ext = ".model"
-    filter_glob: bpy.props.StringProperty(default="*.model", options={'HIDDEN'})
+    filename_ext = '.model'
+    filter_glob: bpy.props.StringProperty(default='*.model', options={'HIDDEN'})
 
     scale: bpy.props.FloatProperty(name="倍率", default=5, min=0.1, max=100, soft_min=0.1, soft_max=100, step=100, precision=1, description="インポート時のメッシュ等の拡大率です")
 
@@ -69,7 +69,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                 self.filepath = self.filepaths[0].name
             else:
                 self.filepath = common.default_cm3d2_dir(
-                    prefs.model_default_path or prefs.model_import_path, None, "model")
+                    prefs.model_default_path or prefs.model_import_path, None, 'model')
         self.scale = prefs.scale
         self.is_convert_bone_weight_names = prefs.is_convert_bone_weight_names
         context.window_manager.fileselect_add(self)
@@ -355,8 +355,8 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             
             except UnicodeDecodeError as e:
                 msg = [
-                    f_tip_("Error reading file at byte 0x{num:02X}", num=reader.tell()-len(e.object)) + "\n",
-                    str(e) + "\n",
+                    f_tip_("Error reading file at byte 0x{num:02X}", num=reader.tell()-len(e.object)) + '\n',
+                    str(e) + '\n',
                     *traceback.format_tb(e.__traceback__)
                 ]
                 self.report(type={'ERROR'}, message="".join(reversed(msg))[0:-1])
@@ -365,8 +365,8 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             
             except struct.error as e:
                 msg = [
-                    f_tip_("Error reading file at byte 0x{num:02X}", num=reader.tell()) + "\n",
-                    str(e) + "\n",
+                    f_tip_("Error reading file at byte 0x{num:02X}", num=reader.tell()) + '\n',
+                    str(e) + '\n',
                     *traceback.format_tb(e.__traceback__)
                 ]
                 self.report(type={'ERROR'}, message="".join(reversed(msg))[0:-1])
@@ -375,8 +375,8 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
 
             except common.CM3D2ImportError as e:
                 msg = [
-                    f_tip_("Error reading file at byte 0x{num:02X}", num=reader.tell()) + "\n",
-                    str(e) + "\n",
+                    f_tip_("Error reading file at byte 0x{num:02X}", num=reader.tell()) + '\n',
+                    str(e) + '\n',
                     *traceback.format_tb(e.__traceback__)
                 ]
                 self.report(type={'ERROR'}, message="".join(reversed(msg))[0:-1])
@@ -393,8 +393,8 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
 
         # アーマチュア作成
         if self.is_armature:
-            arm    = bpy.data.armatures.new(model_name1 + ".armature")
-            arm_ob = bpy.data.objects.new  (model_name1 + ".armature", arm)
+            arm    = bpy.data.armatures.new(model_name1 + '.armature')
+            arm_ob = bpy.data.objects.new  (model_name1 + '.armature', arm)
             compat.link(bpy.context.scene, arm_ob)
             compat.set_select(arm_ob, True)
             compat.set_active(context, arm_ob)
@@ -448,7 +448,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                     compat.set_bone_matrix(bone, mat)
 
 
-                    bone["cm3d2_scl_bone"] = 1 if data['scl'] else 0
+                    bone['cm3d2_scl_bone'] = 1 if data['scl'] else 0
                     if 'scale' in data:
                         bone['cm3d2_bone_scale'] = data['scale']
                         scale = mathutils.Vector(data['scale'])
@@ -636,7 +636,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                     if bone.parent:
                         max_len = 0.0
                         for child_bone in bone.children:
-                            if "Pelvis" in bone.name:
+                            if 'Pelvis' in bone.name:
                                 dist = (child_bone.head - bone.head).length
                             else:
                                 dist = distOnRay(bone.head, bone.tail, child_bone.head)
@@ -797,7 +797,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         # マテリアル情報のテキスト埋め込み
         if self.is_mate_data_text:
             for index, data in enumerate(material_data):
-                txt_name = "Material:" + str(index)
+                txt_name = 'Material:' + str(index)
                 if txt_name in context.blend_data.texts:
                     txt = context.blend_data.texts[txt_name]
                     txt.clear()
@@ -805,61 +805,61 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                     txt = context.blend_data.texts.new(txt_name)
                 txt.write(data.to_text())
                 
-                # txt.write("1000" + "\n")
-                # txt.write(data['name1'].lower() + "\n")
-                # txt.write(data['name1'] + "\n")
-                # txt.write(data['name2'] + "\n")
-                # txt.write(data['name3'] + "\n")
-                # txt.write("\n")
+                # txt.write("1000" + '\n')
+                # txt.write(data['name1'].lower() + '\n')
+                # txt.write(data['name1'] + '\n')
+                # txt.write(data['name2'] + '\n')
+                # txt.write(data['name3'] + '\n')
+                # txt.write('\n')
                 # for tex_data in data['data']:
-                #     txt.write(tex_data['type'] + "\n")
+                #     txt.write(tex_data['type'] + '\n')
                 #     if tex_data['type'] == 'tex':
-                #         txt.write("\t" + tex_data['name'] + "\n")
-                #         txt.write("\t" + tex_data['type2'] + "\n")
+                #         txt.write('\t' + tex_data['name'] + '\n')
+                #         txt.write('\t' + tex_data['type2'] + '\n')
                 #         if tex_data['type2'] == 'tex2d':
-                #             txt.write("\t" + tex_data['name2'] + "\n")
-                #             txt.write("\t" + tex_data['path'] + "\n")
+                #             txt.write('\t' + tex_data['name2'] + '\n')
+                #             txt.write('\t' + tex_data['path'] + '\n')
                 #             map_list = tex_data['tex_map']
                 #             tex_map = " ".join([str(map_list[0]), str(map_list[1]), str(map_list[2]), str(map_list[3])])
-                #             txt.write("\t" + tex_map + "\n")
+                #             txt.write('\t' + tex_map + '\n')
                 #     elif tex_data['type'] == 'col':
-                #         txt.write("\t" + tex_data['name'] + "\n")
+                #         txt.write('\t' + tex_data['name'] + '\n')
                 #         col = " ".join([str(tex_data['color'][0]), str(tex_data['color'][1]), str(tex_data['color'][2]), str(tex_data['color'][3])])
-                #         txt.write("\t" + col + "\n")
+                #         txt.write('\t' + col + '\n')
                 #     elif tex_data['type'] == 'f':
-                #         txt.write("\t" + tex_data['name'] + "\n")
-                #         txt.write("\t" + str(tex_data['float']) + "\n")
+                #         txt.write('\t' + tex_data['name'] + '\n')
+                #         txt.write('\t' + str(tex_data['float']) + '\n')
                 # txt.current_line_index = 0
         context.window_manager.progress_update(9)
 
         # ボーン情報のテキスト埋め込み
         if self.is_bone_data_text:
-            if "BoneData" in context.blend_data.texts:
-                txt = context.blend_data.texts["BoneData"]
+            if 'BoneData' in context.blend_data.texts:
+                txt = context.blend_data.texts['BoneData']
                 txt.clear()
             else:
-                txt = context.blend_data.texts.new("BoneData")
+                txt = context.blend_data.texts.new('BoneData')
         for i, data in enumerate(bone_data):
-            s = ",".join([data['name'], str(data['scl']), ""])
+            s = ','.join([data['name'], str(data['scl']), ''])
             parent_index = data['parent_index']
             if -1 < parent_index:
-                s += bone_data[parent_index]['name'] + ","
+                s += bone_data[parent_index]['name'] + ','
             else:
-                s += "None" + ","
-            s += " ".join([str(data['co'][0]), str(data['co'][1]), str(data['co'][2])]) + ","
-            s += " ".join([str(data['rot'][0]), str(data['rot'][1]), str(data['rot'][2]), str(data['rot'][3])])
+                s += 'None' + ','
+            s += ' '.join([str(data['co'][0]), str(data['co'][1]), str(data['co'][2])]) + ','
+            s += ' '.join([str(data['rot'][0]), str(data['rot'][1]), str(data['rot'][2]), str(data['rot'][3])])
             if model_ver >= 2001:
                 if 'scale' in data:
-                    s += ",1," + " ".join(map(str, data['scale']))
+                    s += ',1,' + ' '.join(map(str, data['scale']))
                 else:
-                    s += ",0"
+                    s += ',0'
 
             if self.is_bone_data_text:
-                txt.write(s + "\n")
+                txt.write(s + '\n')
             if self.is_mesh and self.is_bone_data_obj_property:
-                ob["BoneData:" + str(i)] = s
+                ob['BoneData:' + str(i)] = s
             if self.is_armature and self.is_bone_data_arm_property:
-                arm["BoneData:" + str(i)] = s
+                arm['BoneData:' + str(i)] = s
         if self.is_bone_data_text:
             txt['BaseBone'] = model_name2
             txt.current_line_index = 0
@@ -867,13 +867,13 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
 
         # ローカルボーン情報のテキスト埋め込み
         if self.is_bone_data_text:
-            if "LocalBoneData" in context.blend_data.texts:
-                txt = context.blend_data.texts["LocalBoneData"]
+            if 'LocalBoneData' in context.blend_data.texts:
+                txt = context.blend_data.texts['LocalBoneData']
                 txt.clear()
             else:
-                txt = context.blend_data.texts.new("LocalBoneData")
+                txt = context.blend_data.texts.new('LocalBoneData')
         for i, data in enumerate(local_bone_data):
-            s = data['name'] + ","
+            s = data['name'] + ','
 
             mat_list = list(data['matrix'][0])
             mat_list.extend(list(data['matrix'][1]))
@@ -881,14 +881,14 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             mat_list.extend(list(data['matrix'][3]))
             for j, f in enumerate(mat_list):
                 mat_list[j] = str(f)
-            s += " ".join(mat_list)
+            s += ' '.join(mat_list)
 
             if self.is_bone_data_text:
-                txt.write(s + "\n")
+                txt.write(s + '\n')
             if self.is_mesh and self.is_bone_data_obj_property:
-                ob["LocalBoneData:" + str(i)] = s
+                ob['LocalBoneData:' + str(i)] = s
             if self.is_armature and self.is_bone_data_arm_property:
-                arm["LocalBoneData:" + str(i)] = s
+                arm['LocalBoneData:' + str(i)] = s
         if self.is_bone_data_text:
             txt['BaseBone'] = model_name2
             txt.current_line_index = 0
@@ -909,10 +909,10 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         filesize_str = "バイト"
         if 1024 * 1024 < filesize:
             filesize = filesize / (1024 * 1024.0)
-            filesize_str = "MB"
+            filesize_str = 'MB'
         elif 1024 < filesize:
             filesize = filesize / 1024.0
-            filesize_str = "KB"
+            filesize_str = 'KB'
         self.report(type={'INFO'}, message=f_tip_("modelのインポートが完了しました ({} {}/ {:.2f} 秒)", filesize, filesize_str, require_time))
         
         if is_odd_scale_bone:
@@ -1007,10 +1007,10 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         # UV作成
         bm = bmesh.new()
         bm.from_mesh(me)
-        bm.loops.layers.uv.new(f_data_("MainUV"))
+        bm.loops.layers.uv.new('MainUV')
         for i, used in enumerate(extra_uv_uses):    
             if used:
-                bm.loops.layers.uv.new(f_data_("ExtraUV{num}", num=i))
+                bm.loops.layers.uv.new(f'ExtraUV{i}')
         for face in bm.faces:
             for loop in face.loops:
                 loop[bm.loops.layers.uv[0]].uv = vertex_data[loop.vert.index]['uv']
@@ -1182,11 +1182,11 @@ if not compat.IS_LT41:
         """
         ファイルドロップ時の中継オペレーター, ダイアログメニューをコールする
         """
-        bl_idname = "object.drop_import_cm3d2_model_manager"
-        bl_label = "CM3D2 Model Drop Manager"
+        bl_idname = 'object.drop_import_cm3d2_model_manager'
+        bl_label = 'CM3D2 Model Drop Manager'
 
         files: bpy.props.CollectionProperty(type=bpy.types.OperatorFileListElement)
-        directory: bpy.props.StringProperty(subtype="DIR_PATH")
+        directory: bpy.props.StringProperty(subtype='DIR_PATH')
 
         filepaths = []
 
@@ -1216,8 +1216,8 @@ if not compat.IS_LT41:
 
     @compat.BlRegister()
     class CNV_OT_ModelDropSelector(bpy.types.Operator):
-        bl_idname = "object.drop_import_cm3d2_model_selector"
-        bl_label = "CM3D2 Model Drop Selector"
+        bl_idname = 'object.drop_import_cm3d2_model_selector'
+        bl_label = 'CM3D2 Model Drop Selector'
 
         mode: bpy.props.StringProperty()
 
@@ -1241,7 +1241,7 @@ if not compat.IS_LT41:
         """
         ファイルドロップ時のダイアログメニュー
         """
-        bl_idname = "VIEW3D_MT_ModelDropMenu"
+        bl_idname = 'VIEW3D_MT_ModelDropMenu'
         bl_label = "CM3D2 Model Drop Menu"
 
         def draw(self, context):
@@ -1264,9 +1264,9 @@ if not compat.IS_LT41:
         """
         ビューポートに.modelファイルがドロップされたときのハンドラー
         """
-        bl_idname = "VIEW3D_FH_ModelDropHandler"
-        bl_label = "Model File Drop Handler"
-        bl_file_extensions = ".model"
+        bl_idname = 'VIEW3D_FH_ModelDropHandler'
+        bl_label = 'Model File Drop Handler'
+        bl_file_extensions = '.model'
         bl_import_operator = CNV_OT_ModelDropManager.bl_idname
 
         @classmethod

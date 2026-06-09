@@ -55,7 +55,7 @@ class INFO_MT_help_CM3D2_Converter_RSS(bpy.types.Menu):
             minute = 0
             second = 0
             ms = 0
-            for version_sub_value in common.bl_info["version"]:
+            for version_sub_value in common.bl_info['version']:
                 number = None
                 if   type(version_sub_value) is int:
                     number = version_sub_value
@@ -147,8 +147,8 @@ class CNV_OT_update_cm3d2_converter(bpy.types.Operator):
 
     items = [
         ('current', f_iface_("Current ({branch})", branch=common.BRANCH), ""),
-        ('bl_28'  , "bl_28", ""),
-        ('testing', "testing", ""),
+        ('bl_28'  , 'bl_28', ""),
+        ('testing', 'testing', ""),
     ]
     branch: bpy.props.EnumProperty(items=items, name="Branch", default='current')
 
@@ -170,7 +170,7 @@ class CNV_OT_update_cm3d2_converter(bpy.types.Operator):
         branch = self.branch
         if branch == 'current':
             branch = common.BRANCH
-        zip_path = Path(bpy.app.tempdir) / f"Blender-CM3D2-Converter-{branch}.zip"
+        zip_path = Path(bpy.app.tempdir) / f'Blender-CM3D2-Converter-{branch}.zip'
         addon_path = Path(__file__).parent
 
         response = urllib.request.urlopen(common.URL_MODULE.format(branch=branch))
@@ -181,7 +181,7 @@ class CNV_OT_update_cm3d2_converter(bpy.types.Operator):
         zip_file = zipfile.ZipFile(zip_path, 'r')
         sub_dir = ""
         for path in zip_file.namelist():
-            if not sub_dir and os.path.split(os.path.split(path)[0])[1] in ("CM3D2 Converter", "CM3D2_Converter"):
+            if not sub_dir and os.path.split(os.path.split(path)[0])[1] in ('CM3D2 Converter', 'CM3D2_Converter'):
                 sub_dir = path
                 continue
             if not sub_dir or sub_dir not in path:
@@ -226,7 +226,7 @@ class CNV_OT_update_cm3d2_converter(bpy.types.Operator):
             if filepath:
                 command_line.append(filepath)
             if self.is_toggle_console:
-                py = os.path.join(os.path.dirname(__file__), "console_toggle.py")
+                py = os.path.join(os.path.dirname(__file__), 'console_toggle.py')
                 command_line.append('-P')
                 command_line.append(py)
 

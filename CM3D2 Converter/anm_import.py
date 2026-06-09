@@ -25,8 +25,8 @@ class CNV_OT_import_cm3d2_anm(bpy.types.Operator):
     bl_options = {'REGISTER'}
 
     filepath: bpy.props.StringProperty(subtype='FILE_PATH')
-    filename_ext = ".anm"
-    filter_glob: bpy.props.StringProperty(default="*.anm", options={'HIDDEN'})
+    filename_ext = '.anm'
+    filter_glob: bpy.props.StringProperty(default='*.anm', options={'HIDDEN'})
 
     scale: bpy.props.FloatProperty(name="倍率", default=5, min=0.1, max=100, soft_min=0.1, soft_max=100, step=100, precision=1, description="インポート時のメッシュ等の拡大率です")
     set_frame_rate: bpy.props.BoolProperty(name="Set Framerate", default=True, description="Change the scene's render settings to 60 fps")
@@ -37,9 +37,9 @@ class CNV_OT_import_cm3d2_anm(bpy.types.Operator):
     set_frame: bpy.props.BoolProperty(name="フレーム開始・終了位置を調整", default=True)
     ignore_automatic_bone: bpy.props.BoolProperty(name="Twisterボーンを除外", default=True)
 
-    is_location: bpy.props.BoolProperty(name="位置", default=True)
-    is_rotation: bpy.props.BoolProperty(name="回転", default=True)
-    is_scale: bpy.props.BoolProperty(name="拡縮", default=True)
+    is_location: bpy.props.BoolProperty(name="Location", default=True)
+    is_rotation: bpy.props.BoolProperty(name="Rotation", default=True)
+    is_scale: bpy.props.BoolProperty(name="Scale", default=True)
     is_tangents: bpy.props.BoolProperty(name="Tangents", default=False)
 
     apply_as_pose: bpy.props.BoolProperty(default=False, options={'HIDDEN'})
@@ -52,9 +52,9 @@ class CNV_OT_import_cm3d2_anm(bpy.types.Operator):
     def invoke(self, context, event):
         prefs = common.preferences()
         if prefs.anm_default_path:
-            self.filepath = common.default_cm3d2_dir(prefs.anm_default_path, None, "anm")
+            self.filepath = common.default_cm3d2_dir(prefs.anm_default_path, None, 'anm')
         else:
-            self.filepath = common.default_cm3d2_dir(prefs.anm_import_path, None, "anm")
+            self.filepath = common.default_cm3d2_dir(prefs.anm_import_path, None, 'anm')
         self.scale = prefs.scale
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
@@ -209,11 +209,11 @@ class AnmImporter:
         
         for bone_name, bone_data in anm_data.items():
             if self.ignore_automatic_bone:
-                if re.match(r"Kata_[RL]", bone_name):
+                if re.match(r'Kata_[RL]', bone_name):
                     continue
-                if re.match(r"Uppertwist1_[RL]", bone_name):
+                if re.match(r'Uppertwist1_[RL]', bone_name):
                     continue
-                if re.match(r"momoniku_[RL]", bone_name):
+                if re.match(r'momoniku_[RL]', bone_name):
                     continue
 
             if bone_name not in pose.bones:
@@ -559,13 +559,13 @@ class AnmImporter:
         if found_tangents:
             self.reporter.report(type={'INFO'}, message="Found the following tangent values:")
             for f1, f2 in found_tangents:
-                self.reporter.report(type={'INFO'}, message=f_tip_("f1 = {float1}, f2 = {float2}", float1=f1, float2=f2))
+                self.reporter.report(type={'INFO'}, message=f_tip_('f1 = {float1}, f2 = {float2}', float1=f1, float2=f2))
             self.reporter.report(type={'INFO'}, message="Found the above tangent values.")  
             self.reporter.report(type={'WARNING'}, message=f_tip_("Found {count} large tangents. Blender animation may not interpolate properly. See log for more info.", count=len(found_tangents)))  
         if found_unknown:
             self.reporter.report(type={'INFO'}, message="Found the following unknown channel IDs:")
             for channel_id in found_unknown:
-                self.reporter.report(type={'INFO'}, message=f_tip_("id = {id}", id=channel_id))
+                self.reporter.report(type={'INFO'}, message=f_tip_('id = {id}', id=channel_id))
             self.reporter.report(type={'INFO'}, message="Found the above unknown channel IDs.")  
             self.reporter.report(type={'WARNING'}, message=f_tip_("Found {count} unknown channel IDs. Blender animation may be missing some keyframes. See log for more info.", count=len(found_unknown)))
 
@@ -677,11 +677,11 @@ class AnmImporter:
         return locs, loc_tangents, quats, quat_tangents, scls, scl_tangents, found_unknown
 
     def import_anm_data_to_text(self, context, anm_data):
-        if "AnmData" in context.blend_data.texts:
-            txt = context.blend_data.texts["AnmData"]
+        if 'AnmData' in context.blend_data.texts:
+            txt = context.blend_data.texts['AnmData']
             txt.clear()
         else:
-            txt = context.blend_data.texts.new("AnmData")
+            txt = context.blend_data.texts.new('AnmData')
 
         # json変換不能なキーが含まれているための調整
         serializable_anm_data =  {}

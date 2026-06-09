@@ -13,8 +13,8 @@ class CNV_OT_export_cm3d2_mate(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     filepath: bpy.props.StringProperty(subtype='FILE_PATH')
-    filename_ext = ".mate"
-    filter_glob: bpy.props.StringProperty(default="*.mate", options={'HIDDEN'})
+    filename_ext = '.mate'
+    filter_glob: bpy.props.StringProperty(default='*.mate', options={'HIDDEN'})
 
     is_backup: bpy.props.BoolProperty(name="ファイルをバックアップ", default=True, description="ファイルに上書きする場合にバックアップファイルを複製します")
 
@@ -34,9 +34,9 @@ class CNV_OT_export_cm3d2_mate(bpy.types.Operator):
         prefs = common.preferences()
         mate = context.material
         if prefs.mate_default_path:
-            self.filepath = common.default_cm3d2_dir(prefs.mate_default_path, mate.name.lower(), "mate")
+            self.filepath = common.default_cm3d2_dir(prefs.mate_default_path, mate.name.lower(), 'mate')
         else:
-            self.filepath = common.default_cm3d2_dir(prefs.mate_export_path, mate.name.lower(), "mate")
+            self.filepath = common.default_cm3d2_dir(prefs.mate_export_path, mate.name.lower(), 'mate')
         self.is_backup = bool(prefs.backup_ext)
         self.name1 = common.remove_serial_number(mate.name.lower())
         self.name2 = common.remove_serial_number(mate.name)
@@ -87,8 +87,8 @@ class CNV_OT_export_cm3d2_mate_text(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     filepath: bpy.props.StringProperty(subtype='FILE_PATH')
-    filename_ext = ".mate"
-    filter_glob: bpy.props.StringProperty(default="*.mate", options={'HIDDEN'})
+    filename_ext = '.mate'
+    filter_glob: bpy.props.StringProperty(default='*.mate', options={'HIDDEN'})
 
     is_backup: bpy.props.BoolProperty(name="ファイルをバックアップ", default=True, description="ファイルに上書きする場合にバックアップファイルを複製します")
 
@@ -103,7 +103,7 @@ class CNV_OT_export_cm3d2_mate_text(bpy.types.Operator):
             data = edit_text.as_string()
             if len(data) < 32:
                 return False
-            if "\ntex\n" in data or "\ncol\n" in data or "\nf\n" in data:
+            if '\ntex\n' in data or '\ncol\n' in data or '\nf\n' in data:
                 return True
 
         return False
@@ -113,9 +113,9 @@ class CNV_OT_export_cm3d2_mate_text(bpy.types.Operator):
         lines = txt.as_string().split('\n')
         mate_name = lines[1]
         if common.preferences().mate_default_path:
-            self.filepath = common.default_cm3d2_dir(common.preferences().mate_default_path, mate_name.lower(), "mate")
+            self.filepath = common.default_cm3d2_dir(common.preferences().mate_default_path, mate_name.lower(), 'mate')
         else:
-            self.filepath = common.default_cm3d2_dir(common.preferences().mate_export_path, mate_name.lower(), "mate")
+            self.filepath = common.default_cm3d2_dir(common.preferences().mate_export_path, mate_name.lower(), 'mate')
         try:
             self.version = int(lines[0])
         except:
@@ -144,7 +144,7 @@ class CNV_OT_export_cm3d2_mate_text(bpy.types.Operator):
             text = context.edit_text.as_string()
             mat_data = cm3d2_data.MaterialHandler.parse_text(text)
         except Exception as e:
-            self.report(type={'ERROR'}, message='マテリアル情報の貼付けを中止します。' + str(e))
+            self.report(type={'ERROR'}, message="マテリアル情報の貼付けを中止します。" + str(e))
             return {'CANCELLED'}
 
         try:

@@ -217,7 +217,7 @@ PROPS = {
     '_ZTest2': {
         'type': 'f',
         'disableSlider': True,
-        'preset_enums': [(0, "0"), (1, "1")],
+        'preset_enums': [(0, '0'), (1, '1')],
         # 'default': 0, 'step': 1, 'precision': 2,
         # 'min': -100, 'soft_min': -100,
         # 'max': 100, 'soft_max': 100,
@@ -458,7 +458,7 @@ class DataHandler:
         for name in SHADER_NAMES_COM3D2:
             item = _inst.shader_dict.get(name)
             if item:
-                support_desc = '' if name in support_both else ' (COM3D2 only)'
+                support_desc = '' if name in support_both else " (COM3D2 only)"
                 items.append((name, f"{item['type_name']}{support_desc}", '', item['icon'], idx))
                 idx += 1
         return items
@@ -470,7 +470,7 @@ class DataHandler:
         if shader_prop:
             return shader_prop
 
-        return {'type_name': '不明', 'icon': 'NONE'}
+        return {'type_name': "不明", 'icon': 'NONE'}
 
 Handler = DataHandler.instance()
 
@@ -608,38 +608,38 @@ class Material():
         common.write_str(writer, 'end')
 
     def to_text(self):
-        output_text = str(self.version) + "\n"
-        output_text += self.name1 + "\n"
-        output_text += self.name2 + "\n"
-        output_text += self.shader1 + "\n"
-        output_text += self.shader2 + "\n"
-        output_text += "\n"
+        output_text = str(self.version) + '\n'
+        output_text += self.name1 + '\n'
+        output_text += self.name2 + '\n'
+        output_text += self.shader1 + '\n'
+        output_text += self.shader2 + '\n'
+        output_text += '\n'
 
         for tex_item in self.tex_list:
             output_text += 'tex\n'
-            output_text += "\t" + tex_item[0] + "\n"  # prop_name
+            output_text += '\t' + tex_item[0] + '\n'  # prop_name
 
             if len(tex_item) < 2:
                 output_text += '\tnull\n'
             else:
                 output_text += '\ttex2d\n'
-                output_text += "\t" + tex_item[1] + "\n"  # tex_name
-                output_text += "\t" + tex_item[2] + "\n"  # tex_path
+                output_text += '\t' + tex_item[1] + '\n'  # tex_name
+                output_text += '\t' + tex_item[2] + '\n'  # tex_path
                 trans = tex_item[3]
                 scale = tex_item[4]
-                output_text += "\t" + " ".join([str(trans[0]), str(trans[1]), str(scale[0]), str(scale[1])]) + "\n"
+                output_text += '\t' + ' '.join([str(trans[0]), str(trans[1]), str(scale[0]), str(scale[1])]) + '\n'
 
         for col_item in self.col_list:
             output_text += 'col\n'
-            output_text += "\t" + col_item[0] + "\n"  # prop_name
+            output_text += '\t' + col_item[0] + '\n'  # prop_name
             col = col_item[1]
-            output_text += "\t" + " ".join([str(col[0]), str(col[1]), str(col[2]), str(col[3])]) + "\n"  # prop_name
+            output_text += '\t' + ' '.join([str(col[0]), str(col[1]), str(col[2]), str(col[3])]) + '\n'  # prop_name
 
         for f_item in self.f_list:
             output_text += 'f\n'
-            output_text += "\t" + f_item[0] + "\n"  # prop_name
+            output_text += '\t' + f_item[0] + '\n'  # prop_name
             f = f_item[1]
-            output_text += "\t" + str(f) + "\n"
+            output_text += '\t' + str(f) + '\n'
 
         return output_text
 
@@ -882,11 +882,11 @@ class MaterialHandler:
             if type(value) == bool:
                 rna_ui = mate.get('_RNA_UI', dict())
                 rna_ui[key] = {
-                    "default"  : value,
-                    "min"      : 0    ,
-                    "max"      : 1    ,
-                    "soft_min" : 0    ,
-                    "soft_max" : 1    ,
+                    'default'  : value,
+                    'min'      : 0    ,
+                    'max'      : 1    ,
+                    'soft_min' : 0    ,
+                    'soft_max' : 1    ,
                 }
                 mate['_RNA_UI'] = rna_ui
 

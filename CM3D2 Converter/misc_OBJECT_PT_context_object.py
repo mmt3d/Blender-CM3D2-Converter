@@ -37,8 +37,8 @@ def menu_func(self, context):
         else:
             sub_row.label(text="0", icon='CHECKBOX_DEHLT')
         row = col.row(align=True)
-        row.operator('object.copy_object_bone_data_property', icon='COPYDOWN', text="コピー")
-        row.operator('object.paste_object_bone_data_property', icon='PASTEDOWN', text="貼付け")
+        row.operator('object.copy_object_bone_data_property', icon='COPYDOWN', text="Copy")
+        row.operator('object.paste_object_bone_data_property', icon='PASTEDOWN', text="Paste")
         row.operator('object.remove_object_bone_data_property', icon='X', text="")
 
 @compat.BlRegister()
@@ -61,20 +61,20 @@ class CNV_OT_copy_object_bone_data_property(bpy.types.Operator):
         ob = context.active_object
         pass_count = 0
         if 'BaseBone' in ob:
-            output_text += "BaseBone:" + ob['BaseBone'] + "\n"
+            output_text += 'BaseBone:' + ob['BaseBone'] + '\n'
         for i in range(99999):
-            name = "BoneData:" + str(i)
+            name = 'BoneData:' + str(i)
             if name in ob:
-                output_text += "BoneData:" + ob[name] + "\n"
+                output_text += 'BoneData:' + ob[name] + '\n'
             else:
                 pass_count += 1
             if 10 < pass_count:
                 break
         pass_count = 0
         for i in range(99999):
-            name = "LocalBoneData:" + str(i)
+            name = 'LocalBoneData:' + str(i)
             if name in ob:
-                output_text += "LocalBoneData:" + ob[name] + "\n"
+                output_text += 'LocalBoneData:' + ob[name] + '\n'
             else:
                 pass_count += 1
             if 10 < pass_count:
@@ -104,7 +104,7 @@ class CNV_OT_paste_object_bone_data_property(bpy.types.Operator):
         ob = context.active_object
         pass_count = 0
         for i in range(99999):
-            name = "BoneData:" + str(i)
+            name = 'BoneData:' + str(i)
             if name in ob:
                 del ob[name]
             else:
@@ -113,7 +113,7 @@ class CNV_OT_paste_object_bone_data_property(bpy.types.Operator):
                 break
         pass_count = 0
         for i in range(99999):
-            name = "LocalBoneData:" + str(i)
+            name = 'LocalBoneData:' + str(i)
             if name in ob:
                 del ob[name]
             else:
@@ -122,21 +122,21 @@ class CNV_OT_paste_object_bone_data_property(bpy.types.Operator):
                 break
         bone_data_count = 0
         local_bone_data_count = 0
-        for line in context.window_manager.clipboard.split("\n"):
+        for line in context.window_manager.clipboard.split('\n'):
             if line.startswith('BaseBone:'):
                 ob['BaseBone'] = line[9:]  # len('BaseData:') == 9
                 continue
 
             if line.startswith('BoneData:'):
                 if line.count(',') >= 4:
-                    name = "BoneData:" + str(bone_data_count)
+                    name = 'BoneData:' + str(bone_data_count)
                     ob[name] = line[9:]  # len('BoneData:') == 9
                     bone_data_count += 1
                 continue
 
             if line.startswith('LocalBoneData:'):
                 if line.count(',') == 1:
-                    name = "LocalBoneData:" + str(local_bone_data_count)
+                    name = 'LocalBoneData:' + str(local_bone_data_count)
                     ob[name] = line[14:]  # len('LocalBoneData:') == 14
                     local_bone_data_count += 1
         self.report(type={'INFO'}, message="ボーン情報をクリップボードから貼付けました")
@@ -170,7 +170,7 @@ class CNV_OT_remove_object_bone_data_property(bpy.types.Operator):
         if 'BaseBone' in ob:
             del ob['BaseBone']
         for i in range(99999):
-            name = "BoneData:" + str(i)
+            name = 'BoneData:' + str(i)
             if name in ob:
                 del ob[name]
             else:
@@ -179,7 +179,7 @@ class CNV_OT_remove_object_bone_data_property(bpy.types.Operator):
                 break
         pass_count = 0
         for i in range(99999):
-            name = "LocalBoneData:" + str(i)
+            name = 'LocalBoneData:' + str(i)
             if name in ob:
                 del ob[name]
             else:

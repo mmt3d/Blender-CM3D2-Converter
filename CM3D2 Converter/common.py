@@ -15,12 +15,12 @@ from .cm3d2_data import Handler, ArcHandler
 
 # アドオン情報
 bl_info = {}
-ADDON_NAME = "CM3D2 Converter"
-BASE_PATH_TEX = "Assets/texture/texture/"
-BRANCH = "bl_28"
-URL_REPOS = "https://github.com/luvoid/Blender-CM3D2-Converter/"
-URL_ATOM = URL_REPOS + "commits/{branch}.atom"
-URL_MODULE = URL_REPOS + "archive/{branch}.zip"
+ADDON_NAME = 'CM3D2 Converter'
+BASE_PATH_TEX = 'Assets/texture/texture/'
+BRANCH = 'bl_28'
+URL_REPOS = 'https://github.com/luvoid/Blender-CM3D2-Converter/'
+URL_ATOM = URL_REPOS + 'commits/{branch}.atom'
+URL_MODULE = URL_REPOS + 'archive/{branch}.zip'
 KISS_ICON = None
 PREFS = None
 preview_collections = {}
@@ -31,13 +31,13 @@ COM3D2_SHADER_REV = 1
 POSE_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), ADDON_NAME, 'pose')
 TOON_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), ADDON_NAME, 'toon')
 
-re_png = re.compile(r"\.[Pp][Nn][Gg](\.\d{3})?$")
-re_serial = re.compile(r"(\.\d{3})$")
-re_prefix = re.compile(r"^[\/\.]*")
-re_path_prefix = re.compile(r"^assets/", re.I)
-re_ext_png = re.compile(r"\.png$", re.I)
-re_bone1 = re.compile(r"([_ ])\*([_ ].*)\.([rRlL])$")
-re_bone2 = re.compile(r"([_ ])([rRlL])([_ ].*)$")
+re_png = re.compile(r'\.[Pp][Nn][Gg](\.\d{3})?$')
+re_serial = re.compile(r'(\.\d{3})$')
+re_prefix = re.compile(r'^[\/\.]*')
+re_path_prefix = re.compile(r'^assets/', re.I)
+re_ext_png = re.compile(r'\.png$', re.I)
+re_bone1 = re.compile(r'([_ ])\*([_ ].*)\.([rRlL])$')
+re_bone2 = re.compile(r'([_ ])([rRlL])([_ ].*)$')
 
 
 # このアドオンの設定値群を呼び出す
@@ -98,7 +98,7 @@ def write_str(file, raw_str):
     b_str = format(len(raw_str.encode('utf-8')), 'b')
     for i in range(9):
         if len(b_str) > 7:
-            file.write(struct.pack('<B', int("1" + b_str[-7:], 2)))
+            file.write(struct.pack('<B', int('1' + b_str[-7:], 2)))
             b_str = b_str[:-7]
         else:
             file.write(struct.pack('<B', int(b_str, 2)))
@@ -109,7 +109,7 @@ def pack_str(buffer, raw_str):
     b_str = format(len(raw_str.encode('utf-8')), 'b')
     for i in range(9):
         if 7 < len(b_str):
-            buffer = buffer + struct.pack('<B', int("1" + b_str[-7:], 2))
+            buffer = buffer + struct.pack('<B', int('1' + b_str[-7:], 2))
             b_str = b_str[:-7]
         else:
             buffer = buffer + struct.pack('<B', int(b_str, 2))
@@ -319,14 +319,14 @@ def default_cm3d2_dir(base_dir: str, file_name: str|None, new_ext: str):
     if not base_dir:
         cm3d2_path = get_pref_cm3d2_dir()
         if cm3d2_path:
-            base_dir = os.path.join(cm3d2_path, "GameData", "*." + new_ext)
+            base_dir = os.path.join(cm3d2_path, 'GameData', '*.' + new_ext)
 
         if base_dir is None:
-            base_dir = "."
+            base_dir = '.'
 
     if file_name:
         base_dir = os.path.join(os.path.split(base_dir)[0], file_name)
-    base_dir = os.path.splitext(base_dir)[0] + "." + new_ext
+    base_dir = os.path.splitext(base_dir)[0] + '.' + new_ext
     return base_dir
 
 
@@ -344,7 +344,7 @@ def open_temporary(filepath, mode, is_backup=False):
 def file_backup(filepath, enable=True):
     backup_ext = preferences().backup_ext
     if enable and backup_ext and os.path.exists(filepath):
-        shutil.copyfile(filepath, filepath + "." + backup_ext)
+        shutil.copyfile(filepath, filepath + '.' + backup_ext)
 
 
 # サブフォルダを再帰的に検索してリスト化
@@ -352,7 +352,7 @@ def find_tex_all_files(dir):
     for root, dirs, files in os.walk(dir):
         for f in files:
             ext = os.path.splitext(f)[1].lower()
-            if ext == ".tex" or ext == ".png":
+            if ext == '.tex' or ext == '.png':
                 yield os.path.join(root, f)
 
 
@@ -365,18 +365,18 @@ def get_default_tex_paths():
         cm3d2_dir = get_pref_cm3d2_dir()
 
         if cm3d2_dir:
-            target_dirs.append(os.path.join(cm3d2_dir, "GameData", "texture"))
-            target_dirs.append(os.path.join(cm3d2_dir, "GameData", "texture2"))
-            target_dirs.append(os.path.join(cm3d2_dir, "Sybaris", "GameData"))
-            target_dirs.append(os.path.join(cm3d2_dir, "Mod"))
+            target_dirs.append(os.path.join(cm3d2_dir, 'GameData', 'texture'))
+            target_dirs.append(os.path.join(cm3d2_dir, 'GameData', 'texture2'))
+            target_dirs.append(os.path.join(cm3d2_dir, 'Sybaris', 'GameData'))
+            target_dirs.append(os.path.join(cm3d2_dir, 'Mod'))
 
         # com3d2_dir = prefs.com3d2_path
         # if not com3d2_dir:
         #     com3d2_dir = get_cm3d2_dir()
         # if com3d2_dir:
-        #     target_dirs.append(os.path.join(com3d2_dir, "GameData", "parts"))
-        #     target_dirs.append(os.path.join(com3d2_dir, "GameData", "parts2"))
-        #     target_dirs.append(os.path.join(com3d2_dir, "MOD"))
+        #     target_dirs.append(os.path.join(com3d2_dir, 'GameData', 'parts'))
+        #     target_dirs.append(os.path.join(com3d2_dir, 'GameData', 'parts2'))
+        #     target_dirs.append(os.path.join(com3d2_dir, 'MOD'))
 
         tex_dirs = [path for path in target_dirs if os.path.isdir(path)]
 
@@ -541,11 +541,11 @@ def replace_cm3d2_tex(img, texpath_dict: dict=None, reload_path: bool=True) -> b
 def __replace_cm3d2_tex(img, texpath_dict: dict) -> bool:
     source_name = remove_serial_number(img.name).lower()
 
-    source_png_name = source_name + ".png"
+    source_png_name = source_name + '.png'
     if reload_png(img, texpath_dict, source_png_name):
         return True
 
-    source_tex_name = source_name + ".tex"
+    source_tex_name = source_name + '.tex'
     tex_path = texpath_dict.get(source_tex_name)
     try:
         if tex_path is None:
@@ -554,7 +554,7 @@ def __replace_cm3d2_tex(img, texpath_dict: dict) -> bool:
         if tex_data is None:
             return False
         
-        png_path = tex_path[:-4] + ".png"
+        png_path = tex_path[:-4] + '.png'
         with open(png_path, 'wb') as png_file:
             png_file.write(tex_data[-1])
         img.filepath = png_path
@@ -574,18 +574,18 @@ def load_cm3d2tex(path, skip_data=False):
         CAPS_TEXTURE = 0x00001000
 
         header = bytearray(128)
-        header[0:4] = b"DDS "
-        struct.pack_into("<I", header, 4, 124)
-        struct.pack_into("<I", header, 8, FLAGS_REQUIRED)
-        struct.pack_into("<I", header, 12, height)
-        struct.pack_into("<I", header, 16, width)
-        struct.pack_into("<I", header, 20, data_size)
+        header[0:4] = b'DDS '
+        struct.pack_into('<I', header, 4, 124)
+        struct.pack_into('<I', header, 8, FLAGS_REQUIRED)
+        struct.pack_into('<I', header, 12, height)
+        struct.pack_into('<I', header, 16, width)
+        struct.pack_into('<I', header, 20, data_size)
 
-        struct.pack_into("<I", header, 76, 32)
-        struct.pack_into("<I", header, 80, 0x00000004)
-        header[84:88] = b"DXT5"
+        struct.pack_into('<I', header, 76, 32)
+        struct.pack_into('<I', header, 80, 0x00000004)
+        header[84:88] = b'DXT5'
 
-        struct.pack_into("<I", header, 108, CAPS_TEXTURE)
+        struct.pack_into('<I', header, 108, CAPS_TEXTURE)
         return bytes(header)
 
     def _dds_to_png(data: bytes, width: int, height: int) -> bytes:
@@ -625,15 +625,15 @@ def load_cm3d2tex(path, skip_data=False):
         # PNGチャンクの構築
         png_signature = b'\x89PNG\r\n\x1a\n'
 
-        ihdr_data = struct.pack(">IIBBBBB", width, height, 8, 6, 0, 0, 0)
+        ihdr_data = struct.pack('>IIBBBBB', width, height, 8, 6, 0, 0, 0)
         ihdr_chunk = b'IHDR' + ihdr_data
-        ihdr_chunk = struct.pack(">I", len(ihdr_data)) + ihdr_chunk + struct.pack(">I", zlib.crc32(ihdr_chunk))
+        ihdr_chunk = struct.pack('>I', len(ihdr_data)) + ihdr_chunk + struct.pack('>I', zlib.crc32(ihdr_chunk))
 
         idat_data = zlib.compress(scanlines)
         idat_chunk = b'IDAT' + idat_data
-        idat_chunk = struct.pack(">I", len(idat_data)) + idat_chunk + struct.pack(">I", zlib.crc32(idat_chunk))
+        idat_chunk = struct.pack('>I', len(idat_data)) + idat_chunk + struct.pack('>I', zlib.crc32(idat_chunk))
 
-        iend_chunk = struct.pack(">I", 0) + b'IEND' + struct.pack(">I", zlib.crc32(b'IEND'))
+        iend_chunk = struct.pack('>I', 0) + b'IEND' + struct.pack('>I', zlib.crc32(b'IEND'))
         return png_signature + ihdr_chunk + idat_chunk + iend_chunk
 
     with open(path, 'rb') as file:
@@ -1073,7 +1073,7 @@ class CNV_UL_generic_selector(bpy.types.UIList):
     use_order_name: bpy.props.BoolProperty(
         name="Name", default=False, options=set(),
         description="Sort groups by their name (case-insensitive)",
-        update=_gen_order_update("use_order_name", "use_order_importance"),
+        update=_gen_order_update('use_order_name', 'use_order_importance'),
     )
     use_filter_orderby_invert: bpy.props.BoolProperty(
         name="Order by Invert",
@@ -1121,13 +1121,13 @@ class CNV_UL_generic_selector(bpy.types.UIList):
                 row = layout.row()
                 row.enabled = False
                 #row.alignment = 'LEFT'
-                row.prop(item, "value", text=item.name, icon=item.icon)
+                row.prop(item, 'value', text=item.name, icon=item.icon)
             else:
-                layout.prop(item, "value", text=item.name, icon=item.icon)
+                layout.prop(item, 'value', text=item.name, icon=item.icon)
             
-            #layout.prop(item, "value", text=item.name, icon=item.icon)
+            #layout.prop(item, 'value', text=item.name, icon=item.icon)
             icon = 'RADIOBUT_ON' if item.preferred else 'RADIOBUT_OFF'
-            layout.prop(item, "preferred", text="", icon=icon, emboss=False)
+            layout.prop(item, 'preferred', text="", icon=icon, emboss=False)
 
     def draw_filter(self, context, layout):
         # Nothing much to say here, it's usual UI code...
@@ -1140,26 +1140,26 @@ class CNV_UL_generic_selector(bpy.types.UIList):
             self.expanded_layout = True
 
         subrow = row.row(align=True)
-        subrow.prop(self, "filter_name", text="")
+        subrow.prop(self, 'filter_name', text="")
         icon = 'ZOOM_OUT' if self.use_filter_name_reverse else 'ZOOM_IN'
-        subrow.prop(self, "use_filter_name_reverse", text="", icon=icon)
+        subrow.prop(self, 'use_filter_name_reverse', text="", icon=icon)
 
         #subrow = row.row(align=True)
-        #subrow.prop(self, "use_filter_deform", toggle=True)
+        #subrow.prop(self, 'use_filter_deform', toggle=True)
         #icon = 'ZOOM_OUT' if self.use_filter_deform_reverse else 'ZOOM_IN'
-        #subrow.prop(self, "use_filter_deform_reverse", text="", icon=icon)
+        #subrow.prop(self, 'use_filter_deform_reverse', text="", icon=icon)
 
         #subrow = row.row(align=True)
-        #subrow.prop(self, "use_filter_empty", toggle=True)
+        #subrow.prop(self, 'use_filter_empty', toggle=True)
         #icon = 'ZOOM_OUT' if self.use_filter_empty_reverse else 'ZOOM_IN'
-        #subrow.prop(self, "use_filter_empty_reverse", text="", icon=icon)
+        #subrow.prop(self, 'use_filter_empty_reverse', text="", icon=icon)
 
         row = layout.row(align=True)
         row.label(text="Order by:")
-        row.prop(self, "use_order_name", toggle=True)
-        #row.prop(self, "use_order_importance", toggle=True)
+        row.prop(self, 'use_order_name', toggle=True)
+        #row.prop(self, 'use_order_importance', toggle=True)
         icon = 'TRIA_UP' if self.use_filter_orderby_invert else 'TRIA_DOWN'
-        row.prop(self, "use_filter_orderby_invert", text="", icon=icon)
+        row.prop(self, 'use_filter_orderby_invert', text="", icon=icon)
 
     def filter_items(self, context, data, propname):
         # This function gets the collection property (as the usual tuple (data, propname)), and must return two lists:
@@ -1180,9 +1180,9 @@ class CNV_UL_generic_selector(bpy.types.UIList):
         #
         #if not self.local_bone_names:
         #    target_ob, source_ob = common.get_target_and_source_ob(context)
-        #    bone_data_ob = (target_ob.get("LocalBoneData:0") and target_ob) or (source_ob.get("LocalBoneData:0") and source_ob) or None
+        #    bone_data_ob = (target_ob.get('LocalBoneData:0') and target_ob) or (source_ob.get('LocalBoneData:0') and source_ob) or None
         #    if bone_data_ob:
-        #        local_bone_data = model_export.CNV_OT_export_cm3d2_model.local_bone_data_parser(model_export.CNV_OT_export_cm3d2_model.indexed_data_generator(bone_data_ob, prefix="LocalBoneData:"))
+        #        local_bone_data = model_export.CNV_OT_export_cm3d2_model.local_bone_data_parser(model_export.CNV_OT_export_cm3d2_model.indexed_data_generator(bone_data_ob, prefix='LocalBoneData:'))
         #        self.local_bone_names = [ bone['name'] for bone in local_bone_data ]
         
         if not self.cached_values:
@@ -1199,7 +1199,7 @@ class CNV_UL_generic_selector(bpy.types.UIList):
 
         # Filtering by name
         if self.filter_name:
-            flt_flags = helper_funcs.filter_items_by_name(self.filter_name, self.bitflag_filter_item, items, "name",
+            flt_flags = helper_funcs.filter_items_by_name(self.filter_name, self.bitflag_filter_item, items, 'name',
                                                           reverse=self.use_filter_name_reverse)
         if not flt_flags:
             flt_flags = [self.bitflag_filter_item] * len(items)
@@ -1230,7 +1230,7 @@ class CNV_UL_generic_selector(bpy.types.UIList):
         
         # Reorder by name or average weight.
         if self.use_order_name:
-            flt_neworder = helper_funcs.sort_items_by_name(items, "name")
+            flt_neworder = helper_funcs.sort_items_by_name(items, 'name')
         #elif self.use_order_importance:
         #    _sort = [(idx, vgroups_empty[vg.index][1]) for idx, vg in enumerate(vgroups)]
         #    flt_neworder = helper_funcs.sort_items_helper(_sort, lambda e: e[1], True)
