@@ -1014,10 +1014,7 @@ class NodeHandler:
 
 #@compat.BlRegister()
 class CNV_UL_generic_selector(bpy.types.UIList):
-    bl_label       = "CNV_UL_generic_selector"
     bl_options     = {'DEFAULT_CLOSED'}
-    bl_region_type = 'WINDOW'
-    bl_space_type  = 'PROPERTIES'
 
     # Constants (flags)
     # Be careful not to shadow FILTER_ITEM!
@@ -1241,9 +1238,6 @@ class CNV_UL_generic_selector(bpy.types.UIList):
 
 @compat.BlRegister()
 class CNV_SelectorItem(bpy.types.PropertyGroup):
-    bl_label       = "CNV_SelectorItem"
-    bl_region_type = 'WINDOW'
-    bl_space_type  = 'PROPERTIES'
 
     name: bpy.props.StringProperty(name="Name", default="Unknown")
     value: bpy.props.BoolProperty(name="Value", default=True)

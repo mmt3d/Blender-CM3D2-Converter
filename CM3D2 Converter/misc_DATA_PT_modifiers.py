@@ -25,10 +25,7 @@ def menu_func(self, context):
 
 @compat.BlRegister()
 class CNV_UL_modifier_selector(common.CNV_UL_generic_selector):
-    bl_label       = 'CNV_UL_modifier_selector'
     bl_options     = {'DEFAULT_CLOSED'}
-    bl_region_type = 'WINDOW'
-    bl_space_type  = 'PROPERTIES'
 
     # Constants (flags)
     # Be careful not to shadow FILTER_ITEM!

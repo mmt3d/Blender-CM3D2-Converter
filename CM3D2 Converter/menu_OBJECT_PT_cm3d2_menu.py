@@ -9,8 +9,6 @@ from . import menu_file
 class CM3D2MENU_UL_command_list(bpy.types.UIList):
     bl_idname      = 'CM3D2MENU_UL_command_list'
     bl_options     = {'DEFAULT_CLOSED'}
-    bl_region_type = 'WINDOW'
-    bl_space_type  = 'PROPERTIES'
     # The draw_item function is called for each item of the collection that is visible in the list.
     #   data is the RNA object containing the collection,
     #   item is the current drawn item of the collection,
