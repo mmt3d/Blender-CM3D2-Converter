@@ -103,9 +103,7 @@ class CNV_PT_poselib(bpy.types.Panel):
 
         is_included_primed = any(x.data.get('isPrimedPose') for x in selected)
         if is_included_primed:
-            layout.label(text="選択オブジェクトに素体ポーズ変更", icon='ERROR')
-            layout.label(text="されているものがあります", icon='BLANK1')
-            layout.label(text="元の素体ポーズでないと利用できません", icon='BLANK1')
+            common.wrap_label(layout, text="選択オブジェクトに素体ポーズ変更されているものがあります。元の素体ポーズでないと利用できません。", icon='ERROR')
             return
 
         if not ob:

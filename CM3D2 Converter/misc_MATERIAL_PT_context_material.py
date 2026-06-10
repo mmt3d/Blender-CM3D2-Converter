@@ -524,6 +524,8 @@ class CNV_OT_change_shader(bpy.types.Operator, new_mate_opr):
     remove_unused: bpy.props.BoolProperty(name="不使用ノードを削除", default=False, description="変更前のシェーダーで使用していたノードのうち、変更後のシェーダーで使用しないものを削除します")
     asis_if_exists: bpy.props.BoolProperty(name="存在するノードはパラメータそのままにする", default=True)  # override
 
+    width = 480
+
     @classmethod
     def poll(cls, context):
         return True
@@ -532,7 +534,7 @@ class CNV_OT_change_shader(bpy.types.Operator, new_mate_opr):
         ob = context.active_object
         mate = ob.active_material
         self.shader_type = mate.get('shader1')
-        return context.window_manager.invoke_props_dialog(self)
+        return context.window_manager.invoke_props_dialog(self, width=self.width)
 
     def draw(self, context):
         self.layout.prop(self, 'shader_type', icon='MATERIAL')
@@ -548,13 +550,11 @@ class CNV_OT_change_shader(bpy.types.Operator, new_mate_opr):
         self.layout.prop(self, 'remove_unused', icon='TRASH')
         box = self.layout.box()
         col = box.column(align=True)
-        col.label(text='ご注意', icon='ERROR')
-        col.label(text='『不使用ノードを削除』は変更後のシェーダーで使用')
-        col.label(text='しなくなるノードを削除します。')
-        col.label(text='削除されると元のシェーダーに戻しても以前の調整値')
-        col.label(text='は失われデフォルト値になります。')
-        col.label(text='また、不使用ノードを残していても mate や model の')
-        col.label(text='エクスポート時には除外されます。')
+        col.label(text="ご注意", icon='ERROR')
+        text = _("『不使用ノードを削除』は変更後のシェーダーで使用しなくなるノードを削除します。\n"
+                 "削除されると元のシェーダーに戻しても以前の調整値は失われデフォルト値になります。\n"
+                 "また、不使用ノードを残していても mate や model のエクスポート時には除外されます。")
+        common.wrap_label(col, text=text, indent='  ', width=self.width)
 
     def execute(self, context):
         ob = context.active_object
@@ -955,14 +955,12 @@ def menu_mateprop_tex(context, layout, node):
         else:
             row.operator('image.replace_cm3d2_tex', icon='BORDERMOVE').node_name = node.name
 
-    # TODO expand
     desc = prop_info.get('desc')
     if desc:
         sub_box = box.box()
         col = sub_box.column(align=True)
         col.label(text="解説", icon='TEXT')
-        for line in desc:
-            col.label(text=line)
+        common.wrap_label(col, text=_(desc))
 
 
 def menu_mateprop_col(context, layout, node):
@@ -1006,14 +1004,12 @@ def menu_mateprop_col(context, layout, node):
         opr = row.operator('texture.set_color_value', text="", icon='TRIA_RIGHT')
         opr.node_name, opr.color = node.name, col_val[:3] + (1,)
 
-    # TODO expand
     desc = prop_info.get('desc')
     if desc:
         sub_box = box.box()
         col = sub_box.column(align=True)
         col.label(text="解説", icon='TEXT')
-        for line in desc:
-            col.label(text=line)
+        common.wrap_label(col, text=_(desc))
 
 
 def menu_mateprop_f(context, layout, node):
@@ -1071,11 +1067,9 @@ def menu_mateprop_f(context, layout, node):
         split.label(text="正確な値: ")
         split.label(text='{0:f}'.format(node.outputs[0].default_value))
 
-    # TODO expand
     desc = prop_info.get('desc')
     if desc:
         sub_box = box.box()
         col = sub_box.column(align=True)
         col.label(text="解説", icon='TEXT')
-        for line in desc:
-            col.label(text=line)
+        common.wrap_label(col, text=_(desc))

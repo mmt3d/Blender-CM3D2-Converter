@@ -7,6 +7,8 @@ from typing import Any
 import bpy
 import bmesh
 import mathutils
+import itertools
+import unicodedata
 from . import fileutil
 from . import compat
 from .cm3d2_shader import toon_vector_node_tree, com3d2_shader_node_tree, alpha_mixer_node_tree, bind_light_switch
@@ -1398,3 +1400,102 @@ def handler_remove(handlers, func):
     for h in list(handlers):
         if h.__name__ == func_name:
             handlers.remove(h)
+
+
+def get_width(text: str) -> int:
+    """全角=2、半角=1 として文字列の幅を計算する"""
+    return sum(2 if unicodedata.east_asian_width(c) in ('F', 'W', 'A') else 1 for c in text)
+
+
+def wrap_label(ui: bpy.types.UILayout, text: str, indent: str = '', width: int|None = None, **kwargs):
+    """
+    指定幅に合わせて改行してラベル出力する(UILayout.labelを複数回実施する)
+    ※text指定値は翻訳済みのものを渡す ex. wrap_label(text=_("..."))
+    """
+    size = get_region_size(width=width)
+    if 'icon' in kwargs or 'icon_value' in kwargs:
+        size -= 4
+
+    available_size = size - get_width(indent)
+    if available_size <= 0:
+        available_size = 1
+
+    raw_lines = text.split('\n')
+    final_lines = []
+
+    for raw_line in raw_lines:
+        if not raw_line:
+            final_lines.append('')
+            continue
+
+        # tokensにワードを分割する。全角は1文字1ワードとする。
+        tokens = []
+        for width, group in itertools.groupby(raw_line, get_width):
+            chunk = ''.join(group)
+            if width == 1:
+                words = chunk.split(' ')
+                for i, w in enumerate(words):
+                    if w:
+                        tokens.append(w)
+                    if i < len(words) - 1:
+                        tokens.append(' ')
+            else:
+                tokens.extend(list(chunk))
+
+        # tokens を指定幅ごとに行に分配する
+        current_line = []
+        current_width = 0
+        for token in tokens:
+            token_width = get_width(token)
+
+            if not current_line and token == ' ':
+                continue
+
+            if current_width + token_width > available_size:
+                if current_line:
+                    final_lines.append(''.join(current_line))
+                if token == ' ':
+                    current_line = []
+                    current_width = 0
+                else:
+                    current_line = [token]
+                    current_width = token_width
+            else:
+                current_line.append(token)
+                current_width += token_width
+        if current_line:
+            final_lines.append(''.join(current_line))
+
+    for i, line in enumerate(final_lines):
+        ui.label(text=indent + line.rstrip(), **kwargs)
+        if i == 0:
+            if 'icon' in kwargs or 'icon_value' in kwargs:
+                kwargs['icon'] = 'BLANK1'
+
+
+def get_region_size(width: int|None = None) -> int:
+    """
+    context.region に描画可能な文字列の幅を返却する
+    """
+    context = bpy.context
+    margin = 0
+    if width is not None:
+        # ダイアログの場合、検知できないためダイアログに指定したwidthをそのまま使用する前提
+        pass
+    elif context.area.type == 'PREFERENCES':
+        margin = 36
+        width = getattr(context.region, 'width', 600)
+    elif context.area.type == 'PROPERTIES':
+        margin = 79
+        width = getattr(context.region, 'width', 400)
+    elif context.area.type == 'VIEW_3D':
+        margin = 50
+        width = getattr(context.region, 'width', 400)
+    else:
+        width = 600
+    ui_scale = context.preferences.view.ui_scale
+    content_px = max(100, width - int(margin * ui_scale))
+    px_per_unit = 5.6 * ui_scale
+    size = max(10, int(content_px / px_per_unit))
+    #print(context.area.type, width, margin, content_px, size)
+    return size
