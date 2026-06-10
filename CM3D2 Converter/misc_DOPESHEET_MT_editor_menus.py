@@ -1,5 +1,4 @@
 import bpy
-import bmesh
 import math
 import mathutils
 from . import common

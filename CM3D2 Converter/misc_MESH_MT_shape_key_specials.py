@@ -4,7 +4,6 @@ import bpy
 import bmesh
 import mathutils
 import traceback
-from typing import TYPE_CHECKING
 import abc
 from . import common
 from . import compat

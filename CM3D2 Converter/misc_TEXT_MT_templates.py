@@ -2,7 +2,6 @@ import bpy
 from pathlib import Path
 from . import common
 from . import compat
-from .translations.pgettext_functions import *
 
 
 TEMPLATES_PATH = Path(__file__).parent / 'templates'

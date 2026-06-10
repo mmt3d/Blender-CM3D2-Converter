@@ -2,12 +2,9 @@ from __future__ import annotations
 
 import bpy
 import os
-from pathlib import Path
-import sys
 import tempfile
-from typing import TYPE_CHECKING, Literal, overload
+from typing import TYPE_CHECKING, overload
 
-from . import common
 from . import compat
 from . anm_export import AnmBuilder
 

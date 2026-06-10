@@ -6,7 +6,6 @@ import bmesh
 import mathutils
 from . import common
 from . import compat
-from .translations.pgettext_functions import *
 
 
 # メニュー等に項目追加

@@ -1,11 +1,7 @@
 # 「プロパティ」エリア → 「レンダー」タブ → 「レンダー」パネル
 import os
-import re
-import sys
 import math
 import bpy
-import time
-import bmesh
 import mathutils
 from . import common
 from . import compat

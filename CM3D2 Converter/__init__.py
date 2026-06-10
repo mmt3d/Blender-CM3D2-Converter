@@ -85,7 +85,6 @@ if True:
     from . import misc_VIEW3D_MT_pose_apply
     from . import misc_VIEW3D_PT_tools_weightpaint
     from . import misc_VIEW3D_PT_pose_change
-    from . import misc_VIEW3D_PT_tools_mesh_shapekey
     from . import misc_DOPESHEET_MT_editor_menus
 
     from . import translations

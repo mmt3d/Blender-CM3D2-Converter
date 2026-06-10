@@ -1,7 +1,6 @@
 # 「プロパティ」エリア → 「オブジェクト」タブ
 import re
 import bpy
-import mathutils
 from . import common
 from . import compat
 

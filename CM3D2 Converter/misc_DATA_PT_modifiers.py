@@ -1,12 +1,6 @@
 # 「プロパティ」エリア → 「モディファイア」タブ
-import os
 import re
-import struct
-import math
-import unicodedata
-import time
 import bpy
-import bmesh
 import mathutils
 from . import common
 from . import compat

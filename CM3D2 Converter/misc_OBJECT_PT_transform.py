@@ -1,6 +1,5 @@
 # 「プロパティ」エリア → 「オブジェクト」タブ → 「トランスフォーム」パネル
 import bpy
-import bmesh
 import mathutils
 import numpy as np
 from . import common
