@@ -434,7 +434,12 @@ class CNV_OT_set_value(bpy.types.Operator, common.NodeHandler):
     bl_description = "floatタイプの設定値を設定します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    value: bpy.props.FloatProperty(name="value")
+    value: bpy.props.FloatProperty(options={'HIDDEN', 'SKIP_SAVE'})
+    description: bpy.props.StringProperty(options={'HIDDEN', 'SKIP_SAVE'})
+
+    @classmethod
+    def description(cls, context, properties):
+        return getattr(properties, 'description', cls.bl_description)
 
     @classmethod
     def poll(cls, context):

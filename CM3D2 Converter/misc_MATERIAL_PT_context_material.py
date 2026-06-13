@@ -1061,6 +1061,8 @@ def menu_mateprop_f(context, layout, node):
             val = preset[0]
             opr = row.operator('texture.set_value', text=preset[1])
             opr.value, opr.node_name = val, node.name
+            if len(preset) > 2:
+                opr.description = preset[2]
 
     if prop_info.get('dispExact'):
         split = compat.layout_split(box, factor=LAYOUT_FACTOR)
