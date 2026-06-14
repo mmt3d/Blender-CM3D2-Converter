@@ -46,7 +46,7 @@ class CNV_OT_import_cm3d2_anm(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        selected, _ = common.get_outliner_selection(context, 'ARMATURE')
+        selected, __ = common.get_outliner_selection(context, 'ARMATURE')
         return bool(selected)
 
     def invoke(self, context, event):
@@ -131,7 +131,7 @@ class AnmImporter:
         self._keyframe_queue: dict[bpy.types.FCurve, list[tuple[tuple[float, float], str]]] = {}
 
     def import_anm(self, context: bpy.types.Context, filepath: str):
-        target_objects, _ = common.get_outliner_selection(context, 'ARMATURE')
+        target_objects, __ = common.get_outliner_selection(context, 'ARMATURE')
         for i, ob in enumerate(target_objects):
             # ポーズをいじった状態からインポートするとねじれが発生しうるのでレストポーズにクリアする
             self._transforms_clear(ob)

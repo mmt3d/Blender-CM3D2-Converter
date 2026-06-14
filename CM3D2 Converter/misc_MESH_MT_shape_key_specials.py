@@ -915,7 +915,7 @@ class CNV_OT_weighted_shape_key_transfer(shape_key_transfer_op):
             local_bone_data = model_export.CNV_OT_export_cm3d2_model.local_bone_data_parser(model_export.CNV_OT_export_cm3d2_model.indexed_data_generator(bone_data_ob, prefix='LocalBoneData:'))
             local_bone_names = [ bone['name'] for bone in local_bone_data ]
 
-        importance_map = {vg.index: [0.0, 0] for vg, _ in self.matched_vgroups}
+        importance_map = {vg.index: [0.0, 0] for vg, __ in self.matched_vgroups}
         for v in target_ob.data.vertices:
             for g in v.groups:
                 if g.group in importance_map:

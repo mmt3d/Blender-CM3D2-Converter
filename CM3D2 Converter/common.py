@@ -900,12 +900,12 @@ class material_restore:
             self.mesh_data.append(mesh_datum)
 
         with bpy.context.temp_override(object=ob):
-            for _ in ob.material_slots[:]:
+            for __ in ob.material_slots[:]:
                 bpy.ops.object.material_slot_remove()
 
     def restore(self):
         with bpy.context.temp_override(object=self.object):
-            for _ in self.object.material_slots[:]:
+            for __ in self.object.material_slots[:]:
                 bpy.ops.object.material_slot_remove()
 
             for index, mate in enumerate(self.slots):

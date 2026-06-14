@@ -12,7 +12,7 @@ def menu_func(self, context):
     self.layout.operator('pose.prime_pose', icon_value=common.kiss_icon())
     row = self.layout.row()
     row.operator('pose.revert_primed_pose', icon_value=common.kiss_icon())
-    _, ob = common.get_outliner_selection(context, 'ARMATURE')
+    __, ob = common.get_outliner_selection(context, 'ARMATURE')
     # チェック対象がexecuteで変更される関係でpollでチェックさせるとREDOできなくなるため、ここで有効無効を切り替える
     if not ob or not ob.data.get('isPrimedPose'):
         row.enabled = False
@@ -157,7 +157,7 @@ class CNV_OT_base_prime_pose_operator(bpy.types.Operator):
             col.prop(self, 'keyframe_range')
 
     def execute(self, context):
-        _, ob = common.get_outliner_selection(context, 'ARMATURE')
+        __, ob = common.get_outliner_selection(context, 'ARMATURE')
         arm = ob.data
         progress = 0
 
@@ -241,7 +241,7 @@ class CNV_OT_base_prime_pose_operator(bpy.types.Operator):
                 ob.animation_data_create()
             # 専用のアクション名で用意する
             action_name = f'{ob.name}_poses'
-            action, _ = compat.get_new_action_and_fcurves(action_name, ob.name)
+            action, __ = compat.get_new_action_and_fcurves(action_name, ob.name)
             action.use_fake_user = True
             ob.animation_data.action = action
 

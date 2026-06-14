@@ -1040,17 +1040,17 @@ class ArcHandler:
                 if offset_ref[0] >= len(stream_bytes): return
                 offset_ref[0] += 8
                 struct.unpack('<Q', stream_bytes[offset_ref[0]:offset_ref[0] + 8])[0]
-                dir_count, file_count, depth, _ = struct.unpack('<IIII',
+                dir_count, file_count, depth, __ = struct.unpack('<IIII',
                                                                 stream_bytes[offset_ref[0] + 8:offset_ref[0] + 24])
                 offset_ref[0] += 24
 
                 dirs_info = []
-                for _ in range(dir_count):
+                for __ in range(dir_count):
                     d_hash, d_offset = struct.unpack('<QQ', stream_bytes[offset_ref[0]:offset_ref[0] + 16])
                     dirs_info.append((d_hash, d_offset))
                     offset_ref[0] += 16
 
-                for _ in range(file_count):
+                for __ in range(file_count):
                     f_hash, f_offset = struct.unpack('<QQ', stream_bytes[offset_ref[0]:offset_ref[0] + 16])
                     f_name = name_lut.get(f_hash, None)
                     files_found.append({
@@ -1060,7 +1060,7 @@ class ArcHandler:
                     offset_ref[0] += 16
 
                 offset_ref[0] += 8 * depth
-                for _ in dirs_info:
+                for __ in dirs_info:
                     parse_hash_table(stream_bytes, offset_ref)
 
             if utf16_hash_data:
@@ -1207,7 +1207,7 @@ class NeiHandler:
         cols, rows = struct.unpack('<II', nei_data[4:12])
         offset = 12
         str_lengths = []
-        for _ in range(cols * rows):
+        for __ in range(cols * rows):
             offset += 4
             str_len = struct.unpack('<I', nei_data[offset:offset + 4])[0]
             str_lengths.append(str_len)
@@ -1234,7 +1234,7 @@ class NeiHandler:
     def _generate_iv(cls, iv_seed: bytes) -> bytes:
         seed_last = struct.unpack('<I', iv_seed)[0] ^ 0xBFBFBFBF
         seed = [0x075BCD15, 0x159A55E5, 0x1F123BB5, cls._to_u32(seed_last)]
-        for _ in range(4):
+        for __ in range(4):
             n = cls._to_u32(seed[0] ^ cls._to_u32(seed[0] << 11))
             seed[0] = seed[1]
             seed[1] = seed[2]
@@ -1315,7 +1315,7 @@ class AES128CBC:
     @staticmethod
     def _gmul(a, b):
         p = 0
-        for _ in range(8):
+        for __ in range(8):
             if b & 1: p ^= a
             hi_bit_set = a & 0x80
             a = (a << 1) & 0xFF

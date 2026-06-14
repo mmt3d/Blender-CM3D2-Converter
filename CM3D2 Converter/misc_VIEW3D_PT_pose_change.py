@@ -26,7 +26,7 @@ class CNV_PT_control_primed_pose(bpy.types.Panel):
         col = row.column()
         col.operator('pose.revert_primed_pose')
 
-        _, ob = common.get_outliner_selection(context, 'ARMATURE')
+        __, ob = common.get_outliner_selection(context, 'ARMATURE')
         # チェック対象がexecuteで変更される関係でpollでチェックさせるとREDOできなくなるため、ここで有効無効を切り替える
         if not ob or not ob.data.get('isPrimedPose'):
             col.enabled = False
@@ -184,9 +184,9 @@ def reload_pose_list(import_type: str, force: bool = False):
         is_com3d2 = len(edit_poses[0]) == 6
         for item in edit_poses:
             if is_com3d2:
-                _, icon, _, ks, pose, _ = item
+                __, icon, __, ks, pose, __ = item
             else:
-                icon, _, ks, pose = item
+                icon, __, ks, pose = item
             if ks not in ks_poses:
                 ks_poses[ks] = []
             ks_poses[ks].append((pose, icon))
@@ -303,7 +303,7 @@ def set_pose(ob, value: int):
         bpy.ops.screen.animation_cancel(restore_frame=False)
         # NOTE: 3.3, 3.4 だとアニメーション停止からのポーズ適用は1発で反映されない(Blender側のバグ)
 
-    selected, _ = common.get_outliner_selection(bpy.context, 'ARMATURE')
+    selected, __ = common.get_outliner_selection(bpy.context, 'ARMATURE')
 
     if props.apply_type == 'POSE':
         _is_processing = True
