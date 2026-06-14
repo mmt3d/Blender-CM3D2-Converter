@@ -4,7 +4,7 @@ import mathutils
 import os
 from . import common
 from . import compat
-from .translations.pgettext_functions import *
+from .translations import *
 
 
 # メニュー等に項目追加

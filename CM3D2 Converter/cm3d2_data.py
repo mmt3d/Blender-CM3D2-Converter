@@ -7,7 +7,7 @@ import re
 import pickle
 import struct
 from . import common
-from .translations.pgettext_functions import *
+from .translations import *
 
 
 SHADER_NAMES_CM3D2 = [

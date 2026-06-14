@@ -9,7 +9,7 @@ import os
 from . import common
 from . import compat
 from . fileutil import deserialize_from_file
-from . translations.pgettext_functions import *
+from . translations import *
 from . common import CM3D2ImportError
 
 from CM3D2.Serialization.Files import Anm  # type: ignore

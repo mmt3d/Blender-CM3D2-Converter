@@ -301,7 +301,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
         row = box.row()
         row.prop(self, 'console_utf8', text="コンソール文字コードをUTF8にする (日本語文字化け対策)")
         col = box.column(align=True)
-        from .translations.pgettext_functions import _
+        from .translations import _
         msg = _("このアドオン以外のコンソール出力にも影響を及ぼす可能性があります。\n"
                 "一度ONにするとOFFに戻してもBlender再起動しないと戻りません。")
         common.wrap_label(col, text=msg, indent='   ')

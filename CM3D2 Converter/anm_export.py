@@ -8,7 +8,7 @@ from mathutils import Vector, Quaternion, Matrix
 from pathlib import Path
 from . import common
 from . import compat
-from . translations.pgettext_functions import *
+from . translations import *
 from . fileutil import serialize_to_file
 from . import misc_DOPESHEET_MT_editor_menus
 

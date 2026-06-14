@@ -4,7 +4,7 @@ import mathutils
 import numpy as np
 from . import common
 from . import compat
-from .translations.pgettext_functions import *
+from .translations import *
 from .model_export import CNV_OT_export_cm3d2_model
 
 
