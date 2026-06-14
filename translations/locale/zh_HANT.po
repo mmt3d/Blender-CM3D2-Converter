@@ -1,0 +1,8197 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: CM3D2 Converter ('luv', 2023, 9, 23)\n"
+"POT-Creation-Date: 2026-06-14 22:04:37\n"
+"Language: zh_HANT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. mt:gemini
+#: __init__.py:328
+#, fuzzy
+msgctxt "Operator"
+msgid "CM3D2リソースデータを抽出"
+msgstr "提取 CM3D2 資源數據"
+
+#. mt:gemini
+#: __init__.py:122
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2インストールフォルダ"
+msgstr "CM3D2 安裝資料夾"
+
+#. mt:gemini
+#: __init__.py:122
+#, fuzzy
+msgctxt "*"
+msgid "変更している場合は設定しておくと役立つかもしれません"
+msgstr "如果已變更，設定此項可能會有所幫助"
+
+#. mt:gemini
+#: __init__.py:123
+#, fuzzy
+msgctxt "*"
+msgid "バックアップの拡張子 (空欄で無効)"
+msgstr "備份副檔名 (留空則停用)"
+
+#. mt:gemini
+#: __init__.py:123
+#, fuzzy
+msgctxt "*"
+msgid "エクスポート時にバックアップを作成時この拡張子で複製します、空欄でバックアップを無効"
+msgstr "匯出時建立備份檔案會以此副檔名複製，留空則停用備份"
+
+#. mt:gemini
+#: __init__.py:125 anm_export.py:32 anm_import.py:31
+#: misc_MESH_MT_shape_key_specials.py:1028
+#: misc_MESH_MT_vertex_group_specials.py:585 model_export.py:28
+#: model_import.py:33
+#, fuzzy
+msgctxt "*"
+msgid "倍率"
+msgstr "比例"
+
+#. mt:gemini
+#: __init__.py:125
+#, fuzzy
+msgctxt "*"
+msgid "Blenderでモデルを扱うときの拡大率"
+msgstr "在 Blender 中處理模型時的縮放比例"
+
+#. mt:gemini
+#: __init__.py:126
+#, fuzzy
+msgctxt "*"
+msgid "基本的にボーン名/ウェイト名をBlender用に変換"
+msgstr "基本上將骨骼名稱/權重名稱轉換為 Blender 格式"
+
+#. mt:gemini
+#: __init__.py:126
+#, fuzzy
+msgctxt "*"
+msgid "modelインポート時にボーン名/ウェイト名を変換するかどうかのオプションのデフォルトを設定します"
+msgstr "設定模型匯入時是否轉換骨骼名稱/權重名稱的預設選項"
+
+#. mt:gemini
+#: __init__.py:127
+#, fuzzy
+msgctxt "*"
+msgid "modelファイル置き場"
+msgstr "模型檔案位置"
+
+#. mt:gemini
+#: __init__.py:127
+#, fuzzy
+msgctxt "*"
+msgid "設定すれば、modelを扱う時は必ずここからファイル選択を始めます"
+msgstr "如果設定，處理模型時將始終從此處開始檔案選擇"
+
+#. mt:gemini
+#: __init__.py:128
+#, fuzzy
+msgctxt "*"
+msgid "modelインポート時のデフォルトパス"
+msgstr "模型匯入時的預設路徑"
+
+#. mt:gemini
+#: __init__.py:128
+#, fuzzy
+msgctxt "*"
+msgid "modelインポート時に最初はここが表示されます、インポート毎に保存されます"
+msgstr "模型匯入時會先顯示此處，每次匯入都會儲存"
+
+#. mt:gemini
+#: __init__.py:129
+#, fuzzy
+msgctxt "*"
+msgid "modelエクスポート時のデフォルトパス"
+msgstr "模型匯出時的預設路徑"
+
+#. mt:gemini
+#: __init__.py:129
+#, fuzzy
+msgctxt "*"
+msgid "modelエクスポート時に最初はここが表示されます、エクスポート毎に保存されます"
+msgstr "模型匯出時會先顯示此處，每次匯出都會儲存"
+
+#. mt:gemini
+#: __init__.py:130
+#, fuzzy
+msgctxt "*"
+msgid "インポート後のアーマチュアを非表示"
+msgstr "匯入後隱藏骨架"
+
+#. mt:gemini
+#: __init__.py:130 model_import.py:54
+#, fuzzy
+msgctxt "*"
+msgid "インポート後のアーマチュアを非表示にします"
+msgstr "將匯入後的骨架設為隱藏"
+
+#. mt:gemini
+#: __init__.py:131
+#, fuzzy
+msgctxt "*"
+msgid "ポーズ変更していても編集時のメッシュを追従させる"
+msgstr "即使變更姿勢，編輯時的網格也會跟隨"
+
+#. mt:gemini
+#: __init__.py:131
+#, fuzzy
+msgctxt "*"
+msgid "インポート時のアーマチュアモディファイア追加で編集時のメッシュ追従オプションをONにします"
+msgstr "匯入時新增骨架修改器，並開啟編輯時網格追蹤選項"
+
+#. mt:gemini
+#: __init__.py:132 misc_VIEW3D_MT_pose_apply.py:137 model_export.py:52
+#, fuzzy
+msgctxt "*"
+msgid "アーマチュア適用は体積を維持"
+msgstr "套用骨架時保持體積"
+
+#. mt:gemini
+#: __init__.py:132
+#, fuzzy
+msgctxt "*"
+msgid "インポート時のアーマチュアモディファイア追加で体積を維持するオプションをONにします"
+msgstr "匯入時新增骨架修改器，並開啟保持體積選項"
+
+#. mt:gemini
+#: __init__.py:134
+#, fuzzy
+msgctxt "*"
+msgid "anmファイル置き場"
+msgstr "anm 檔案位置"
+
+#. mt:gemini
+#: __init__.py:134
+#, fuzzy
+msgctxt "*"
+msgid "設定すれば、anmを扱う時は必ずここからファイル選択を始めます"
+msgstr "如果設定，處理 anm 檔案時將始終從此處開始檔案選擇"
+
+#. mt:gemini
+#: __init__.py:135
+#, fuzzy
+msgctxt "*"
+msgid "anmインポート時のデフォルトパス"
+msgstr "anm 匯入時的預設路徑"
+
+#. mt:gemini
+#: __init__.py:135
+#, fuzzy
+msgctxt "*"
+msgid "anmインポート時に最初はここが表示されます、インポート毎に保存されます"
+msgstr "anm 匯入時會先顯示此處，每次匯入都會儲存"
+
+#. mt:gemini
+#: __init__.py:136
+#, fuzzy
+msgctxt "*"
+msgid "anmエクスポート時のデフォルトパス"
+msgstr "anm 匯出時的預設路徑"
+
+#. mt:gemini
+#: __init__.py:136
+#, fuzzy
+msgctxt "*"
+msgid "anmエクスポート時に最初はここが表示されます、エクスポート毎に保存されます"
+msgstr "anm 匯出時會先顯示此處，每次匯出都會儲存"
+
+#. mt:gemini
+#: __init__.py:137 __init__.py:232
+#, fuzzy
+msgctxt "*"
+msgid "MyPoseフォルダ"
+msgstr "MyPose 資料夾"
+
+#. mt:gemini
+#: __init__.py:137
+#, fuzzy
+msgctxt "*"
+msgid "ポーズライブラリのMyPoseからポーズ選択できるようになります"
+msgstr "可以從姿勢庫的 MyPose 中選擇姿勢"
+
+#. mt:gemini
+#: __init__.py:139 __init__.py:154 __init__.py:155 __init__.py:156
+#: __init__.py:157
+#, fuzzy
+msgctxt "*"
+msgid "texファイル置き場"
+msgstr "tex 檔案位置"
+
+#. mt:gemini
+#: __init__.py:139
+#, fuzzy
+msgctxt "*"
+msgid "設定すれば、texを扱う時は必ずここからファイル選択を始めます"
+msgstr "如果設定，處理 tex 檔案時將始終從此處開始檔案選擇"
+
+#. mt:gemini
+#: __init__.py:140
+#, fuzzy
+msgctxt "*"
+msgid "texインポート時のデフォルトパス"
+msgstr "tex 匯入時的預設路徑"
+
+#. mt:gemini
+#: __init__.py:140
+#, fuzzy
+msgctxt "*"
+msgid "texインポート時に最初はここが表示されます、インポート毎に保存されます"
+msgstr "tex 匯入時會先顯示此處，每次匯入都會儲存"
+
+#. mt:gemini
+#: __init__.py:141
+#, fuzzy
+msgctxt "*"
+msgid "texエクスポート時のデフォルトパス"
+msgstr "tex 匯出時的預設路徑"
+
+#. mt:gemini
+#: __init__.py:141
+#, fuzzy
+msgctxt "*"
+msgid "texエクスポート時に最初はここが表示されます、エクスポート毎に保存されます"
+msgstr "tex 匯出時會先顯示此處，每次匯出都會儲存"
+
+#. mt:gemini
+#: __init__.py:143
+#, fuzzy
+msgctxt "*"
+msgid "mateファイル置き場"
+msgstr "mate 檔案位置"
+
+#. mt:gemini
+#: __init__.py:143
+#, fuzzy
+msgctxt "*"
+msgid "設定すれば、mateを扱う時は必ずここからファイル選択を始めます"
+msgstr "如果設定，處理 mate 檔案時將始終從此處開始檔案選擇"
+
+#. mt:gemini
+#: __init__.py:144
+#, fuzzy
+msgctxt "*"
+msgid "同じ設定値が2つ以上ある場合削除"
+msgstr "如果存在兩個或更多相同設定值則刪除"
+
+#. mt:gemini
+#: __init__.py:144
+#, fuzzy
+msgctxt "*"
+msgid "_ShadowColor など"
+msgstr "例如 _ShadowColor"
+
+#. mt:gemini
+#: __init__.py:145
+#, fuzzy
+msgctxt "*"
+msgid "mateインポート時のデフォルトパス"
+msgstr "mate 匯入時的預設路徑"
+
+#. mt:gemini
+#: __init__.py:145
+#, fuzzy
+msgctxt "*"
+msgid "mateインポート時に最初はここが表示されます、インポート毎に保存されます"
+msgstr "mate 匯入時會先顯示此處，每次匯入都會儲存"
+
+#. mt:gemini
+#: __init__.py:146
+#, fuzzy
+msgctxt "*"
+msgid "mateエクスポート時のデフォルトパス"
+msgstr "mate 匯出時的預設路徑"
+
+#. mt:gemini
+#: __init__.py:146
+#, fuzzy
+msgctxt "*"
+msgid "mateエクスポート時に最初はここが表示されます、エクスポート毎に保存されます"
+msgstr "mate匯出時，此處將會是預設顯示路徑，每次匯出後會儲存。"
+
+#. mt:gemini
+#: __init__.py:148
+#, fuzzy
+msgctxt "*"
+msgid ".menu Default Path"
+msgstr ".menu 預設路徑"
+
+#. mt:gemini
+#: __init__.py:148
+#, fuzzy
+msgctxt "*"
+msgid "If set. The file selection will open here."
+msgstr "如果設定，檔案選擇器將在此處開啟。"
+
+#. mt:gemini
+#: __init__.py:149
+#, fuzzy
+msgctxt "*"
+msgid ".menu Default Import Path"
+msgstr ".menu 預設匯入路徑"
+
+#. mt:gemini
+#: __init__.py:149
+#, fuzzy
+msgctxt "*"
+msgid ""
+"When importing a .menu file. The file selection prompt will begin here."
+msgstr "匯入 .menu 檔案時，檔案選擇提示將從此處開始。"
+
+#. mt:gemini
+#: __init__.py:150
+#, fuzzy
+msgctxt "*"
+msgid ".menu Default Export Path"
+msgstr ".menu 預設匯出路徑"
+
+#. mt:gemini
+#: __init__.py:150
+#, fuzzy
+msgctxt "*"
+msgid ""
+"When exporting a .menu file. The file selection prompt will begin here."
+msgstr "匯出 .menu 檔案時，檔案選擇提示將從此處開始。"
+
+#. mt:gemini
+#: __init__.py:152
+#, fuzzy
+msgctxt "*"
+msgid "基本的にtexファイルを探す"
+msgstr "基本上尋找 tex 檔案"
+
+#. mt:gemini
+#: __init__.py:152
+#, fuzzy
+msgctxt "*"
+msgid "texファイルを探すかどうかのオプションのデフォルト値を設定します"
+msgstr "設定是否尋找 tex 檔案的預設選項"
+
+#. mt:gemini
+#: __init__.py:153 __init__.py:251
+#, fuzzy
+msgctxt "*"
+msgid "相対探索範囲"
+msgstr "相對搜尋範圍"
+
+#. mt:gemini
+#: __init__.py:153
+#, fuzzy
+msgctxt "*"
+msgid "インポート対象からの相対ディレクトリ以下を探索対象に加えます"
+msgstr "將匯入目標的相對目錄及其子目錄加入搜尋範圍"
+
+#. mt:gemini
+#: __init__.py:154 __init__.py:155 __init__.py:156 __init__.py:157
+#, fuzzy
+msgctxt "*"
+msgid "texファイルを探す時はここから探します"
+msgstr "尋找 tex 檔案時會從此處開始搜尋"
+
+#. mt:gemini
+#: __init__.py:159
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2用法線のブレンド率"
+msgstr "CM3D2 法線混合比例"
+
+#. mt:gemini
+#: __init__.py:160
+#, fuzzy
+msgctxt "*"
+msgid "無変更シェイプキーをスキップ"
+msgstr "跳過未變更的形狀鍵"
+
+#. mt:gemini
+#: __init__.py:160
+#, fuzzy
+msgctxt "*"
+msgid "ベースと同じシェイプキーを出力しない"
+msgstr "不匯出與基礎相同的形狀鍵"
+
+#. mt:gemini
+#: __init__.py:161
+#, fuzzy
+msgctxt "*"
+msgid "モディファイアを適用"
+msgstr "套用修改器"
+
+#. mt:gemini
+#: __init__.py:163
+#, fuzzy
+msgctxt "*"
+msgid "テクスチャのオフセット"
+msgstr "紋理偏移"
+
+#. mt:gemini
+#: __init__.py:164
+#, fuzzy
+msgctxt "*"
+msgid "テクスチャのスケール"
+msgstr "紋理縮放"
+
+#. mt:gemini
+#: __init__.py:166
+#, fuzzy
+msgctxt "*"
+msgid "_ToonRamp 名前"
+msgstr "_ToonRamp 名稱"
+
+#. mt:gemini
+#: __init__.py:167
+#, fuzzy
+msgctxt "*"
+msgid "_ToonRamp パス"
+msgstr "_ToonRamp 路徑"
+
+#. mt:gemini
+#: __init__.py:169
+#, fuzzy
+msgctxt "*"
+msgid "_ShadowRateToon 名前"
+msgstr "_ShadowRateToon 名稱"
+
+#. mt:gemini
+#: __init__.py:170
+#, fuzzy
+msgctxt "*"
+msgid "_ShadowRateToon パス"
+msgstr "_ShadowRateToon 路徑"
+
+#. mt:gemini
+#: __init__.py:172
+#, fuzzy
+msgctxt "*"
+msgid "_OutlineToonRamp 名前"
+msgstr "_OutlineToonRamp 名稱"
+
+#. mt:gemini
+#: __init__.py:173
+#, fuzzy
+msgctxt "*"
+msgid "_OutlineToonRamp パス"
+msgstr "_OutlineToonRamp 路徑"
+
+#. mt:gemini
+#: __init__.py:217
+#, fuzzy
+msgctxt "*"
+msgid "modelファイル"
+msgstr "模型檔案"
+
+#. mt:gemini
+#: __init__.py:227 __init__.py:231 __init__.py:236 __init__.py:241
+#, fuzzy
+msgctxt "*"
+msgid "ファイル選択時の初期フォルダ"
+msgstr "檔案選擇時的初始資料夾"
+
+#. mt:gemini
+#: __init__.py:230
+#, fuzzy
+msgctxt "*"
+msgid "anmファイル"
+msgstr "anm 檔案"
+
+#. mt:gemini
+#: __init__.py:235
+#, fuzzy
+msgctxt "*"
+msgid "texファイル"
+msgstr "tex 檔案"
+
+#. mt:gemini
+#: __init__.py:239
+#, fuzzy
+msgctxt "*"
+msgid "mateファイル"
+msgstr "mate 檔案"
+
+#. mt:gemini
+#: __init__.py:244
+#, fuzzy
+msgctxt "*"
+msgid ".menu File"
+msgstr ".menu 檔案"
+
+#. mt:gemini
+#: __init__.py:245
+#, fuzzy
+msgctxt "*"
+msgid "Initial folder when selecting files"
+msgstr "選擇檔案時的初始資料夾"
+
+#. mt:gemini
+#: __init__.py:248
+#, fuzzy
+msgctxt "*"
+msgid "texファイル検索"
+msgstr "tex 檔案搜尋"
+
+#. mt:gemini
+#: __init__.py:253
+#, fuzzy
+msgctxt "*"
+msgid "探索パス1"
+msgstr "搜尋路徑 1"
+
+#. mt:gemini
+#: __init__.py:254
+#, fuzzy
+msgctxt "*"
+msgid "探索パス2"
+msgstr "搜尋路徑 2"
+
+#. mt:gemini
+#: __init__.py:255
+#, fuzzy
+msgctxt "*"
+msgid "探索パス3"
+msgstr "搜尋路徑 3"
+
+#. mt:gemini
+#: __init__.py:256
+#, fuzzy
+msgctxt "*"
+msgid "探索パス4"
+msgstr "搜尋路徑 4"
+
+#. mt:gemini
+#: __init__.py:259
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2用マテリアル新規作成時の初期値"
+msgstr "建立 CM3D2 材質時的初始值"
+
+#. mt:gemini
+#: __init__.py:283
+#, fuzzy
+msgctxt "*"
+msgid "Default Armature Settings"
+msgstr "預設骨架設定"
+
+#. mt:gemini
+#: __init__.py:293
+#, fuzzy
+msgctxt "*"
+msgid "各操作の初期パラメータ"
+msgstr "各操作的初始參數"
+
+#. mt:gemini
+#: __init__.py:300
+#, fuzzy
+msgctxt "*"
+msgid "コンソール"
+msgstr "控制台"
+
+#. mt:gemini
+#: __init__.py:302
+#, fuzzy
+msgctxt "*"
+msgid "コンソール文字コードをUTF8にする (日本語文字化け対策)"
+msgstr "將控制台字元編碼設為 UTF8 (解決日文亂碼問題)"
+
+#. mt:gemini
+#: __init__.py:305
+#, fuzzy
+msgctxt "*"
+msgid ""
+"このアドオン以外のコンソール出力にも影響を及ぼす可能性があります。\n"
+"一度ONにするとOFFに戻してもBlender再起動しないと戻りません。"
+msgstr ""
+"這可能會影響此附加元件以外的控制台輸出。\n"
+"一旦開啟，即使關閉，也必須重新啟動 Blender 才能恢復。"
+
+#. mt:gemini
+#: __init__.py:5 misc_MESH_MT_shape_key_specials.py:19
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2 Converter"
+msgstr "CM3D2 轉換器"
+
+#. mt:gemini
+#: __init__.py:9
+#, fuzzy
+msgctxt "*"
+msgid "ファイル > インポート/エクスポート > CM3D2 Model (.model)"
+msgstr "檔案 > 匯入/匯出 > CM3D2 模型 (.model)"
+
+#. mt:gemini
+#: __init__.py:10
+#, fuzzy
+msgctxt "*"
+msgid "カスタムメイド3D2/カスタムオーダーメイド3D2専用ファイルのインポート/エクスポートを行います"
+msgstr "匯入/匯出 Custom Maid 3D 2 / Custom Order Maid 3D 2 專用檔案"
+
+#. mt:gemini
+#: __init__.py:329
+#, fuzzy
+msgctxt "*"
+msgid "上記インストールフォルダよりリソースデータ(toon画像・ポーズanm)を抽出してBlender datafilesフォルダに保存します"
+msgstr "從上述安裝資料夾中提取資源數據 (卡通圖像、姿勢 anm) 並儲存到 Blender datafiles 資料夾"
+
+#. mt:gemini
+#: __init__.py:153
+#, fuzzy
+msgctxt "*"
+msgid "指定なし"
+msgstr "無指定"
+
+#. mt:gemini
+#: __init__.py:153
+#, fuzzy
+msgctxt "*"
+msgid "同ディレクトリ以下"
+msgstr "相同目錄及其子目錄"
+
+#. mt:gemini
+#: __init__.py:153
+#, fuzzy
+msgctxt "*"
+msgid "親ディレクトリ以下"
+msgstr "父目錄及其子目錄"
+
+#. mt:gemini
+#: anm_export.py:24 anm_import.py:23
+#, fuzzy
+msgctxt "Operator"
+msgid "CM3D2モーション (.anm)"
+msgstr "CM3D2 動畫 (.anm)"
+
+#. mt:gemini
+#: anm_export.py:32 model_export.py:28
+#, fuzzy
+msgctxt "*"
+msgid "エクスポート時のメッシュ等の拡大率です"
+msgstr "匯出時網格等的縮放比例"
+
+#. mt:gemini
+#: anm_export.py:33 mate_export.py:19 mate_export.py:93 model_export.py:30
+#: tex_export.py:20
+#, fuzzy
+msgctxt "*"
+msgid "ファイルをバックアップ"
+msgstr "備份檔案"
+
+#. mt:gemini
+#: anm_export.py:33 mate_export.py:19 mate_export.py:93 model_export.py:30
+#: tex_export.py:20
+#, fuzzy
+msgctxt "*"
+msgid "ファイルに上書きする場合にバックアップファイルを複製します"
+msgstr "覆寫檔案時會複製備份檔案"
+
+#. mt:gemini
+#: anm_export.py:34 mate_export.py:21 mate_export.py:95 model_export.py:32
+#: tex_export.py:22
+#, fuzzy
+msgctxt "*"
+msgid "ファイルバージョン"
+msgstr "檔案版本"
+
+#. mt:gemini
+#: anm_export.py:45
+#, fuzzy
+msgctxt "*"
+msgid "開始フレーム"
+msgstr "開始影格"
+
+#. mt:gemini
+#: anm_export.py:46
+#, fuzzy
+msgctxt "*"
+msgid "最終フレーム"
+msgstr "結束影格"
+
+#. mt:gemini
+#: anm_export.py:47
+#, fuzzy
+msgctxt "*"
+msgid "キーフレーム数"
+msgstr "關鍵影格數"
+
+#. mt:gemini
+#: anm_export.py:48
+#, fuzzy
+msgctxt "*"
+msgid "再生速度"
+msgstr "播放速度"
+
+#. mt:gemini
+#: anm_export.py:49
+#, fuzzy
+msgctxt "*"
+msgid "同じ変形のキーフレームを掃除"
+msgstr "清理相同變形的關鍵影格"
+
+#. mt:gemini
+#: anm_export.py:50
+#, fuzzy
+msgctxt "*"
+msgid "Use Visual Transforms"
+msgstr "使用視覺變換"
+
+#. mt:gemini
+#: anm_export.py:51
+#, fuzzy
+msgctxt "*"
+msgid "キーフレーム間の変形をスムーズに"
+msgstr "平滑關鍵影格之間的變形"
+
+#. mt:gemini
+#: anm_export.py:57 anm_export.py:128
+#, fuzzy
+msgctxt "*"
+msgid "ボーン親情報の参照先"
+msgstr "骨骼父級資訊的參考來源"
+
+#. mt:gemini
+#: anm_export.py:59
+#, fuzzy
+msgctxt "*"
+msgid "Export Location"
+msgstr "匯出位置"
+
+#. mt:gemini
+#: anm_export.py:60
+#, fuzzy
+msgctxt "*"
+msgid "Export Rotation"
+msgstr "匯出旋轉"
+
+#. mt:gemini
+#: anm_export.py:61
+#, fuzzy
+msgctxt "*"
+msgid "Export Scale (Ex)"
+msgstr "匯出縮放 (Ex)"
+
+#. mt:gemini
+#: anm_export.py:63 livelink.py:64 livelink.py:254
+#, fuzzy
+msgctxt "*"
+msgid "Remove Unkeyed Bones"
+msgstr "移除未設定關鍵影格的骨骼"
+
+#. mt:gemini
+#: anm_export.py:64
+#, fuzzy
+msgctxt "*"
+msgid "親も子も存在しない"
+msgstr "父級和子級都不存在"
+
+#. mt:gemini
+#: anm_export.py:65
+#, fuzzy
+msgctxt "*"
+msgid "名前がIK/Nubっぽい"
+msgstr "名稱類似 IK/Nub"
+
+#. mt:gemini
+#: anm_export.py:66
+#, fuzzy
+msgctxt "*"
+msgid "名前が連番付き"
+msgstr "名稱帶有序列號"
+
+#. mt:gemini
+#: anm_export.py:67
+#, fuzzy
+msgctxt "*"
+msgid "名前に日本語が含まれる"
+msgstr "名稱包含日文"
+
+#. mt:gemini
+#: anm_export.py:132
+#, fuzzy
+msgctxt "*"
+msgid "輸出アニメーション情報"
+msgstr "匯出動畫資訊"
+
+#. mt:gemini
+#: anm_export.py:139
+#, fuzzy
+msgctxt "*"
+msgid "除外するボーン"
+msgstr "要排除的骨骼"
+
+#. mt:gemini
+#: anm_export.py:175
+#, fuzzy
+msgctxt "*"
+msgid ""
+"Blocked attempt to export extended animation as '.anm', use '.ex.anm' "
+"instead"
+msgstr "已阻止嘗試將擴展動畫匯出為「.anm」，請改用「.ex.anm」"
+
+#. mt:gemini
+#: anm_export.py:1147
+#, python-format, fuzzy
+msgctxt "*"
+msgid ""
+"The bone '{bone}' had an invalid matrix during frames {frame_from} - {frame_to} in animation:\n"
+"{matrix}"
+msgstr ""
+"骨骼「{bone}」在動畫影格 {frame_from} - {frame_to} 期間具有無效的矩陣：\n"
+"{matrix}"
+
+#. mt:gemini
+#: anm_export.py:186 anm_import.py:89 mate_export.py:61 mate_export.py:153
+#: mate_import.py:51 mate_import.py:125 model_export.py:573
+#: model_import.py:164 tex_import.py:73
+#, python-format, fuzzy
+msgctxt "*"
+msgid "ファイルを開くのに失敗しました、アクセス不可かファイルが存在しません。file={}"
+msgstr "開啟檔案失敗，可能是無法存取或檔案不存在。檔案={}"
+
+#. mt:gemini
+#: anm_export.py:788
+#, python-format, fuzzy
+msgctxt "*"
+msgid "Creating missing FCurve for {path}[{index}]"
+msgstr "正在為 {path}[{index}] 建立遺失的 FCurve"
+
+#. mt:gemini
+#: anm_export.py:820
+#, python-format, fuzzy
+msgctxt "*"
+msgid "Creating missing keyframe @ frame {frame} for {path}[{index}]"
+msgstr "正在為 {path}[{index}] 在影格 {frame} 建立遺失的關鍵影格"
+
+#. mt:gemini
+#: anm_export.py:25
+#, fuzzy
+msgctxt "*"
+msgid "カスタムメイド3D2のanmファイルを保存します"
+msgstr "儲存 Custom Maid 3D 2 的 anm 檔案"
+
+#. mt:gemini
+#: anm_export.py:38
+#, fuzzy
+msgctxt "*"
+msgid "Bake All Frames"
+msgstr "烘焙所有影格"
+
+#. mt:gemini
+#: anm_export.py:38
+#, fuzzy
+msgctxt "*"
+msgid "Export every frame as a keyframe (legacy behavior, large file sizes)"
+msgstr "將每個影格匯出為關鍵影格（舊版行為，檔案大小較大）"
+
+#. mt:gemini
+#: anm_export.py:39
+#, fuzzy
+msgctxt "*"
+msgid "Only Export Keyframes"
+msgstr "僅匯出關鍵影格"
+
+#. mt:gemini
+#: anm_export.py:39
+#, fuzzy
+msgctxt "*"
+msgid "Only export keyframes and their tangents (for more advance users)"
+msgstr "僅匯出關鍵影格及其切線（適用於進階使用者）"
+
+#. mt:gemini
+#: anm_export.py:40
+#, fuzzy
+msgctxt "*"
+msgid "From Anm Text JSON"
+msgstr "從 Anm 文字 JSON 匯出"
+
+#. mt:gemini
+#: anm_export.py:40
+#, fuzzy
+msgctxt "*"
+msgid "Export data from the JSON in the 'AnmData' text file"
+msgstr "從「AnmData」文字檔案中的 JSON 匯出資料"
+
+#. mt:gemini
+#: anm_export.py:54 model_export.py:44 model_import.py:116
+#, fuzzy
+msgctxt "*"
+msgid "アーマチュア"
+msgstr "骨架"
+
+#. mt:gemini
+#: anm_export.py:55 model_export.py:47
+#, fuzzy
+msgctxt "*"
+msgid "アーマチュア内プロパティ"
+msgstr "骨架內屬性"
+
+#. mt:gemini
+#: anm_import.py:31 model_import.py:33
+#, fuzzy
+msgctxt "*"
+msgid "インポート時のメッシュ等の拡大率です"
+msgstr "匯入時網格等的縮放比例"
+
+#. mt:gemini
+#: anm_import.py:32
+#, fuzzy
+msgctxt "*"
+msgid "Set Framerate"
+msgstr "設定影格率"
+
+#. mt:gemini
+#: anm_import.py:32
+#, fuzzy
+msgctxt "*"
+msgid "Change the scene's render settings to 60 fps"
+msgstr "將場景的渲染設定變更為 60 fps"
+
+#. mt:gemini
+#: anm_import.py:35
+#, fuzzy
+msgctxt "*"
+msgid "Anm Text (SLOW)"
+msgstr "Anm 文字 (慢)"
+
+#. mt:gemini
+#: anm_import.py:35
+#, fuzzy
+msgctxt "*"
+msgid "Output Data to a JSON file"
+msgstr "將資料輸出到 JSON 檔案"
+
+#. mt:gemini
+#: anm_import.py:37
+#, fuzzy
+msgctxt "*"
+msgid "フレーム開始・終了位置を調整"
+msgstr "調整影格開始/結束位置"
+
+#. mt:gemini
+#: anm_import.py:38
+#, fuzzy
+msgctxt "*"
+msgid "Twisterボーンを除外"
+msgstr "排除 Twister 骨骼"
+
+#. mt:gemini
+#: anm_import.py:73
+#, fuzzy
+msgctxt "*"
+msgid "読み込むアニメーション情報"
+msgstr "要讀取的動畫資訊"
+
+#. mt:gemini
+#: anm_import.py:564
+#, python-format, fuzzy
+msgctxt "*"
+msgid ""
+"Found {count} large tangents. Blender animation may not interpolate "
+"properly. See log for more info."
+msgstr "找到 {count} 個大切線。Blender 動畫可能無法正確插值。詳情請參閱日誌。"
+
+#. mt:gemini
+#: anm_import.py:570
+#, python-format, fuzzy
+msgctxt "*"
+msgid ""
+"Found {count} unknown channel IDs. Blender animation may be missing some "
+"keyframes. See log for more info."
+msgstr "找到 {count} 個未知通道 ID。Blender 動畫可能缺少某些關鍵影格。詳情請參閱日誌。"
+
+#. mt:gemini
+#: anm_import.py:675
+#, python-format, fuzzy
+msgctxt "*"
+msgid "Unknown channel id {num}"
+msgstr "未知通道 ID {num}"
+
+#. mt:gemini
+#: anm_import.py:24
+#, fuzzy
+msgctxt "*"
+msgid "カスタムメイド3D2のanmファイルを読み込みます"
+msgstr "讀取 Custom Maid 3D 2 的 anm 檔案"
+
+#. mt:gemini
+#: anm_import.py:560
+#, fuzzy
+msgctxt "*"
+msgid "Found the following tangent values:"
+msgstr "找到以下切線值："
+
+#. mt:gemini
+#: anm_import.py:563
+#, fuzzy
+msgctxt "*"
+msgid "Found the above tangent values."
+msgstr "找到上述切線值。"
+
+#. mt:gemini
+#: anm_import.py:566
+#, fuzzy
+msgctxt "*"
+msgid "Found the following unknown channel IDs:"
+msgstr "找到以下未知通道 ID："
+
+#. mt:gemini
+#: anm_import.py:569
+#, fuzzy
+msgctxt "*"
+msgid "Found the above unknown channel IDs."
+msgstr "找到上述未知通道 ID。"
+
+#. mt:gemini
+#: cm3d2_data.py:76
+#, fuzzy
+msgctxt "*"
+msgid ""
+"面の色を決定するテクスチャを指定。普段テスクチャと呼んでいるものは基本コレです。テクスチャパスは適当でも動きます。しかし、テクスチャ名はきちんと決めましょう。"
+msgstr "指定決定表面顏色的紋理。通常所說的紋理基本上就是這個。紋理路徑即使隨意也能運作。但是，紋理名稱請務必正確設定。"
+
+#. mt:gemini
+#: cm3d2_data.py:80
+#, fuzzy
+msgctxt "*"
+msgid "暗い部分に乗算するグラデーション画像を指定します。"
+msgstr "指定用於乘以暗部區域的漸變圖像。"
+
+#. mt:gemini
+#: cm3d2_data.py:84
+#, fuzzy
+msgctxt "*"
+msgid "陰部分の面の色を決定するテクスチャを指定。「_ShadowRateToon」で範囲を指定します。"
+msgstr "指定決定陰影部分表面顏色的紋理。使用「_ShadowRateToon」指定範圍。"
+
+#. mt:gemini
+#: cm3d2_data.py:88
+#, fuzzy
+msgctxt "*"
+msgid "「_ShadowTex」を有効にする部分を指定します。黒色で有効、白色で無効。"
+msgstr "指定啟用「_ShadowTex」的部分。黑色為啟用，白色為停用。"
+
+#. mt:gemini
+#: cm3d2_data.py:92
+#, fuzzy
+msgctxt "*"
+msgid "アウトラインを表現するためのテクスチャを指定。"
+msgstr "指定用於表現輪廓的紋理。"
+
+#. mt:gemini
+#: cm3d2_data.py:96
+#, fuzzy
+msgctxt "*"
+msgid "_OutlineTexの暗い部分に乗算するグラデーション画像を指定します。"
+msgstr "指定用於乘以 _OutlineTex 暗部區域的漸變圖像。"
+
+#. mt:gemini
+#: cm3d2_data.py:100
+#, fuzzy
+msgctxt "*"
+msgid "ハイライトのテクスチャを指定。"
+msgstr "指定高光紋理。"
+
+#. mt:gemini
+#: cm3d2_data.py:104
+#, fuzzy
+msgctxt "*"
+msgid "モザイクシェーダーにある設定値。特に設定の必要なし。"
+msgstr "馬賽克著色器中的設定值。無需特別設定。"
+
+#. mt:gemini
+#: cm3d2_data.py:108
+#, fuzzy
+msgctxt "*"
+msgid "面の色を指定。白色で無効。基本的に白色で良いでしょう。"
+msgstr "指定表面顏色。白色為無效。基本上設為白色即可。"
+
+#. mt:gemini
+#: cm3d2_data.py:112
+#, fuzzy
+msgctxt "*"
+msgid "影の色を指定。白色で無効。別の物体に遮られてできた「影」の色です。"
+msgstr "指定陰影顏色。白色為無效。這是被其他物體遮擋而形成的「陰影」顏色。"
+
+#. mt:gemini
+#: cm3d2_data.py:116
+#, fuzzy
+msgctxt "*"
+msgid "リムライトの色を指定。リムライトとは縁にできる光の反射のことです。"
+msgstr "指定邊緣光顏色。邊緣光是指邊緣處產生的光線反射。"
+
+#. mt:gemini
+#: cm3d2_data.py:120
+#, fuzzy
+msgctxt "*"
+msgid "輪郭線の色を指定。黒にするか、テクスチャの明度を落としたものを指定するとより良いでしょう。"
+msgstr "指定輪廓線顏色。設為黑色，或指定降低紋理亮度的顏色會更好。"
+
+#. mt:gemini
+#: cm3d2_data.py:124
+#, fuzzy
+msgctxt "*"
+msgid ""
+"スペキュラーの強さを指定。0.0～1.0で指定。スペキュラーとは面の角度と光源の角度によってできるハイライトのことです。金属、皮、ガラスなどに使うと良いでしょう。"
+msgstr "指定鏡面反射強度。範圍為 0.0～1.0。鏡面反射是指由表面角度和光源角度產生的高光。適用於金屬、皮革、玻璃等。"
+
+#. mt:gemini
+#: cm3d2_data.py:132
+#, fuzzy
+msgctxt "*"
+msgid "輪郭線の太さを指定。0.002は太め、0.001は細め。"
+msgstr "指定輪廓線粗細。0.002 較粗，0.001 較細。"
+
+#. mt:gemini
+#: cm3d2_data.py:141
+#, fuzzy
+msgctxt "*"
+msgid "リムライトの強さを指定。この値は10以上なことも多いです。0に近い値だと正常に表示されません。"
+msgstr "指定邊緣光強度。此值通常大於 10。接近 0 的值將無法正常顯示。"
+
+#. mt:gemini
+#: cm3d2_data.py:149
+#, fuzzy
+msgctxt "*"
+msgid "リムライトの幅を指定。0.0～1.0で指定。0.5でもかなり強い。"
+msgstr "指定邊緣光寬度。範圍為 0.0～1.0。0.5 也相當強。"
+
+#. mt:gemini
+#: cm3d2_data.py:157
+#, fuzzy
+msgctxt "*"
+msgid "モザイクの粗さ"
+msgstr "馬賽克粗糙度"
+
+#. mt:gemini
+#: cm3d2_data.py:165
+#, fuzzy
+msgctxt "*"
+msgid "アルファのカットオフ値。アルファ値がこの値より大きい部分だけがレンダリングされる"
+msgstr "Alpha 截止值。只有 Alpha 值大於此值的部分才會被渲染"
+
+#. mt:gemini
+#: cm3d2_data.py:174
+#, fuzzy
+msgctxt "*"
+msgid "深度テストの実行方法を指定する。"
+msgstr "指定深度測試的執行方式。"
+
+#. mt:gemini
+#: cm3d2_data.py:237
+#, fuzzy
+msgctxt "*"
+msgid "リアル"
+msgstr "真實"
+
+#. mt:gemini
+#: cm3d2_data.py:245
+#, fuzzy
+msgctxt "*"
+msgid "リアル 透過"
+msgstr "真實 透明"
+
+#. mt:gemini
+#: cm3d2_data.py:458
+#, fuzzy
+msgctxt "*"
+msgid "不明"
+msgstr "未知"
+
+#. mt:gemini
+#: cm3d2_data.py:177
+#, fuzzy
+msgctxt "*"
+msgid "深度テストを無効にし、全てのオブジェクトを描画する"
+msgstr "停用深度測試，繪製所有物件"
+
+#. mt:gemini
+#: cm3d2_data.py:178
+#, fuzzy
+msgctxt "*"
+msgid "描画しない"
+msgstr "不繪製"
+
+#. mt:gemini
+#: cm3d2_data.py:179
+#, fuzzy
+msgctxt "*"
+msgid "奥にある場合に描画する"
+msgstr "在後方時繪製"
+
+#. mt:gemini
+#: cm3d2_data.py:180
+#, fuzzy
+msgctxt "*"
+msgid "既存のオブジェクトと距離が同じ場合に描画する"
+msgstr "與現有物件距離相同時繪製"
+
+#. mt:gemini
+#: cm3d2_data.py:181
+#, fuzzy
+msgctxt "*"
+msgid "等しいか、手前にある場合に描画する（デフォルト）"
+msgstr "相等或在前方時繪製 (預設)"
+
+#. mt:gemini
+#: cm3d2_data.py:182
+#, fuzzy
+msgctxt "*"
+msgid "手前にある場合に描画する"
+msgstr "在前方時繪製"
+
+#. mt:gemini
+#: cm3d2_data.py:183
+#, fuzzy
+msgctxt "*"
+msgid "距離が等しくない場合に描画する"
+msgstr "距離不相等時繪製"
+
+#. mt:gemini
+#: cm3d2_data.py:184
+#, fuzzy
+msgctxt "*"
+msgid "等しいか、奥にある場合に描画する"
+msgstr "相等或在後方時繪製"
+
+#. mt:gemini
+#: cm3d2_data.py:185
+#, fuzzy
+msgctxt "*"
+msgid "奥行きを無視して、常に描画する"
+msgstr "忽略深度，始終繪製"
+
+#. mt:gemini
+#: cm3d2_data.py:255
+#, fuzzy
+msgctxt "*"
+msgid "トゥーン"
+msgstr "卡通"
+
+#. mt:gemini
+#: cm3d2_data.py:263
+#, fuzzy
+msgctxt "*"
+msgid "トゥーン 髪"
+msgstr "卡通 髮型"
+
+#. mt:gemini
+#: cm3d2_data.py:271
+#, fuzzy
+msgctxt "*"
+msgid "トゥーン 透過"
+msgstr "卡通 透明"
+
+#. mt:gemini
+#: cm3d2_data.py:279
+#, fuzzy
+msgctxt "*"
+msgid "トゥーン 透過 NoZ"
+msgstr "卡通 透明 無 Z"
+
+#. mt:gemini
+#: cm3d2_data.py:287
+#, fuzzy
+msgctxt "*"
+msgid "トゥーン 透過 NoZTest"
+msgstr "卡通 透明 無 Z 測試"
+
+#. mt:gemini
+#: cm3d2_data.py:295
+#, fuzzy
+msgctxt "*"
+msgid "トゥーン 輪郭線"
+msgstr "卡通 輪廓線"
+
+#. mt:gemini
+#: cm3d2_data.py:303
+#, fuzzy
+msgctxt "*"
+msgid "トゥーン 輪郭線 Tex"
+msgstr "卡通 輪廓線 紋理"
+
+#. mt:gemini
+#: cm3d2_data.py:311
+#, fuzzy
+msgctxt "*"
+msgid "トゥーン 輪郭線 髪"
+msgstr "卡通 輪廓線 髮型"
+
+#. mt:gemini
+#: cm3d2_data.py:327
+#, fuzzy
+msgctxt "*"
+msgid "トゥーン 輪郭線 透過"
+msgstr "卡通 輪廓線 透明"
+
+#. mt:gemini
+#: cm3d2_data.py:335
+#, fuzzy
+msgctxt "*"
+msgid "トゥーン Cutout"
+msgstr "卡通 鏤空"
+
+#. mt:gemini
+#: cm3d2_data.py:343
+#, fuzzy
+msgctxt "*"
+msgid "トゥーン無し 透過"
+msgstr "無卡通 透明"
+
+#. mt:gemini
+#: cm3d2_data.py:351
+#, fuzzy
+msgctxt "*"
+msgid "トゥーン無し"
+msgstr "無卡通"
+
+#. mt:gemini
+#: cm3d2_data.py:359
+#, fuzzy
+msgctxt "*"
+msgid "トゥーン無し Cutout"
+msgstr "無卡通 鏤空"
+
+#. mt:gemini
+#: cm3d2_data.py:367
+#, fuzzy
+msgctxt "*"
+msgid "発光"
+msgstr "發光"
+
+#. mt:gemini
+#: cm3d2_data.py:375
+#, fuzzy
+msgctxt "*"
+msgid "発光 透過"
+msgstr "發光 透明"
+
+#. mt:gemini
+#: cm3d2_data.py:383
+#, fuzzy
+msgctxt "*"
+msgid "モザイク"
+msgstr "馬賽克"
+
+#. mt:gemini
+#: cm3d2_data.py:391
+#, fuzzy
+msgctxt "*"
+msgid "ご主人様"
+msgstr "主人"
+
+#. mt:gemini
+#: cm3d2_data.py:403
+#, fuzzy
+msgctxt "*"
+msgid "法線"
+msgstr "法線"
+
+#. mt:gemini
+#: cm3d2_data.py:446
+#, fuzzy
+msgctxt "*"
+msgid " (COM3D2 only)"
+msgstr " (僅限 COM3D2)"
+
+#. mt:gemini
+#: cm3d2_shader.py:211 cm3d2_shader.py:212
+#, fuzzy
+msgctxt "*"
+msgid "COM3D2 Light"
+msgstr "COM3D2 光源"
+
+#. mt:gemini
+#: common.py:1035 misc_DATA_PT_modifiers.py:76
+#: misc_MESH_MT_shape_key_specials.py:805
+#, fuzzy
+msgctxt "*"
+msgid "Reverse Name"
+msgstr "反轉名稱"
+
+#. mt:gemini
+#: common.py:1035 misc_DATA_PT_modifiers.py:76
+#: misc_MESH_MT_shape_key_specials.py:805
+#, fuzzy
+msgctxt "*"
+msgid "Reverse name filtering"
+msgstr "反轉名稱篩選"
+
+#. mt:gemini
+#: common.py:1072 misc_DATA_PT_modifiers.py:88
+#, fuzzy
+msgctxt "*"
+msgid "Sort groups by their name (case-insensitive)"
+msgstr "依名稱排序群組（不區分大小寫）"
+
+#. mt:gemini
+#: common.py:1077 misc_DATA_PT_modifiers.py:93
+#: misc_MESH_MT_shape_key_specials.py:811
+#, fuzzy
+msgctxt "*"
+msgid "Order by Invert"
+msgstr "反轉排序順序"
+
+#. mt:gemini
+#: common.py:1077 misc_DATA_PT_modifiers.py:93
+#: misc_MESH_MT_shape_key_specials.py:811
+#, fuzzy
+msgctxt "*"
+msgid "Invert the sort by order"
+msgstr "反轉排序順序"
+
+#. mt:gemini
+#: common.py:1247
+#, fuzzy
+msgctxt "*"
+msgid "Prefered"
+msgstr "偏好"
+
+#. mt:gemini
+#: common.py:1250
+#, fuzzy
+msgctxt "*"
+msgid "Filter 0"
+msgstr "篩選器 0"
+
+#. mt:gemini
+#: common.py:1251
+#, fuzzy
+msgctxt "*"
+msgid "Filter 1"
+msgstr "篩選器 1"
+
+#. mt:gemini
+#: common.py:1252
+#, fuzzy
+msgctxt "*"
+msgid "Filter 2"
+msgstr "篩選器 2"
+
+#. mt:gemini
+#: common.py:1253
+#, fuzzy
+msgctxt "*"
+msgid "Filter 3"
+msgstr "篩選器 3"
+
+#. mt:gemini
+#: common.py:1255
+#, fuzzy
+msgctxt "*"
+msgid "Sort 0"
+msgstr "排序 0"
+
+#. mt:gemini
+#: common.py:1256
+#, fuzzy
+msgctxt "*"
+msgid "Sort 1"
+msgstr "排序 1"
+
+#. mt:gemini
+#: common.py:1257
+#, fuzzy
+msgctxt "*"
+msgid "Sort 2"
+msgstr "排序 2"
+
+#. mt:gemini
+#: common.py:1258
+#, fuzzy
+msgctxt "*"
+msgid "Sort 3"
+msgstr "排序 3"
+
+#. mt:gemini
+#: common.py:1157
+#, fuzzy
+msgctxt "*"
+msgid "Order by:"
+msgstr "排序依據："
+
+#. mt:gemini
+#: livelink.py:106
+#, fuzzy
+msgctxt "*"
+msgid "LiveLink"
+msgstr "即時連結"
+
+#. mt:gemini
+#: livelink.py:158
+#, fuzzy
+msgctxt "Operator"
+msgid "Start LiveLink"
+msgstr "啟動即時連結"
+
+#. mt:gemini
+#: livelink.py:192
+#, fuzzy
+msgctxt "Operator"
+msgid "Stop LiveLink"
+msgstr "停止即時連結"
+
+#. mt:gemini
+#: livelink.py:228
+#, fuzzy
+msgctxt "Operator"
+msgid "Wait for Connection"
+msgstr "等待連線"
+
+#. mt:gemini
+#: livelink.py:250
+#, fuzzy
+msgctxt "Operator"
+msgid "Send Animation"
+msgstr "傳送動畫"
+
+#. mt:gemini
+#: livelink.py:297
+#, fuzzy
+msgctxt "Operator"
+msgid "Link Pose"
+msgstr "連結姿勢"
+
+#. mt:gemini
+#: livelink.py:368
+#, fuzzy
+msgctxt "Operator"
+msgid "Unlink Pose"
+msgstr "取消連結姿勢"
+
+#. mt:gemini
+#: livelink.py:392
+#, fuzzy
+msgctxt "Operator"
+msgid "Send Model"
+msgstr "傳送模型"
+
+#. mt:gemini
+#: livelink.py:63
+#, fuzzy
+msgctxt "*"
+msgid "Max Frames to Send"
+msgstr "要傳送的最大影格數"
+
+#. mt:gemini
+#: livelink.py:253
+#, fuzzy
+msgctxt "*"
+msgid "Maximum Frames to Send"
+msgstr "要傳送的最大影格數"
+
+#. mt:gemini
+#: livelink.py:122
+#, fuzzy
+msgctxt "*"
+msgid "Server not running"
+msgstr "伺服器未執行"
+
+#. mt:gemini
+#: livelink.py:210
+#, fuzzy
+msgctxt "*"
+msgid "⚠ WARNING ⚠"
+msgstr "⚠ 警告 ⚠"
+
+#. mt:gemini
+#: livelink.py:211
+#, fuzzy
+msgctxt "*"
+msgid "Stopping the server may crash Blender, the client, or both."
+msgstr "停止伺服器可能會導致 Blender、客戶端或兩者都崩潰。"
+
+#. mt:gemini
+#: livelink.py:212
+#, fuzzy
+msgctxt "*"
+msgid "This action is only safe if the client is already disconnected."
+msgstr "僅在客戶端已斷開連線時，此操作才是安全的。"
+
+#. mt:gemini
+#: livelink.py:213
+#, fuzzy
+msgctxt "*"
+msgid "Are you sure you want to try disconnecting?"
+msgstr "您確定要嘗試斷開連線嗎？"
+
+#. mt:gemini
+#: livelink.py:215
+#, fuzzy
+msgctxt "*"
+msgid "Shutdown LiveLink server?"
+msgstr "關閉即時連結伺服器？"
+
+#. mt:gemini
+#: livelink.py:105
+#, fuzzy
+msgctxt "*"
+msgid "COM3D2"
+msgstr "COM3D2"
+
+#. mt:gemini
+#: livelink.py:68
+#, fuzzy
+msgctxt "*"
+msgid "Link Pose is Active"
+msgstr "姿勢連結已啟用"
+
+#. mt:gemini
+#: livelink.py:161
+#, fuzzy
+msgctxt "*"
+msgid "Address"
+msgstr "位址"
+
+#. mt:gemini
+#: livelink.py:162
+#, fuzzy
+msgctxt "*"
+msgid "Wait For Connection"
+msgstr "等待連線"
+
+#. mt:gemini
+#: livelink.py:169
+#, fuzzy
+msgctxt "*"
+msgid "The LiveLink server is already running"
+msgstr "即時連結伺服器已在執行中"
+
+#. mt:gemini
+#: livelink.py:199
+#, fuzzy
+msgctxt "*"
+msgid "LiveLink core is not initialized."
+msgstr "即時連結核心未初始化。"
+
+#. mt:gemini
+#: livelink.py:129
+#, fuzzy
+msgctxt "*"
+msgid "Not connected"
+msgstr "未連線"
+
+#. mt:gemini
+#: mate_export.py:11 mate_export.py:85
+#, fuzzy
+msgctxt "Operator"
+msgid "mateとして保存"
+msgstr "儲存為 mate"
+
+#. mt:gemini
+#: mate_export.py:22 mate_export.py:96
+#, fuzzy
+msgctxt "*"
+msgid "名前1"
+msgstr "名稱 1"
+
+#. mt:gemini
+#: mate_export.py:23 mate_export.py:97
+#, fuzzy
+msgctxt "*"
+msgid "名前2"
+msgstr "名稱 2"
+
+#. mt:gemini
+#: mate_export.py:12
+#, fuzzy
+msgctxt "*"
+msgid "表示しているマテリアルをmateファイルとして保存します"
+msgstr "將顯示的材質儲存為 mate 檔案"
+
+#. mt:gemini
+#: mate_export.py:86
+#, fuzzy
+msgctxt "*"
+msgid "表示しているテキストデータをmateファイルとして保存します"
+msgstr "將顯示的文字資料儲存為 mate 檔案"
+
+#. mt:gemini
+#: mate_export.py:147
+#, fuzzy
+msgctxt "*"
+msgid "マテリアル情報の貼付けを中止します。"
+msgstr "中止貼上材質資訊。"
+
+#. mt:gemini
+#: mate_export.py:160
+#, fuzzy
+msgctxt "*"
+msgid "mateファイルの出力に失敗、中止します。 構文を見直して下さい。"
+msgstr "mate 檔案匯出失敗，已中止。請檢查語法。"
+
+#. mt:gemini
+#: mate_import.py:12 mate_import.py:84
+#, fuzzy
+msgctxt "Operator"
+msgid "mateを開く"
+msgstr "開啟 mate"
+
+#. mt:gemini
+#: mate_import.py:20 misc_MATERIAL_PT_context_material.py:174
+#: misc_MATERIAL_PT_context_material.py:582 model_import.py:47
+#, fuzzy
+msgctxt "*"
+msgid "種類に合わせてマテリアルを装飾"
+msgstr "根據類型裝飾材質"
+
+#. mt:gemini
+#: mate_import.py:21 misc_MATERIAL_PT_context_material.py:583
+#, fuzzy
+msgctxt "*"
+msgid "テクスチャを探す"
+msgstr "尋找紋理"
+
+#. mt:gemini
+#: mate_import.py:21 misc_MATERIAL_PT_context_material.py:583
+#: misc_TEXTURE_PT_context_texture.py:116
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2本体のインストールフォルダからtexファイルを探して開きます"
+msgstr "從 CM3D2 主程式的安裝資料夾中尋找並開啟 tex 檔案"
+
+#. mt:gemini
+#: mate_import.py:92
+#, fuzzy
+msgctxt "*"
+msgid "現在のテキストに上書き"
+msgstr "覆寫目前的文字"
+
+#. mt:gemini
+#: mate_import.py:13
+#, fuzzy
+msgctxt "*"
+msgid "mateファイルをマテリアルとして開きます"
+msgstr "將 mate 檔案作為材質開啟"
+
+#. mt:gemini
+#: mate_import.py:85
+#, fuzzy
+msgctxt "*"
+msgid "mateファイルをテキストとして開きます"
+msgstr "將 mate 檔案作為文字開啟"
+
+#. mt:gemini
+#: mate_import.py:118
+#, fuzzy
+msgctxt "*"
+msgid "上書きする為のテキストデータが見つかりません"
+msgstr "找不到要覆寫的文字資料"
+
+#. mt:gemini
+#: mate_import.py:59 mate_import.py:133
+#, fuzzy
+msgctxt "*"
+msgid "mateファイルのインポートを中止します。"
+msgstr "中止匯入 mate 檔案。"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:43
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2 Menu"
+msgstr "CM3D2 選單"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:98 menu_OBJECT_PT_cm3d2_menu.py:57
+#, fuzzy
+msgctxt "Operator"
+msgid "Import CM3D2 Menu File"
+msgstr "匯入 CM3D2 選單檔案"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:138 menu_OBJECT_PT_cm3d2_menu.py:58
+#, fuzzy
+msgctxt "Operator"
+msgid "Export CM3D2 Menu File"
+msgstr "匯出 CM3D2 選單檔案"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:184
+#, fuzzy
+msgctxt "Operator"
+msgid "Add Command"
+msgstr "新增指令"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:222
+#, fuzzy
+msgctxt "Operator"
+msgid "Remove Command"
+msgstr "移除指令"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:244
+#, fuzzy
+msgctxt "Operator"
+msgid "Move Command"
+msgstr "移動指令"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:286
+#, fuzzy
+msgctxt "Operator"
+msgid "Align Selected to Attach Point"
+msgstr "將選取項目對齊到附加點"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:363
+#, fuzzy
+msgctxt "Operator"
+msgid "Align Attach Point to Selected"
+msgstr "將附加點對齊到選取項目"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:439
+#, fuzzy
+msgctxt "Operator"
+msgid "Add Parameter"
+msgstr "新增參數"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:465
+#, fuzzy
+msgctxt "Operator"
+msgid "Remove Parameter"
+msgstr "移除參數"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:498
+#, fuzzy
+msgctxt "Operator"
+msgid "Move Parameter"
+msgstr "移動參數"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:146
+#, fuzzy
+msgctxt "*"
+msgid "Backup"
+msgstr "備份"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:146
+#, fuzzy
+msgctxt "*"
+msgid "Will backup overwritten files."
+msgstr "將備份被覆寫的檔案。"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:290 menu_OBJECT_PT_cm3d2_menu.py:367
+#: misc_DATA_PT_context_arm.py:341 misc_DATA_PT_context_arm.py:701
+#: misc_DATA_PT_context_arm.py:1105 misc_DATA_PT_context_arm.py:1336
+#: misc_DATA_PT_context_arm.py:1795 misc_OBJECT_PT_transform.py:58
+#, fuzzy
+msgctxt "*"
+msgid ""
+"The amount by which the mesh is scaled when imported. Recommended that you "
+"use the same when at the time of export."
+msgstr "匯入時網格的縮放量。建議在匯出時使用相同的值。"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:99
+#, fuzzy
+msgctxt "*"
+msgid "Open a .menu file"
+msgstr "開啟 .menu 檔案"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:139
+#, fuzzy
+msgctxt "*"
+msgid "Writes the active CM3D2Menu to a .menu file"
+msgstr "將作用中的 CM3D2 選單寫入 .menu 檔案"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:185
+#, fuzzy
+msgctxt "*"
+msgid "Adds a new CM3D2MenuCommand to the active CM3D2Menu"
+msgstr "將新的 CM3D2 選單指令新增至作用中的 CM3D2 選單"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:223
+#, fuzzy
+msgctxt "*"
+msgid "Removes the active CM3D2MenuCommand from the active CM3D2Menu"
+msgstr "從作用中的 CM3D2 選單中移除作用中的 CM3D2 選單指令"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:245
+#, fuzzy
+msgctxt "*"
+msgid "Moves the active CM3D2MenuCommand up/down in the list"
+msgstr "在清單中向上/向下移動作用中的 CM3D2 選單指令"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:287
+#, fuzzy
+msgctxt "*"
+msgid ""
+"Align other selected objects to the active object's active CM3D2 attach "
+"point"
+msgstr "將其他選取的物件對齊到作用中物件的作用中 CM3D2 附加點"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:364
+#, fuzzy
+msgctxt "*"
+msgid ""
+"Align the active CM3D2Menu's active attach point to the first other selected"
+" object"
+msgstr "將作用中的 CM3D2 選單的作用中附加點對齊到第一個其他選取的物件"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:440
+#, fuzzy
+msgctxt "*"
+msgid "Adds a new CM3D2MenuParam to the active CM3D2MenuCommand"
+msgstr "將新的 CM3D2 選單參數新增至作用中的 CM3D2 選單指令"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:466
+#, fuzzy
+msgctxt "*"
+msgid "Removes the active CM3D2MenuParam from the active CM3D2MenuCommand"
+msgstr "從作用中的 CM3D2 選單指令中移除作用中的 CM3D2 選單參數"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:499
+#, fuzzy
+msgctxt "*"
+msgid "Moves the active CM3D2MenuParameter up/down in the list"
+msgstr "在清單中向上/向下移動作用中的 CM3D2 選單參數"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:249 menu_OBJECT_PT_cm3d2_menu.py:503
+#, fuzzy
+msgctxt "*"
+msgid "Move the active CM3D2MenuCommand up in the list"
+msgstr "在清單中向上移動作用中的 CM3D2 選單指令"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:250 menu_OBJECT_PT_cm3d2_menu.py:504
+#, fuzzy
+msgctxt "*"
+msgid "Move the active CM3D2MenuCommand down in the list"
+msgstr "在清單中向下移動作用中的 CM3D2 選單指令"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:177
+#, fuzzy
+msgctxt "*"
+msgid "Successfully exported to .menu file"
+msgstr "成功匯出至 .menu 檔案"
+
+#. mt:gemini
+#: menu_OBJECT_PT_cm3d2_menu.py:350 menu_OBJECT_PT_cm3d2_menu.py:353
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2 Attachment"
+msgstr "CM3D2 附加"
+
+#. mt:gemini
+#: menu_file.py:137
+#, fuzzy
+msgctxt "*"
+msgid "Slot Name"
+msgstr "槽位名稱"
+
+#. mt:gemini
+#: menu_file.py:141
+#, fuzzy
+msgctxt "*"
+msgid "Command"
+msgstr "指令"
+
+#. mt:gemini
+#: menu_file.py:141
+#, fuzzy
+msgctxt "*"
+msgid "The command of this menu file command-chunk"
+msgstr "此選單檔案指令區塊的指令"
+
+#. mt:gemini
+#: menu_file.py:182
+#, fuzzy
+msgctxt "*"
+msgid "Point Name"
+msgstr "點名稱"
+
+#. mt:gemini
+#: menu_file.py:182
+#, fuzzy
+msgctxt "*"
+msgid "Name of the slot to define the attatchment point for"
+msgstr "定義附加點的槽位名稱"
+
+#. mt:gemini
+#: menu_file.py:183
+#, fuzzy
+msgctxt "*"
+msgid "Location of the attatchment relative to the base bone"
+msgstr "附加點相對於基礎骨骼的位置"
+
+#. mt:gemini
+#: menu_file.py:184
+#, fuzzy
+msgctxt "*"
+msgid "Rotation of the attatchment relative to the base bone"
+msgstr "附加點相對於基礎骨骼的旋轉"
+
+#. mt:gemini
+#: menu_file.py:239
+#, fuzzy
+msgctxt "*"
+msgid "Name of the property to set on load"
+msgstr "載入時要設定的屬性名稱"
+
+#. mt:gemini
+#: menu_file.py:240
+#, fuzzy
+msgctxt "*"
+msgid "Property Value"
+msgstr "屬性值"
+
+#. mt:gemini
+#: menu_file.py:240
+#, fuzzy
+msgctxt "*"
+msgid "Value of the property to set on load"
+msgstr "載入時要設定的屬性值"
+
+#. mt:gemini
+#: menu_file.py:365
+#, fuzzy
+msgctxt "*"
+msgid "Commands"
+msgstr "指令"
+
+#. mt:gemini
+#: menu_file.py:366
+#, fuzzy
+msgctxt "*"
+msgid "Active Command Index"
+msgstr "作用中指令索引"
+
+#. mt:gemini
+#: menu_file.py:507 menu_file.py:511
+#, fuzzy
+msgctxt "Operator"
+msgid "CM3D2 Menu (.menu)"
+msgstr "CM3D2 選單 (.menu)"
+
+#. mt:gemini
+#: menu_file.py:151
+#, python-format, fuzzy
+msgctxt "*"
+msgid "Error {gerund} `{command}`: {error}"
+msgstr "錯誤 {gerund} `{command}`: {error}"
+
+#. mt:gemini
+#: menu_file.py:89
+#, fuzzy
+msgctxt "*"
+msgid "Some other manually entered miscillaneous command"
+msgstr "其他手動輸入的雜項指令"
+
+#. mt:gemini
+#: menu_file.py:19
+#, fuzzy
+msgctxt "*"
+msgid "Menu Meta"
+msgstr "選單元資料"
+
+#. mt:gemini
+#: menu_file.py:20 menu_file.py:21 menu_file.py:22 menu_file.py:23
+#: menu_file.py:24 menu_file.py:25 menu_file.py:26 menu_file.py:27
+#: menu_file.py:31 menu_file.py:32 menu_file.py:33 menu_file.py:34
+#: menu_file.py:35 menu_file.py:36 menu_file.py:37 menu_file.py:38
+#: menu_file.py:39 menu_file.py:44 menu_file.py:45 menu_file.py:46
+#: menu_file.py:47 menu_file.py:48 menu_file.py:49 menu_file.py:50
+#: menu_file.py:51 menu_file.py:52 menu_file.py:53 menu_file.py:56
+#: menu_file.py:57 menu_file.py:58 menu_file.py:59 menu_file.py:60
+#: menu_file.py:61 menu_file.py:62 menu_file.py:63 menu_file.py:64
+#: menu_file.py:65 menu_file.py:66 menu_file.py:69 menu_file.py:70
+#: menu_file.py:71 menu_file.py:72 menu_file.py:73 menu_file.py:74
+#: menu_file.py:75 menu_file.py:76 menu_file.py:77 menu_file.py:78
+#, fuzzy
+msgctxt "*"
+msgid "description"
+msgstr "描述"
+
+#. mt:gemini
+#: menu_file.py:22
+#, fuzzy
+msgctxt "*"
+msgid "Menu Category"
+msgstr "選單類別"
+
+#. mt:gemini
+#: menu_file.py:23
+#, fuzzy
+msgctxt "*"
+msgid "Menu Description"
+msgstr "選單描述"
+
+#. mt:gemini
+#: menu_file.py:25
+#, fuzzy
+msgctxt "*"
+msgid "Folder"
+msgstr "資料夾"
+
+#. mt:gemini
+#: menu_file.py:27
+#, fuzzy
+msgctxt "*"
+msgid "Icon (Small)"
+msgstr "圖示 (小)"
+
+#. mt:gemini
+#: menu_file.py:28
+#, fuzzy
+msgctxt "*"
+msgid "Icon (Large)"
+msgstr "圖示 (大)"
+
+#. mt:gemini
+#: menu_file.py:28 menu_file.py:42 menu_file.py:43 menu_file.py:81
+#, fuzzy
+msgctxt "*"
+msgid "Unused"
+msgstr "未使用"
+
+#. mt:gemini
+#: menu_file.py:30
+#, fuzzy
+msgctxt "*"
+msgid "Item Meta"
+msgstr "項目元資料"
+
+#. mt:gemini
+#: menu_file.py:31
+#, fuzzy
+msgctxt "*"
+msgid "Item Version"
+msgstr "項目版本"
+
+#. mt:gemini
+#: menu_file.py:32
+#, fuzzy
+msgctxt "*"
+msgid "Item Category"
+msgstr "項目類別"
+
+#. mt:gemini
+#: menu_file.py:33
+#, fuzzy
+msgctxt "*"
+msgid "Item Category Number"
+msgstr "項目類別編號"
+
+#. mt:gemini
+#: menu_file.py:35
+#, fuzzy
+msgctxt "*"
+msgid "Item Conditions"
+msgstr "項目條件"
+
+#. mt:gemini
+#: menu_file.py:36
+#, fuzzy
+msgctxt "*"
+msgid "Item If"
+msgstr "項目 If"
+
+#. mt:gemini
+#: menu_file.py:37
+#, fuzzy
+msgctxt "*"
+msgid "Item Parameters"
+msgstr "項目參數"
+
+#. mt:gemini
+#: menu_file.py:38
+#, fuzzy
+msgctxt "*"
+msgid "Item Half Off"
+msgstr "項目半脫"
+
+#. mt:gemini
+#: menu_file.py:39
+#, fuzzy
+msgctxt "*"
+msgid "Item Resource Reference"
+msgstr "項目資源參考"
+
+#. mt:gemini
+#: menu_file.py:41
+#, fuzzy
+msgctxt "*"
+msgid "Item Control"
+msgstr "項目控制"
+
+#. mt:gemini
+#: menu_file.py:44
+#, fuzzy
+msgctxt "*"
+msgid "Set Slot Item"
+msgstr "設定槽位項目"
+
+#. mt:gemini
+#: menu_file.py:46
+#, fuzzy
+msgctxt "*"
+msgid "Unset Item"
+msgstr "取消設定項目"
+
+#. mt:gemini
+#: menu_file.py:47
+#, fuzzy
+msgctxt "*"
+msgid "Disable Item Floor"
+msgstr "禁用項目地板"
+
+#. mt:gemini
+#: menu_file.py:48
+#, fuzzy
+msgctxt "*"
+msgid "Mask Item"
+msgstr "遮罩項目"
+
+#. mt:gemini
+#: menu_file.py:49
+#, fuzzy
+msgctxt "*"
+msgid "Delete Item"
+msgstr "刪除項目"
+
+#. mt:gemini
+#: menu_file.py:50
+#, fuzzy
+msgctxt "*"
+msgid "Node Hide"
+msgstr "節點隱藏"
+
+#. mt:gemini
+#: menu_file.py:51
+#, fuzzy
+msgctxt "*"
+msgid "Node Display"
+msgstr "節點顯示"
+
+#. mt:gemini
+#: menu_file.py:52
+#, fuzzy
+msgctxt "*"
+msgid "Parts-Node Hide"
+msgstr "部件節點隱藏"
+
+#. mt:gemini
+#: menu_file.py:53
+#, fuzzy
+msgctxt "*"
+msgid "Parts-Node Display"
+msgstr "部件節點顯示"
+
+#. mt:gemini
+#: menu_file.py:55
+#, fuzzy
+msgctxt "*"
+msgid "Material Control"
+msgstr "材質控制"
+
+#. mt:gemini
+#: menu_file.py:57
+#, fuzzy
+msgctxt "*"
+msgid "Man Color"
+msgstr "男性顏色"
+
+#. mt:gemini
+#: menu_file.py:58
+#, fuzzy
+msgctxt "*"
+msgid "Color-Set"
+msgstr "顏色設定"
+
+#. mt:gemini
+#: menu_file.py:60
+#, fuzzy
+msgctxt "*"
+msgid "Texture Change"
+msgstr "紋理變更"
+
+#. mt:gemini
+#: menu_file.py:61
+#, fuzzy
+msgctxt "*"
+msgid "Texture Multiplication"
+msgstr "紋理乘法"
+
+#. mt:gemini
+#: menu_file.py:62
+#, fuzzy
+msgctxt "*"
+msgid "Texture Composition"
+msgstr "紋理合成"
+
+#. mt:gemini
+#: menu_file.py:63
+#, fuzzy
+msgctxt "*"
+msgid "Texture Set Composition"
+msgstr "紋理集合成"
+
+#. mt:gemini
+#: menu_file.py:64
+#, fuzzy
+msgctxt "*"
+msgid "Material Change"
+msgstr "材質變更"
+
+#. mt:gemini
+#: menu_file.py:68
+#, fuzzy
+msgctxt "*"
+msgid "Maid Control"
+msgstr "女僕控制"
+
+#. mt:gemini
+#: menu_file.py:70 menu_file.py:182
+#, fuzzy
+msgctxt "*"
+msgid "Attach Point"
+msgstr "附加點"
+
+#. mt:gemini
+#: menu_file.py:71
+#, fuzzy
+msgctxt "*"
+msgid "Face Blend-Set"
+msgstr "臉部混合設定"
+
+#. mt:gemini
+#: menu_file.py:72
+#, fuzzy
+msgctxt "*"
+msgid "Face Parameter-Set"
+msgstr "臉部參數設定"
+
+#. mt:gemini
+#: menu_file.py:73
+#, fuzzy
+msgctxt "*"
+msgid "Profile Comment Type"
+msgstr "個人資料評論類型"
+
+#. mt:gemini
+#: menu_file.py:74
+#, fuzzy
+msgctxt "*"
+msgid "Bone Morph"
+msgstr "骨骼變形"
+
+#. mt:gemini
+#: menu_file.py:77
+#, fuzzy
+msgctxt "*"
+msgid "Animation (Material)"
+msgstr "動畫 (材質)"
+
+#. mt:gemini
+#: menu_file.py:78
+#, fuzzy
+msgctxt "*"
+msgid "Parameter 2"
+msgstr "參數 2"
+
+#. mt:gemini
+#: menu_file.py:80
+#, fuzzy
+msgctxt "*"
+msgid "Misc."
+msgstr "雜項"
+
+#. mt:gemini
+#: menu_file.py:81
+#, fuzzy
+msgctxt "*"
+msgid "Set String"
+msgstr "設定字串"
+
+#. mt:gemini
+#: menu_file.py:82
+#, fuzzy
+msgctxt "*"
+msgid "onclickmenu"
+msgstr "點擊選單"
+
+#. mt:gemini
+#: menu_file.py:82 menu_file.py:83 menu_file.py:84 menu_file.py:85
+#, fuzzy
+msgctxt "*"
+msgid "Decorative"
+msgstr "裝飾性"
+
+#. mt:gemini
+#: menu_file.py:83
+#, fuzzy
+msgctxt "*"
+msgid "addattribute"
+msgstr "新增屬性"
+
+#. mt:gemini
+#: menu_file.py:84
+#, fuzzy
+msgctxt "*"
+msgid "Hide-Node Start"
+msgstr "隱藏節點開始"
+
+#. mt:gemini
+#: menu_file.py:85
+#, fuzzy
+msgctxt "*"
+msgid "Hide-Node End"
+msgstr "隱藏節點結束"
+
+#. mt:gemini
+#: menu_file.py:296
+#, fuzzy
+msgctxt "*"
+msgid "newparam"
+msgstr "新參數"
+
+#. mt:gemini
+#: menu_file.py:136 menu_file.py:137
+#, fuzzy
+msgctxt "*"
+msgid "param"
+msgstr "參數"
+
+#. mt:gemini
+#: menu_file.py:239
+#, fuzzy
+msgctxt "*"
+msgid "prop name"
+msgstr "屬性名稱"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:105
+#, fuzzy
+msgctxt "Operator"
+msgid "ボーン名をCM3D2用→Blender用に変換"
+msgstr "將骨骼名稱從 CM3D2 轉換為 Blender 格式"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:140
+#, fuzzy
+msgctxt "Operator"
+msgid "ボーン名をBlender用→CM3D2用に変換"
+msgstr "將骨骼名稱從 Blender 轉換為 CM3D2 格式"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:175 misc_OBJECT_PT_context_object.py:46
+#, fuzzy
+msgctxt "Operator"
+msgid "ボーン情報をコピー"
+msgstr "複製骨骼資訊"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:220 misc_OBJECT_PT_context_object.py:89
+#, fuzzy
+msgctxt "Operator"
+msgid "ボーン情報を貼付け"
+msgstr "貼上骨骼資訊"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:281 misc_OBJECT_PT_context_object.py:148
+#, fuzzy
+msgctxt "Operator"
+msgid "ボーン情報を削除"
+msgstr "刪除骨骼資訊"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:337
+#, fuzzy
+msgctxt "Operator"
+msgid "Add CM3D2 Twist Bones"
+msgstr "新增 CM3D2 扭轉骨骼"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1332
+#, fuzzy
+msgctxt "Operator"
+msgid "Add CM3D2 Body Sliders"
+msgstr "新增 CM3D2 身體滑桿"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1598
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2 Sliders"
+msgstr "CM3D2 滑桿"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1651
+#, fuzzy
+msgctxt "*"
+msgid "Body Sliders"
+msgstr "身體滑桿"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1691
+#, fuzzy
+msgctxt "*"
+msgid "Wide Sliders"
+msgstr "寬滑桿"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1791 misc_DATA_PT_context_arm.py:73
+#: misc_DATA_PT_context_arm.py:1641
+#, fuzzy
+msgctxt "Operator"
+msgid "Cleanup Scale Bones"
+msgstr "清理縮放骨骼"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1852
+#, fuzzy
+msgctxt "Operator"
+msgid "Save CM3D2 Body Sliders to Menu"
+msgstr "將 CM3D2 身體滑桿儲存到選單"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:759
+#, fuzzy
+msgctxt "*"
+msgid "Size of face (left to right)"
+msgstr "臉部大小 (從左到右)"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:760
+#, fuzzy
+msgctxt "*"
+msgid "Size of face (up and down)"
+msgstr "臉部大小 (從上到下)"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:761
+#, fuzzy
+msgctxt "*"
+msgid "Leg length"
+msgstr "腿長"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:763
+#, fuzzy
+msgctxt "*"
+msgid "Breast size"
+msgstr "胸部大小"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:764
+#, fuzzy
+msgctxt "*"
+msgid "Breast sagging level"
+msgstr "胸部下垂程度"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:765
+#, fuzzy
+msgctxt "*"
+msgid "Position of the nipple"
+msgstr "乳頭位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:766
+#, fuzzy
+msgctxt "*"
+msgid "Direction of breast"
+msgstr "胸部方向"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:767 misc_DATA_PT_context_arm.py:805
+#: misc_DATA_PT_context_arm.py:1632 misc_DATA_PT_context_arm.py:1675
+#, fuzzy
+msgctxt "*"
+msgid "Waist"
+msgstr "腰圍"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:768 misc_DATA_PT_context_arm.py:1676
+#, fuzzy
+msgctxt "*"
+msgid "Belly"
+msgstr "腹部"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:769
+#, fuzzy
+msgctxt "*"
+msgid "Shoulder width"
+msgstr "肩寬"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:770
+#, fuzzy
+msgctxt "*"
+msgid "Size of arms"
+msgstr "手臂大小"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:771
+#, fuzzy
+msgctxt "*"
+msgid "Length of arms"
+msgstr "手臂長度"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:772
+#, fuzzy
+msgctxt "*"
+msgid "Length of neck"
+msgstr "頸部長度"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:773 misc_DATA_PT_context_arm.py:806
+#: misc_DATA_PT_context_arm.py:1633 misc_DATA_PT_context_arm.py:1681
+#, fuzzy
+msgctxt "*"
+msgid "Hip"
+msgstr "臀部"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:774
+#, fuzzy
+msgctxt "*"
+msgid "Leg thickness"
+msgstr "腿部粗細"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:775
+#, fuzzy
+msgctxt "*"
+msgid "Leg definition"
+msgstr "腿部線條"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:776
+#, fuzzy
+msgctxt "*"
+msgid "munel shapekey value"
+msgstr "munel 形狀鍵值"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:777
+#, fuzzy
+msgctxt "*"
+msgid "munes shapekey value"
+msgstr "munes 形狀鍵值"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:804 misc_DATA_PT_context_arm.py:1630
+#, fuzzy
+msgctxt "*"
+msgid "Bust"
+msgstr "胸圍"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:807 misc_DATA_PT_context_arm.py:1631
+#, fuzzy
+msgctxt "*"
+msgid "Cup"
+msgstr "罩杯"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1107
+#, fuzzy
+msgctxt "*"
+msgid "This property never has a value"
+msgstr "此屬性從未有值"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1109
+#, fuzzy
+msgctxt "*"
+msgid "Enable All"
+msgstr "啟用全部"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1109
+#, fuzzy
+msgctxt "*"
+msgid "Enable all sliders, even ones without a GUI in-game"
+msgstr "啟用所有滑桿，即使是遊戲中沒有GUI的滑桿"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1111
+#, fuzzy
+msgctxt "*"
+msgid "Hips Position"
+msgstr "臀部位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1112
+#, fuzzy
+msgctxt "*"
+msgid "Legs Position"
+msgstr "腿部位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1113
+#, fuzzy
+msgctxt "*"
+msgid "Thigh Position"
+msgstr "大腿位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1114
+#, fuzzy
+msgctxt "*"
+msgid "Rear Thigh Position"
+msgstr "大腿後側位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1115
+#, fuzzy
+msgctxt "*"
+msgid "Knee Position"
+msgstr "膝蓋位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1116
+#, fuzzy
+msgctxt "*"
+msgid "Skirt Position"
+msgstr "裙子位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1117
+#, fuzzy
+msgctxt "*"
+msgid "Lower Abdomen Position"
+msgstr "下腹部位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1118
+#, fuzzy
+msgctxt "*"
+msgid "Upper Abdomen Position"
+msgstr "上腹部位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1119
+#, fuzzy
+msgctxt "*"
+msgid "Lower Chest Position"
+msgstr "下胸部位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1120
+#, fuzzy
+msgctxt "*"
+msgid "Upper Chest Position"
+msgstr "上胸部位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1121
+#, fuzzy
+msgctxt "*"
+msgid "Breasts Position"
+msgstr "胸部位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1122
+#, fuzzy
+msgctxt "*"
+msgid "Breasts Sub-Position"
+msgstr "胸部次要位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1124
+#, fuzzy
+msgctxt "*"
+msgid "Clavicle Position"
+msgstr "鎖骨位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1126
+#, fuzzy
+msgctxt "*"
+msgid "Pelvis Scale"
+msgstr "骨盆縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1127
+#, fuzzy
+msgctxt "*"
+msgid "Hips Scale"
+msgstr "臀部縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1128
+#, fuzzy
+msgctxt "*"
+msgid "Legs Scale"
+msgstr "腿部縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1129
+#, fuzzy
+msgctxt "*"
+msgid "Thigh Scale"
+msgstr "大腿縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1130
+#, fuzzy
+msgctxt "*"
+msgid "Rear Thigh Scale"
+msgstr "大腿後側縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1131
+#, fuzzy
+msgctxt "*"
+msgid "Knee Scale"
+msgstr "膝蓋縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1132
+#, fuzzy
+msgctxt "*"
+msgid "Calf Scale"
+msgstr "小腿縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1133
+#, fuzzy
+msgctxt "*"
+msgid "Foot Scale"
+msgstr "足部縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1134
+#, fuzzy
+msgctxt "*"
+msgid "Skirt Scale"
+msgstr "裙子縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1135
+#, fuzzy
+msgctxt "*"
+msgid "Lower Abdomen Scale"
+msgstr "下腹部縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1136
+#, fuzzy
+msgctxt "*"
+msgid "Upper Abdomen Scale"
+msgstr "上腹部縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1137
+#, fuzzy
+msgctxt "*"
+msgid "Lower Chest Scale"
+msgstr "下胸部縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1138
+#, fuzzy
+msgctxt "*"
+msgid "Upper Chest Scale"
+msgstr "上胸部縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1139
+#, fuzzy
+msgctxt "*"
+msgid "Upper Torso Scale"
+msgstr "上半身縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1140
+#, fuzzy
+msgctxt "*"
+msgid "Breasts Scale"
+msgstr "胸部縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1141
+#, fuzzy
+msgctxt "*"
+msgid "Breasts Sub-Scale"
+msgstr "胸部次要縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1142
+#, fuzzy
+msgctxt "*"
+msgid "Neck Scale"
+msgstr "頸部縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1143
+#, fuzzy
+msgctxt "*"
+msgid "Clavicle Scale"
+msgstr "鎖骨縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1144
+#, fuzzy
+msgctxt "*"
+msgid "Shoulders Scale"
+msgstr "肩部縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1145
+#, fuzzy
+msgctxt "*"
+msgid "Upper Arm Scale"
+msgstr "上臂縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1146
+#, fuzzy
+msgctxt "*"
+msgid "Forearm Scale"
+msgstr "前臂縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1147
+#, fuzzy
+msgctxt "*"
+msgid "Hand Scale"
+msgstr "手部縮放"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1338
+#, fuzzy
+msgctxt "*"
+msgid "Fix Thigh"
+msgstr "修正大腿"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1338
+#, fuzzy
+msgctxt "*"
+msgid "Fix twist bone values for the thighs in motor-cycle pose"
+msgstr "修正摩托車姿勢中大腿的扭轉骨骼值"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1339
+#, fuzzy
+msgctxt "*"
+msgid "Drive Shape Keys"
+msgstr "驅動形狀鍵"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1339
+#, fuzzy
+msgctxt "*"
+msgid "Connect sliders to mesh children's shape keys"
+msgstr "將滑桿連接到網格子物件的形狀鍵"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1797
+#, fuzzy
+msgctxt "*"
+msgid "Keep bones with children"
+msgstr "保留帶有子骨骼的骨骼"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1797
+#, fuzzy
+msgctxt "*"
+msgid ""
+"Will not remove scale bones that have children (for custom scale bones)"
+msgstr "不會移除帶有子骨骼的縮放骨骼（用於自訂縮放骨骼）"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1856
+#, fuzzy
+msgctxt "*"
+msgid "Overwrite Existing"
+msgstr "覆寫現有"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:37
+#, fuzzy
+msgctxt "*"
+msgid "ボーン情報"
+msgstr "骨骼資訊"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:71
+#, fuzzy
+msgctxt "*"
+msgid "Armature Operators"
+msgstr "骨架操作"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:72
+#, fuzzy
+msgctxt "Operator"
+msgid "Connect Twist Bones"
+msgstr "連接扭轉骨骼"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:299 misc_DATA_PT_context_arm.py:282
+#: misc_OBJECT_PT_context_object.py:164 misc_OBJECT_PT_context_object.py:149
+#, fuzzy
+msgctxt "*"
+msgid "カスタムプロパティのボーン情報を全て削除します"
+msgstr "刪除所有自訂屬性中的骨骼資訊"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1637
+#, fuzzy
+msgctxt "Operator"
+msgid "Connect Sliders"
+msgstr "連接滑桿"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1667
+#, fuzzy
+msgctxt "*"
+msgid "Face Width"
+msgstr "臉部寬度"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1668
+#, fuzzy
+msgctxt "*"
+msgid "Face Height"
+msgstr "臉部高度"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1669
+#, fuzzy
+msgctxt "*"
+msgid "Leg Length"
+msgstr "腿長"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1671
+#, fuzzy
+msgctxt "*"
+msgid "Breast Size"
+msgstr "胸部大小"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1672
+#, fuzzy
+msgctxt "*"
+msgid "Breast Sag"
+msgstr "胸部下垂度"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1673
+#, fuzzy
+msgctxt "*"
+msgid "Breast Pitch"
+msgstr "胸部傾斜"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1674
+#, fuzzy
+msgctxt "*"
+msgid "Breast Yaw"
+msgstr "胸部偏轉"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1677 misc_DATA_PT_context_arm.py:1780
+#, fuzzy
+msgctxt "*"
+msgid "Shoulders"
+msgstr "肩膀"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1678
+#, fuzzy
+msgctxt "*"
+msgid "Arm Size"
+msgstr "手臂大小"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1679
+#, fuzzy
+msgctxt "*"
+msgid "Arm Length"
+msgstr "手臂長度"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1680
+#, fuzzy
+msgctxt "*"
+msgid "Neck Length"
+msgstr "頸長"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1682
+#, fuzzy
+msgctxt "*"
+msgid "Leg Fat"
+msgstr "腿部脂肪"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1683
+#, fuzzy
+msgctxt "*"
+msgid "Leg Meat"
+msgstr "腿部肌肉"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1707
+#, fuzzy
+msgctxt "*"
+msgid "Enable All Sliders"
+msgstr "啟用所有滑桿"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:32 misc_DATA_PT_context_arm.py:78
+#: misc_DATA_PT_context_arm.py:59 misc_IMAGE_PT_image_properties.py:10
+#: misc_MATERIAL_PT_context_material.py:47
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2用"
+msgstr "用於 CM3D2"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:63
+#, fuzzy
+msgctxt "*"
+msgid "ボーン名変換"
+msgstr "骨骼名稱轉換"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:65 misc_DATA_PT_vertex_groups.py:25
+#, fuzzy
+msgctxt "Operator"
+msgid "CM3D2 → Blender"
+msgstr "CM3D2 → Blender"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:66 misc_DATA_PT_vertex_groups.py:26
+#, fuzzy
+msgctxt "Operator"
+msgid "Blender → CM3D2"
+msgstr "Blender → CM3D2"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1874
+#, fuzzy
+msgctxt "*"
+msgid "Any existing data will be overwritten"
+msgstr "任何現有資料將被覆寫"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1896 misc_DATA_PT_context_arm.py:1904
+#, fuzzy
+msgctxt "*"
+msgid "Generated in blender using body sliders"
+msgstr "使用Blender身體滑桿生成"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1894
+#, fuzzy
+msgctxt "*"
+msgid "Body"
+msgstr "身體"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:106
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2で使われてるボーン名をBlenderで左右対称編集できるように変換します"
+msgstr "將 CM3D2 中使用的骨骼名稱轉換為 Blender 格式，以便進行左右對稱編輯"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:141
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2で使われてるボーン名に元に戻します"
+msgstr "恢復為 CM3D2 中使用的骨骼名稱"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:176 misc_OBJECT_PT_context_object.py:47
+#, fuzzy
+msgctxt "*"
+msgid "カスタムプロパティのボーン情報をクリップボードにコピーします"
+msgstr "將自訂屬性中的骨骼資訊複製到剪貼簿"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:221 misc_OBJECT_PT_context_object.py:90
+#, fuzzy
+msgctxt "*"
+msgid "カスタムプロパティのボーン情報をクリップボードから貼付けます"
+msgstr "從剪貼簿貼上自訂屬性中的骨骼資訊"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:338
+#, fuzzy
+msgctxt "*"
+msgid "Adds drivers to armature to automatically set twist-bone positions."
+msgstr "為骨架添加驅動器以自動設定扭轉骨骼位置。"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1333
+#, fuzzy
+msgctxt "*"
+msgid "Adds drivers to armature to enable body sliders."
+msgstr "為骨架添加驅動器以啟用身體滑桿。"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1792 misc_DATA_PT_context_arm.py:1853
+#, fuzzy
+msgctxt "*"
+msgid "Remove scale bones from the active armature object"
+msgstr "從活動骨架物件中移除縮放骨骼"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:82
+#, fuzzy
+msgctxt "*"
+msgid "Armature State: Primed"
+msgstr "骨架狀態：預備"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:84
+#, fuzzy
+msgctxt "*"
+msgid "Armature State: Normal"
+msgstr "骨架狀態：正常"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1762
+#, fuzzy
+msgctxt "*"
+msgid "Pelvis"
+msgstr "骨盆"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1763
+#, fuzzy
+msgctxt "*"
+msgid "Hips"
+msgstr "臀部"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1764
+#, fuzzy
+msgctxt "*"
+msgid "Legs"
+msgstr "腿"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1765
+#, fuzzy
+msgctxt "*"
+msgid "Thigh"
+msgstr "大腿"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1766
+#, fuzzy
+msgctxt "*"
+msgid "Rear Thigh"
+msgstr "大腿後側"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1767
+#, fuzzy
+msgctxt "*"
+msgid "Knee"
+msgstr "膝蓋"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1768
+#, fuzzy
+msgctxt "*"
+msgid "Calf"
+msgstr "小腿"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1769
+#, fuzzy
+msgctxt "*"
+msgid "Foot"
+msgstr "足部"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1770
+#, fuzzy
+msgctxt "*"
+msgid "Skirt"
+msgstr "裙子"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1771
+#, fuzzy
+msgctxt "*"
+msgid "Lower Abdomen"
+msgstr "下腹部"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1772
+#, fuzzy
+msgctxt "*"
+msgid "Upper Abdomen"
+msgstr "上腹部"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1773
+#, fuzzy
+msgctxt "*"
+msgid "Lower Chest"
+msgstr "下胸部"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1774
+#, fuzzy
+msgctxt "*"
+msgid "Upper Chest"
+msgstr "上胸部"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1775
+#, fuzzy
+msgctxt "*"
+msgid "Upper Torso"
+msgstr "上半身"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1776
+#, fuzzy
+msgctxt "*"
+msgid "Breasts"
+msgstr "胸部"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1777
+#, fuzzy
+msgctxt "*"
+msgid "Breasts Sub"
+msgstr "胸部次要"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1778
+#, fuzzy
+msgctxt "*"
+msgid "Neck"
+msgstr "頸部"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1779
+#, fuzzy
+msgctxt "*"
+msgid "Clavicle"
+msgstr "鎖骨"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1781
+#, fuzzy
+msgctxt "*"
+msgid "Upper Arm"
+msgstr "上臂"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1782
+#, fuzzy
+msgctxt "*"
+msgid "Forearm"
+msgstr "前臂"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1783
+#, fuzzy
+msgctxt "*"
+msgid "Hand"
+msgstr "手"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:213 misc_OBJECT_PT_context_object.py:82
+#: misc_TEXT_HT_header.py:97
+#, fuzzy
+msgctxt "*"
+msgid "ボーン情報をクリップボードにコピーしました"
+msgstr "骨骼資訊已複製到剪貼簿"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:274 misc_OBJECT_PT_context_object.py:141
+#: misc_TEXT_HT_header.py:141
+#, fuzzy
+msgctxt "*"
+msgid "ボーン情報をクリップボードから貼付けました"
+msgstr "骨骼資訊已從剪貼簿貼上"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:323 misc_OBJECT_PT_context_object.py:188
+#, fuzzy
+msgctxt "*"
+msgid "ボーン情報を削除しました"
+msgstr "骨骼資訊已刪除"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1924
+#, fuzzy
+msgctxt "*"
+msgid ""
+"Successfully saved properties to menu file data in Properties > Object Tab >"
+" CM3D2 Menu File"
+msgstr "成功將屬性儲存到「屬性」>「物件」標籤>「CM3D2選單檔案」中的選單檔案資料"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:131 misc_DATA_PT_context_arm.py:166
+#: misc_DATA_PT_vertex_groups.py:75 misc_DATA_PT_vertex_groups.py:126
+#, fuzzy
+msgctxt "*"
+msgid "変換できる名前が見つかりませんでした"
+msgstr "找不到可轉換的名稱"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:133
+#, fuzzy
+msgctxt "*"
+msgid "ボーン名をBlender用に変換しました"
+msgstr "骨骼名稱已轉換為 Blender 格式"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:168
+#, fuzzy
+msgctxt "*"
+msgid "ボーン名をCM3D2用に戻しました"
+msgstr "骨骼名稱已恢復為 CM3D2 格式"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:153
+#, fuzzy
+msgctxt "Operator"
+msgid "モディファイア強制適用"
+msgstr "強制套用修改器"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:53
+#, fuzzy
+msgctxt "*"
+msgid "Only enable modifiers visible in viewport"
+msgstr "僅啟用在視埠中可見的修改器"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:60
+#, fuzzy
+msgctxt "*"
+msgid "Renderer"
+msgstr "渲染器"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:60
+#, fuzzy
+msgctxt "*"
+msgid "Only enable modifiers visible in renderer"
+msgstr "僅啟用在渲染器中可見的修改器"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:67
+#, fuzzy
+msgctxt "*"
+msgid "Reverse Visible Filter"
+msgstr "反轉可見篩選器"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:67
+#, fuzzy
+msgctxt "*"
+msgid "Reverse the selected visible-in filter"
+msgstr "反轉選定的「可見於」篩選器"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:157 misc_VIEW3D_MT_pose_apply.py:136
+#: model_export.py:51
+#, fuzzy
+msgctxt "*"
+msgid "Preserve Shape Key Values"
+msgstr "保留形狀鍵值"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:157
+#, fuzzy
+msgctxt "*"
+msgid "Ensure shape key values are not changed"
+msgstr "確保形狀鍵值不被更改"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:163
+#, fuzzy
+msgctxt "*"
+msgid "Apply Viewport-Visible Modifiers"
+msgstr "應用視埠可見修改器"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:164
+#, fuzzy
+msgctxt "*"
+msgid "Apply Renderer-Visible Modifiers"
+msgstr "應用渲染器可見修改器"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:103
+#, fuzzy
+msgctxt "*"
+msgid "Visible in:"
+msgstr "可見於："
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:211
+#, fuzzy
+msgctxt "*"
+msgid "適用するモディファイア"
+msgstr "要套用的修改器"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:224 misc_MESH_MT_shape_key_specials.py:944
+#, fuzzy
+msgctxt "*"
+msgid "Show filters"
+msgstr "顯示篩選器"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:318
+#, python-format, fuzzy
+msgctxt "*"
+msgid "Could not apply '{}' modifier \"{}\" to shapekey {}"
+msgstr "無法將「{}」修改器「{}」應用於形狀鍵{}"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:352
+#, python-format, fuzzy
+msgctxt "*"
+msgid "Could not apply '{type}' modifier \"{name}\""
+msgstr "無法應用「{type}」修改器「{name}」"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:414
+#, python-format, fuzzy
+msgctxt "*"
+msgid "Could not apply '{mod_type}' modifier \"{mod_name}\""
+msgstr "無法應用「{mod_type}」修改器「{mod_name}」"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:154
+#, fuzzy
+msgctxt "*"
+msgid "シェイプキーのあるメッシュのモディファイアでも強制的に適用します"
+msgstr "即使是帶有形狀鍵的網格，也會強制套用修改器"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:256
+#, fuzzy
+msgctxt "*"
+msgid "適用対象のモディファイアがないため、キャンセルします"
+msgstr "由於沒有要套用的修改器，已取消"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:427
+#, fuzzy
+msgctxt "*"
+msgid "ミラー等が原因で頂点数が変わっているためシェイプキーを格納できません、中止するのでCtrl+Z等で元に戻し修正してください。"
+msgstr "由於鏡像等原因導致頂點數變更，無法儲存形狀鍵，請中止並使用 Ctrl+Z 等恢復並修正。"
+
+#. mt:gemini
+#: misc_DATA_PT_modifiers.py:341
+#, fuzzy
+msgctxt "*"
+msgid ""
+"Vertex groups are not in blender naming style. Mirror modifier results may "
+"not be as expected"
+msgstr "頂點群組不符合Blender命名風格。鏡像修改器結果可能不如預期"
+
+#. mt:gemini
+#: misc_DATA_PT_vertex_groups.py:33
+#, fuzzy
+msgctxt "Operator"
+msgid "頂点グループ名をCM3D2用→Blender用に変換"
+msgstr "將頂點群組名稱從 CM3D2 轉換為 Blender 格式"
+
+#. mt:gemini
+#: misc_DATA_PT_vertex_groups.py:85
+#, fuzzy
+msgctxt "Operator"
+msgid "頂点グループ名をBlender用→CM3D2用に変換"
+msgstr "將頂點群組名稱從 Blender 轉換為 CM3D2 格式"
+
+#. mt:gemini
+#: misc_DATA_PT_vertex_groups.py:23
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2用 頂点グループ名変換"
+msgstr "CM3D2 頂點群組名稱轉換"
+
+#. mt:gemini
+#: misc_DATA_PT_vertex_groups.py:34
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2で使われてるボーン名(頂点グループ名)をBlenderで左右対称編集できるように変換します"
+msgstr "將CM3D2骨骼名稱（頂點群組名稱）轉換為Blender格式以進行左右對稱編輯。"
+
+#. mt:gemini
+#: misc_DATA_PT_vertex_groups.py:86
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2で使われてるボーン名(頂点グループ名)に戻します"
+msgstr "將CM3D2骨骼名稱（頂點群組名稱）恢復為原始格式。"
+
+#. mt:gemini
+#: misc_DATA_PT_vertex_groups.py:77
+#, fuzzy
+msgctxt "*"
+msgid "頂点グループ名をBlender用に変換しました"
+msgstr "頂點群組名稱已轉換為Blender格式。"
+
+#. mt:gemini
+#: misc_DATA_PT_vertex_groups.py:128
+#, fuzzy
+msgctxt "*"
+msgid "頂点グループ名をCM3D2用に戻しました"
+msgstr "頂點群組名稱已恢復為CM3D2格式。"
+
+#. mt:gemini
+#: misc_DOPESHEET_MT_editor_menus.py:26 misc_DOPESHEET_MT_editor_menus.py:239
+#, fuzzy
+msgctxt "Operator"
+msgid "Convert to CM3D2 Interpolation"
+msgstr "轉換為CM3D2插值"
+
+#. mt:gemini
+#: misc_DOPESHEET_MT_editor_menus.py:31
+#, fuzzy
+msgctxt "*"
+msgid "Keep Reports"
+msgstr "保留報告"
+
+#. mt:gemini
+#: misc_DOPESHEET_MT_editor_menus.py:226
+#, python-format, fuzzy
+msgctxt "*"
+msgid "'{interpolation}' interpolation not convertable"
+msgstr "「{interpolation}」插值無法轉換"
+
+#. mt:gemini
+#: misc_DOPESHEET_MT_editor_menus.py:27 misc_DOPESHEET_MT_editor_menus.py:240
+#, fuzzy
+msgctxt "*"
+msgid "Convert keyframes to be compatible with CM3D2 Interpolation"
+msgstr "將關鍵影格轉換為與CM3D2插值相容"
+
+#. mt:gemini
+#: misc_DOPESHEET_MT_editor_menus.py:245
+#, fuzzy
+msgctxt "*"
+msgid "FCurves"
+msgstr "F曲線"
+
+#. mt:gemini
+#: misc_DOPESHEET_MT_editor_menus.py:246
+#, fuzzy
+msgctxt "*"
+msgid "KeyFrames"
+msgstr "關鍵影格"
+
+#. mt:gemini
+#: misc_DOPESHEET_MT_editor_menus.py:227
+#, python-format, fuzzy
+msgctxt "*"
+msgid ""
+"Found {count} unsupported interpolation type(s) in {id_data}'s FCurve "
+"{fcurve_path}[{fcurve_index}]. See log for more info."
+msgstr ""
+"在{id_data}的F曲線{fcurve_path}[{fcurve_index}]中發現{count}個不支援的插值類型。詳情請參閱日誌。"
+
+#. mt:gemini
+#: misc_IMAGE_HT_header.py:9
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2用: 内部パス"
+msgstr "適用於CM3D2：內部路徑"
+
+#. mt:gemini
+#: misc_IMAGE_PT_image_properties.py:11
+#, fuzzy
+msgctxt "*"
+msgid "内部パス"
+msgstr "內部路徑"
+
+#. mt:gemini
+#: misc_INFO_HT_header.py:17
+#, fuzzy
+msgctxt "Operator"
+msgid "頂点数をチェック"
+msgstr "檢查頂點數"
+
+#. mt:gemini
+#: misc_INFO_HT_header.py:48
+#, python-format, fuzzy
+msgctxt "*"
+msgid ""
+"○ 出力可能な頂点数です、あと約{remaining}頂点ほど余裕があります (頂点数:{vertices}(+{uv_split_incl}) "
+"UV分割で増加:+{uv_split_ratio}％)"
+msgstr ""
+"○ 可匯出的頂點數，還有約{remaining}個頂點的餘裕 (頂點數：{vertices}(+{uv_split_incl}) "
+"UV分割增加：+{uv_split_ratio}％)"
+
+#. mt:gemini
+#: misc_INFO_HT_header.py:55
+#, python-format, fuzzy
+msgctxt "*"
+msgid ""
+"× 出力できない頂点数です、あと約{remaining}頂点減らしてください (頂点数:{vertices}(+{uv_split_incr}) "
+"UV分割で増加:+{uv_split_ratio}％)"
+msgstr ""
+"× 無法匯出的頂點數，請再減少約{remaining}個頂點 (頂點數：{vertices}(+{uv_split_incr}) "
+"UV分割增加：+{uv_split_ratio}％)"
+
+#. mt:gemini
+#: misc_INFO_HT_header.py:18
+#, fuzzy
+msgctxt "*"
+msgid "選択メッシュがConverterで出力可能な頂点数に収まっているかをチェックします"
+msgstr "檢查所選網格的頂點數是否在轉換器可匯出的限制範圍內。"
+
+#. mt:gemini
+#: misc_INFO_HT_header.py:29
+#, fuzzy
+msgctxt "*"
+msgid "UVが存在しないので測定できません。"
+msgstr "無法測量，因為不存在UV。"
+
+#. mt:gemini
+#: misc_INFO_MT_add.py:18 misc_MATERIAL_PT_context_material.py:15
+#: misc_VIEW3D_MT_edit_mesh_split.py:10
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2"
+msgstr "CM3D2"
+
+#. mt:gemini
+#: misc_INFO_MT_add.py:36
+#, fuzzy
+msgctxt "Operator"
+msgid "CM3D2用の素体をインポート"
+msgstr "匯入CM3D2素體"
+
+#. mt:gemini
+#: misc_INFO_MT_add.py:40
+#, fuzzy
+msgctxt "*"
+msgid "素体名"
+msgstr "素體名稱"
+
+#. mt:gemini
+#: misc_INFO_MT_add.py:21
+#, fuzzy
+msgctxt "Operator"
+msgid "body001"
+msgstr "body001"
+
+#. mt:gemini
+#: misc_INFO_MT_add.py:23
+#, fuzzy
+msgctxt "Operator"
+msgid "乳袋防止素体"
+msgstr "防止乳袋素體"
+
+#. mt:gemini
+#: misc_INFO_MT_add.py:25
+#, fuzzy
+msgctxt "Operator"
+msgid "Tスタンス素体"
+msgstr "T字站姿素體"
+
+#. mt:gemini
+#: misc_INFO_MT_add.py:26
+#, fuzzy
+msgctxt "Operator"
+msgid "Tスタンス素体 足のみ"
+msgstr "T字站姿素體 (僅足部)"
+
+#. mt:gemini
+#: misc_INFO_MT_add.py:27
+#, fuzzy
+msgctxt "Operator"
+msgid "Tスタンス素体 手のみ"
+msgstr "T字站姿素體 (僅手部)"
+
+#. mt:gemini
+#: misc_INFO_MT_add.py:29
+#, fuzzy
+msgctxt "Operator"
+msgid "anm出力用リグ"
+msgstr "用於anm匯出的骨架"
+
+#. mt:gemini
+#: misc_INFO_MT_add.py:30
+#, fuzzy
+msgctxt "Operator"
+msgid "anm出力用リグ(男)"
+msgstr "用於anm匯出的骨架 (男性)"
+
+#. mt:gemini
+#: misc_INFO_MT_add.py:37
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2関係の素体を現在のシーンにインポートします"
+msgstr "將CM3D2相關素體匯入到當前場景。"
+
+#. mt:gemini
+#: misc_INFO_MT_add.py:29
+#, fuzzy
+msgctxt "*"
+msgid "anm出力用リグ・身体メッシュ"
+msgstr "用於anm匯出的骨架・身體網格"
+
+#. mt:gemini
+#: misc_INFO_MT_add.py:30
+#, fuzzy
+msgctxt "*"
+msgid "anm出力用リグ(男)・身体メッシュ"
+msgstr "用於anm匯出的骨架 (男性)・身體網格"
+
+#. mt:gemini
+#: misc_INFO_MT_curve_add.py:20
+#, fuzzy
+msgctxt "Operator"
+msgid "髪の房を追加"
+msgstr "新增髮束"
+
+#. mt:gemini
+#: misc_INFO_MT_curve_add.py:14
+#, fuzzy
+msgctxt "Operator"
+msgid "髪の房"
+msgstr "髮束"
+
+#. mt:gemini
+#: misc_INFO_MT_curve_add.py:24
+#, fuzzy
+msgctxt "*"
+msgid "房の半径"
+msgstr "髮束半徑"
+
+#. mt:gemini
+#: misc_INFO_MT_curve_add.py:25
+#, fuzzy
+msgctxt "*"
+msgid "ランダム要素の強さ"
+msgstr "隨機元素強度"
+
+#. mt:gemini
+#: misc_INFO_MT_curve_add.py:26
+#, fuzzy
+msgctxt "*"
+msgid "中間のZ軸の高さ"
+msgstr "中間Z軸高度"
+
+#. mt:gemini
+#: misc_INFO_MT_curve_add.py:38
+#, fuzzy
+msgctxt "*"
+msgid "ホイール:太さ変更"
+msgstr "滾輪：改變粗細"
+
+#. mt:gemini
+#: misc_INFO_MT_curve_add.py:39
+#, fuzzy
+msgctxt "*"
+msgid "ホイールクリック:ランダム強度変更"
+msgstr "滾輪點擊：改變隨機強度"
+
+#. mt:gemini
+#: misc_INFO_MT_curve_add.py:40
+#, fuzzy
+msgctxt "*"
+msgid "ZXキー:高さ変更"
+msgstr "ZX鍵：改變高度"
+
+#. mt:gemini
+#: misc_INFO_MT_curve_add.py:21
+#, fuzzy
+msgctxt "*"
+msgid "アニメ調の髪の房を追加します"
+msgstr "新增動漫風格的髮束。"
+
+#. mt:gemini
+#: misc_INFO_MT_curve_add.py:51 misc_INFO_MT_curve_add.py:52
+#, fuzzy
+msgctxt "*"
+msgid "Hair Bunch"
+msgstr "髮束"
+
+#. mt:gemini
+#: misc_INFO_MT_curve_add.py:75 misc_INFO_MT_curve_add.py:76
+#, fuzzy
+msgctxt "*"
+msgid "Hair Bunch Bevel"
+msgstr "髮束斜角"
+
+#. mt:gemini
+#: misc_INFO_MT_curve_add.py:190
+#, fuzzy
+msgctxt "*"
+msgid "オブジェクトモードで実行してください"
+msgstr "請在物件模式下執行。"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:39
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2 Converterの更新履歴"
+msgstr "CM3D2 Converter更新歷史"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:141
+#, fuzzy
+msgctxt "Operator"
+msgid "CM3D2 Converterを更新「luv」バージョン"
+msgstr "更新CM3D2 Converter「luv」版本"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:245
+#, fuzzy
+msgctxt "Operator"
+msgid "CM3D2 Converterの設定画面を開く"
+msgstr "開啟CM3D2 Converter設定畫面"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:275
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2 Converter Reload Notice"
+msgstr "CM3D2轉換器重新載入通知"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:145
+#, fuzzy
+msgctxt "*"
+msgid "更新後にBlenderを再起動"
+msgstr "更新後重新啟動Blender"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:146
+#, fuzzy
+msgctxt "*"
+msgid "再起動後にコンソールを閉じる"
+msgstr "重新啟動後關閉控制台"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:153
+#, fuzzy
+msgctxt "*"
+msgid "Branch"
+msgstr "分支"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:279
+#, fuzzy
+msgctxt "*"
+msgid "Scripts must be reloaded to apply changes."
+msgstr "必須重新載入腳本才能應用更改。"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:280
+#, fuzzy
+msgctxt "*"
+msgid "Top Bar > Blender Logo > System > Reload Scripts"
+msgstr "頂部欄 > Blender標誌 > 系統 > 重新載入腳本"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:135
+#, fuzzy
+msgctxt "*"
+msgid "更新の取得に失敗しました"
+msgstr "無法取得更新"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:149
+#, python-format, fuzzy
+msgctxt "*"
+msgid "Current ({branch})"
+msgstr "目前 ({branch})"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:109
+#, python-format, fuzzy
+msgctxt "*"
+msgid "{}日前"
+msgstr "{}天前"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:111
+#, python-format, fuzzy
+msgctxt "*"
+msgid "{}時間前"
+msgstr "{}小時前"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:113
+#, python-format, fuzzy
+msgctxt "*"
+msgid "{}分前"
+msgstr "{}分鐘前"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:115
+#, python-format, fuzzy
+msgctxt "*"
+msgid "{}秒前"
+msgstr "{}秒前"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:142
+#, fuzzy
+msgctxt "*"
+msgid "GitHubから最新版のCM3D2 Converterアドオンをダウンロードし上書き更新します"
+msgstr "從GitHub下載最新版CM3D2 Converter附加元件並覆蓋更新。"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:246
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2 Converterアドオンの設定画面を表示します"
+msgstr "顯示CM3D2 Converter附加元件的設定畫面。"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:238
+#, fuzzy
+msgctxt "*"
+msgid ""
+"Blender-CM3D2-Converter updated successfully. Reload scripts to apply "
+"changes."
+msgstr "Blender-CM3D2-Converter已成功更新。請重新載入腳本以應用更改。"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:267
+#, fuzzy
+msgctxt "*"
+msgid "表示できるエリアが見つかりませんでした"
+msgstr "找不到可顯示的區域"
+
+#. mt:gemini
+#: misc_INFO_MT_help.py:129
+#, fuzzy
+msgctxt "*"
+msgid "Now! "
+msgstr "現在！"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:499
+#, fuzzy
+msgctxt "Operator"
+msgid "CM3D2用マテリアルを新規作成"
+msgstr "新增CM3D2材質"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:509
+#, fuzzy
+msgctxt "Operator"
+msgid "COM3D2用マテリアルを新規作成"
+msgstr "新增COM3D2材質"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:519
+#, fuzzy
+msgctxt "Operator"
+msgid "CM3D2/COM3D2用シェーダーを変更"
+msgstr "變更CM3D2/COM3D2著色器"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:578
+#, fuzzy
+msgctxt "Operator"
+msgid "クリップボードからマテリアルを貼付け"
+msgstr "從剪貼簿貼上材質"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:652
+#, fuzzy
+msgctxt "Operator"
+msgid "マテリアルをクリップボードにコピー"
+msgstr "將材質複製到剪貼簿"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:723
+#, fuzzy
+msgctxt "Operator"
+msgid "全マテリアルを再構築"
+msgstr "重建所有材質"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:750
+#, fuzzy
+msgctxt "Operator"
+msgid "マテリアルを再構築"
+msgstr "重建材質"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:773
+#, fuzzy
+msgctxt "Operator"
+msgid "マテリアルを装飾"
+msgstr "裝飾材質"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:803
+#, fuzzy
+msgctxt "Operator"
+msgid "このテクスチャを見る"
+msgstr "檢視此紋理"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:837
+#, fuzzy
+msgctxt "Operator"
+msgid "マテリアルのセットアップ"
+msgstr "設定材質"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:859
+#, fuzzy
+msgctxt "Operator"
+msgid "マテリアルプロパティの詳細情報"
+msgstr "材質屬性詳細資訊"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:176
+#: misc_MATERIAL_PT_context_material.py:525
+#, fuzzy
+msgctxt "*"
+msgid "存在するノードはパラメータそのままにする"
+msgstr "保持現有節點參數不變"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:503
+#: misc_MATERIAL_PT_context_material.py:513
+#: misc_MATERIAL_PT_context_material.py:523
+#, fuzzy
+msgctxt "*"
+msgid "種類"
+msgstr "類型"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:524
+#, fuzzy
+msgctxt "*"
+msgid "不使用ノードを削除"
+msgstr "刪除未使用的節點"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:524
+#, fuzzy
+msgctxt "*"
+msgid "変更前のシェーダーで使用していたノードのうち、変更後のシェーダーで使用しないものを削除します"
+msgstr "刪除舊著色器中使用但新著色器未使用的節點。"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:584
+#, fuzzy
+msgctxt "*"
+msgid "マテリアルの新規作成"
+msgstr "新增材質"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:585
+#, fuzzy
+msgctxt "*"
+msgid "マテリアル名を上書きする"
+msgstr "覆寫材質名稱"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:586
+#, fuzzy
+msgctxt "*"
+msgid "上書き設定"
+msgstr "覆寫設定"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:807
+#: misc_TEXTURE_PT_context_texture.py:176
+#: misc_TEXTURE_PT_context_texture.py:224
+#, fuzzy
+msgctxt "*"
+msgid "テクスチャ名"
+msgstr "紋理名稱"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:890
+#: misc_MATERIAL_PT_context_material.py:975
+#: misc_MATERIAL_PT_context_material.py:1025
+#, fuzzy
+msgctxt "*"
+msgid "プロパティ タイプ:"
+msgstr "屬性類型："
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:892
+#, fuzzy
+msgctxt "*"
+msgid "テクスチャ"
+msgstr "紋理"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:977 misc_RENDER_PT_bake.py:753
+#: misc_TEXTURE_PT_context_texture.py:414
+#, fuzzy
+msgctxt "*"
+msgid "色"
+msgstr "顏色"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:1027
+#: misc_MATERIAL_PT_context_material.py:141
+#: misc_VIEW3D_PT_tools_weightpaint.py:275
+#: misc_VIEW3D_PT_tools_weightpaint.py:293
+#, fuzzy
+msgctxt "*"
+msgid "値"
+msgstr "值"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:553
+#, fuzzy
+msgctxt "*"
+msgid "ご注意"
+msgstr "注意"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:921
+#, fuzzy
+msgctxt "*"
+msgid "実ファイルパス:"
+msgstr "實際檔案路徑："
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:931
+#, fuzzy
+msgctxt "*"
+msgid "オフセット:"
+msgstr "位移："
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:933
+#: misc_MATERIAL_PT_context_material.py:940
+#, fuzzy
+msgctxt "*"
+msgid "x"
+msgstr "x"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:934
+#: misc_MATERIAL_PT_context_material.py:941
+#, fuzzy
+msgctxt "*"
+msgid "y"
+msgstr "y"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:938
+#, fuzzy
+msgctxt "*"
+msgid "スケール:"
+msgstr "縮放："
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:962
+#: misc_MATERIAL_PT_context_material.py:1011
+#: misc_MATERIAL_PT_context_material.py:1076
+#, fuzzy
+msgctxt "*"
+msgid "解説"
+msgstr "說明"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:1002
+#, fuzzy
+msgctxt "*"
+msgid "色の透明度"
+msgstr "顏色透明度"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:1069
+#, fuzzy
+msgctxt "*"
+msgid "正確な値: "
+msgstr "精確值："
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:37
+#, fuzzy
+msgctxt "Operator"
+msgid "mateから"
+msgstr "從mate"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:38
+#, fuzzy
+msgctxt "Operator"
+msgid "クリップボードから"
+msgstr "從剪貼簿"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:907
+#, fuzzy
+msgctxt "Operator"
+msgid "拡張子を省略"
+msgstr "省略副檔名"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:915
+#, fuzzy
+msgctxt "*"
+msgid "テクスチャパス:"
+msgstr "紋理路徑："
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:948
+#: misc_TEXTURE_PT_context_texture.py:90
+#, fuzzy
+msgctxt "Operator"
+msgid "画像を表示"
+msgstr "顯示圖片"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:990
+#, fuzzy
+msgctxt "Operator"
+msgid "自動設定"
+msgstr "自動設定"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:49
+#, fuzzy
+msgctxt "Operator"
+msgid "mateへ"
+msgstr "到mate"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:54
+#, fuzzy
+msgctxt "Operator"
+msgid "再構成"
+msgstr "重建"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:62
+#, fuzzy
+msgctxt "*"
+msgid "種類:"
+msgstr "類型："
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:64
+#, fuzzy
+msgctxt "*"
+msgid "マテリアル名"
+msgstr "材質名稱"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:65
+#, fuzzy
+msgctxt "*"
+msgid "シェーダー1"
+msgstr "著色器1"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:66
+#, fuzzy
+msgctxt "*"
+msgid "シェーダー2"
+msgstr "著色器2"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:918
+#, fuzzy
+msgctxt "Operator"
+msgid "テクスチャパスを生成"
+msgstr "產生紋理路徑"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:954
+#: misc_TEXTURE_PT_context_texture.py:372
+#, fuzzy
+msgctxt "Operator"
+msgid "texで保存"
+msgstr "儲存為tex"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:69
+#: misc_MATERIAL_PT_context_material.py:75
+#, fuzzy
+msgctxt "Operator"
+msgid "フラグセットアップ"
+msgstr "旗標設定"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:82
+#: misc_MATERIAL_PT_context_material.py:162
+#, fuzzy
+msgctxt "*"
+msgid "マテリアルプロパティ"
+msgstr "材質屬性"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:167
+#: misc_MATERIAL_PT_context_material.py:170
+#, fuzzy
+msgctxt "Operator"
+msgid "COM3D2用に変更"
+msgstr "變更為COM3D2"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:169
+#, fuzzy
+msgctxt "Operator"
+msgid "CM3D2用に変更"
+msgstr "變更為CM3D2"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:554
+#, fuzzy
+msgctxt "*"
+msgid ""
+"『不使用ノードを削除』は変更後のシェーダーで使用しなくなるノードを削除します。\n"
+"削除されると元のシェーダーに戻しても以前の調整値は失われデフォルト値になります。\n"
+"また、不使用ノードを残していても mate や model のエクスポート時には除外されます。"
+msgstr ""
+"「刪除未使用的節點」將刪除變更後著色器不再使用的節點。\n"
+"刪除後，即使恢復到原始著色器，先前的調整值也會遺失並恢復為預設值。\n"
+"此外，即使保留未使用的節點，在匯出mate或model時也會被排除。"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:548
+#, python-format, fuzzy
+msgctxt "*"
+msgid "この種類はmodelバージョン({})に不適格です"
+msgstr "此類型不適用於模型版本({})。"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:500
+#: misc_MATERIAL_PT_context_material.py:510
+#, fuzzy
+msgctxt "*"
+msgid "Blender-CM3D2-Converterで使用できるマテリアルを新規で作成します"
+msgstr "新增可在Blender-CM3D2-Converter中使用的材質。"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:520
+#, fuzzy
+msgctxt "*"
+msgid "Blender-CM3D2-Converterで使用できるマテリアルのシェーダーを変更します"
+msgstr "變更可在Blender-CM3D2-Converter中使用的材質著色器。"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:579
+#, fuzzy
+msgctxt "*"
+msgid "クリップボード内のテキストからマテリアル情報を上書きします"
+msgstr "從剪貼簿中的文字覆寫材質資訊。"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:653
+#, fuzzy
+msgctxt "*"
+msgid "表示しているマテリアルをテキスト形式でクリップボードにコピーします"
+msgstr "將顯示的材質以文字格式複製到剪貼簿。"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:724
+#, fuzzy
+msgctxt "*"
+msgid "全マテリアルのシェーダー構成を再構築します"
+msgstr "重建所有材質的著色器配置。"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:751
+#, fuzzy
+msgctxt "*"
+msgid "マテリアルのシェーダー構成を再構築します"
+msgstr "重建材質的著色器配置。"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:774
+#, fuzzy
+msgctxt "*"
+msgid "スロット内のマテリアルを全て設定に合わせて装飾します"
+msgstr "根據設定裝飾插槽中的所有材質。"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:838
+#, fuzzy
+msgctxt "*"
+msgid "マテリアルの各種フラグを初期化する"
+msgstr "初始化各種材質旗標。"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:860
+#, fuzzy
+msgctxt "*"
+msgid "マテリアルプロパティの詳細情報の表示状態を切り替える"
+msgstr "切換材質屬性詳細資訊的顯示狀態。"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:645
+#, fuzzy
+msgctxt "*"
+msgid "クリップボードからマテリアルを貼付けました"
+msgstr "已從剪貼簿貼上材質。"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:672
+#, fuzzy
+msgctxt "*"
+msgid "マテリアルテキストをクリップボードにコピーしました"
+msgstr "已將材質文字複製到剪貼簿。"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:668
+#, fuzzy
+msgctxt "*"
+msgid "クリップボードへのコピーを中止します。:"
+msgstr "中止複製到剪貼簿："
+
+#. mt:gemini
+#: misc_MESH_MT_attribute_context_menu.py:20
+#, fuzzy
+msgctxt "Operator"
+msgid "From Custom Normals"
+msgstr "從自訂法線"
+
+#. mt:gemini
+#: misc_MESH_MT_attribute_context_menu.py:80
+#, fuzzy
+msgctxt "Operator"
+msgid "Convert Normals"
+msgstr "轉換法線"
+
+#. mt:gemini
+#: misc_MESH_MT_attribute_context_menu.py:21
+#, fuzzy
+msgctxt "*"
+msgid "Creates a new attribute from the custom split normals"
+msgstr "從自訂分割法線創建新屬性"
+
+#. mt:gemini
+#: misc_MESH_MT_attribute_context_menu.py:81
+#, fuzzy
+msgctxt "*"
+msgid "Converts the data type of the normals attribute"
+msgstr "轉換法線屬性的資料類型"
+
+#. mt:gemini
+#: misc_MESH_MT_attribute_context_menu.py:25
+#: misc_MESH_MT_attribute_context_menu.py:85
+#, fuzzy
+msgctxt "*"
+msgid "3D vector with floating point values"
+msgstr "帶浮點值的3D向量"
+
+#. mt:gemini
+#: misc_MESH_MT_attribute_context_menu.py:26
+#: misc_MESH_MT_attribute_context_menu.py:86
+#, fuzzy
+msgctxt "*"
+msgid "RGBA color with floating point precisions"
+msgstr "帶浮點精度的RGBA顏色"
+
+#. mt:gemini
+#: misc_MESH_MT_attribute_context_menu.py:27
+#: misc_MESH_MT_attribute_context_menu.py:87
+#, fuzzy
+msgctxt "*"
+msgid "RGBA color with 8-bit precision"
+msgstr "帶8位元精度的RGBA顏色"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:444
+#, fuzzy
+msgctxt "Operator"
+msgid "クイック・シェイプキー転送"
+msgstr "快速形狀鍵傳輸"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:541
+#, fuzzy
+msgctxt "Operator"
+msgid "空間ぼかし・シェイプキー転送"
+msgstr "空間模糊形狀鍵傳輸"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:880
+#, fuzzy
+msgctxt "Operator"
+msgid "Weighted shape key transfer"
+msgstr "加權形狀鍵傳輸"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1024
+#, fuzzy
+msgctxt "Operator"
+msgid "シェイプキーの変形に乗算"
+msgstr "形狀鍵變形乘法"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1088
+#, fuzzy
+msgctxt "Operator"
+msgid "シェイプキーぼかし"
+msgstr "形狀鍵模糊"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1239
+#, fuzzy
+msgctxt "Operator"
+msgid "このシェイプキーをベースに"
+msgstr "以此形狀鍵為基礎"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1298
+#, fuzzy
+msgctxt "Operator"
+msgid "Copy shape key values"
+msgstr "複製形狀鍵值"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:162
+#, fuzzy
+msgctxt "*"
+msgid "最初に全シェイプキーを削除"
+msgstr "首先刪除所有形狀鍵"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:163
+#, fuzzy
+msgctxt "*"
+msgid "変形のないシェイプキーを削除"
+msgstr "刪除沒有變形的形狀鍵"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:164
+#, fuzzy
+msgctxt "*"
+msgid "Bind to current source mix"
+msgstr "綁定到目前來源混合"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:165
+#: misc_MESH_MT_vertex_group_specials.py:201
+#, fuzzy
+msgctxt "*"
+msgid "参照元の分割"
+msgstr "參考來源的細分"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:166
+#, fuzzy
+msgctxt "*"
+msgid "選択したシェイプキーのみ転送"
+msgstr "僅傳輸選定的形狀鍵"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:448
+#: misc_MESH_MT_shape_key_specials.py:545
+#: misc_MESH_MT_shape_key_specials.py:884
+#, fuzzy
+msgctxt "*"
+msgid "Step Size (low = quality, high = speed)"
+msgstr "步長（低=品質，高=速度）"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:546
+#: misc_MESH_MT_shape_key_specials.py:1099
+#: misc_MESH_MT_vertex_group_specials.py:202
+#: misc_MESH_MT_vertex_group_specials.py:420
+#, fuzzy
+msgctxt "*"
+msgid "範囲倍率"
+msgstr "範圍倍率"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:806
+#, fuzzy
+msgctxt "*"
+msgid "Only Deform"
+msgstr "僅變形"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:806
+#, fuzzy
+msgctxt "*"
+msgid "Only show deforming vertex groups"
+msgstr "僅顯示變形頂點群組"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:807
+#, fuzzy
+msgctxt "*"
+msgid "Only show non-deforming vertex groups"
+msgstr "僅顯示非變形頂點群組"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:808
+#, fuzzy
+msgctxt "*"
+msgid "Filter Empty"
+msgstr "篩選空值"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:808
+#, fuzzy
+msgctxt "*"
+msgid "Whether to filter empty vertex groups"
+msgstr "是否篩選空頂點群組"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:809
+#, fuzzy
+msgctxt "*"
+msgid "Reverse Empty"
+msgstr "反轉空值"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:809
+#, fuzzy
+msgctxt "*"
+msgid "Reverse empty filtering"
+msgstr "反轉空值篩選"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:810
+#, fuzzy
+msgctxt "*"
+msgid "Order by"
+msgstr "排序依據"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:885
+#, fuzzy
+msgctxt "*"
+msgid "Range magnification"
+msgstr "範圍放大"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1028
+#, fuzzy
+msgctxt "*"
+msgid "シェイプキーの拡大率です"
+msgstr "這是形狀鍵的縮放比例。"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1035
+#: misc_MESH_MT_shape_key_specials.py:1098
+#: misc_MESH_MT_vertex_group_specials.py:365
+#: misc_MESH_MT_vertex_group_specials.py:419
+#: misc_MESH_MT_vertex_group_specials.py:584
+#, fuzzy
+msgctxt "*"
+msgid "対象"
+msgstr "目標"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1100
+#: misc_MESH_MT_vertex_group_specials.py:366
+#: misc_MESH_MT_vertex_group_specials.py:421
+#, fuzzy
+msgctxt "*"
+msgid "強さ"
+msgstr "強度"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1106
+#: misc_MESH_MT_vertex_group_specials.py:427
+#, fuzzy
+msgctxt "*"
+msgid "ぼかし効果"
+msgstr "模糊效果"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1112
+#: misc_VIEW3D_PT_tools_weightpaint.py:30
+#: misc_VIEW3D_PT_tools_weightpaint.py:259
+#, fuzzy
+msgctxt "*"
+msgid "減衰タイプ"
+msgstr "衰減類型"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1243
+#, fuzzy
+msgctxt "*"
+msgid "素メッシュを調整"
+msgstr "調整基礎網格"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1244
+#, fuzzy
+msgctxt "*"
+msgid "他シェイプを調整"
+msgstr "調整其他形狀"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1302
+#, fuzzy
+msgctxt "*"
+msgid "Apply as drivers"
+msgstr "應用為驅動器"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:661
+#: misc_MESH_MT_shape_key_specials.py:285
+#: misc_MESH_MT_vertex_group_specials.py:350
+#, python-format, fuzzy
+msgctxt "*"
+msgid "{:.2f} Seconds"
+msgstr "{:.2f} 秒"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:445
+#, fuzzy
+msgctxt "*"
+msgid "アクティブなメッシュに他の選択メッシュのシェイプキーを高速で転送します"
+msgstr "將其他選定網格的形狀鍵快速傳輸到活動網格。"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:542
+#, fuzzy
+msgctxt "*"
+msgid "アクティブなメッシュに他の選択メッシュのシェイプキーを遠いほどぼかして転送します"
+msgstr "將其他選定網格的形狀鍵傳輸到活動網格，距離越遠模糊程度越高。"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:881
+#, fuzzy
+msgctxt "*"
+msgid ""
+"Transfers the shape keys of other selected mesh to the active mesh, using "
+"matching vertex groups as masks"
+msgstr "使用匹配的頂點群組作為遮罩，將其他選定網格的形狀鍵傳輸到活動網格"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1025
+#, fuzzy
+msgctxt "*"
+msgid "シェイプキーの変形に数値を乗算し、変形の強度を増減させます"
+msgstr "將形狀鍵變形乘以一個值，以增加或減少變形強度。"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1089
+#, fuzzy
+msgctxt "*"
+msgid "アクティブ、もしくは全てのシェイプキーをぼかします"
+msgstr "模糊活動或所有形狀鍵。"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1240
+#, fuzzy
+msgctxt "*"
+msgid "アクティブなシェイプキーを他のシェイプキーのベースにします"
+msgstr "將活動形狀鍵作為其他形狀鍵的基礎。"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1299
+#, fuzzy
+msgctxt "*"
+msgid "Copy the shape key values from the other selected mesh"
+msgstr "從其他選定網格複製形狀鍵值"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1030
+#: misc_MESH_MT_shape_key_specials.py:1093
+#: misc_MESH_MT_vertex_group_specials.py:362
+#: misc_MESH_MT_vertex_group_specials.py:414
+#: misc_MESH_MT_vertex_group_specials.py:579
+#: misc_VIEW3D_PT_tools_weightpaint.py:37
+#: misc_VIEW3D_PT_tools_weightpaint.py:265
+#, fuzzy
+msgctxt "*"
+msgid "アクティブのみ"
+msgstr "僅活動"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1031
+#: misc_MESH_MT_shape_key_specials.py:1094
+#: misc_MESH_MT_vertex_group_specials.py:415
+#: misc_MESH_MT_vertex_group_specials.py:580
+#, fuzzy
+msgctxt "*"
+msgid "アクティブより上"
+msgstr "在活動之上"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1032
+#: misc_MESH_MT_shape_key_specials.py:1095
+#: misc_MESH_MT_vertex_group_specials.py:416
+#: misc_MESH_MT_vertex_group_specials.py:581
+#, fuzzy
+msgctxt "*"
+msgid "アクティブより下"
+msgstr "在活動之下"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1033
+#: misc_MESH_MT_shape_key_specials.py:1096
+#: misc_MESH_MT_vertex_group_specials.py:363
+#: misc_MESH_MT_vertex_group_specials.py:417
+#: misc_MESH_MT_vertex_group_specials.py:582 misc_RENDER_PT_bake.py:1292
+#: misc_VIEW3D_PT_tools_weightpaint.py:36
+#, fuzzy
+msgctxt "*"
+msgid "全て"
+msgstr "全部"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1102
+#: misc_MESH_MT_vertex_group_specials.py:423
+#, fuzzy
+msgctxt "*"
+msgid "増減両方"
+msgstr "增減兩者"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1103
+#: misc_MESH_MT_vertex_group_specials.py:424
+#, fuzzy
+msgctxt "*"
+msgid "増加のみ"
+msgstr "僅增加"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1104
+#: misc_MESH_MT_vertex_group_specials.py:425
+#, fuzzy
+msgctxt "*"
+msgid "減少のみ"
+msgstr "僅減少"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1108
+#, fuzzy
+msgctxt "*"
+msgid "ライナー"
+msgstr "線性"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1109
+#, fuzzy
+msgctxt "*"
+msgid "スムーズ1"
+msgstr "平滑1"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:1110
+#, fuzzy
+msgctxt "*"
+msgid "スムーズ2"
+msgstr "平滑2"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:399
+#, fuzzy
+msgctxt "*"
+msgid ""
+"Shape key transfer canceled. Results may not be as expected. Use Undo / Ctrl"
+" Z to revert changes"
+msgstr "形狀鍵傳輸已取消。結果可能不如預期。請使用撤銷/Ctrl Z恢復更改"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:230
+#, fuzzy
+msgctxt "*"
+msgid "Press ESC to cancel shape key transfer"
+msgstr "按ESC鍵取消形狀鍵傳輸"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:810
+#, fuzzy
+msgctxt "*"
+msgid "Sort groups by name (case-insensitive)"
+msgstr "按名稱排序群組（不區分大小寫）"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:810
+#, fuzzy
+msgctxt "*"
+msgid "Importance"
+msgstr "重要性"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:810
+#, fuzzy
+msgctxt "*"
+msgid "Sort groups by average weight"
+msgstr "按平均權重排序群組"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:219
+#, fuzzy
+msgctxt "*"
+msgid "Error while preparing shapekey transfer."
+msgstr "準備形狀鍵傳輸時出錯。"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:655
+#, fuzzy
+msgctxt "*"
+msgid ""
+"Error while transfering shapekeys. Results may not be as expected. Use Undo "
+"/ Ctrl Z to revert changes"
+msgstr "傳輸形狀鍵時出錯。結果可能不如預期。請使用撤銷/Ctrl Z恢復更改"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:258
+#, fuzzy
+msgctxt "*"
+msgid "Error while canceling shapekey transfer."
+msgstr "取消形狀鍵傳輸時出錯。"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:269
+#, fuzzy
+msgctxt "*"
+msgid "Error while performing shapekey transfer."
+msgstr "執行形狀鍵傳輸時出錯。"
+
+#. mt:gemini
+#: misc_MESH_MT_shape_key_specials.py:280
+#, fuzzy
+msgctxt "*"
+msgid "Error while finishing shapekey transfer."
+msgstr "完成形狀鍵傳輸時出錯。"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:29
+#, fuzzy
+msgctxt "Operator"
+msgid "クイック・ウェイト転送"
+msgstr "快速權重傳輸"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:196
+#, fuzzy
+msgctxt "Operator"
+msgid "空間ぼかし・ウェイト転送"
+msgstr "空間模糊權重傳輸"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:357
+#, fuzzy
+msgctxt "Operator"
+msgid "頂点グループぼかし"
+msgstr "頂點群組模糊"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:409
+#, fuzzy
+msgctxt "Operator"
+msgid "旧・頂点グループぼかし"
+msgstr "舊版頂點群組模糊"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:574
+#, fuzzy
+msgctxt "Operator"
+msgid "頂点グループに乗算"
+msgstr "頂點群組乘法"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:664
+#, fuzzy
+msgctxt "Operator"
+msgid "割り当てのない頂点グループを削除"
+msgstr "刪除未分配的頂點群組"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:33
+#: misc_MESH_MT_vertex_group_specials.py:200
+#, fuzzy
+msgctxt "*"
+msgid "すでにある頂点グループを削除 (ロックで保護)"
+msgstr "刪除現有頂點群組 (受鎖定保護)"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:34
+#, fuzzy
+msgctxt "*"
+msgid "選択頂点のみ(参照)"
+msgstr "僅選定頂點 (參考)"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:35
+#, fuzzy
+msgctxt "*"
+msgid "選択頂点のみ(対象)"
+msgstr "僅選定頂點 (目標)"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:42
+#, fuzzy
+msgctxt "*"
+msgid "参照要素"
+msgstr "參考元素"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:43
+#, fuzzy
+msgctxt "*"
+msgid "転送後にクリーンを実行"
+msgstr "傳輸後執行清理"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:44
+#, fuzzy
+msgctxt "*"
+msgid "転送後に割り当てのない頂点グループを削除"
+msgstr "傳輸後刪除未分配的頂點群組"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:203 model_import.py:44
+#, fuzzy
+msgctxt "*"
+msgid "割り当てのない頂点グループを削除"
+msgstr "刪除未分配的頂點群組"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:367
+#, fuzzy
+msgctxt "*"
+msgid "反復"
+msgstr "迭代次數"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:368
+#, fuzzy
+msgctxt "*"
+msgid "拡大縮小"
+msgstr "縮放"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:428
+#: misc_MESH_MT_vertex_group_specials.py:586
+#, fuzzy
+msgctxt "*"
+msgid "他頂点グループも調節"
+msgstr "同時調整其他頂點群組"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:668
+#, fuzzy
+msgctxt "*"
+msgid "これ以下の影響は切り捨て"
+msgstr "捨棄低於此的影響"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:30
+#, fuzzy
+msgctxt "*"
+msgid "アクティブなメッシュに他の選択メッシュの頂点グループを高速で転送します"
+msgstr "將其他選定網格的頂點群組快速傳輸到活動網格。"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:197
+#, fuzzy
+msgctxt "*"
+msgid "アクティブなメッシュに他の選択メッシュの頂点グループを遠いほどぼかして転送します"
+msgstr "將其他選定網格的頂點群組傳輸到活動網格，距離越遠模糊程度越高。"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:358
+#: misc_MESH_MT_vertex_group_specials.py:410
+#, fuzzy
+msgctxt "*"
+msgid "アクティブ、もしくは全ての頂点グループをぼかします"
+msgstr "模糊活動或所有頂點群組。"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:575
+#, fuzzy
+msgctxt "*"
+msgid "頂点グループのウェイトに数値を乗算し、ウェイトの強度を増減させます"
+msgstr "將頂點群組權重乘以一個值，以增加或減少權重強度。"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:665
+#, fuzzy
+msgctxt "*"
+msgid "どの頂点にも割り当てられていない頂点グループを全て削除します"
+msgstr "刪除所有未分配給任何頂點的頂點群組。"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:37
+#, fuzzy
+msgctxt "*"
+msgid "最も近い頂点"
+msgstr "最近的頂點"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:38
+#, fuzzy
+msgctxt "*"
+msgid "最も近い辺"
+msgstr "最近的邊"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:39
+#, fuzzy
+msgctxt "*"
+msgid "最も近い面"
+msgstr "最近的面"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:40
+#, fuzzy
+msgctxt "*"
+msgid "投影先"
+msgstr "投影目標"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:116
+#: misc_MESH_MT_vertex_group_specials.py:119
+#, fuzzy
+msgctxt "*"
+msgid "面がひとつも存在しません、辺モードに変更します"
+msgstr "不存在任何面，將切換到邊模式。"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:122
+#, fuzzy
+msgctxt "*"
+msgid "辺がひとつも存在しません、頂点モードに変更します"
+msgstr "不存在任何邊，將切換到頂點模式。"
+
+#. mt:gemini
+#: misc_MESH_MT_vertex_group_specials.py:124
+#, fuzzy
+msgctxt "*"
+msgid "頂点がひとつも存在しません、中止します"
+msgstr "不存在任何頂點，中止。"
+
+#. mt:gemini
+#: misc_OBJECT_PT_context_object.py:27
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2用ボーン情報"
+msgstr "CM3D2骨骼資訊"
+
+#. mt:gemini
+#: misc_OBJECT_PT_transform.py:20
+#, fuzzy
+msgctxt "Operator"
+msgid "オブジェクトの位置を合わせる"
+msgstr "對齊物件位置"
+
+#. mt:gemini
+#: misc_OBJECT_PT_transform.py:54
+#, fuzzy
+msgctxt "Operator"
+msgid "Align to Base Bone"
+msgstr "對齊到基礎骨骼"
+
+#. mt:gemini
+#: misc_OBJECT_PT_transform.py:59
+#, fuzzy
+msgctxt "*"
+msgid "Preserve Mesh"
+msgstr "保留網格"
+
+#. mt:gemini
+#: misc_OBJECT_PT_transform.py:59
+#, fuzzy
+msgctxt "*"
+msgid ""
+"Align object transform, then fix mesh transform so it remains in place."
+msgstr "對齊物件變換，然後修正網格變換使其保持原位。"
+
+#. mt:gemini
+#: misc_OBJECT_PT_transform.py:67 misc_OBJECT_PT_transform.py:137
+#, fuzzy
+msgctxt "*"
+msgid "Bone Data Source"
+msgstr "骨骼資料來源"
+
+#. mt:gemini
+#: misc_OBJECT_PT_transform.py:67
+#, fuzzy
+msgctxt "*"
+msgid "This will decide from where the Bone Data is gathered from."
+msgstr "這將決定骨骼資料從何處收集。"
+
+#. mt:gemini
+#: misc_OBJECT_PT_transform.py:224
+#, python-format, fuzzy
+msgctxt "*"
+msgid ""
+"Could not find 'BaseBone' in {source_name} Please add it or change source"
+msgstr "在{source_name}中找不到「BaseBone」。請添加或更改來源"
+
+#. mt:gemini
+#: misc_OBJECT_PT_transform.py:21
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトの中心位置を、他の選択オブジェクトの中心位置に合わせます"
+msgstr "將活動物件的中心位置與其他選定物件的中心位置對齊。"
+
+#. mt:gemini
+#: misc_OBJECT_PT_transform.py:55
+#, fuzzy
+msgctxt "*"
+msgid "Align the object to it's armature's base bone"
+msgstr "將物件對齊到其骨架的基礎骨骼"
+
+#. mt:gemini
+#: misc_OBJECT_PT_transform.py:65
+#, fuzzy
+msgctxt "*"
+msgid "Armature Data"
+msgstr "骨架資料"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:40
+#, fuzzy
+msgctxt "Operator"
+msgid "ベイク用の画像を作成"
+msgstr "建立用於烘焙的圖片"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:107
+#, fuzzy
+msgctxt "Operator"
+msgid "AO・ベイク"
+msgstr "AO烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:195
+#, fuzzy
+msgctxt "Operator"
+msgid "擬似AO・ベイク"
+msgstr "偽AO烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:295
+#, fuzzy
+msgctxt "Operator"
+msgid "ヘミライト・ベイク"
+msgstr "半球光烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:404
+#, fuzzy
+msgctxt "Operator"
+msgid "影・ベイク"
+msgstr "陰影烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:520
+#, fuzzy
+msgctxt "Operator"
+msgid "側面陰・ベイク"
+msgstr "側面陰影烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:641
+#, fuzzy
+msgctxt "Operator"
+msgid "グラデーション・ベイク"
+msgstr "漸變烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:737
+#, fuzzy
+msgctxt "Operator"
+msgid "金属・ベイク"
+msgstr "金屬烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:849
+#, fuzzy
+msgctxt "Operator"
+msgid "ヘアー・ベイク"
+msgstr "毛髮烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:982
+#, fuzzy
+msgctxt "Operator"
+msgid "UV縁・ベイク"
+msgstr "UV邊緣烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1161
+#, fuzzy
+msgctxt "Operator"
+msgid "メッシュ縁・ベイク"
+msgstr "網格邊緣烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1275
+#, fuzzy
+msgctxt "Operator"
+msgid "密度・ベイク"
+msgstr "密度烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1424
+#, fuzzy
+msgctxt "Operator"
+msgid "メッシュ間距離・ベイク"
+msgstr "網格間距離烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1528
+#, fuzzy
+msgctxt "Operator"
+msgid "膨らみ・ベイク"
+msgstr "膨脹烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1634
+#, fuzzy
+msgctxt "Operator"
+msgid "白い液体・ベイク"
+msgstr "白色液體烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:14
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2用ベイク"
+msgstr "CM3D2烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:16
+#, fuzzy
+msgctxt "Operator"
+msgid "新規画像"
+msgstr "新增圖片"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:17
+#, fuzzy
+msgctxt "Operator"
+msgid "AO (重)"
+msgstr "AO (重)"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:18
+#, fuzzy
+msgctxt "Operator"
+msgid "擬似AO"
+msgstr "偽AO"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:20
+#, fuzzy
+msgctxt "Operator"
+msgid "ヘミライト"
+msgstr "半球光"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:21
+#, fuzzy
+msgctxt "Operator"
+msgid "影 (重)"
+msgstr "陰影 (重)"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:22
+#, fuzzy
+msgctxt "Operator"
+msgid "側面陰"
+msgstr "側面陰影"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:24
+#, fuzzy
+msgctxt "Operator"
+msgid "グラデーション"
+msgstr "漸變"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:25
+#, fuzzy
+msgctxt "Operator"
+msgid "UV縁"
+msgstr "UV邊緣"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:26
+#, fuzzy
+msgctxt "Operator"
+msgid "メッシュ縁"
+msgstr "網格邊緣"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:28
+#, fuzzy
+msgctxt "Operator"
+msgid "密度"
+msgstr "密度"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:29
+#, fuzzy
+msgctxt "Operator"
+msgid "膨らみ"
+msgstr "膨脹"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:30
+#, fuzzy
+msgctxt "Operator"
+msgid "メッシュ間距離"
+msgstr "網格間距離"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:32
+#, fuzzy
+msgctxt "Operator"
+msgid "金属"
+msgstr "金屬"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:33
+#, fuzzy
+msgctxt "Operator"
+msgid "髪"
+msgstr "頭髮"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:34
+#, fuzzy
+msgctxt "Operator"
+msgid "白い液体"
+msgstr "白色液體"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:44 misc_RENDER_PT_bake.py:111
+#: misc_RENDER_PT_bake.py:199 misc_RENDER_PT_bake.py:299
+#: misc_RENDER_PT_bake.py:408 misc_RENDER_PT_bake.py:524
+#: misc_RENDER_PT_bake.py:645 misc_RENDER_PT_bake.py:741
+#: misc_RENDER_PT_bake.py:853 misc_RENDER_PT_bake.py:986
+#: misc_RENDER_PT_bake.py:1165 misc_RENDER_PT_bake.py:1279
+#: misc_RENDER_PT_bake.py:1428 misc_RENDER_PT_bake.py:1532
+#: misc_RENDER_PT_bake.py:1638 misc_TEXTURE_PT_context_texture.py:94
+#, fuzzy
+msgctxt "*"
+msgid "画像名"
+msgstr "圖像名稱"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:53 misc_RENDER_PT_bake.py:120
+#: misc_RENDER_PT_bake.py:208 misc_RENDER_PT_bake.py:308
+#: misc_RENDER_PT_bake.py:417 misc_RENDER_PT_bake.py:533
+#: misc_RENDER_PT_bake.py:654 misc_RENDER_PT_bake.py:750
+#: misc_RENDER_PT_bake.py:862 misc_RENDER_PT_bake.py:995
+#: misc_RENDER_PT_bake.py:1174 misc_RENDER_PT_bake.py:1288
+#: misc_RENDER_PT_bake.py:1437 misc_RENDER_PT_bake.py:1541
+#: misc_RENDER_PT_bake.py:1647
+#, fuzzy
+msgctxt "*"
+msgid "幅"
+msgstr "寬度"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:54 misc_RENDER_PT_bake.py:121
+#: misc_RENDER_PT_bake.py:209 misc_RENDER_PT_bake.py:309
+#: misc_RENDER_PT_bake.py:418 misc_RENDER_PT_bake.py:534
+#: misc_RENDER_PT_bake.py:655 misc_RENDER_PT_bake.py:751
+#: misc_RENDER_PT_bake.py:863 misc_RENDER_PT_bake.py:996
+#: misc_RENDER_PT_bake.py:1175 misc_RENDER_PT_bake.py:1289
+#: misc_RENDER_PT_bake.py:1438 misc_RENDER_PT_bake.py:1542
+#: misc_RENDER_PT_bake.py:1648
+#, fuzzy
+msgctxt "*"
+msgid "高"
+msgstr "高度"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:127
+#, fuzzy
+msgctxt "*"
+msgid "処理方法"
+msgstr "處理方法"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:128
+#, fuzzy
+msgctxt "*"
+msgid "精度"
+msgstr "精確度"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:129 misc_RENDER_PT_bake.py:315
+#: misc_RENDER_PT_bake.py:872
+#, fuzzy
+msgctxt "*"
+msgid "他オブジェクトの影響を受けない"
+msgstr "不受其他物件影響"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:211
+#, fuzzy
+msgctxt "*"
+msgid "ブラー強度"
+msgstr "模糊強度"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:212
+#, fuzzy
+msgctxt "*"
+msgid "ブラー反復度"
+msgstr "模糊重複次數"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:213
+#, fuzzy
+msgctxt "*"
+msgid "ハイライト角度"
+msgstr "高光角度"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:214
+#, fuzzy
+msgctxt "*"
+msgid "擬似AO角度"
+msgstr "偽AO角度"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:215
+#, fuzzy
+msgctxt "*"
+msgid "擬似AOのみ"
+msgstr "僅偽AO"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:311 misc_RENDER_PT_bake.py:868
+#, fuzzy
+msgctxt "*"
+msgid "光の強さ"
+msgstr "光線強度"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:313 misc_RENDER_PT_bake.py:870
+#, fuzzy
+msgctxt "*"
+msgid "AOを使用"
+msgstr "使用AO"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:314 misc_RENDER_PT_bake.py:871
+#, fuzzy
+msgctxt "*"
+msgid "AOの精度"
+msgstr "AO精確度"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:420
+#, fuzzy
+msgctxt "*"
+msgid "光源の最大角度"
+msgstr "光源最大角度"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:421
+#, fuzzy
+msgctxt "*"
+msgid "光源の数"
+msgstr "光源數量"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:422
+#, fuzzy
+msgctxt "*"
+msgid "影のみ"
+msgstr "僅陰影"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:536
+#, fuzzy
+msgctxt "*"
+msgid "二極化を有効"
+msgstr "啟用兩極化"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:537
+#, fuzzy
+msgctxt "*"
+msgid "二極化のしきい値"
+msgstr "兩極化閾值"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:538
+#, fuzzy
+msgctxt "*"
+msgid "二極化のぼかし"
+msgstr "兩極化模糊"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:754
+#, fuzzy
+msgctxt "*"
+msgid "映り込み強さ"
+msgstr "反射強度"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:755
+#, fuzzy
+msgctxt "*"
+msgid "ハイライト強さ"
+msgstr "高光強度"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:865
+#, fuzzy
+msgctxt "*"
+msgid "髪色"
+msgstr "髮色"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:866
+#, fuzzy
+msgctxt "*"
+msgid "天使の輪の強さ"
+msgstr "天使光環強度"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1008
+#, fuzzy
+msgctxt "*"
+msgid "ぼかしタイプ"
+msgstr "模糊類型"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1009
+#, fuzzy
+msgctxt "*"
+msgid "ぼかし強度"
+msgstr "模糊強度"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1010
+#, fuzzy
+msgctxt "*"
+msgid "正規化"
+msgstr "正規化"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1011
+#, fuzzy
+msgctxt "*"
+msgid "余白を透過"
+msgstr "透明邊距"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1177
+#, fuzzy
+msgctxt "*"
+msgid "範囲"
+msgstr "範圍"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1295 misc_RENDER_PT_bake.py:1320
+#, fuzzy
+msgctxt "*"
+msgid "比較対象"
+msgstr "比較對象"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1650
+#, fuzzy
+msgctxt "*"
+msgid "テクスチャサイズ"
+msgstr "紋理尺寸"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:74 misc_RENDER_PT_bake.py:149
+#: misc_RENDER_PT_bake.py:235 misc_RENDER_PT_bake.py:335
+#: misc_RENDER_PT_bake.py:441 misc_RENDER_PT_bake.py:557
+#: misc_RENDER_PT_bake.py:674 misc_RENDER_PT_bake.py:774
+#: misc_RENDER_PT_bake.py:892 misc_RENDER_PT_bake.py:1031
+#: misc_RENDER_PT_bake.py:1197 misc_RENDER_PT_bake.py:1315
+#: misc_RENDER_PT_bake.py:1458 misc_RENDER_PT_bake.py:1562
+#: misc_RENDER_PT_bake.py:1670
+#, fuzzy
+msgctxt "*"
+msgid "新規画像設定"
+msgstr "新圖像設定"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:154 misc_RENDER_PT_bake.py:342
+#: misc_RENDER_PT_bake.py:902
+#, fuzzy
+msgctxt "*"
+msgid "AO設定"
+msgstr "AO設定"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:240
+#, fuzzy
+msgctxt "*"
+msgid "擬似AO設定"
+msgstr "偽AO設定"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:340 misc_RENDER_PT_bake.py:900
+#, fuzzy
+msgctxt "*"
+msgid "ヘミライト設定"
+msgstr "半球光設定"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:446
+#, fuzzy
+msgctxt "*"
+msgid "光源設定"
+msgstr "光源設定"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:565
+#, fuzzy
+msgctxt "*"
+msgid "しきい値"
+msgstr "閾值"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:566
+#, fuzzy
+msgctxt "*"
+msgid "ぼかし"
+msgstr "模糊"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:779
+#, fuzzy
+msgctxt "*"
+msgid "金属設定"
+msgstr "金屬設定"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:897
+#, fuzzy
+msgctxt "*"
+msgid "ヘアー設定"
+msgstr "頭髮設定"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1036
+#, fuzzy
+msgctxt "*"
+msgid "縁設定"
+msgstr "邊緣設定"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:41
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトに素早くベイク用の空の画像を用意します"
+msgstr "為活動物件快速準備用於烘焙的空白圖像"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:108
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトに素早くAOをベイクします"
+msgstr "為活動物件快速烘焙AO"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:196
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトに素早く擬似AOをベイクします"
+msgstr "為活動物件快速烘焙偽AO"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:296
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトに素早くヘミライトの陰をベイクします"
+msgstr "為活動物件快速烘焙半球光陰影"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:405
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトに素早く影をベイクします"
+msgstr "為活動物件快速烘焙陰影"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:521
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトに素早く側面陰をベイクします"
+msgstr "為活動物件快速烘焙側面陰影"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:642
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトに素早くグラデーションをベイクします"
+msgstr "為活動物件快速烘焙漸變"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:738
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトに素早く金属風にベイクします"
+msgstr "為活動物件快速烘焙金屬風格"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:850
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトに素早くCM3D2の髪風のテクスチャをベイクします"
+msgstr "為活動物件快速烘焙CM3D2頭髮風格紋理"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:983
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトに素早くUVの縁を黒くベイクします"
+msgstr "為活動物件快速烘焙UV邊緣為黑色"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1162
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトに素早くメッシュの縁を黒くベイクします"
+msgstr "為活動物件快速烘焙網格邊緣為黑色"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1276
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトに素早く密度をベイクします"
+msgstr "為活動物件快速烘焙密度"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1425
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトに他オブジェクトとの距離をベイクします"
+msgstr "為活動物件烘焙與其他物件的距離"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1529
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトに膨らんでいる部分を白くベイクします"
+msgstr "為活動物件烘焙膨脹部分為白色"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1635
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトに白い液体をベイクします"
+msgstr "為活動物件烘焙白色液體"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:70
+#, fuzzy
+msgctxt "*"
+msgid " Bake"
+msgstr " 烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:124
+#, fuzzy
+msgctxt "*"
+msgid "レイトレース"
+msgstr "光線追蹤"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:125
+#, fuzzy
+msgctxt "*"
+msgid "近似(AAO)"
+msgstr "近似(AAO)"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:145
+#, fuzzy
+msgctxt "*"
+msgid " AO Bake"
+msgstr " AO烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:231
+#, fuzzy
+msgctxt "*"
+msgid " Dirty AO Bake"
+msgstr " 髒污AO烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:331
+#, fuzzy
+msgctxt "*"
+msgid " Hemi Bake"
+msgstr " 半球光烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:437
+#, fuzzy
+msgctxt "*"
+msgid " Shadow Bake"
+msgstr " 陰影烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:553
+#, fuzzy
+msgctxt "*"
+msgid " SideShade Bake"
+msgstr " 側面陰影烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:670
+#, fuzzy
+msgctxt "*"
+msgid " Gradation Bake"
+msgstr " 漸變烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:770
+#, fuzzy
+msgctxt "*"
+msgid " Metal Bake"
+msgstr " 金屬烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:888
+#, fuzzy
+msgctxt "*"
+msgid " Hair Bake"
+msgstr " 頭髮烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:999
+#, fuzzy
+msgctxt "*"
+msgid "フラット"
+msgstr "平面"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1000
+#, fuzzy
+msgctxt "*"
+msgid "テント"
+msgstr "帳篷"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1001
+#, fuzzy
+msgctxt "*"
+msgid "二次式"
+msgstr "二次式"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1002
+#, fuzzy
+msgctxt "*"
+msgid "三次式"
+msgstr "三次式"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1003
+#, fuzzy
+msgctxt "*"
+msgid "ガウシアン"
+msgstr "高斯"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1004
+#, fuzzy
+msgctxt "*"
+msgid "高速ガウシアン"
+msgstr "快速高斯"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1027
+#, fuzzy
+msgctxt "*"
+msgid " UV Border Bake"
+msgstr " UV邊界烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1193
+#, fuzzy
+msgctxt "*"
+msgid " Mesh Border Bake"
+msgstr " 網格邊界烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1293
+#, fuzzy
+msgctxt "*"
+msgid "パーツごと"
+msgstr "按部件"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1311
+#, fuzzy
+msgctxt "*"
+msgid " Density Bake"
+msgstr " 密度烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1454
+#, fuzzy
+msgctxt "*"
+msgid " Mesh Distance Bake"
+msgstr " 網格距離烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1558
+#, fuzzy
+msgctxt "*"
+msgid " Bulge Bake"
+msgstr " 膨脹烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_bake.py:1666
+#, fuzzy
+msgctxt "*"
+msgid " Semen Bake"
+msgstr " 精液烘焙"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:18
+#, fuzzy
+msgctxt "Operator"
+msgid "CM3D2メニュー用のアイコンをレンダリング"
+msgstr "渲染CM3D2選單圖示"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:26 misc_VIEW3D_PT_tools_weightpaint.py:70
+#: misc_VIEW3D_PT_tools_weightpaint.py:292
+#, fuzzy
+msgctxt "*"
+msgid "モード"
+msgstr "模式"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:28
+#, fuzzy
+msgctxt "*"
+msgid "輪郭線を描画"
+msgstr "繪製輪廓線"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:29
+#, fuzzy
+msgctxt "*"
+msgid "線の太さ"
+msgstr "線條粗細"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:30
+#, fuzzy
+msgctxt "*"
+msgid "線の色"
+msgstr "線條顏色"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:32
+#, fuzzy
+msgctxt "*"
+msgid "解像度"
+msgstr "解析度"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:33 misc_RENDER_PT_render.py:94
+#, fuzzy
+msgctxt "*"
+msgid "カメラ角度"
+msgstr "攝影機角度"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:34
+#, fuzzy
+msgctxt "*"
+msgid "カメラ移動"
+msgstr "攝影機移動"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:35
+#, fuzzy
+msgctxt "*"
+msgid "ズーム倍率"
+msgstr "縮放倍率"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:37
+#, fuzzy
+msgctxt "*"
+msgid "背景を使用"
+msgstr "使用背景"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:38
+#, fuzzy
+msgctxt "*"
+msgid "背景色"
+msgstr "背景顏色"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:39
+#, fuzzy
+msgctxt "*"
+msgid "隅を丸める"
+msgstr "圓角"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:41
+#, fuzzy
+msgctxt "*"
+msgid "重ねる画像"
+msgstr "疊加圖像"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:82
+#, fuzzy
+msgctxt "*"
+msgid "テクスチャ参照方法"
+msgstr "紋理參考方法"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:88
+#, fuzzy
+msgctxt "*"
+msgid "輪郭線"
+msgstr "輪廓線"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:19
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2内のアイコン画像に使用できそうな画像をレンダリングします"
+msgstr "渲染CM3D2中可用作圖示的圖像"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:23
+#, fuzzy
+msgctxt "*"
+msgid "面のテクスチャで"
+msgstr "以面紋理"
+
+#. mt:gemini
+#: misc_RENDER_PT_render.py:24
+#, fuzzy
+msgctxt "*"
+msgid "今のマテリアルで"
+msgstr "以當前材質"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:18 misc_TEXTURE_PT_context_texture.py:32
+#: misc_TEXTURE_PT_context_texture.py:46 misc_TEXTURE_PT_context_texture.py:62
+#, fuzzy
+msgctxt "*"
+msgid "値リスト"
+msgstr "值列表"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:115
+#, fuzzy
+msgctxt "Operator"
+msgid "テクスチャを探す"
+msgstr "尋找紋理"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:149
+#, fuzzy
+msgctxt "Operator"
+msgid "設定をプレビューに同期"
+msgstr "同步設定至預覽"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:172
+#, fuzzy
+msgctxt "Operator"
+msgid "トゥーンを選択"
+msgstr "選擇卡通"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:220
+#, fuzzy
+msgctxt "Operator"
+msgid "イメージの再読込み"
+msgstr "重新載入圖像"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:243
+#, fuzzy
+msgctxt "Operator"
+msgid "色設定値を自動設定"
+msgstr "自動設定顏色值"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:410
+#, fuzzy
+msgctxt "Operator"
+msgid "色設定値を設定"
+msgstr "設定顏色值"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:433
+#, fuzzy
+msgctxt "Operator"
+msgid "設定値を設定"
+msgstr "設定值"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:461
+#, fuzzy
+msgctxt "Operator"
+msgid "テクスチャのオフセットをリセット"
+msgstr "重設紋理偏移"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:478
+#, fuzzy
+msgctxt "Operator"
+msgid "テクスチャのスケールをリセット"
+msgstr "重設紋理縮放"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:495
+#, fuzzy
+msgctxt "Operator"
+msgid "CM3D2パスを設定"
+msgstr "設定CM3D2路徑"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:511
+#, fuzzy
+msgctxt "Operator"
+msgid "イメージ名から拡張子を除外"
+msgstr "從圖像名稱中排除副檔名"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:526
+#, fuzzy
+msgctxt "*"
+msgid "toon tex 選択"
+msgstr "卡通紋理選擇"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:247
+#, fuzzy
+msgctxt "*"
+msgid "全てが対象"
+msgstr "全部為對象"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:248
+#, fuzzy
+msgctxt "*"
+msgid "彩度の乗算値"
+msgstr "飽和度乘數"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:249
+#, fuzzy
+msgctxt "*"
+msgid "明度の乗算値"
+msgstr "亮度乘數"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:213
+#, python-format, fuzzy
+msgctxt "*"
+msgid "ノード({})のテクスチャを再設定しました。filepath={}"
+msgstr "已重新設定節點({})的紋理。檔案路徑={}"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:236
+#, python-format, fuzzy
+msgctxt "*"
+msgid "対象のイメージが見つかりません={}"
+msgstr "找不到目標圖像={}"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:139
+#, python-format, fuzzy
+msgctxt "*"
+msgid "テクスチャファイルが見つかりませんでした。file={}"
+msgstr "找不到紋理檔案。檔案={}"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:139
+#, fuzzy
+msgctxt "*"
+msgid "イメージが設定されていません。"
+msgstr "未設定圖像。"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:191
+#, python-format, fuzzy
+msgctxt "*"
+msgid "対象のノードが見つかりません={}"
+msgstr "找不到目標節點={}"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:381
+#, python-format, fuzzy
+msgctxt "*"
+msgid "イメージの取得に失敗しました。{}"
+msgstr "圖像取得失敗。{}"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:135
+#, python-format, fuzzy
+msgctxt "*"
+msgid "テクスチャファイルを読み込みました。file={}"
+msgstr "已載入紋理檔案。檔案={}"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:91
+#, fuzzy
+msgctxt "*"
+msgid "指定の画像をUV/画像エディターに表示します"
+msgstr "在UV/圖像編輯器中顯示指定圖像"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:150
+#, fuzzy
+msgctxt "*"
+msgid "設定値をテクスチャのプレビューに適用してわかりやすくします"
+msgstr "將設定值應用於紋理預覽以使其更清晰"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:173
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2にデフォルトで入っているトゥーンテクスチャを選択できます"
+msgstr "可選擇CM3D2內建的卡通紋理"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:221
+#, fuzzy
+msgctxt "*"
+msgid "実ファイルパスの設定から、再読込み"
+msgstr "從實際檔案路徑設定重新載入"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:244
+#, fuzzy
+msgctxt "*"
+msgid "色関係の設定値をテクスチャの色情報から自動で設定します"
+msgstr "從紋理顏色資訊自動設定顏色相關值"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:373
+#, fuzzy
+msgctxt "*"
+msgid "テクスチャの画像を同フォルダにtexとして保存します"
+msgstr "將紋理圖像保存為tex檔案到相同資料夾"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:411
+#, fuzzy
+msgctxt "*"
+msgid "色タイプの設定値を設定します"
+msgstr "設定顏色類型的值"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:434
+#, fuzzy
+msgctxt "*"
+msgid "floatタイプの設定値を設定します"
+msgstr "設定浮點類型的值"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:462
+#, fuzzy
+msgctxt "*"
+msgid "テクスチャのオフセットに初期値(0, 0)を設定します"
+msgstr "將紋理偏移設定為初始值(0, 0)"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:479
+#, fuzzy
+msgctxt "*"
+msgid "テクスチャのスケールに初期値(1, 1)を設定します"
+msgstr "將紋理縮放設定為初始值(1, 1)"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:496
+#, fuzzy
+msgctxt "*"
+msgid "texタイプのCM3D2パスを自動設定します"
+msgstr "自動設定tex類型的CM3D2路徑"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:512
+#, fuzzy
+msgctxt "*"
+msgid "texタイプのイメージ名から拡張子を除外します"
+msgstr "從tex類型的圖像名稱中排除副檔名"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:100
+#, fuzzy
+msgctxt "*"
+msgid "指定された画像が見つかりません"
+msgstr "找不到指定圖像"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:107
+#, fuzzy
+msgctxt "*"
+msgid "画像を表示できるエリアが見つかりませんでした"
+msgstr "找不到可顯示圖像的區域"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:142
+#, fuzzy
+msgctxt "*"
+msgid "テクスチャノードが見つからないため、スキップしました。"
+msgstr "找不到紋理節點，已跳過。"
+
+#. mt:gemini
+#: misc_TEXTURE_PT_context_texture.py:403
+#, fuzzy
+msgctxt "*"
+msgid "同フォルダにtexとして保存しました。"
+msgstr "已保存為tex檔案到相同資料夾。"
+
+#. mt:gemini
+#: misc_TEXT_HT_header.py:57
+#, fuzzy
+msgctxt "Operator"
+msgid "テキストを表示"
+msgstr "顯示文字"
+
+#. mt:gemini
+#: misc_TEXT_HT_header.py:75
+#, fuzzy
+msgctxt "Operator"
+msgid "テキストのボーン情報をコピー"
+msgstr "複製文字骨骼資訊"
+
+#. mt:gemini
+#: misc_TEXT_HT_header.py:104
+#, fuzzy
+msgctxt "Operator"
+msgid "テキストのボーン情報を貼付け"
+msgstr "貼上文字骨骼資訊"
+
+#. mt:gemini
+#: misc_TEXT_HT_header.py:148
+#, fuzzy
+msgctxt "Operator"
+msgid "マテリアル情報テキストを全削除"
+msgstr "刪除所有材質資訊文字"
+
+#. mt:gemini
+#: misc_TEXT_HT_header.py:12
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2用:"
+msgstr "CM3D2用："
+
+#. mt:gemini
+#: misc_TEXT_HT_header.py:61
+#, fuzzy
+msgctxt "*"
+msgid "テキスト名"
+msgstr "文字名稱"
+
+#. mt:gemini
+#: misc_TEXT_HT_header.py:152
+#, fuzzy
+msgctxt "*"
+msgid "使用する分は保管"
+msgstr "保留使用部分"
+
+#. mt:gemini
+#: misc_TEXT_HT_header.py:58
+#, fuzzy
+msgctxt "*"
+msgid "指定したテキストをこの領域に表示します"
+msgstr "在此區域顯示指定文字"
+
+#. mt:gemini
+#: misc_TEXT_HT_header.py:76
+#, fuzzy
+msgctxt "*"
+msgid "テキストのボーン情報をカスタムプロパティへ貼付ける形にしてクリップボードにコピーします"
+msgstr "將文字骨骼資訊以貼上到自訂屬性的形式複製到剪貼簿"
+
+#. mt:gemini
+#: misc_TEXT_HT_header.py:105
+#, fuzzy
+msgctxt "*"
+msgid "クリップボード内のボーン情報をテキストデータに貼付けます"
+msgstr "將剪貼簿中的骨骼資訊貼上到文字資料"
+
+#. mt:gemini
+#: misc_TEXT_HT_header.py:149
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2で使用できるマテリアルテキストを全て削除します"
+msgstr "刪除所有CM3D2可用的材質文字"
+
+#. mt:gemini
+#: misc_TEXT_MT_templates.py:19
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2 Converter (third-party)"
+msgstr "CM3D2轉換器（第三方）"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_edit_mesh_specials.py:21
+#: misc_VIEW3D_MT_edit_mesh_specials.py:14
+#, fuzzy
+msgctxt "Operator"
+msgid "選択面の描画順を最前面に"
+msgstr "將選定面的繪製順序移至最前面"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_edit_mesh_specials.py:25
+#, fuzzy
+msgctxt "*"
+msgid "最背面"
+msgstr "最背面"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_edit_mesh_specials.py:15
+#, fuzzy
+msgctxt "Operator"
+msgid "選択面の描画順を最背面に"
+msgstr "將選定面的繪製順序移至最背面"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_edit_mesh_specials.py:22
+#, fuzzy
+msgctxt "*"
+msgid "選択中の面の描画順を最も前面/背面に並び替えます"
+msgstr "重新排列選定面的繪製順序至最前面/最背面"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_edit_mesh_split.py:16
+#, fuzzy
+msgctxt "Operator"
+msgid "Split Sharp Edges"
+msgstr "分割銳利邊緣"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_edit_mesh_split.py:17
+#, fuzzy
+msgctxt "*"
+msgid "Split all edges marked as sharp"
+msgstr "分割所有標記為銳利的邊緣"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:24
+#, fuzzy
+msgctxt "Operator"
+msgid "Transfer Pose"
+msgstr "傳輸姿勢"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:281
+#, fuzzy
+msgctxt "Operator"
+msgid "現在のポーズで素体化"
+msgstr "以當前姿勢素體化"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:289
+#, fuzzy
+msgctxt "Operator"
+msgid "元の素体ポーズに戻す"
+msgstr "恢復到原始素體姿勢"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:368
+#, fuzzy
+msgctxt "Operator"
+msgid "Original Rest"
+msgstr "原始靜止"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:377
+#, fuzzy
+msgctxt "Operator"
+msgid "Current Rest"
+msgstr "目前靜止"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:29
+#, fuzzy
+msgctxt "*"
+msgid "Key Location"
+msgstr "關鍵位置"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:30
+#, fuzzy
+msgctxt "*"
+msgid "Key Rotation"
+msgstr "關鍵旋轉"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:31
+#, fuzzy
+msgctxt "*"
+msgid "Key Scale"
+msgstr "關鍵縮放"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:135
+#, fuzzy
+msgctxt "*"
+msgid "関係するメッシュのアーマチュアを適用"
+msgstr "應用相關網格的骨架"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:136 model_export.py:51
+#, fuzzy
+msgctxt "*"
+msgid "Ensure shape key values of child mesh objects are not changed"
+msgstr "確保子網格物件的形狀鍵值不被更改"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:138
+#, fuzzy
+msgctxt "*"
+msgid "配置するキーフレームの範囲"
+msgstr "放置關鍵影格的範圍"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:138
+#, fuzzy
+msgctxt "*"
+msgid "比較用に元のレストポーズと交互に配置するキーフレームの範囲"
+msgstr "用於比較，將原始靜止姿勢和當前姿勢交替放置的關鍵影格範圍"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:25
+#, fuzzy
+msgctxt "*"
+msgid "Transfers the visual pose of the selected object to the active object"
+msgstr "將選定物件的視覺姿勢傳輸到活動物件"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:282
+#, fuzzy
+msgctxt "*"
+msgid "現在のポーズで衣装をモデリングしやすくする素体を作成します"
+msgstr "以當前姿勢創建素體，使其更容易建模服裝"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:290
+#, fuzzy
+msgctxt "*"
+msgid "カスタムプロパティのボーン情報を元に最初の素体ポーズを復元します"
+msgstr "根據自訂屬性中的骨骼資訊恢復到初始素體姿勢"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:369
+#, fuzzy
+msgctxt "*"
+msgid "Moves to original rest pose frame"
+msgstr "移動到原始靜止姿勢影格"
+
+#. mt:gemini
+#: misc_VIEW3D_MT_pose_apply.py:378
+#, fuzzy
+msgctxt "*"
+msgid "Moves to current rest pose frame"
+msgstr "移動到目前靜止姿勢影格"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:16
+#, fuzzy
+msgctxt "*"
+msgid "ポーズ素体化"
+msgstr "姿勢素體化"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:78
+#, fuzzy
+msgctxt "Operator"
+msgid "Set Active Pose"
+msgstr "設定啟用姿勢"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:62
+#, fuzzy
+msgctxt "*"
+msgid "ポーズ種別"
+msgstr "姿勢類型"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:67
+#, fuzzy
+msgctxt "*"
+msgid "適用方法"
+msgstr "應用方法"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:68
+#, fuzzy
+msgctxt "*"
+msgid "適用と同時に再生する"
+msgstr "應用並同時播放"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:101
+#, fuzzy
+msgctxt "*"
+msgid "アーマチュアを選択してください"
+msgstr "請選擇骨架"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:127 misc_VIEW3D_PT_pose_change.py:131
+#: misc_VIEW3D_PT_pose_change.py:134
+#, fuzzy
+msgctxt "*"
+msgid "ポーズ選択"
+msgstr "姿勢選擇"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:80
+#, fuzzy
+msgctxt "*"
+msgid "ポーズを適用します"
+msgstr "應用姿勢"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:58
+#, fuzzy
+msgctxt "*"
+msgid "スタンス"
+msgstr "站姿"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:59
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2ポーズ"
+msgstr "CM3D2姿勢"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:60
+#, fuzzy
+msgctxt "*"
+msgid "MyPose"
+msgstr "我的姿勢"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:64
+#, fuzzy
+msgctxt "*"
+msgid "アニメーション"
+msgstr "動畫"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:64
+#, fuzzy
+msgctxt "*"
+msgid "アニメーションをインポートします。オブジェクトに既存アニメーションがあれば差し替えます。"
+msgstr "匯入動畫。如果物件存在現有動畫，將會替換。"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:65
+#, fuzzy
+msgctxt "*"
+msgid "ポーズ"
+msgstr "姿勢"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:65
+#, fuzzy
+msgctxt "*"
+msgid "アニメーションの初期フレームをポーズとして取り込みます。既存アニメーションがあっても影響ありませんが再生すると取り込んだポーズは失われます。"
+msgstr "將動畫的初始影格作為姿勢匯入。即使存在現有動畫也不受影響，但播放後匯入的姿勢將會遺失。"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:106
+#, fuzzy
+msgctxt "*"
+msgid "選択オブジェクトに素体ポーズ変更されているものがあります。元の素体ポーズでないと利用できません。"
+msgstr "選定物件中存在已更改素體姿勢的物件。必須是原始素體姿勢才能使用。"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:158
+#, fuzzy
+msgctxt "*"
+msgid "D-Stance"
+msgstr "D型站姿"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:159
+#, fuzzy
+msgctxt "*"
+msgid "T-Stance"
+msgstr "T型站姿"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_pose_change.py:160
+#, fuzzy
+msgctxt "*"
+msgid "A-Stance"
+msgstr "A型站姿"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:22
+#, fuzzy
+msgctxt "Operator"
+msgid "選択部の頂点グループをぼかす"
+msgstr "模糊選定部分的頂點組"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:251
+#, fuzzy
+msgctxt "Operator"
+msgid "選択部の頂点グループに四則演算"
+msgstr "對選定部分的頂點組進行四則運算"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:14
+#, fuzzy
+msgctxt "*"
+msgid "頂点選択モード"
+msgstr "頂點選擇模式"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:15
+#, fuzzy
+msgctxt "Operator"
+msgid "選択部をぼかす"
+msgstr "模糊選定部分"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:16
+#, fuzzy
+msgctxt "Operator"
+msgid "選択部に四則演算"
+msgstr "對選定部分進行四則運算"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:32
+#: misc_VIEW3D_PT_tools_weightpaint.py:261
+#, fuzzy
+msgctxt "*"
+msgid "選択をぼかす範囲倍率"
+msgstr "模糊選定範圍倍率"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:33
+#: misc_VIEW3D_PT_tools_weightpaint.py:262
+#, fuzzy
+msgctxt "*"
+msgid "選択をぼかす分割精度"
+msgstr "模糊選定分割精確度"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:39
+#: misc_VIEW3D_PT_tools_weightpaint.py:267
+#, fuzzy
+msgctxt "*"
+msgid "対象頂点グループ"
+msgstr "目標頂點組"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:45
+#, fuzzy
+msgctxt "*"
+msgid "ぼかしモード"
+msgstr "模糊模式"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:46
+#, fuzzy
+msgctxt "*"
+msgid "ウェイトをぼかす範囲倍率"
+msgstr "模糊權重範圍倍率"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:47
+#, fuzzy
+msgctxt "*"
+msgid "ウェイトをぼかす回数"
+msgstr "模糊權重次數"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:48
+#, fuzzy
+msgctxt "*"
+msgid "ウェイト数を4つに制限"
+msgstr "限制權重數量為4"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:274
+#, fuzzy
+msgctxt "*"
+msgid "四則演算モード"
+msgstr "四則運算模式"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:64
+#: misc_VIEW3D_PT_tools_weightpaint.py:285
+#, fuzzy
+msgctxt "*"
+msgid "選択をぼかす"
+msgstr "模糊選定"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:65
+#: misc_VIEW3D_PT_tools_weightpaint.py:71
+#: misc_VIEW3D_PT_tools_weightpaint.py:287
+#, fuzzy
+msgctxt "*"
+msgid "範囲 | 辺の長さの平均×"
+msgstr "範圍 | 邊長平均 ×"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:66
+#: misc_VIEW3D_PT_tools_weightpaint.py:288
+#, fuzzy
+msgctxt "*"
+msgid "精度 (分割数)"
+msgstr "精確度 (分割數)"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:68
+#, fuzzy
+msgctxt "*"
+msgid "頂点グループをぼかす"
+msgstr "模糊頂點組"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:69
+#: misc_VIEW3D_PT_tools_weightpaint.py:291
+#, fuzzy
+msgctxt "*"
+msgid "対象グループ"
+msgstr "目標組"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:72
+#, fuzzy
+msgctxt "*"
+msgid "実行回数"
+msgstr "執行次數"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:290
+#, fuzzy
+msgctxt "*"
+msgid "四則演算"
+msgstr "四則運算"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:23
+#, fuzzy
+msgctxt "*"
+msgid "選択メッシュの頂点グループの割り当てをぼかします"
+msgstr "模糊選定網格的頂點組分配"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:252
+#, fuzzy
+msgctxt "*"
+msgid "選択メッシュの頂点グループの割り当てに四則演算を施します"
+msgstr "對選定網格的頂點組分配進行四則運算"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:295
+#, fuzzy
+msgctxt "*"
+msgid "式： 元のウェイト "
+msgstr "公式：原始權重 "
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:27
+#: misc_VIEW3D_PT_tools_weightpaint.py:256
+#, fuzzy
+msgctxt "*"
+msgid "リニア"
+msgstr "線性"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:28
+#: misc_VIEW3D_PT_tools_weightpaint.py:257
+#, fuzzy
+msgctxt "*"
+msgid "スムーズ"
+msgstr "平滑"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:41
+#, fuzzy
+msgctxt "*"
+msgid "通常・ぼかし"
+msgstr "正常・模糊"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:42
+#, fuzzy
+msgctxt "*"
+msgid "増加・拡張"
+msgstr "增加・擴展"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:43
+#, fuzzy
+msgctxt "*"
+msgid "減少・縮小"
+msgstr "減少・縮小"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:269
+#, fuzzy
+msgctxt "*"
+msgid "加算"
+msgstr "加法"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:270
+#, fuzzy
+msgctxt "*"
+msgid "減算"
+msgstr "減法"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:271
+#, fuzzy
+msgctxt "*"
+msgid "乗算"
+msgstr "乘法"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:272
+#, fuzzy
+msgctxt "*"
+msgid "除算"
+msgstr "除法"
+
+#. mt:gemini
+#: misc_VIEW3D_PT_tools_weightpaint.py:312
+#, fuzzy
+msgctxt "*"
+msgid "0で除算することはできません、中止します"
+msgstr "不能除以0，已中止"
+
+#. mt:gemini
+#: model_export.py:20 model_import.py:21
+#, fuzzy
+msgctxt "Operator"
+msgid "CM3D2モデル (.model)"
+msgstr "CM3D2模型 (.model)"
+
+#. mt:gemini
+#: model_export.py:40
+#, fuzzy
+msgctxt "*"
+msgid "model名"
+msgstr "模型名稱"
+
+#. mt:gemini
+#: model_export.py:41
+#, fuzzy
+msgctxt "*"
+msgid "基点ボーン名"
+msgstr "基準骨骼名稱"
+
+#. mt:gemini
+#: model_export.py:49 model_export.py:199
+#, fuzzy
+msgctxt "*"
+msgid "ボーン情報元"
+msgstr "骨骼資訊來源"
+
+#. mt:gemini
+#: model_export.py:49
+#, fuzzy
+msgctxt "*"
+msgid "modelファイルに必要なボーン情報をどこから引っ張ってくるか選びます"
+msgstr "選擇從何處獲取模型檔案所需的骨骼資訊"
+
+#. mt:gemini
+#: model_export.py:50
+#, fuzzy
+msgctxt "*"
+msgid "元の素体ポーズに一時的に戻す"
+msgstr "暫時恢復到原始素體姿勢"
+
+#. mt:gemini
+#: model_export.py:50
+#, fuzzy
+msgctxt "*"
+msgid "素体化処理によって素体ポーズが変更されている場合、一時的に元の素体ポーズに戻してからエクスポートします"
+msgstr "如果素體姿勢因素體化處理而改變，將暫時恢復到原始素體姿勢後再匯出"
+
+#. mt:gemini
+#: model_export.py:58 model_export.py:202
+#, fuzzy
+msgctxt "*"
+msgid "マテリアル情報元"
+msgstr "材質資訊來源"
+
+#. mt:gemini
+#: model_export.py:58
+#, fuzzy
+msgctxt "*"
+msgid "modelファイルに必要なマテリアル情報をどこから引っ張ってくるか選びます"
+msgstr "選擇從何處獲取模型檔案所需的材質資訊"
+
+#. mt:gemini
+#: model_export.py:60
+#, fuzzy
+msgctxt "*"
+msgid "データ名の連番を削除"
+msgstr "刪除資料名稱的序號"
+
+#. mt:gemini
+#: model_export.py:60
+#, fuzzy
+msgctxt "*"
+msgid "「○○.001」のような連番が付属したデータ名からこれらを削除します"
+msgstr "從附帶「○○.001」等序號的資料名稱中刪除這些內容"
+
+#. mt:gemini
+#: model_export.py:62
+#, fuzzy
+msgctxt "*"
+msgid "Align to Base Bone"
+msgstr "對齊到基礎骨骼"
+
+#. mt:gemini
+#: model_export.py:62
+#, fuzzy
+msgctxt "*"
+msgid "Align the object to it's base bone"
+msgstr "將物件對齊到其基礎骨骼"
+
+#. mt:gemini
+#: model_export.py:63
+#, fuzzy
+msgctxt "*"
+msgid "四角面を三角面に"
+msgstr "將四邊面轉換為三角面"
+
+#. mt:gemini
+#: model_export.py:63
+#, fuzzy
+msgctxt "*"
+msgid "四角ポリゴンを三角ポリゴンに変換してから出力します、元のメッシュには影響ありません"
+msgstr "將四邊形多邊形轉換為三角形多邊形後再匯出，不會影響原始網格"
+
+#. mt:gemini
+#: model_export.py:64
+#, fuzzy
+msgctxt "*"
+msgid "Split Sharp Edges"
+msgstr "分割銳利邊緣"
+
+#. mt:gemini
+#: model_export.py:64
+#, fuzzy
+msgctxt "*"
+msgid "Split all edges marked as sharp."
+msgstr "分割所有標記為銳利的邊緣。"
+
+#. mt:gemini
+#: model_export.py:65
+#, fuzzy
+msgctxt "*"
+msgid "ウェイトの合計を1.0に"
+msgstr "將權重總和設為1.0"
+
+#. mt:gemini
+#: model_export.py:65
+#, fuzzy
+msgctxt "*"
+msgid "4つのウェイトの合計値が1.0になるように正規化します"
+msgstr "將4個權重的值正規化，使其總和為1.0"
+
+#. mt:gemini
+#: model_export.py:66
+#, fuzzy
+msgctxt "*"
+msgid "頂点グループ名をCM3D2用に変換"
+msgstr "將頂點群組名稱轉換為CM3D2格式"
+
+#. mt:gemini
+#: model_export.py:66
+#, fuzzy
+msgctxt "*"
+msgid "全ての頂点グループ名をCM3D2で使える名前にしてからエクスポートします"
+msgstr "將所有頂點群組名稱轉換為CM3D2可用的名稱後再匯出"
+
+#. mt:gemini
+#: model_export.py:67
+#, fuzzy
+msgctxt "*"
+msgid "クリーンな頂点グループ"
+msgstr "清理頂點群組"
+
+#. mt:gemini
+#: model_export.py:67
+#, fuzzy
+msgctxt "*"
+msgid "重みがゼロの場合、頂点グループから頂点を削除します"
+msgstr "如果權重為零，則從頂點群組中刪除頂點"
+
+#. mt:gemini
+#: model_export.py:69
+#, fuzzy
+msgctxt "*"
+msgid "バッチモード"
+msgstr "批次模式"
+
+#. mt:gemini
+#: model_export.py:69
+#, fuzzy
+msgctxt "*"
+msgid "モードの切替やエラー個所の選択を行いません"
+msgstr "不切換模式或選擇錯誤位置"
+
+#. mt:gemini
+#: model_export.py:71
+#, fuzzy
+msgctxt "*"
+msgid "接空間情報出力"
+msgstr "匯出切線空間資訊"
+
+#. mt:gemini
+#: model_export.py:71
+#, fuzzy
+msgctxt "*"
+msgid "接空間情報(binormals, tangents)を出力する"
+msgstr "匯出切線空間資訊（副法線、切線）"
+
+#. mt:gemini
+#: model_export.py:73
+#, fuzzy
+msgctxt "*"
+msgid "Shape Key Threshold"
+msgstr "形狀鍵閾值"
+
+#. mt:gemini
+#: model_export.py:73
+#, fuzzy
+msgctxt "*"
+msgid ""
+"Lower values increase accuracy and file size. Higher values truncate small "
+"changes and reduce file size."
+msgstr "較低的值會增加準確性和檔案大小。較高的值會截斷微小變化並減少檔案大小。"
+
+#. mt:gemini
+#: model_export.py:74
+#, fuzzy
+msgctxt "*"
+msgid "Export Shape Key Normals"
+msgstr "匯出形狀鍵法線"
+
+#. mt:gemini
+#: model_export.py:74
+#, fuzzy
+msgctxt "*"
+msgid "Export custom normals for each shape key on export."
+msgstr "匯出時為每個形狀鍵匯出自訂法線。"
+
+#. mt:gemini
+#: model_export.py:75
+#, fuzzy
+msgctxt "*"
+msgid "Shape Key Normals Blend"
+msgstr "形狀鍵法線混合"
+
+#. mt:gemini
+#: model_export.py:75
+#, fuzzy
+msgctxt "*"
+msgid "Adjust the influence of shape keys on custom normals"
+msgstr "調整形狀鍵對自訂法線的影響"
+
+#. mt:gemini
+#: model_export.py:76
+#, fuzzy
+msgctxt "*"
+msgid "Use Shape Key Colors"
+msgstr "使用形狀鍵顏色"
+
+#. mt:gemini
+#: model_export.py:76
+#, fuzzy
+msgctxt "*"
+msgid ""
+"Use the shape key normals stored in the vertex colors instead of calculating"
+" the normals on export. (Recommend disabling if geometry was customized)"
+msgstr "使用儲存在頂點顏色中的形狀鍵法線，而不是在匯出時計算法線。(如果幾何體已自訂，建議停用)"
+
+#. mt:gemini
+#: model_export.py:188
+#, fuzzy
+msgctxt "*"
+msgid "素体ポーズ変更対応"
+msgstr "支援素體姿勢變更"
+
+#. mt:gemini
+#: model_export.py:206
+#, fuzzy
+msgctxt "*"
+msgid "メッシュオプション"
+msgstr "網格選項"
+
+#. mt:gemini
+#: model_export.py:324
+#, python-format, fuzzy
+msgctxt "*"
+msgid "modelのエクスポートが完了しました。{:.2f} 秒 file={}"
+msgstr "模型匯出完成。{:.2f} 秒 檔案={}"
+
+#. mt:gemini
+#: model_export.py:542
+#, python-format, fuzzy
+msgctxt "*"
+msgid "ウェイトの合計が1.0を超えている頂点が見つかりました。正規化してください。超過している頂点の数:{}"
+msgstr "發現權重總和超過1.0的頂點。請正規化。超出頂點數：{}"
+
+#. mt:gemini
+#: model_export.py:544
+#, python-format, fuzzy
+msgctxt "*"
+msgid "ウェイトの合計が1.0未満の頂点が見つかりました。正規化してください。不足している頂点の数:{}"
+msgstr "發現權重總和小於1.0的頂點。請正規化。不足頂點數：{}"
+
+#. mt:gemini
+#: model_export.py:548
+#, python-format, fuzzy
+msgctxt "*"
+msgid "4つを超える頂点グループにある頂点が見つかりました。頂点グループをクリーンアップしてください。不足している頂点の数:{}"
+msgstr "發現存在於4個以上頂點群組的頂點。請清理頂點群組。不足頂點數：{}"
+
+#. mt:gemini
+#: model_export.py:564
+#, python-format, fuzzy
+msgctxt "*"
+msgid "頂点が割り当てられていない{num}つのローカルボーンが見つかりました。 詳細については、ログを参照してください。"
+msgstr "發現{num}個未分配頂點的局部骨骼。詳情請參閱日誌。"
+
+#. mt:gemini
+#: model_export.py:311
+#, python-format, fuzzy
+msgctxt "*"
+msgid "{}個のオブジェクトをマージしました"
+msgstr "已合併{}個物件"
+
+#. mt:gemini
+#: model_export.py:562
+#, python-format, fuzzy
+msgctxt "*"
+msgid ""
+"Could not find whether bone with index {index} was used. See console for "
+"more info."
+msgstr "無法找到索引為 {index} 的骨骼是否被使用。詳情請參閱控制台。"
+
+#. mt:gemini
+#: model_export.py:21
+#, fuzzy
+msgctxt "*"
+msgid "カスタムメイド3D2のmodelファイルを書き出します"
+msgstr "匯出Custom Maid 3D 2的模型檔案"
+
+#. mt:gemini
+#: model_export.py:552
+#, fuzzy
+msgctxt "*"
+msgid "The game will delete these local bones"
+msgstr "遊戲將刪除這些局部骨骼"
+
+#. mt:gemini
+#: model_export.py:45 model_export.py:55 model_import.py:56
+#, fuzzy
+msgctxt "*"
+msgid "テキスト"
+msgstr "文字"
+
+#. mt:gemini
+#: model_export.py:46
+#, fuzzy
+msgctxt "*"
+msgid "オブジェクト内プロパティ"
+msgstr "物件內屬性"
+
+#. mt:gemini
+#: model_export.py:56 model_import.py:106
+#, fuzzy
+msgctxt "*"
+msgid "マテリアル"
+msgstr "材質"
+
+#. mt:gemini
+#: model_export.py:97
+#, fuzzy
+msgctxt "*"
+msgid "アクティブオブジェクトがありません"
+msgstr "沒有作用中物件"
+
+#. mt:gemini
+#: model_export.py:99
+#, fuzzy
+msgctxt "*"
+msgid "メッシュオブジェクトを選択した状態で実行してください"
+msgstr "請在選擇網格物件的狀態下執行"
+
+#. mt:gemini
+#: model_export.py:101
+#, fuzzy
+msgctxt "*"
+msgid "マテリアルがありません"
+msgstr "沒有材質"
+
+#. mt:gemini
+#: model_export.py:112
+#, fuzzy
+msgctxt "*"
+msgid "UVがありません"
+msgstr "沒有UV"
+
+#. mt:gemini
+#: model_export.py:114
+#, fuzzy
+msgctxt "*"
+msgid "エクスポート可能な頂点数を大幅に超えています、最低でも65535未満には削減してください"
+msgstr "匯出頂點數大幅超出限制，請至少削減至65535以下"
+
+#. mt:gemini
+#: model_export.py:440
+#, fuzzy
+msgctxt "*"
+msgid "テキスト「BoneData」に有効なデータがありません"
+msgstr "文字「BoneData」中沒有有效資料"
+
+#. mt:gemini
+#: model_export.py:470
+#, fuzzy
+msgctxt "*"
+msgid "テキスト「LocalBoneData」に有効なデータがありません"
+msgstr "文字「LocalBoneData」中沒有有效資料"
+
+#. mt:gemini
+#: model_export.py:35
+#, fuzzy
+msgctxt "*"
+msgid "determine model version from object properties"
+msgstr "從物件屬性確定模型版本"
+
+#. mt:gemini
+#: model_export.py:36
+#, fuzzy
+msgctxt "*"
+msgid "model version 1000 (available for cm3d2/com3d2)"
+msgstr "模型版本 1000 (適用於 CM3D2/COM3D2)"
+
+#. mt:gemini
+#: model_export.py:37
+#, fuzzy
+msgctxt "*"
+msgid "model version 2000 (com3d2 version)"
+msgstr "模型版本 2000 (COM3D2 版本)"
+
+#. mt:gemini
+#: model_export.py:38
+#, fuzzy
+msgctxt "*"
+msgid "model version 2001 (available only for com3d2)"
+msgstr "模型版本 2001 (僅適用於 COM3D2)"
+
+#. mt:gemini
+#: model_export.py:104
+#, fuzzy
+msgctxt "*"
+msgid "空のマテリアルスロットを削除してください"
+msgstr "請刪除空的材質槽"
+
+#. mt:gemini
+#: model_export.py:376 model_export.py:396
+#, fuzzy
+msgctxt "*"
+msgid "メッシュオブジェクトの親がアーマチュアではありません"
+msgstr "網格物件的父級不是骨架"
+
+#. mt:gemini
+#: model_export.py:446
+#, fuzzy
+msgctxt "*"
+msgid "基点ボーンが存在しません"
+msgstr "基準骨骼不存在"
+
+#. mt:gemini
+#: model_export.py:504
+#, fuzzy
+msgctxt "*"
+msgid "ウェイトが割り当てられていない頂点が見つかりました、中止します"
+msgstr "發現未分配權重的頂點，已中止"
+
+#. mt:gemini
+#: model_export.py:109
+#, fuzzy
+msgctxt "*"
+msgid "マテリアルに「shader1」と「shader2」という名前のカスタムプロパティを用意してください"
+msgstr "請為材質準備名為「shader1」和「shader2」的自訂屬性"
+
+#. mt:gemini
+#: model_export.py:385
+#, fuzzy
+msgctxt "*"
+msgid "テキスト「BoneData」が見つかりません、中止します"
+msgstr "找不到文字「BoneData」，已中止"
+
+#. mt:gemini
+#: model_export.py:387
+#, fuzzy
+msgctxt "*"
+msgid "テキスト「LocalBoneData」が見つかりません、中止します"
+msgstr "找不到文字「LocalBoneData」，已中止"
+
+#. mt:gemini
+#: model_export.py:413
+#, fuzzy
+msgctxt "*"
+msgid "マテリアル情報元のテキストが足りません"
+msgstr "材質資訊來源的文字不足"
+
+#. mt:gemini
+#: model_export.py:381 model_export.py:401
+#, fuzzy
+msgctxt "*"
+msgid "アーマチュアが見つかりません、親にするかモディファイアにして下さい"
+msgstr "找不到骨架，請將其設為父級或修改器"
+
+#. mt:gemini
+#: model_export.py:390 model_export.py:392
+#, fuzzy
+msgctxt "*"
+msgid "オブジェクトのカスタムプロパティにボーン情報がありません"
+msgstr "物件的自訂屬性中沒有骨骼資訊"
+
+#. mt:gemini
+#: model_export.py:408
+#, fuzzy
+msgctxt "*"
+msgid "ボーン情報元のモードがおかしいです"
+msgstr "骨骼資訊來源模式異常"
+
+#. mt:gemini
+#: model_export.py:404 model_export.py:406
+#, fuzzy
+msgctxt "*"
+msgid "アーマチュアのカスタムプロパティにボーン情報がありません"
+msgstr "骨架的自訂屬性中沒有骨骼資訊"
+
+#. mt:gemini
+#: model_import.py:1245
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2 Model Drop Menu"
+msgstr "CM3D2 模型拖放選單"
+
+#. mt:gemini
+#: model_import.py:35
+#, fuzzy
+msgctxt "*"
+msgid "メッシュ生成"
+msgstr "生成網格"
+
+#. mt:gemini
+#: model_import.py:35
+#, fuzzy
+msgctxt "*"
+msgid "ポリゴンを読み込みます、大抵の場合オンでOKです"
+msgstr "讀取多邊形，通常開啟即可"
+
+#. mt:gemini
+#: model_import.py:36
+#, fuzzy
+msgctxt "*"
+msgid "重複頂点を結合"
+msgstr "合併重複頂點"
+
+#. mt:gemini
+#: model_import.py:36
+#, fuzzy
+msgctxt "*"
+msgid "UVの切れ目でポリゴンが分かれている仕様なので、インポート時にくっつけます"
+msgstr "由於UV邊界處多邊形會分離，匯入時會將其連接"
+
+#. mt:gemini
+#: model_import.py:37
+#, fuzzy
+msgctxt "*"
+msgid "シームをつける"
+msgstr "建立縫合邊"
+
+#. mt:gemini
+#: model_import.py:37
+#, fuzzy
+msgctxt "*"
+msgid "UVの切れ目にシームをつけます"
+msgstr "在UV邊界處建立縫合邊"
+
+#. mt:gemini
+#: model_import.py:38
+#, fuzzy
+msgctxt "*"
+msgid ""
+"This will mark removed doubles on your mesh as sharp (or all free edges if "
+"not removing doubles)."
+msgstr "這會將網格上已移除的重複項標記為銳利 (如果未移除重複項，則為所有自由邊緣)。"
+
+#. mt:gemini
+#: model_import.py:40
+#, fuzzy
+msgctxt "*"
+msgid "UV座標の重複頂点を結合"
+msgstr "合併UV座標的重複頂點"
+
+#. mt:gemini
+#: model_import.py:40
+#, fuzzy
+msgctxt "*"
+msgid "UV座標の重複頂点を結合することで、意図しない切れ目がある場合に役立ちます"
+msgstr "透過合併UV座標的重複頂點，有助於處理意外的斷裂處"
+
+#. mt:gemini
+#: model_import.py:42
+#, fuzzy
+msgctxt "*"
+msgid "頂点グループ名をBlender用に変換"
+msgstr "將頂點群組名稱轉換為Blender格式"
+
+#. mt:gemini
+#: model_import.py:42
+#, fuzzy
+msgctxt "*"
+msgid "全ての頂点グループ名をBlenderの左右対称編集で使えるように変換してから読み込みます"
+msgstr "將所有頂點群組名稱轉換為Blender的左右對稱編輯可用名稱後再讀取"
+
+#. mt:gemini
+#: model_import.py:43
+#, fuzzy
+msgctxt "*"
+msgid "頂点グループを名前順ソート"
+msgstr "按名稱排序頂點群組"
+
+#. mt:gemini
+#: model_import.py:43
+#, fuzzy
+msgctxt "*"
+msgid "頂点グループを名前順でソートします"
+msgstr "按名稱排序頂點群組"
+
+#. mt:gemini
+#: model_import.py:44
+#, fuzzy
+msgctxt "*"
+msgid "全ての頂点に割り当てのない頂点グループを削除します"
+msgstr "刪除未分配給任何頂點的頂點群組"
+
+#. mt:gemini
+#: model_import.py:46
+#, fuzzy
+msgctxt "*"
+msgid "テクスチャキャッシュを再構成"
+msgstr "重新建構紋理快取"
+
+#. mt:gemini
+#: model_import.py:46
+#, fuzzy
+msgctxt "*"
+msgid "texファイルを探す際、キャッシュを再構成します"
+msgstr "搜尋tex檔案時，重新建構快取"
+
+#. mt:gemini
+#: model_import.py:48
+#, fuzzy
+msgctxt "*"
+msgid "テキストにマテリアル情報埋め込み"
+msgstr "將材質資訊嵌入文字"
+
+#. mt:gemini
+#: model_import.py:48
+#, fuzzy
+msgctxt "*"
+msgid "シェーダー情報をテキストに埋め込みます"
+msgstr "將著色器資訊嵌入文字"
+
+#. mt:gemini
+#: model_import.py:50
+#, fuzzy
+msgctxt "*"
+msgid "アーマチュア生成"
+msgstr "生成骨架"
+
+#. mt:gemini
+#: model_import.py:50
+#, fuzzy
+msgctxt "*"
+msgid "ウェイトを編集する時に役立つアーマチュアを読み込みます"
+msgstr "讀取有助於編輯權重的骨架"
+
+#. mt:gemini
+#: model_import.py:51
+#, fuzzy
+msgctxt "*"
+msgid "不要なボーンを削除"
+msgstr "刪除不需要的骨骼"
+
+#. mt:gemini
+#: model_import.py:51
+#, fuzzy
+msgctxt "*"
+msgid "ウェイトが無いボーンを削除します"
+msgstr "刪除沒有權重的骨骼"
+
+#. mt:gemini
+#: model_import.py:52
+#, fuzzy
+msgctxt "*"
+msgid "Use Custom Bones"
+msgstr "使用自訂骨骼"
+
+#. mt:gemini
+#: model_import.py:52
+#, fuzzy
+msgctxt "*"
+msgid "Use the currently selected object for custom bone shapes."
+msgstr "使用當前選定的物件作為自訂骨骼形狀。"
+
+#. mt:gemini
+#: model_import.py:53
+#, fuzzy
+msgctxt "*"
+msgid "Use Local Bones"
+msgstr "使用局部骨骼"
+
+#. mt:gemini
+#: model_import.py:53
+#, fuzzy
+msgctxt "*"
+msgid "Use the Local Bone Data for orientation (more accurate)"
+msgstr "使用局部骨骼資料進行定向 (更準確)"
+
+#. mt:gemini
+#: model_import.py:54
+#, fuzzy
+msgctxt "*"
+msgid "アーマチュアを非表示"
+msgstr "隱藏骨架"
+
+#. mt:gemini
+#: model_import.py:56
+#, fuzzy
+msgctxt "*"
+msgid "ボーン情報をテキストとして読み込みます"
+msgstr "將骨骼資訊讀取為文字"
+
+#. mt:gemini
+#: model_import.py:57
+#, fuzzy
+msgctxt "*"
+msgid "オブジェクトのカスタムプロパティ"
+msgstr "物件的自訂屬性"
+
+#. mt:gemini
+#: model_import.py:57
+#, fuzzy
+msgctxt "*"
+msgid "メッシュオブジェクトのカスタムプロパティにボーン情報を埋め込みます"
+msgstr "將骨骼資訊嵌入網格物件的自訂屬性"
+
+#. mt:gemini
+#: model_import.py:58
+#, fuzzy
+msgctxt "*"
+msgid "アーマチュアのカスタムプロパティ"
+msgstr "骨架的自訂屬性"
+
+#. mt:gemini
+#: model_import.py:58
+#, fuzzy
+msgctxt "*"
+msgid "アーマチュアデータのカスタムプロパティにボーン情報を埋め込みます"
+msgstr "將骨骼資訊嵌入骨架資料的自訂屬性"
+
+#. mt:gemini
+#: model_import.py:87
+#, fuzzy
+msgctxt "*"
+msgid "メッシュ"
+msgstr "網格"
+
+#. mt:gemini
+#: model_import.py:99
+#, fuzzy
+msgctxt "*"
+msgid "頂点グループ"
+msgstr "頂點群組"
+
+#. mt:gemini
+#: model_import.py:117
+#, fuzzy
+msgctxt "*"
+msgid "Use Local Bone Data"
+msgstr "使用局部骨骼資料"
+
+#. mt:gemini
+#: model_import.py:119
+#, fuzzy
+msgctxt "*"
+msgid "ボーン名をBlender用に変換"
+msgstr "將骨骼名稱轉換為Blender格式"
+
+#. mt:gemini
+#: model_import.py:120
+#, fuzzy
+msgctxt "*"
+msgid "Show Bones in Front"
+msgstr "在前面顯示骨骼"
+
+#. mt:gemini
+#: model_import.py:121
+#, fuzzy
+msgctxt "*"
+msgid "アーマチュアを非表示にする"
+msgstr "隱藏骨架"
+
+#. mt:gemini
+#: model_import.py:123
+#, fuzzy
+msgctxt "*"
+msgid "Use Selected as Bone Shape"
+msgstr "使用選定物件作為骨骼形狀"
+
+#. mt:gemini
+#: model_import.py:127
+#, fuzzy
+msgctxt "*"
+msgid "ボーン情報埋め込み場所"
+msgstr "骨骼資訊嵌入位置"
+
+#. mt:gemini
+#: model_import.py:1253
+#, fuzzy
+msgctxt "*"
+msgid "Shift+クリックでこの選択を記憶"
+msgstr "Shift+點擊以記住此選擇"
+
+#. mt:gemini
+#: model_import.py:1258
+#, fuzzy
+msgctxt "Operator"
+msgid "デフォルト設定でインポート"
+msgstr "以預設設定匯入"
+
+#. mt:gemini
+#: model_import.py:1259
+#, fuzzy
+msgctxt "Operator"
+msgid "設定を指定してインポート..."
+msgstr "指定設定後匯入..."
+
+#. mt:gemini
+#: model_import.py:916
+#, python-format, fuzzy
+msgctxt "*"
+msgid "modelのインポートが完了しました ({} {}/ {:.2f} 秒)"
+msgstr "模型匯入完成 ({} {}/ {:.2f} 秒)"
+
+#. mt:gemini
+#: model_import.py:182
+#, python-format, fuzzy
+msgctxt "*"
+msgid "Model Version = {version}"
+msgstr "模型版本 = {version}"
+
+#. mt:gemini
+#: model_import.py:358 model_import.py:368 model_import.py:378
+#, python-format, fuzzy
+msgctxt "*"
+msgid "Error reading file at byte 0x{num:02X}"
+msgstr "在位元組 0x{num:02X} 處讀取檔案時發生錯誤"
+
+#. mt:gemini
+#: model_import.py:457 model_import.py:557
+#, python-format, fuzzy
+msgctxt "*"
+msgid "Bone '{bone_name}' has odd scale '{bone_scale}' (odd by {bone_diff})"
+msgstr "骨骼 '{bone_name}' 具有奇怪的縮放 '{bone_scale}' (奇怪程度為 {bone_diff})"
+
+#. mt:gemini
+#: model_import.py:22
+#, fuzzy
+msgctxt "*"
+msgid "カスタムメイド3D2のmodelファイルを読み込みます"
+msgstr "讀取Custom Maid 3D 2的模型檔案"
+
+#. mt:gemini
+#: model_import.py:909
+#, fuzzy
+msgctxt "*"
+msgid "バイト"
+msgstr "位元組"
+
+#. mt:gemini
+#: model_import.py:919
+#, fuzzy
+msgctxt "*"
+msgid "Found bone with a scale not equal to 1."
+msgstr "發現骨骼的縮放不等於 1。"
+
+#. mt:gemini
+#: model_import.py:921
+#, fuzzy
+msgctxt "*"
+msgid ""
+"Found potentially corrupt local bone data, please re-import with \"Use Local"
+" Bone Data\" disabled."
+msgstr "發現潛在損壞的局部骨骼資料，請在停用「使用局部骨骼資料」的情況下重新匯入。"
+
+#. mt:gemini
+#: model_import.py:1201
+#, fuzzy
+msgctxt "*"
+msgid "Shiftドロップインポート: メニュー表示を再有効化しました"
+msgstr "Shift拖放匯入：已重新啟用選單顯示"
+
+#. mt:gemini
+#: model_import.py:1205
+#, fuzzy
+msgctxt "*"
+msgid "Shift+ファイルドロップでメニュー表示を再有効化できます"
+msgstr "Shift+拖放檔案可重新啟用選單顯示"
+
+#. mt:gemini
+#: model_import.py:1229
+#, fuzzy
+msgctxt "*"
+msgid "ドロップインポート: 方法選択メニュー表示を無効化しました (Shift+ドロップで再有効化)"
+msgstr "拖放匯入：已停用方法選擇選單顯示 (Shift+拖放可重新啟用)"
+
+#. mt:gemini
+#: model_import.py:179
+#, fuzzy
+msgctxt "*"
+msgid "これはカスタムメイド3D2のモデルファイルではありません"
+msgstr "這不是Custom Maid 3D 2的模型檔案"
+
+#. mt:gemini
+#: tex_export.py:12
+#, fuzzy
+msgctxt "Operator"
+msgid "texファイルを保存"
+msgstr "儲存tex檔案"
+
+#. mt:gemini
+#: tex_export.py:29
+#, fuzzy
+msgctxt "*"
+msgid "パス"
+msgstr "路徑"
+
+#. mt:gemini
+#: tex_export.py:80
+#, python-format, fuzzy
+msgctxt "*"
+msgid "texファイルの出力に失敗しました。{}"
+msgstr "tex檔案匯出失敗。{}"
+
+#. mt:gemini
+#: tex_export.py:13
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2で使用されるテクスチャファイル(.tex)として保存します"
+msgstr "儲存為CM3D2使用的紋理檔案(.tex)"
+
+#. mt:gemini
+#: tex_export.py:25
+#, fuzzy
+msgctxt "*"
+msgid "COM3D2 1.13 or later"
+msgstr "COM3D2 1.13 或更高版本"
+
+#. mt:gemini
+#: tex_export.py:26
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2 1.49 ～ or COM3D2"
+msgstr "CM3D2 1.49 ～ 或 COM3D2"
+
+#. mt:gemini
+#: tex_export.py:27
+#, fuzzy
+msgctxt "*"
+msgid "旧フォーマット"
+msgstr "舊格式"
+
+#. mt:gemini
+#: tex_export.py:74
+#, fuzzy
+msgctxt "*"
+msgid "texファイルを出力しました。"
+msgstr "已匯出tex檔案。"
+
+#. mt:gemini
+#: tex_import.py:11
+#, fuzzy
+msgctxt "Operator"
+msgid "texファイルを開く"
+msgstr "開啟tex檔案"
+
+#. mt:gemini
+#: tex_import.py:23 tex_import.py:37
+#, fuzzy
+msgctxt "*"
+msgid "展開方法"
+msgstr "展開方式"
+
+#. mt:gemini
+#: tex_import.py:12
+#, fuzzy
+msgctxt "*"
+msgid "CM3D2で使用されるテクスチャファイル(.tex)を読み込みます"
+msgstr "讀取CM3D2使用的紋理檔案(.tex)"
+
+#. mt:gemini
+#: tex_import.py:20
+#, fuzzy
+msgctxt "*"
+msgid "内部にパックする"
+msgstr "打包到內部"
+
+#. mt:gemini
+#: tex_import.py:21
+#, fuzzy
+msgctxt "*"
+msgid "PNGに変換してPNGを開く"
+msgstr "轉換為PNG並開啟PNG"
+
+#. mt:gemini
+#: tex_import.py:47
+#, fuzzy
+msgctxt "*"
+msgid "texファイルのヘッダが正しくありません。"
+msgstr "tex檔案的標頭不正確。"
+
+#. mt:gemini
+#: tex_import.py:52
+#, fuzzy
+msgctxt "*"
+msgid "未対応フォーマットのtexです。format="
+msgstr "不支援的tex格式。format="

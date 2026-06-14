@@ -426,7 +426,7 @@ def register():
     bpy.types.Scene.cm3d2_converter = bpy.props.PointerProperty(type=SceneProperties)
     
     # Change wiki_url based on locale (only works in legacy version)
-    locale = translations.get_locale()
+    locale = bpy.app.translations.locale
     if locale != 'ja_JP':   
         bl_info['wiki_url'] = common.URL_REPOS + f'blob/bl_28/translations/{locale}/README.md'
 

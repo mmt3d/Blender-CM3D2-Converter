@@ -3,6 +3,7 @@ __pycache__
 venv
 .venv*
 .idea
+.env
 
 # This is symlinked for convienence
 cm3d2converter
