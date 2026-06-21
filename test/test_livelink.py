@@ -1,10 +1,10 @@
 import bpy
 import subprocess
 import os
+import pytest
 from pathlib import Path
 
 from blenderunittest import BlenderTestCase
-from profilehelpers import ProfileLog
 
 import cm3d2converter
 
@@ -44,8 +44,10 @@ class TestLiveLink(BlenderTestCase):
         self.activate_object(tpose_object)
         
         bpy.ops.com3d2livelink.send_animation()
-    
+
+    @pytest.mark.profile
     def test_link_pose(self):
+        from profilehelpers import ProfileLog
         tpose_object: bpy.types.Object = bpy.data.objects.get('Tスタンス素体.armature')
         self.activate_object(tpose_object)
         

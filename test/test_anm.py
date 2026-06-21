@@ -1,8 +1,8 @@
 import bpy
+import pytest
 from mathutils import Vector, Quaternion
 
 from blenderunittest import BlenderTestCase
-from profilehelpers import dump_test_stats, Profile, LineProfile
 
 import cm3d2converter
 
@@ -111,7 +111,9 @@ class AnmTest(AnmTestCase):
         pose_copy: bpy.types.Pose = body001_armature_copy.pose
         self.assertPoseEqual(pose, pose_copy, allow_missing_bones=True)
 
+    @pytest.mark.profile
     def testprofile_anm_import(self):
+        from profilehelpers import dump_test_stats, Profile, LineProfile
         body001_armature_object: bpy.types.Object = bpy.data.objects.get('body001.body.armature')
         self.activate_object(body001_armature_object)
 
@@ -132,7 +134,9 @@ class AnmTest(AnmTestCase):
 
         dump_test_stats(self, prof, lineprof)
 
+    @pytest.mark.profile
     def testprofile_anm_export(self):
+        from profilehelpers import dump_test_stats, Profile, LineProfile
         body001_armature_object: bpy.types.Object = bpy.data.objects.get('body001.body.armature')
         self.activate_object(body001_armature_object)
 
@@ -156,7 +160,9 @@ class AnmTest(AnmTestCase):
 
         dump_test_stats(self, prof, lineprof)
 
+    @pytest.mark.profile
     def testprofile_anm_export_with_warmup(self):
+        from profilehelpers import dump_test_stats, Profile, LineProfile
         body001_armature_object: bpy.types.Object = bpy.data.objects.get('body001.body.armature')
         self.activate_object(body001_armature_object)
 
@@ -242,8 +248,10 @@ class LongAnmTest(AnmTestCase):
             frame_end=4000,
             export_method='ALL',
         )
-        
+
+    @pytest.mark.profile
     def testprofile_long_anm(self):
+        from profilehelpers import dump_test_stats, Profile, LineProfile
         body001_armature_object: bpy.types.Object = bpy.data.objects.get('body001.body.armature')
         self.activate_object(body001_armature_object)
         
