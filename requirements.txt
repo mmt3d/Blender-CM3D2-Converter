@@ -7,4 +7,7 @@ pythonnet==3.0.5         # Used to load C# Managed DLLs
 
 blender-stubs==3.10.27   # Provides stubs for autocomplete and other LSP features.
 pylint==2.17.4           # Checks code style
+pytest==9.1.1
+python-dotenv==1.2.2
+rich==15.0.0
 git+https://github.com/luvoid/pythonnet-stubs.git@master
