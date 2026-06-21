@@ -53,7 +53,7 @@ def preferences():
             # which is how the unit-tests work
             from . import AddonPreferences
             _props = {}
-            for k, v in AddonPreferences.__dict__.items():
+            for k, v in AddonPreferences.__annotations__.items():
                 if str(type(v)) == '<class \'_PropertyDeferred\'>':
                     kw: dict = v.keywords
                     default = kw['default'] if 'default' in kw.keys() else None

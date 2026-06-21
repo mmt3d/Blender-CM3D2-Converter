@@ -67,8 +67,9 @@ class AnmTest(AnmTestCase):
         self.activate_object(tpose_object)
 
         bpy.ops.export_anim.export_cm3d2_anm(
-            filepath=f'{self.output_dir}/{self._testMethodName}.anm',
-            is_backup=False
+            filepath=f'{self.output_dir}/{self._testMethodName}_{self.pid}.anm',
+            is_backup=False,
+            export_method='ALL'
         )
 
     def test_anm_recursive(self):
@@ -76,21 +77,21 @@ class AnmTest(AnmTestCase):
         self.activate_object(body001_armature_object)
 
         in_file = f'{self.resources_dir}/tpose.anm'
-        out_file_0 = f'{self.output_dir}/{self._testMethodName}_0.anm'
-        out_file_1 = f'{self.output_dir}/{self._testMethodName}_1.anm'
-        out_file_2 = f'{self.output_dir}/{self._testMethodName}_2.anm'
+        out_file_0 = f'{self.output_dir}/{self._testMethodName}_0_{self.pid}.anm'
+        out_file_1 = f'{self.output_dir}/{self._testMethodName}_1_{self.pid}.anm'
+        out_file_2 = f'{self.output_dir}/{self._testMethodName}_2_{self.pid}.anm'
 
         bpy.ops.import_anim.import_cm3d2_anm(filepath=in_file)
-        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file_0)
+        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file_0, export_method='ALL')
 
         bpy.ops.object.duplicate()
         body001_armature_copy: bpy.types.Object = bpy.data.objects.get('body001.body.armature.001')
         self.activate_object(body001_armature_copy)
 
         bpy.ops.import_anim.import_cm3d2_anm(filepath=out_file_0)
-        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file_1)
+        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file_1, export_method='ALL')
         bpy.ops.import_anim.import_cm3d2_anm(filepath=out_file_1)
-        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file_2)
+        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file_2, export_method='ALL')
 
         with open(in_file, 'rb') as reader:
             expected_data = reader.read()
@@ -139,7 +140,7 @@ class AnmTest(AnmTestCase):
         in_file = f'{self.resources_dir}/dance_cm3d21_pole_001_fa_f1.anm'
         in_file = f'{self.resources_dir}/dance_cm3d2_001_zoukin.anm'
         in_file = f'{self.resources_dir}/tpose.anm'
-        out_file = f'{self.output_dir}/{self._testMethodName}.anm'
+        out_file = f'{self.output_dir}/{self._testMethodName}_{self.pid}.anm'
 
 
         bpy.ops.import_anim.import_cm3d2_anm(filepath=in_file)
@@ -151,7 +152,7 @@ class AnmTest(AnmTestCase):
         lineprof.enable()
         prof.enable()
 
-        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file)
+        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file, export_method='ALL')
 
         dump_test_stats(self, prof, lineprof)
 
@@ -163,11 +164,11 @@ class AnmTest(AnmTestCase):
         in_file = f'{self.resources_dir}/dance_cm3d21_pole_001_fa_f1.anm'
         in_file = f'{self.resources_dir}/dance_cm3d2_001_zoukin.anm'
         in_file = f'{self.resources_dir}/tpose.anm'
-        out_file = f'{self.output_dir}/{self._testMethodName}.anm'
+        out_file = f'{self.output_dir}/{self._testMethodName}_{self.pid}.anm'
 
 
         bpy.ops.import_anim.import_cm3d2_anm(filepath=in_file)
-        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file)
+        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file, export_method='ALL')
 
         #with ProfileLog(self.test_anm_recursive.__name__):
         lineprof = LineProfile()
@@ -176,7 +177,7 @@ class AnmTest(AnmTestCase):
         lineprof.enable()
         prof.enable()
 
-        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file)
+        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file, export_method='ALL')
 
         dump_test_stats(self, prof, lineprof)
 
@@ -187,7 +188,7 @@ class AnmTest(AnmTestCase):
         bpy.ops.object.duplicate()
         body001_armature_copy: bpy.types.Object = bpy.data.objects.get('body001.body.armature.001')
 
-        out_file_0 = f'{self.output_dir}/{self._testMethodName}.ex.anm'
+        out_file_0 = f'{self.output_dir}/{self._testMethodName}_{self.pid}.ex.anm'
 
         self.activate_object(body001_armature_object)
         pose: bpy.types.Pose = body001_armature_object.pose
@@ -195,7 +196,7 @@ class AnmTest(AnmTestCase):
         neck.scale = Vector((1, 10, 20))
         print(neck.scale)
 
-        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file_0, is_scale=True)
+        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file_0, is_scale=True, export_method='ALL')
 
         self.activate_object(body001_armature_copy)
         bpy.ops.import_anim.import_cm3d2_anm(filepath=out_file_0)
@@ -235,10 +236,11 @@ class LongAnmTest(AnmTestCase):
         self.activate_object(body001_armature_object)
         
         bpy.ops.export_anim.export_cm3d2_anm(
-            filepath=f'{self.output_dir}/{self._testMethodName}.anm',
+            filepath=f'{self.output_dir}/{self._testMethodName}_{self.pid}.anm',
             is_backup=False,
             frame_start=1,
             frame_end=4000,
+            export_method='ALL',
         )
         
     def testprofile_long_anm(self):
@@ -252,10 +254,11 @@ class LongAnmTest(AnmTestCase):
         prof.enable()
         
         bpy.ops.export_anim.export_cm3d2_anm(
-            filepath=f'{self.output_dir}/{self._testMethodName}.anm',
+            filepath=f'{self.output_dir}/{self._testMethodName}_{self.pid}.anm',
             is_backup=False,
             frame_start=1,
             frame_end=7200,
+            export_method="ALL",
         )
         
         dump_test_stats(self, prof, lineprof)
@@ -271,16 +274,16 @@ class HotdogAnmTest(AnmTestCase):
         hotdog_armature_object: bpy.types.Object = bpy.data.objects.get('hotdog 아마튜어')
         self.activate_object(hotdog_armature_object)
 
-        bpy.ops.export_anim.export_cm3d2_anm(filepath=f'{self.output_dir}/{self._testMethodName}.ex.anm', 
-                                             is_scale=True)
+        bpy.ops.export_anim.export_cm3d2_anm(filepath=f'{self.output_dir}/{self._testMethodName}_{self.pid}.ex.anm',
+                                             is_scale=True, export_method='ALL')
 
     def test_hotdog_reimport(self):
         hotdog_armature_object: bpy.types.Object = bpy.data.objects.get('hotdog 아마튜어')
         self.activate_object(hotdog_armature_object)
 
-        out_file = f'{self.output_dir}/{self._testMethodName}.ex.anm'
+        out_file = f'{self.output_dir}/{self._testMethodName}_{self.pid}.ex.anm'
 
-        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file, is_scale=True)
+        bpy.ops.export_anim.export_cm3d2_anm(filepath=out_file, is_scale=True, export_method='ALL')
         
         self.activate_object(hotdog_armature_object)
         bpy.ops.object.duplicate()
@@ -302,7 +305,7 @@ class VanillaAnmTest(AnmTestCase):
         body001_armature_object: bpy.types.Object = bpy.data.objects.get('body001.body.armature')
         self.activate_object(body001_armature_object)
         
-        out_file = f'{self.output_dir}/{self._testMethodName}.anm'
+        out_file = f'{self.output_dir}/{self._testMethodName}_{self.pid}.anm'
         
         bpy.ops.export_anim.export_cm3d2_anm(
             filepath=out_file,
@@ -310,6 +313,7 @@ class VanillaAnmTest(AnmTestCase):
             frame_start=1,
             frame_end=4000,
             is_scale=False,
+            export_method='ALL',
         )
         
         from CM3D2.Serialization.Files import Anm

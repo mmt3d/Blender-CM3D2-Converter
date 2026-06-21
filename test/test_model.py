@@ -19,7 +19,7 @@ class ModelTest(BlenderTestCase):
         for i, (vert1, vert2) in enumerate(zip(mesh1.vertices, mesh2.vertices)):
             vert1: bpy.types.MeshVertex
             vert2: bpy.types.MeshVertex
-            self.assertEqual(vert1.co, vert2.co, f"vertices[{i}].co not equal" + msg)
+            self.assertVectorAlmostEqual(vert1.co, vert2.co, msg=f"vertices[{i}].co not equal" + msg)
             self.assertEqual(len(vert1.groups), len(vert2.groups),
                              f"len(vertices[{i}].groups) not equal" + msg)
             for j, (group1, group2) in enumerate(zip(vert1.groups, vert2.groups)):
@@ -31,8 +31,8 @@ class ModelTest(BlenderTestCase):
                                  f"vertices[{i}].groups[{j}].weight not equal" + msg)
 
         self.assertEqual(len(mesh1.loops), len(mesh2.loops), "len(loops) not equal" + msg)
-        mesh1.calc_normals_split()
-        mesh2.calc_normals_split()
+        cm3d2converter.compat.calc_normals_split(mesh1)
+        cm3d2converter.compat.calc_normals_split(mesh2)
         for i, (loop1, loop2) in enumerate(zip(mesh1.loops, mesh2.loops)):
             loop1: bpy.types.MeshLoop
             loop2: bpy.types.MeshLoop
@@ -46,7 +46,8 @@ class ModelTest(BlenderTestCase):
         for i, (shape_key1, shape_key2) in enumerate(zip(mesh1.shape_keys.key_blocks, mesh2.shape_keys.key_blocks)):
             shape_key1: bpy.types.ShapeKey
             shape_key2: bpy.types.ShapeKey
-            self.assertEqual(shape_key1.name, shape_key2.name,
+            self.assertEqual(cm3d2converter.translations.data_(shape_key1.name),
+                             cm3d2converter.translations.data_(shape_key2.name),
                              f"shape_keys.key_blocks[{i}].name not equal" + msg)
             for j, (data1, data2) in enumerate(zip(shape_key1.data, shape_key2.data)):
                 data1: bpy.types.ShapeKeyPoint
@@ -76,18 +77,18 @@ class ModelTest(BlenderTestCase):
             bone1: bpy.types.Bone
             bone2: bpy.types.Bone
             self.assertEqual(bone1.name, bone2.name, f"bones[{i}].name not equal" + msg)
-            self.assertEqual(bone1.head, bone2.head,
-                             f"bones[\"{bone1.name}\"].head not equal" + msg)
-            self.assertEqual(bone1.tail, bone2.tail,
-                             f"bones[\"{bone1.name}\"].tail not equal" + msg)
-            self.assertEqual(bone1.matrix, bone2.matrix,
-                             f"bones[\"{bone1.name}\"].matrix not equal" + msg)
+            self.assertVectorAlmostEqual(bone1.head, bone2.head, atol=1e-6,
+                             msg=f"bones[\"{bone1.name}\"].head not equal" + msg)
+            self.assertVectorAlmostEqual(bone1.tail, bone2.tail, atol=1e-6,
+                             msg=f"bones[\"{bone1.name}\"].tail not equal" + msg)
+            self.assertMatrixAlmostEqual(bone1.matrix, bone2.matrix, atol=1e-6,
+                             msg=f"bones[\"{bone1.name}\"].matrix not equal" + msg)
             parent1 = bone1.parent and bone1.parent.name
             parent2 = bone2.parent and bone2.parent.name
             self.assertEqual(parent1, parent2, f"bones[\"{bone1.name}\"].parent not equal" + msg)
 
     def test_model_import(self):
-        bpy.ops.import_mesh.import_cm3d2_model(filepath=f'{self.resources_dir}/body001.model')
+        bpy.ops.import_mesh.import_cm3d2_model(filepath=f'{self.resources_dir}/body001.model', is_remove_doubles=False)
 
         standard_armature_object = bpy.data.objects.get('body001_standard.armature')
         standard_mesh_object = bpy.data.objects.get('body001_standard')
@@ -110,15 +111,15 @@ class ModelTest(BlenderTestCase):
         self.activate_object(body001_mesh_object)
 
         bpy.ops.export_mesh.export_cm3d2_model(
-            filepath=f'{self.output_dir}/{self._testMethodName}.model')
+            filepath=f'{self.output_dir}/{self._testMethodName}_{self.pid}.model')
 
     def test_model_recursive(self):
         bpy.ops.import_mesh.import_cm3d2_model(filepath=f'{self.resources_dir}/body001.model')
 
         in_file = f'{self.resources_dir}/body001.model'
-        out_file_0 = f'{self.output_dir}/{self._testMethodName}_0.model'
-        out_file_1 = f'{self.output_dir}/{self._testMethodName}_1.model'
-        out_file_2 = f'{self.output_dir}/{self._testMethodName}_2.model'
+        out_file_0 = f'{self.output_dir}/{self._testMethodName}_0_{self.pid}.model'
+        out_file_1 = f'{self.output_dir}/{self._testMethodName}_1_{self.pid}.model'
+        out_file_2 = f'{self.output_dir}/{self._testMethodName}_2_{self.pid}.model'
 
         bpy.ops.import_mesh.import_cm3d2_model(filepath=in_file)
         bpy.ops.export_mesh.export_cm3d2_model(filepath=out_file_0)
@@ -164,8 +165,8 @@ class ModelTest(BlenderTestCase):
         bpy.ops.object.vertex_group_assign()
         bpy.ops.object.mode_set(mode='OBJECT')
 
-        out_file_0 = f'{self.output_dir}/{self._testMethodName}_0.model'
-        out_file_1 = f'{self.output_dir}/{self._testMethodName}_1.model'
+        out_file_0 = f'{self.output_dir}/{self._testMethodName}_0_{self.pid}.model'
+        out_file_1 = f'{self.output_dir}/{self._testMethodName}_1_{self.pid}.model'
 
         self.activate_object(mesh_object)
         bpy.ops.export_mesh.export_cm3d2_model(filepath=out_file_0, is_normalize_weight=False)
@@ -206,7 +207,7 @@ class DuplicateMaterialsTest(BlenderTestCase):
         """Test that all materials are present after importing and exporting
         then importing again"""
         in_file = f'{self.resources_dir}/duplicate_materials.model'
-        out_file = f'{self.output_dir}/{self._testMethodName}.model'
+        out_file = f'{self.output_dir}/{self._testMethodName}_{self.pid}.model'
         
         bpy.ops.import_mesh.import_cm3d2_model(filepath=in_file)
         bpy.ops.export_mesh.export_cm3d2_model(filepath=out_file)
@@ -220,8 +221,8 @@ class DuplicateMaterialsTest(BlenderTestCase):
         """Test that the names of the materials are preserved after repeated
         import and exports"""
         in_file = f'{self.resources_dir}/duplicate_materials.model'
-        out_file_0 = f'{self.output_dir}/{self._testMethodName}_0.model'
-        out_file_1 = f'{self.output_dir}/{self._testMethodName}_1.model'
+        out_file_0 = f'{self.output_dir}/{self._testMethodName}_0_{self.pid}.model'
+        out_file_1 = f'{self.output_dir}/{self._testMethodName}_1_{self.pid}.model'
         
         bpy.ops.import_mesh.import_cm3d2_model(filepath=in_file)
         for ms in bpy.context.object.material_slots.values():

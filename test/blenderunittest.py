@@ -1,4 +1,5 @@
 import numpy as np
+import os
 from unittest import TestCase
 from pathlib import Path
 
@@ -34,6 +35,10 @@ class BlenderTestCase(TestCase):
         if not path.exists():
             path.mkdir(parents=True)
         return str(path)
+
+    @property
+    def pid(self) -> int:
+        return os.getpid()
 
     @staticmethod
     def activate_object(obj: 'bpy.types.Object'):
