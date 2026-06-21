@@ -234,7 +234,7 @@ class CNV_OT_update_cm3d2_converter(bpy.types.Operator):
             bpy.ops.wm.quit_blender()
         else:
             bpy.ops.preferences.addon_refresh()
-            bpy.ops.wm.call_menu(name=INFO_MT_help_cm3d2_converter_reload_notice.bl_idname)
+            common.call_menu(name=INFO_MT_help_cm3d2_converter_reload_notice.bl_idname)
             self.report(type={'INFO'}, message="Blender-CM3D2-Converter updated successfully. Reload scripts to apply changes.")
         return {'FINISHED'}
 

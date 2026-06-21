@@ -1373,15 +1373,19 @@ def get_outliner_selection(context: bpy.types.Context, object_type: str = '') ->
     areas = [area for area in scr.areas if area.type == 'OUTLINER']
     regions = [region for region in areas[0].regions if region.type == 'WINDOW']
     with context.temp_override(area=areas[0], region=regions[0], screen=scr):
-        selected_in_outliner = set(x for x in context.selected_ids if isinstance(x, bpy.types.Object))
-        selected = list(selected_in_view | selected_in_outliner)
+        if not bpy.app.background:
+            selected_in_outliner = set(x for x in context.selected_ids if isinstance(x, bpy.types.Object))
+            selected = selected_in_view | selected_in_outliner
+        else:
+            selected = selected_in_view
         active_in_outliner = context.active_object
         active = active_in_view or active_in_outliner
+        selected.add(active)
         if object_type:
             selected = [x for x in selected if x.type == object_type]
             if active and active.type != object_type:
                 active = None
-        return selected, active
+        return list(selected), active
 
 
 def handler_append(handlers, func):
@@ -1499,3 +1503,19 @@ def get_region_size(width: int|None = None) -> int:
     size = max(10, int(content_px / px_per_unit))
     #print(context.area.type, width, margin, content_px, size)
     return size
+
+
+def call_menu(*args, **kwargs):
+    """
+    Blender環境テスト時に無効にするためのラッパー
+    """
+    if not bpy.app.background:
+        bpy.ops.wm.call_menu(*args, **kwargs)
+
+
+def redraw_timer(*args, **kwargs):
+    """
+    Blender環境テスト時に無効にするためのラッパー
+    """
+    if not bpy.app.background:
+        bpy.ops.wm.redraw_timer(*args, **kwargs)

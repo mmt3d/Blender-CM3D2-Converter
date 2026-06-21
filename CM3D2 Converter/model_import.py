@@ -140,7 +140,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         for i, filepath in enumerate(filepaths):
             self.filepath = filepath
             self.import_one(context)
-            bpy.ops.wm.redraw_timer(type='DRAW_WIN_SWAP', iterations=1)
+            common.redraw_timer(type='DRAW_WIN_SWAP', iterations=1)
         return {'FINISHED'}
 
     def import_one(self, context):
@@ -1203,14 +1203,14 @@ if not compat.IS_LT41:
             # 次回から確認しない場合、前回のモードでインポートする
             if props.model_import_last_mode != 'ASK':
                 self.report({'INFO'}, "Shift+ファイルドロップでメニュー表示を再有効化できます")
-                bpy.ops.wm.redraw_timer(type='DRAW_WIN_SWAP', iterations=1)
+                common.redraw_timer(type='DRAW_WIN_SWAP', iterations=1)
                 mode = props.model_import_last_mode
                 ctype = 'EXEC_DEFAULT' if mode == 'DIRECT' else 'INVOKE_DEFAULT'
                 bpy.ops.import_mesh.import_cm3d2_model(ctype, filepaths=filepaths)
                 return {'FINISHED'}
 
             CNV_OT_ModelDropManager.filepaths = filepaths
-            bpy.ops.wm.call_menu(name=VIEW3D_MT_ModelDropMenu.bl_idname)
+            common.call_menu(name=VIEW3D_MT_ModelDropMenu.bl_idname)
             return {'FINISHED'}
 
 
@@ -1230,7 +1230,7 @@ if not compat.IS_LT41:
             return self.execute(context)
 
         def execute(self, context):
-            bpy.ops.wm.redraw_timer(type='DRAW_WIN_SWAP', iterations=1)
+            common.redraw_timer(type='DRAW_WIN_SWAP', iterations=1)
             ctype = 'EXEC_DEFAULT' if self.mode == 'DIRECT' else 'INVOKE_DEFAULT'
             bpy.ops.import_mesh.import_cm3d2_model(ctype, filepaths=CNV_OT_ModelDropManager.filepaths)
             return {'FINISHED'}
