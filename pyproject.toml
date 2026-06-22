@@ -1,0 +1,48 @@
+[project]
+name = "cm3d2-converter-dev"
+version = "0.1.0"
+description = "Development Envionment"
+readme = "README.md"
+requires-python = "==3.11.*"
+publish = { gallery = false }
+
+dependencies = [
+    "bpy==5.0.1",
+    "blender-python-stubs==5.0.1.4",
+    "stubgen",
+    "ruff",
+    # -- test,profile
+    "pytest",
+    "python-dotenv",
+    "rich",
+    "line-profiler",
+    # -- translations
+    "google-genai",
+    "langcodes",
+    "language_data",
+    "polib",
+    "typer",
+]
+
+[tool.uv.sources]
+stubgen = { git = "https://github.com/luvoid/pythonnet-stubs.git", rev = "master" }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test"]
+python_functions = ["test_"]
+
+[tool.ruff.lint]
+select = ["F", "E", "W", "I", "TID", "N"]
+ignore = ["E501", "W293", "N806", "TID252", "N813", "N801"]
+
+[tool.ruff.lint.isort]
+no-lines-before = [
+    "future",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+order-by-type = true

@@ -1,47 +1,43 @@
+import argparse
 import os
 import re
 import subprocess
 import textwrap
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from dotenv import load_dotenv
 from pathlib import Path
 from rich.live import Live
 from rich.table import Table
 from rich.console import Console
 from rich.spinner import Spinner
+import config
 
-
-# 環境変数
-load_dotenv(".env")
-BLENDER_PATH_FMT = os.environ.get("BLENDER_PATH_FMT", "")
-BLENDER_VERSIONS = os.environ.get("BLENDER_VERSIONS", "").split(" ")
-BLENDER_PATHS = [BLENDER_PATH_FMT.format(x) for x in BLENDER_VERSIONS]
-MAX_WORKER_NUM = int(os.environ.get("MAX_WORKER_NUM", 5))
 
 SIGNAL_RE = re.compile(r"__TEST_([\w]+)__:([\w._]+)$")
 console = Console()
 
 
-def run_runner(blender_path: str, runner_script: Path, versions: list, test_files: list,
+def run_runner(blender_mode: bool, v_name: str, cmd: list[str], v_names: list, test_files: list,
                status_matrix: dict, live):
     """
     Blenderを起動してテストランナースクリプトを実行する
     """
-    path = Path(blender_path)
-    v_name = path.parent.name
-    log_dir = runner_script.parent / "logs"
+    # 各種パス
+    test_dir = Path(__file__).parent
+    runner = test_dir / "runner.py"
+    log_dir = test_dir / "logs"
     log_dir.mkdir(exist_ok=True)
     raw_log_path_fmt = log_dir / f"_raw_{v_name}_{{tf_name}}.log"
 
-    # Blender起動
-    cmd = [str(path), "-b", "-P", str(runner_script), "--", "--raw-log-path-fmt", raw_log_path_fmt, "-m", "not profile"]
+    # Venv/Blenderモード区別してテスト環境起動
+    cmd += [runner, "--", "--raw-log-path-fmt", raw_log_path_fmt, "-m", "not profile"]
     process = subprocess.Popen(
-        cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding='utf-8', errors='ignore'
+        cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding='utf-8', errors='ignore',
+        cwd=test_dir
     )
 
     for tf in test_files:
         status_matrix[(v_name, tf)] =  Spinner("point", text="[bold yellow]Booting[/]")
-    live.update(generate_table(versions, test_files, status_matrix))
+    live.update(generate_table(blender_mode, v_names, test_files, status_matrix))
 
     # pipeが止まるまで進捗報告を受信して経過表を更新する
     is_running = False
@@ -68,7 +64,7 @@ def run_runner(blender_path: str, runner_script: Path, versions: list, test_file
                         status_matrix[(v_name, current_tf)] = "[bold red]✘ Fail[/]"
                     elif event == "FATAL":
                         status_matrix[(v_name, current_tf)] = "[bold red]☠ Critical[/]"
-                    live.update(generate_table(versions, test_files, status_matrix))
+                    live.update(generate_table(blender_mode, v_names, test_files, status_matrix))
             else:
                 other_log += line
 
@@ -92,7 +88,7 @@ def run_runner(blender_path: str, runner_script: Path, versions: list, test_file
             log_path = save_log(v_name, tf, other_log, log_dir, return_code, "CRITICAL")
             failed_logs.append((v_name, tf, log_path))
 
-    live.update(generate_table(versions, test_files, status_matrix))
+    live.update(generate_table(blender_mode, v_names, test_files, status_matrix))
     return failed_logs
 
 
@@ -117,12 +113,13 @@ def save_log(v_name: str, tf_name: str, log: str, log_dir: Path, return_code: in
     return log_file_path
 
 
-def generate_table(versions: list[str], test_files: list[str], status_matrix: dict) -> Table:
+def generate_table(blender_mode: bool, v_names: list[str], test_files: list[str], status_matrix: dict) -> Table:
     """
     richのTableオブジェクトを生成
     """
+    mode = "Blender" if blender_mode else "Venv"
     table = Table(
-        title="Blender-CM3D2-Converter Multi-Version Test Matrix",
+        title=f"Blender-CM3D2-Converter Multi-Version Test Matrix\n[bold yellow]Mode: {mode}[/]",
         title_justify="left",
         title_style="bold blue",
         show_header=True,
@@ -132,14 +129,14 @@ def generate_table(versions: list[str], test_files: list[str], status_matrix: di
 
     # 列定義（行ヘッダーとなるテストファイル名列を追加）
     table.add_column("Test File", style="dim", width=25)
-    for v in versions:
-        table.add_column(v, justify="center", width=11)
+    for v_name in v_names:
+        table.add_column(v_name, justify="center", width=11)
 
     # 行データの追加
     for tf in test_files:
         row_cells = [tf]
-        for v in versions:
-            status = status_matrix.get((v, tf), "[dim]-[/]")
+        for v_name in v_names:
+            status = status_matrix.get((v_name, tf), "[dim]-[/]")
             row_cells.append(status)
         table.add_row(*row_cells)
 
@@ -150,30 +147,42 @@ def run_all_tests():
     """
     全Blenderバージョン x 全テストケース を実施
     """
-    test_dir = Path(__file__).parent
-    runner_script = test_dir / "runner.py"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--blender", action="store_true", help="Test by real blender application")
+    args = parser.parse_args()
 
-    test_scripts = test_dir.glob("test_*.py")
-    blender_paths = []
-    for path in BLENDER_PATHS:
-        if os.path.exists(path):
-            blender_paths.append(path)
-        else:
-            console.print(f"[bold red][ERROR] Blender path not found：[/] {path}\n")
-    versions = [Path(p).parent.name for p in blender_paths]
-    test_files = [p.name for p in test_scripts]
+    paths = {}
+    if args.blender:
+        for version in config.BLENDER_VERSIONS:
+            path = config.BLENDER_PATH_FMT.format(version)
+            if os.path.exists(path):
+                paths[f"Blender {version}"] = [path, "-b", "-P"]
+            else:
+                console.print(f"[bold red][ERROR] Blender path not found：[/] {path}")
+    else:
+        for version, spec in config.BLENDER_SPEC_MAP.items():
+            if not spec['bpy']:
+                continue
+            cmd = ["uv", "run", "--no-project", "--python", spec["python"]]
+            if spec.get('find-links'):
+                cmd += ["--find-links", spec["find-links"]]
+            cmd += ["--with", "bpy==" + spec["bpy"], "--with", "pytest", "--", "python"]
+            paths[f"Venv {version}"] = cmd
+
+    v_names = list(paths.keys())
+    test_files = [p.name for p in Path(__file__).parent.glob("test_*.py")]
 
     # ステータスの初期化（未実行は灰色のハイフン）
-    status_matrix = {(v, tf): "[dim]-[/]" for v in versions for tf in test_files}
+    status_matrix = {(v, tf): "[dim]-[/]" for v in v_names for tf in test_files}
 
     # 進捗マトリックス表を動的更新
     failed_logs = []
-    with Live(generate_table(versions, test_files, status_matrix), console=console, refresh_per_second=10) as live:
+    with Live(generate_table(args.blender, v_names, test_files, status_matrix), console=console, refresh_per_second=10) as live:
         # テストランナーの並列起動
-        with ThreadPoolExecutor(max_workers=MAX_WORKER_NUM) as executor:
+        with ThreadPoolExecutor(max_workers=config.MAX_WORKER_NUM) as executor:
             futures = []
-            for blender_path in blender_paths:
-                f = executor.submit(run_runner, blender_path, runner_script, versions, test_files, status_matrix, live)
+            for v_name, cmd in paths.items():
+                f = executor.submit(run_runner, args.blender, v_name, cmd, v_names, test_files, status_matrix, live)
                 futures.append(f)
             # 並列タスクの完了を待機しながらリアルタイム更新
             for future in as_completed(futures):
