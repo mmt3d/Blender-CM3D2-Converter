@@ -1,6 +1,0 @@
-google-genai==2.8.0
-langcodes==3.5.1
-language_data==1.4.0
-python-dotenv==1.2.2
-rich==15.0.0
-typer==0.26.7

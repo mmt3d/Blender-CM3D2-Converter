@@ -23,13 +23,16 @@
 - 依存パッケージ: `translations/requirements.txt`
 - AI 機能を使う場合は `.env` が必要（`.env.sample` を元に作成）
 
+実行環境アクティベート例:
+```powershell
+uv sync
+.\.venv\Scripts\Activate.ps1
+```
+
 セットアップ例:
 
 ```powershell
 Set-Location ".\translations"
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
 Copy-Item .env.sample .env
 ```
 
