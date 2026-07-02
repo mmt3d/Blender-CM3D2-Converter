@@ -1,0 +1,36 @@
+name: Trigger Distribution on Publish
+
+env:
+  DISTRIBUTION_REPO: "mmt3d/blender-extensions"
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Restore Metadata from Cache
+        uses: actions/cache/restore@v4
+        with:
+          path: metadata.json
+          key: metadata-${{ github.event.repository.name }}-${{ github.event.release.tag_name }}-${{ github.event.release.id }}
+          fail-on-cache-miss: true
+
+      - name: Load metadata content
+        run: |
+          B64_CONTENT=$(base64 -w 0 metadata.json)
+          echo "meta_payload=${B64_CONTENT}" >> $GITHUB_ENV
+
+      - name: Send Signal to Distribution Repository
+        run: |
+          curl -L \
+            X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.DEPLOY_TOKEN }}" \
+            https://api.github.com/repos/${{ env.DISTRIBUTION_REPO }}/dispatches \
+            -d '{"event_type": "addon_published", "client_payload": {"metadata": "${{ env.meta_payload }}"}}'

@@ -1,0 +1,26 @@
+schema_version = "1.0.0"
+id = "cm3d2_converter"
+name = "** from bl_info **"
+version = "** from bl_info **"
+tagline = "** from bl_info **"
+maintainer = "** from bl_info **"
+type = "add-on"
+tags = ["Import-Export"]
+blender_version_min = "** from bl_info **"
+blender_version_max = "5.1.99"
+license = ["Apache-2.0"]
+website = "https://github.com/mmt3d/Blender-CM3D2-Converter"
+copyright = [
+    "2015-2017 saidenka",
+    "2015-2019 CM3Duser",
+    "2015-2017 Milly",
+    "2016-2020 trzr",
+    "2020-2023 luvoid",
+    "2023 fadedplumeria",
+    "2026 mmt3d"
+]
+
+[permissions]
+files = "Import/Export CM3D2/COM3D2 resourses from/to disk"
+network = "Transfer pose transforms between the game and Blender via the Livelink"
+clipboard = "Copy/Paste bone and material infomation"
