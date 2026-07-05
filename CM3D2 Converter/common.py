@@ -16,13 +16,8 @@ from .cm3d2_data import Handler, ArcHandler
 
 
 # アドオン情報
-bl_info = {}
-ADDON_NAME = 'CM3D2 Converter'
 BASE_PATH_TEX = 'Assets/texture/texture/'
-BRANCH = 'bl_28'
-URL_REPOS = 'https://github.com/luvoid/Blender-CM3D2-Converter/'
-URL_ATOM = URL_REPOS + 'commits/{branch}.atom'
-URL_MODULE = URL_REPOS + 'archive/{branch}.zip'
+RELEASES_ATOM = 'https://github.com/mmt3d/Blender-CM3D2-Converter/releases.atom'
 KISS_ICON = None
 PREFS = None
 preview_collections = {}
@@ -30,8 +25,8 @@ texpath_dict = {}
 texpath_default_dict = {}
 COM3D2_SHADER_REV = 1
 
-POSE_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), ADDON_NAME, 'pose')
-TOON_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), ADDON_NAME, 'toon')
+POSE_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), __package__, 'pose')
+TOON_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), __package__, 'toon')
 
 re_png = re.compile(r'\.[Pp][Nn][Gg](\.\d{3})?$')
 re_serial = re.compile(r'(\.\d{3})$')

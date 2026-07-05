@@ -9,8 +9,8 @@ bl_info = {
     'location': "ファイル > インポート/エクスポート > CM3D2 Model (.model)",
     'description': "カスタムメイド3D2/カスタムオーダーメイド3D2専用ファイルのインポート/エクスポートを行います",
     'warning': "",
-    'wiki_url': 'https://github.com/luvoid/Blender-CM3D2-Converter/blob/bl_28/README.md',
-    'tracker_url': 'https://github.com/luvoid/Blender-CM3D2-Converter',
+    'doc_url': 'https://github.com/mmt3d/Blender-CM3D2-Converter/blob/bl_33/README.md',
+    'tracker_url': 'https://github.com/mmt3d/Blender-CM3D2-Converter/issues',
     'category': 'Import-Export'
 }
 
@@ -308,8 +308,8 @@ class AddonPreferences(bpy.types.AddonPreferences):
 
         # row = box.row()
         row = self.layout.row()
-        row.operator('script.update_cm3d2_converter', icon='FILE_REFRESH')
-        row.menu('INFO_MT_help_CM3D2_Converter_RSS', icon='INFO')
+        row.operator('wm.check_cm3d2_converter_version', icon='FILE_REFRESH')
+        row.operator('wm.open_cm3d2_converter_releases', icon='INFO')
 
     def apply_console_code(self):
         # システムコンソール上の出力された日本語が文字化けしないようにする
@@ -424,11 +424,6 @@ def register():
 
     # Scene に一時的に記録するプロパティ
     bpy.types.Scene.cm3d2_converter = bpy.props.PointerProperty(type=SceneProperties)
-    
-    # Change wiki_url based on locale (only works in legacy version)
-    locale = bpy.app.translations.locale
-    if locale != 'ja_JP':   
-        bl_info['wiki_url'] = common.URL_REPOS + f'blob/bl_28/translations/{locale}/README.md'
 
 
 # プラグインをアンインストールしたときの処理
