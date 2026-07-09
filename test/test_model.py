@@ -22,13 +22,15 @@ class ModelTest(BlenderTestCase):
             self.assertVectorAlmostEqual(vert1.co, vert2.co, msg=f"vertices[{i}].co not equal" + msg)
             self.assertEqual(len(vert1.groups), len(vert2.groups),
                              f"len(vertices[{i}].groups) not equal" + msg)
-            for j, (group1, group2) in enumerate(zip(vert1.groups, vert2.groups)):
-                group1: bpy.types.VertexGroupElement
-                group2: bpy.types.VertexGroupElement
-                self.assertEqual(group1.group, group2.group,
-                                 f"vertices[{i}].groups[{j}].group not equal" + msg)
-                self.assertEqual(group1.weight, group2.weight,
-                                 f"vertices[{i}].groups[{j}].weight not equal" + msg)
+            # 割り当てグループの順序は意味があるものではなく5.2より保証されないケースがあるため、グループ番号でソートして比較する
+            sorted_groups1 = sorted(vert1.groups, key=lambda g: g.group)
+            sorted_groups2 = sorted(vert2.groups, key=lambda g: g.group)
+            groups1 = [g.group for g in sorted_groups1]
+            groups2 = [g.group for g in sorted_groups2]
+            weights1 = [g.weight for g in sorted_groups1]
+            weights2 = [g.weight for g in sorted_groups2]
+            self.assertListEqual(groups1, groups2, f"vertices[{i}].groups not equal" + msg)
+            self.assertArrayAlmostEqual(weights1, weights2, atol=5e-4, msg=f"vertices[{i}].groups weights not equal" + msg)
 
         self.assertEqual(len(mesh1.loops), len(mesh2.loops), "len(loops) not equal" + msg)
         cm3d2converter.compat.calc_normals_split(mesh1)
