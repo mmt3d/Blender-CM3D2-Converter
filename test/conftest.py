@@ -1,9 +1,7 @@
 import sys
-from pathlib import Path
 import pytest
 
-
-_tf_name = None
+_test_name = None
 _result = None
 
 
@@ -11,7 +9,7 @@ def send_event(event: str):
     """
     run_all_test.py 向けの進捗報告用標準出力
     """
-    sys.__stdout__.write(f"__TEST_{event}__:{_tf_name}\n")
+    sys.__stdout__.write(f"__TEST_{event}__ {_test_name}\n")
     sys.__stdout__.flush()
 
 
@@ -20,10 +18,9 @@ def pytest_sessionstart(session):
     run_all_test.py 向けの進捗報告用フック
     全テストの最初に1回呼ばれる
     """
-    global _tf_name, _result
+    global _test_name, _result
     _result = None
-    py_args = [arg for arg in session.config.args if arg.endswith(".py")]
-    _tf_name = Path(str(py_args[0])).name if py_args else "unknown.py"
+    _test_name = session.config.args[0]
     send_event("START")
 
 

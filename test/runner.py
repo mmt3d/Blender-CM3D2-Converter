@@ -1,6 +1,6 @@
 import argparse
 import sys
-from contextlib import redirect_stdout, redirect_stderr
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
 
@@ -16,7 +16,8 @@ def ensure_pytest():
     try:
         import pytest
     except ImportError:
-        import subprocess, importlib
+        import importlib
+        import subprocess
         print("pytest is not found. Installing pytest...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "pytest", "--user"])
         importlib.invalidate_caches()
@@ -32,24 +33,24 @@ def main():
     # 引数のパース
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     parser = argparse.ArgumentParser(description="Common Pytest Executor")
-    parser.add_argument("--raw-log-path-fmt", type=str, required=True)
+    parser.add_argument("--job-id", required=True)
     parser.add_argument("-m", "--marker", type=str, default="", help="pytest marker expression")
+    parser.add_argument("tests", nargs="*", help="Specify test files")
     args = parser.parse_args(argv)
 
     # テストディレクトリのパス強制追加
     test_dir = Path(__file__).parent
     if str(test_dir) not in sys.path:
         sys.path.append(str(test_dir))
+    log_dir = test_dir / "logs"
+    log_dir.mkdir(exist_ok=True)
 
     # テストファイルごとに pytest プロセスを変えて実行（ログを分離する用）
-    test_files = sorted([f.name for f in test_dir.glob("test_*.py")])
     all_success = True
-    for tf_name in test_files:
-        raw_log_path = args.raw_log_path_fmt.format(tf_name=tf_name)
-        test_file_path = test_dir / tf_name
-
+    for i, test in enumerate(args.tests):
+        raw_log_path = log_dir / f"_raw_{args.job_id}_{i}.log"
         with open(raw_log_path, "w", encoding="utf-8") as f, redirect_stdout(f), redirect_stderr(f):
-            pytest_args = ["-v", str(test_file_path), "--capture=no"]
+            pytest_args = ["-v", "--capture=no", test]
             if args.marker:
                 pytest_args.extend(["-m", args.marker])
 
