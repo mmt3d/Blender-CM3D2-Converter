@@ -1,13 +1,12 @@
-import numpy as np
 import os
-from unittest import TestCase
 from pathlib import Path
-
 from typing import TYPE_CHECKING, Literal
+from unittest import TestCase
+import numpy as np
 
 if TYPE_CHECKING:
     import bpy
-    from mathutils import Vector, Matrix, Quaternion
+    from mathutils import Matrix, Quaternion, Vector
     from numpy._typing import ArrayLike
 
 class BlenderTestCase(TestCase):
@@ -71,6 +70,12 @@ class BlenderTestCase(TestCase):
                 print(ex)
             finally:
                 BlenderTestCase.is_cm3d2converter_registered = True
+
+    def tearDown(self):
+        for root, __, files in os.walk(Path(__file__).parent / 'output'):
+            for file in files:
+                if f"_{self.pid}." in file:
+                    os.remove(os.path.join(root, file))
 
     def assertOperatorFinished(self, result: set[Literal['RUNNING_MODAL', 'CANCELLED', 'FINISHED', 'PASS_THROUGH']],
                                msg=None):
