@@ -401,7 +401,7 @@ def set_transparent(mate: bpy.types.Material, transparent: bool):
 
 def get_fcurves(action: bpy.types.Action, anim_data: bpy.types.AnimData):
     """Fカーブリスト取得の互換性サポート"""
-    if IS_LT44:
+    if IS_LT50:
         return action.fcurves
     else:
         return bpy_extras.anim_utils.action_ensure_channelbag_for_slot(action, anim_data.action_slot).fcurves
