@@ -15,11 +15,11 @@ BLENDER_SPEC_MAP = {
     "4.5": {"python": "3.11", "bpy": "4.5.10"},
     "5.0": {"python": "3.11", "bpy": "5.0.1"},
     "5.1": {"python": "3.13", "bpy": "5.1.2"},
-    #"5.2": {"python": "3.13", "bpy": "5.2.0"},
+    "5.2": {"python": "3.13", "bpy": "5.2.0"},
 }
 
 load_dotenv(Path(__file__).parent / ".env")
 BLENDER_PATH_FMT: str = os.environ.get("BLENDER_PATH_FMT", "")
 BLENDER_VERSIONS: list[str] = os.environ.get("BLENDER_VERSIONS", "").split(" ")
-MAX_WORKER_NUM: int = int(os.environ.get("MAX_WORKER_NUM", 5))
-VENV_PATH_FMT:str  = "venvs/venv_{}/Scripts/python.exe"
+MAX_WORKER_NUM: int = int(os.environ.get("MAX_WORKER_NUM", "5"))
+VENV_PATH_FMT: str = "venvs/venv_{}/Scripts/python.exe"
