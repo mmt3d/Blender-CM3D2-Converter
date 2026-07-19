@@ -33,9 +33,39 @@ python_files = ["test_*.py"]
 python_classes = ["Test"]
 python_functions = ["test_"]
 
+[tool.ruff]
+line-length = 120
+
 [tool.ruff.lint]
-select = ["F", "E", "W", "I", "TID", "N"]
-ignore = ["E501", "W293", "N806", "TID252", "N813", "N801"]
+select = [
+    "F",           # Pyflakes (バグ)
+    "E", "W",      # Pycodestyle (スタイルエラー/警告)
+    "I",           # isort (インポート自動整理)
+    "TID",         # tidy-imports (相対インポート整理)
+    "N",           # pep8-naming (命名規則)
+    "BLE",         # flake8-blind-except (.pylintrc の overgeneral-exceptions)
+    "B",           # flake8-bugbear (潜在バグの予防)
+    "UP",          # pyupgrade (Python 3.11 向け構文の自動モダン化)
+    "A",           # flake8-builtins (組み込み関数名の上書き防止)
+    "PLE", "PLW",  # Pylint Errors/Warnings
+]
+ignore = [
+    "E501",        # 1行の長さ制限
+    "W293",        # 空行の空白
+    "TID252",      # 親モジュールからの相対インポート
+    "N801",        # クラス名のキャメルケース強制
+    "N802",        # 関数名が小文字でない（スネークケース以外）
+    "N806",        # 関数内での大文字変数の使用
+    "N813",        # キャメルケースの小文字インポート
+    "N999",        # 命名規則に従っていないモジュール名
+    "A003",        # クラス属性での組み込み名の上書きを許可
+    "F403",        # import * で定義されていない名前への参照を無視
+    "F405",        # import * の使用
+    "PLW0603",     # グローバル変数の変更
+]
+
+[tool.ruff.lint.pep8-naming]
+ignore-names = ["Run", "register", "unregister"]
 
 [tool.ruff.lint.isort]
 no-lines-before = [
