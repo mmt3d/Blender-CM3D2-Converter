@@ -14,10 +14,11 @@ LEGACY_FALLBACK_LANG_MAP = {
 
 def register(__name__=__name__):
     # Blenderバージョンによりサポート言語タグが異なることがあり、その場合は代替言語タグに差し替える
-    for new_lang, old_lang in LEGACY_FALLBACK_LANG_MAP.items():
-        if new_lang in translation_dict and old_lang in bpy.app.translations.locales:
-            if old_lang not in translation_dict:
-                translation_dict[old_lang] = translation_dict[new_lang]
+    # 翻訳辞書がなければ英語表記とする
+    for lang in bpy.app.translations.locales:
+        if lang not in translation_dict:
+            fallback_lang = LEGACY_FALLBACK_LANG_MAP.get(lang, 'en_US')
+            translation_dict[lang] = translation_dict[fallback_lang]
 
     bpy.app.translations.register(__name__, translation_dict)
 
