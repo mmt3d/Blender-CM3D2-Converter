@@ -1,10 +1,9 @@
 from unittest import TestCase
-
+import CM3D2.Serialization  # type: ignore
+import CM3D2.Serialization.Files  # type: ignore
 import cm3d2converter
+from System.IO import MemoryStream  # type: ignore
 
-import CM3D2.Serialization
-import CM3D2.Serialization.Files
-from System.IO import MemoryStream
 
 class TestCM3D2Serialization(TestCase):
 

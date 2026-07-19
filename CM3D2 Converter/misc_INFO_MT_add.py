@@ -1,8 +1,7 @@
 # 「3Dビュー」エリア → 追加(Shift+A) → CM3D2
 import os
 import bpy
-from . import common
-from . import compat
+from . import common, compat
 
 
 # メニュー等に項目追加

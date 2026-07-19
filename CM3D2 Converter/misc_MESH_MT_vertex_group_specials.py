@@ -1,10 +1,9 @@
 # 「プロパティ」エリア → 「メッシュデータ」タブ → 「頂点グループ」パネル → ▼ボタン
 import time
-import bpy
 import bmesh
+import bpy
 import mathutils
-from . import common
-from . import compat
+from . import common, compat
 from .translations import *
 
 

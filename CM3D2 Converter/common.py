@@ -1,19 +1,17 @@
+import itertools
+import math
 import os
 import re
-import math
-import struct
 import shutil
-from typing import Any
-import bpy
-import bmesh
-import mathutils
-import itertools
+import struct
 import unicodedata
-from . import fileutil
-from . import compat
-from .cm3d2_shader import toon_vector_node_tree, com3d2_shader_node_tree, alpha_mixer_node_tree, bind_light_switch
-from .cm3d2_data import Handler, ArcHandler
-
+from typing import Any
+import bmesh
+import bpy
+import mathutils
+from . import compat, fileutil
+from .cm3d2_data import ArcHandler, Handler
+from .cm3d2_shader import alpha_mixer_node_tree, bind_light_switch, com3d2_shader_node_tree, toon_vector_node_tree
 
 # アドオン情報
 BASE_PATH_TEX = 'Assets/texture/texture/'

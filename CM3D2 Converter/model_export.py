@@ -1,16 +1,14 @@
+import math
 import struct
 import time
-import math
-import bpy
+from operator import itemgetter
 import bmesh
+import bpy
 import mathutils
 import numpy as np
-from operator import itemgetter
-from . import common
-from . import compat
-from . import cm3d2_data
-from .translations.pgettext_functions import *
+from . import cm3d2_data, common, compat
 from .misc_VIEW3D_MT_pose_apply import copy_pose_from_property
+from .translations.pgettext_functions import *
 
 
 # メインオペレーター

@@ -1,16 +1,13 @@
 from __future__ import annotations
-
-import bpy
 import os
 import tempfile
 from typing import TYPE_CHECKING, overload
-
+import bpy
+from CM3D2.Serialization import CM3D2Serializer  # type: ignore
+from COM3D2.LiveLink import *  # type: ignore
+from System.IO import MemoryStream  # type: ignore
 from . import compat
-from . anm_export import AnmBuilder
-
-from COM3D2.LiveLink import *
-from CM3D2.Serialization import CM3D2Serializer
-from System.IO import MemoryStream
+from .anm_export import AnmBuilder
 
 if TYPE_CHECKING:
     # This stub can be easially generated with https://www.javainuse.com/csharp2py

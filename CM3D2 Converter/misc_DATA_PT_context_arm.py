@@ -1,9 +1,8 @@
 # 「プロパティ」エリア → 「アーマチュアデータ」タブ
+import os
 import bpy
 import mathutils
-import os
-from . import common
-from . import compat
+from . import common, compat
 from .translations import *
 
 

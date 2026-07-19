@@ -2,15 +2,14 @@ import json
 import logging
 import math
 import os
-import polib
 import re
 import textwrap
+import polib
 import typer
 from dotenv import load_dotenv
 from google import genai
 from rich.logging import RichHandler
-from rich.progress import Progress, TextColumn, BarColumn, TaskProgressColumn
-
+from rich.progress import BarColumn, Progress, TaskProgressColumn, TextColumn
 
 app = typer.Typer()
 logging.basicConfig(level=logging.INFO, format="%(message)s", handlers=[RichHandler(markup=True)])

@@ -2,12 +2,11 @@ import logging
 import os
 import re
 import textwrap
-import typer
 from datetime import datetime, timedelta, timezone
+import typer
 from dotenv import load_dotenv, set_key
 from google import genai
 from rich.logging import RichHandler
-
 
 app = typer.Typer()
 logging.basicConfig(level=logging.INFO, format="%(message)s", handlers=[RichHandler(markup=True)])

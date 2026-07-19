@@ -1,13 +1,11 @@
 # 「プロパティ」エリア → 「メッシュデータ」タブ → 「シェイプキー」パネル → ▼ボタン
-import time
-import bpy
-import bmesh
-import mathutils
-import traceback
 import abc
-from . import common
-from . import compat
-from . import model_export
+import time
+import traceback
+import bmesh
+import bpy
+import mathutils
+from . import common, compat, model_export
 from .translations import *
 
 

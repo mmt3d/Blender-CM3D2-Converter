@@ -4,8 +4,7 @@ import random
 import bpy
 import bpy_extras.view3d_utils
 import mathutils
-from . import common
-from . import compat
+from . import common, compat
 
 
 # メニュー等に項目追加

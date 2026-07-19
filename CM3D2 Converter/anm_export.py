@@ -1,20 +1,16 @@
 from __future__ import annotations
-
-import struct
 import math
+import struct
 import unicodedata
-import bpy
-from mathutils import Vector, Quaternion, Matrix
 from pathlib import Path
-from . import common
-from . import compat
-from . translations import *
-from . fileutil import serialize_to_file
-from . import misc_DOPESHEET_MT_editor_menus
-
+import bpy
 from CM3D2.Serialization.Files import Anm  # type: ignore
 from CM3D2.Serialization.Performance import PerformanceExtensions  # type: ignore
+from mathutils import Matrix, Quaternion, Vector
 from System import Array  # type: ignore
+from . import common, compat, misc_DOPESHEET_MT_editor_menus
+from .fileutil import serialize_to_file
+from .translations import *
 
 
 # メインオペレーター

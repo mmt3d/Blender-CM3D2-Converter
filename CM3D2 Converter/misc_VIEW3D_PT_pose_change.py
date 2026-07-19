@@ -1,12 +1,10 @@
 # 「3Dビュー」エリア → 「ポーズ」パネル
-import bpy
 import os
 import pickle
-from . import common
-from . import compat
+import bpy
+from . import common, compat
 from .cm3d2_data import ArcHandler
 from .common import POSE_DATA_DIR
-
 
 POSE_LIST = {}
 

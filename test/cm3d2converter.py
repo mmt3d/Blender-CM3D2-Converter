@@ -4,9 +4,9 @@ try:
     __file__ = CM3D2_Converter.__file__
 
 except: # pylint:disable=bare-except
-    from pathlib import Path
     import importlib
     import sys
+    from pathlib import Path
     sys.path.append( str(Path(__file__).parent.parent) )
     cm3d2converter = importlib.import_module('CM3D2 Converter')
     __file__ = cm3d2converter.__file__

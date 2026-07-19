@@ -1,10 +1,9 @@
 import bpy
-import pytest
-from mathutils import Vector, Quaternion
-
-from blenderunittest import BlenderTestCase
-
 import cm3d2converter
+import pytest
+from blenderunittest import BlenderTestCase
+from mathutils import Quaternion, Vector
+
 
 class AnmTestCase(BlenderTestCase):
     

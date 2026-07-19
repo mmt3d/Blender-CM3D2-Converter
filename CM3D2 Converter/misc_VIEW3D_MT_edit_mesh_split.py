@@ -1,7 +1,7 @@
-import bpy
 import bmesh
-from . import common
-from . import compat
+import bpy
+from . import common, compat
+
 
 # メニュー等に項目追加
 def menu_func(self, context):

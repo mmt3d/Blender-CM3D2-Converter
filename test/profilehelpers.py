@@ -1,18 +1,13 @@
 import cProfile
+import profile
 import pstats
+from cProfile import Profile
 from pathlib import Path
 from types import FunctionType
-
-import profile
-
-import cm3d2converter  # If not imported, call stack is missing
-
-from blenderunittest import BlenderTestCase
-
-from cProfile import Profile
-from line_profiler import LineProfiler as _LineProfiler
-
 from typing import TYPE_CHECKING
+import cm3d2converter  # If not imported, call stack is missing
+from blenderunittest import BlenderTestCase
+from line_profiler import LineProfiler as _LineProfiler
 
 
 class LineProfile(_LineProfiler):    

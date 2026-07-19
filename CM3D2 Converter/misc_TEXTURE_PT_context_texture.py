@@ -1,11 +1,9 @@
 # 「プロパティ」エリア → 「テクスチャ」タブ
 import os
-import bpy
 import bmesh
+import bpy
 import mathutils
-from . import common
-from . import compat
-from . import cm3d2_data
+from . import cm3d2_data, common, compat
 from .translations import *
 
 LAYOUT_FACTOR = 0.3

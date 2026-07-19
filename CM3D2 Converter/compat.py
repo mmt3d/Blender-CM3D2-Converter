@@ -1,11 +1,10 @@
+import functools
+import inspect
+import warnings
+from types import FunctionType
 import bpy
 import bpy_extras
 import mathutils
-import inspect
-from types import FunctionType
-import functools
-import warnings
-
 
 IS_LT34 = not hasattr(bpy.app, 'version') or bpy.app.version < (3, 4)
 IS_LT40 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 0)

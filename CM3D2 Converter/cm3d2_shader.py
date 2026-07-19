@@ -1,5 +1,5 @@
 import bpy
-from .compat import new_socket, map_shader_node
+from .compat import map_shader_node, new_socket
 
 
 def toon_vector_node_tree():

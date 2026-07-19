@@ -1,11 +1,8 @@
-import bpy
 import math
 import struct
-from . import common
-from . import compat
+import bpy
+from . import common, compat
 from .translations import *
-
-
 
 PROP_OPTS = {'LIBRARY_EDITABLE'}
 

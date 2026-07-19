@@ -1,11 +1,10 @@
 import json
 import logging
 import os
-import polib
 import textwrap
+import polib
 import typer
 from rich.logging import RichHandler
-
 
 app = typer.Typer()
 logging.basicConfig(level=logging.INFO, format="%(message)s", handlers=[RichHandler(markup=True)])
@@ -100,7 +99,6 @@ def write_python_module(compiled_data, output_path):
 
     with open(output_path, "w", encoding="utf-8", newline="\n") as f:
         f.write(textwrap.dedent("""\
-            # -*- coding: utf-8 -*-
             # Generated automatically by custom PO-to-Py compiler. DO NOT EDIT DIRECTLY.
             
             # Blender translation dictionary data

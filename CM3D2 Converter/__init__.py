@@ -41,57 +41,49 @@ _pre_locals = locals().copy()
 
 # サブスクリプト群をインポート
 if True:
-    from . import compat
-    from . import common
-    from . import cm3d2_shader
-
-    from . import model_import
-    from . import model_export
-
-    from . import anm_import
-    from . import anm_export
-
-    from . import tex_import
-    from . import tex_export
-
-    from . import mate_import
-    from . import mate_export
-
-    from . import menu_file
-    from . import menu_OBJECT_PT_cm3d2_menu
-
-    from . import misc_DATA_PT_context_arm
-    from . import misc_DATA_PT_modifiers
-    from . import misc_DATA_PT_vertex_groups
-    from . import misc_IMAGE_HT_header
-    from . import misc_IMAGE_PT_image_properties
-    from . import misc_INFO_HT_header
-    from . import misc_INFO_MT_add
-    from . import misc_INFO_MT_curve_add
-    from . import misc_INFO_MT_help
-    from . import misc_MATERIAL_PT_context_material
-    from . import misc_MESH_MT_attribute_context_menu
-    from . import misc_MESH_MT_shape_key_specials
-    from . import misc_MESH_MT_vertex_group_specials
-    from . import misc_OBJECT_PT_context_object
-    from . import misc_OBJECT_PT_transform
-    #from . import misc_RENDER_PT_bake
-    from . import misc_RENDER_PT_render
-    from . import misc_TEXTURE_PT_context_texture
-    from . import misc_TEXT_HT_header
-    from . import misc_TEXT_MT_templates
-    from . import misc_VIEW3D_MT_edit_mesh_specials
-    from . import misc_VIEW3D_MT_edit_mesh_split
-    from . import misc_VIEW3D_MT_pose_apply
-    from . import misc_VIEW3D_PT_tools_weightpaint
-    from . import misc_VIEW3D_PT_pose_change
-    from . import misc_DOPESHEET_MT_editor_menus
-
-    from . import translations
-
-    from . import livelink
-
-
+    from . import (
+        anm_export,
+        anm_import,
+        cm3d2_shader,
+        common,
+        compat,
+        livelink,
+        mate_export,
+        mate_import,
+        menu_file,
+        menu_OBJECT_PT_cm3d2_menu,
+        misc_DATA_PT_context_arm,
+        misc_DATA_PT_modifiers,
+        misc_DATA_PT_vertex_groups,
+        misc_DOPESHEET_MT_editor_menus,
+        misc_IMAGE_HT_header,
+        misc_IMAGE_PT_image_properties,
+        misc_INFO_HT_header,
+        misc_INFO_MT_add,
+        misc_INFO_MT_curve_add,
+        misc_INFO_MT_help,
+        misc_MATERIAL_PT_context_material,
+        misc_MESH_MT_attribute_context_menu,
+        misc_MESH_MT_shape_key_specials,
+        misc_MESH_MT_vertex_group_specials,
+        misc_OBJECT_PT_context_object,
+        misc_OBJECT_PT_transform,
+        #misc_RENDER_PT_bake,
+        misc_RENDER_PT_render,
+        misc_TEXT_HT_header,
+        misc_TEXT_MT_templates,
+        misc_TEXTURE_PT_context_texture,
+        misc_VIEW3D_MT_edit_mesh_specials,
+        misc_VIEW3D_MT_edit_mesh_split,
+        misc_VIEW3D_MT_pose_apply,
+        misc_VIEW3D_PT_pose_change,
+        misc_VIEW3D_PT_tools_weightpaint,
+        model_export,
+        model_import,
+        tex_export,
+        tex_import,
+        translations,
+    )
 
 # Save modules that were loaded in the previous section
 for key, module in locals().copy().items():

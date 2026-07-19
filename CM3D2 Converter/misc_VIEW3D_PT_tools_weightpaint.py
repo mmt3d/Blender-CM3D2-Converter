@@ -1,9 +1,8 @@
 # 「3Dビュー」エリア → 「ウェイトペイント」モード → ツールシェルフ → 「ウェイトツール」パネル
-import bpy
 import bmesh
+import bpy
 import mathutils
-from . import common
-from . import compat
+from . import common, compat
 
 
 # メニュー等に項目追加

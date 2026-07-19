@@ -2,10 +2,9 @@
 import bpy
 import mathutils
 import numpy as np
-from . import common
-from . import compat
-from .translations import *
+from . import common, compat
 from .model_export import CNV_OT_export_cm3d2_model
+from .translations import *
 
 
 # メニュー等に項目追加

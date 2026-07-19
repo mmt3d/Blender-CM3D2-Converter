@@ -1,8 +1,7 @@
 # 画面右上 (「情報」エリア → ヘッダー)
-import bpy
 import bmesh
-from . import common
-from . import compat
+import bpy
+from . import common, compat
 from .translations import *
 
 

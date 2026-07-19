@@ -1,19 +1,17 @@
 from __future__ import annotations
+import math
+import os
 import re
 import struct
-import math
 from typing import Literal
 import bpy
 import mathutils
-import os
-from . import common
-from . import compat
-from . fileutil import deserialize_from_file
-from . translations import *
-from . common import CM3D2ImportError
-
 from CM3D2.Serialization.Files import Anm  # type: ignore
 from System import FormatException  # type: ignore
+from . import common, compat
+from .common import CM3D2ImportError
+from .fileutil import deserialize_from_file
+from .translations import *
 
 
 # メインオペレーター

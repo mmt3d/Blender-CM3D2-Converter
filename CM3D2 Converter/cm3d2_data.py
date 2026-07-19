@@ -1,14 +1,13 @@
 """CM3D2/COM3D2用のデータ構造を扱うデータクラス"""
-import bpy
 import copy
 import glob
 import os
-import re
 import pickle
+import re
 import struct
+import bpy
 from . import common
 from .translations import *
-
 
 SHADER_NAMES_CM3D2 = [
     'CM3D2/Toony_Lighted',

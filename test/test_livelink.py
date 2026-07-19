@@ -1,12 +1,11 @@
-import bpy
-import subprocess
 import os
-import pytest
+import subprocess
 from pathlib import Path
-
+import bpy
+import cm3d2converter
+import pytest
 from blenderunittest import BlenderTestCase
 
-import cm3d2converter
 
 class LiveLinkClientCLI:
     exe_path = Path(cm3d2converter.Managed.__file__).parent / 'COM3D2.LiveLink.CLI.exe'

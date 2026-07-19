@@ -1,13 +1,11 @@
 from __future__ import annotations
-
 import io
 import os
 import shutil
 import tempfile
 from typing import TypeVar
-
-from System.IO import MemoryStream
-from CM3D2.Serialization import CM3D2Serializer, ICM3D2Serializable
+from CM3D2.Serialization import CM3D2Serializer, ICM3D2Serializable  # type: ignore
+from System.IO import MemoryStream  # type: ignore
 
 
 class TemporaryFileWriter(io.BufferedWriter):

@@ -1,8 +1,7 @@
 # 「プロパティ」エリア → 「オブジェクト」タブ
 import re
 import bpy
-from . import common
-from . import compat
+from . import common, compat
 
 
 # メニュー等に項目追加

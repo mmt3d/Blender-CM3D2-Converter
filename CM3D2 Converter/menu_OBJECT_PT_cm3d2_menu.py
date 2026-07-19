@@ -1,7 +1,5 @@
 import bpy
-from . import common
-from . import compat
-from . import menu_file
+from . import common, compat, menu_file
 
 ''' CM3D2 Menu / Object Panel Classes '''
 

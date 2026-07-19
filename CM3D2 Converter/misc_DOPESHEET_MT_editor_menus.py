@@ -1,8 +1,7 @@
-import bpy
 import math
+import bpy
 import mathutils
-from . import common
-from . import compat
+from . import common, compat
 from .translations import *
 
 

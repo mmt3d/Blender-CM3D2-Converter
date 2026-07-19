@@ -1,8 +1,6 @@
-import bpy
 from pathlib import Path
-from . import common
-from . import compat
-
+import bpy
+from . import common, compat
 
 TEMPLATES_PATH = Path(__file__).parent / 'templates'
 

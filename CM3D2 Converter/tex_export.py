@@ -1,8 +1,7 @@
-import bpy
 import os
 import struct
-from . import common
-from . import compat
+import bpy
+from . import common, compat
 from .translations import *
 
 

@@ -1,9 +1,7 @@
-import bpy
 from pathlib import Path
-
+import bpy
 import cm3d2converter
 from blenderunittest import BlenderTestCase
-
 
 
 class ModelTest(BlenderTestCase):

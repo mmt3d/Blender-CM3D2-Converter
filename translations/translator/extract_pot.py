@@ -1,16 +1,15 @@
 import ast
 import datetime
-import json
 import gettext
+import json
 import logging
 import os
 import re
 import textwrap
+from typing import TypeGuard
 import typer
 from rich.logging import RichHandler
-from rich.progress import Progress, TextColumn, BarColumn, TaskProgressColumn
-from typing import TypeGuard
-
+from rich.progress import BarColumn, Progress, TaskProgressColumn, TextColumn
 
 app = typer.Typer()
 logging.basicConfig(level=logging.INFO, format="%(message)s", handlers=[RichHandler(markup=True)])

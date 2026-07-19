@@ -4,7 +4,6 @@ import polib
 import typer
 from rich.logging import RichHandler
 
-
 app = typer.Typer()
 logging.basicConfig(level=logging.INFO, format="%(message)s", handlers=[RichHandler(markup=True)])
 

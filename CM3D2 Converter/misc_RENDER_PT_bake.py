@@ -1,11 +1,10 @@
 # 「プロパティ」エリア → 「レンダー」タブ → 「ベイク」パネル
 import os
-import bpy
-import numpy
 import bmesh
+import bpy
 import mathutils
-from . import common
-from . import compat
+import numpy
+from . import common, compat
 
 
 # メニュー等に項目追加

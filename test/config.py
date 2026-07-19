@@ -1,7 +1,6 @@
 import os
-from dotenv import load_dotenv
 from pathlib import Path
-
+from dotenv import load_dotenv
 
 BLENDER_SPEC_MAP = {
     "3.4": {"python": "3.10", "bpy": "3.4.0", "find-links": "https://download.blender.org/pypi/bpy/"},

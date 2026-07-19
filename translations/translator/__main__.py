@@ -1,6 +1,5 @@
 import typer
-from . import extract_pot, merge_po, ai_prepare, ai_translate, compile_dict
-
+from . import ai_prepare, ai_translate, compile_dict, extract_pot, merge_po
 
 app = typer.Typer()
 app.add_typer(extract_pot.app)

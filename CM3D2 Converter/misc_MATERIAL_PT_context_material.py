@@ -1,9 +1,7 @@
 # 「プロパティ」エリア → 「マテリアル」タブ
 import os
 import bpy
-from . import common
-from . import compat
-from . import cm3d2_data
+from . import cm3d2_data, common, compat
 from .translations import *
 
 

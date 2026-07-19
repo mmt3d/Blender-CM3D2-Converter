@@ -1,7 +1,6 @@
 import os
 import bpy
-from . import common
-from . import compat
+from . import common, compat
 from .translations import *
 
 

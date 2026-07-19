@@ -2,16 +2,14 @@ import os
 import struct
 import time
 import traceback
+from collections import Counter
+import bmesh
 import bpy
 import bpy_extras
-import bmesh
 import mathutils
-from collections import Counter
-from . import common
-from . import compat
-from . import cm3d2_data
-from .translations import *
+from . import cm3d2_data, common, compat
 from .misc_OBJECT_PT_transform import CNV_OT_align_to_cm3d2_base_bone
+from .translations import *
 
 
 # メインオペレーター

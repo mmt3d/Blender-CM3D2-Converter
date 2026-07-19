@@ -1,10 +1,9 @@
 # 「プロパティ」エリア → 「レンダー」タブ → 「レンダー」パネル
-import os
 import math
+import os
 import bpy
 import mathutils
-from . import common
-from . import compat
+from . import common, compat
 
 
 # メニュー等に項目追加

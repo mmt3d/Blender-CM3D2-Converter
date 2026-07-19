@@ -1,8 +1,7 @@
 # 「3Dビュー」エリア → ポーズモード or オブジェクトモード → Ctrl+A (ポーズ → 適用)
 import bpy
 import mathutils
-from . import common
-from . import compat
+from . import common, compat
 
 
 # メニュー等に項目追加
