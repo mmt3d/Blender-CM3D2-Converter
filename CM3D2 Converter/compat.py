@@ -13,6 +13,7 @@ IS_LT42 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 2)
 IS_LT44 = not hasattr(bpy.app, 'version') or bpy.app.version < (4, 4)
 IS_LT50 = not hasattr(bpy.app, 'version') or bpy.app.version < (5, 0)
 IS_LT51 = not hasattr(bpy.app, 'version') or bpy.app.version < (5, 1)
+IS_LT52 = not hasattr(bpy.app, 'version') or bpy.app.version < (5, 2)
 
 UILayoutDrawer = bpy.types.Header | bpy.types.Menu | bpy.types.Panel
 
@@ -386,8 +387,8 @@ def map_shader_node(type, inputs: dict = None):
 def set_transparent(mate: bpy.types.Material, transparent: bool):
     """透過モード切り替えの互換性サポート"""
     if transparent:
-        # 5.1 で透過BSDF＋main/shadow塗分け・光沢BSDFの組み合わせで不透明部が黒や赤になる事象があり、やむを得ずディザとする
-        mate.blend_method = 'BLEND' if IS_LT51 else 'HASHED'
+        # 5.1 のみ透過BSDF＋main/shadow塗分け・光沢BSDFの組み合わせで不透明部が黒や赤になる事象があり、やむを得ずディザとする (5.2で解消)
+        mate.blend_method = 'BLEND' if IS_LT51 or not IS_LT52 else 'HASHED'
     else:
         mate.blend_method = 'OPAQUE' if IS_LT42 else 'BLEND'
 
