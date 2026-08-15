@@ -305,6 +305,15 @@ def set_pose(ob, value: int):
 
     if props.apply_type == 'POSE':
         _is_processing = True
+
+        # この機能で適用した既存のアクションが存在する場合は消去する
+        for arm_ob in selected:
+            if arm_ob.animation_data and arm_ob.animation_data.action:
+                act = arm_ob.animation_data.action
+                if act.get('isCM3D2Pose'):
+                    arm_ob.animation_data.action = None
+                    bpy.data.actions.remove(act)
+
         # ポーズとして適用の場合
         bpy.ops.import_anim.import_cm3d2_anm(filepath=anm_path, apply_as_pose=True)
         # 選択ポーズのカスタムプロパティ記録と今後のポーズ変更検知でクリアする仕込み
@@ -323,6 +332,10 @@ def set_pose(ob, value: int):
                 _monitored_objects.remove(ob.name)
         # アニメーションとして適用の場合
         bpy.ops.import_anim.import_cm3d2_anm(filepath=anm_path)
+        # タグ付与
+        for ob in selected:
+            if ob.animation_data and ob.animation_data.action:
+                ob.animation_data.action['isCM3D2Pose'] = True
         if props.play_animation:
             # 再生する場合はフレーム0に戻して再生
             bpy.context.scene.frame_set(0)
