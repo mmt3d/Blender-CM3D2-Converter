@@ -207,11 +207,7 @@ class AnmImporter:
         
         for bone_name, bone_data in anm_data.items():
             if self.ignore_automatic_bone:
-                if re.match(r'Kata_[RL]', bone_name):
-                    continue
-                if re.match(r'Uppertwist1_[RL]', bone_name):
-                    continue
-                if re.match(r'momoniku_[RL]', bone_name):
+                if re.match(r'(?:Kata|UpperTwist1|momoniku|Hip)_[RL]', bone_name):
                     continue
 
             if bone_name not in pose.bones:
