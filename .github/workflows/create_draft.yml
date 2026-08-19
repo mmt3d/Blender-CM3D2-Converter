@@ -18,6 +18,7 @@ permissions:
 jobs:
   create-draft:
     runs-on: ubuntu-latest
+    if: startsWith(github.event.head_commit.message, 'bump:')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
