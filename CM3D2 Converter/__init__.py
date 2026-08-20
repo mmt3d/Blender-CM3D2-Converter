@@ -506,7 +506,3 @@ def unregister():
 # メイン関数
 if __name__ == '__main__':
     register()
-    
-# Make sure that this module is always accessible as 'cm3d2converter'
-import sys
-sys.modules['cm3d2converter'] = sys.modules[__name__]
