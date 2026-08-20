@@ -1,4 +1,7 @@
+import os
 import sys
+from pathlib import Path
+import bpy
 import pytest
 
 _test_name = None
@@ -74,3 +77,18 @@ def pytest_configure(config):
     config.addinivalue_line(
         "markers", "profile: marker for profiling test"
     )
+
+
+def _mock_user_resource(resource_type: str, path: str = '', create: bool = False) -> str:
+    """
+    bpy.utils.user_resource の返すパスをテスト用に変更するパッチ
+    """
+    if resource_type not in {'DATAFILES', 'EXTENSIONS'}:
+        return bpy.utils.user_resource(resource_type, path, create)
+    resource_path = os.path.join(Path(__file__).parent / 'resources', resource_type.lower(), path)
+    if create and not os.path.exists(resource_path):
+        os.makedirs(resource_path, exist_ok=True)
+    return resource_path
+
+# 本体ロード時に即使われるため、ここでパッチする
+bpy.utils.user_resource = _mock_user_resource
