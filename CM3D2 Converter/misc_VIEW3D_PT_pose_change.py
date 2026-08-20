@@ -214,7 +214,7 @@ def reload_pose_list(import_type: str, force: bool = False):
         wm.progress_update(3)
 
         # arcよりポーズanmを抽出
-        ah.extract('motion*.arc', output_dir=POSE_DATA_DIR, target_files=[f'{x[1]}.anm' for x in pose_list])
+        ah.extract('motion.*.arc', output_dir=POSE_DATA_DIR, target_files=[f'{x[1]}.anm' for x in pose_list])
         wm.progress_update(4)
 
         # 所持していると確認できるものをリスト化、アイコンはpreview collectionに登録
