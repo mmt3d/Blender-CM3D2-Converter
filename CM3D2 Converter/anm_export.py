@@ -4,10 +4,7 @@ import struct
 import unicodedata
 from pathlib import Path
 import bpy
-from CM3D2.Serialization.Files import Anm  # type: ignore
-from CM3D2.Serialization.Performance import PerformanceExtensions  # type: ignore
 from mathutils import Matrix, Quaternion, Vector
-from System import Array  # type: ignore
 from . import common, compat, misc_DOPESHEET_MT_editor_menus
 from .fileutil import serialize_to_file
 from .translations import *
@@ -495,7 +492,7 @@ class AnmBuilder:
         
         self._invalid_bones: dict[bpy.types.PoseBone, list[tuple(float, Matrix)]] = dict()
     
-    def build_anm(self, context) -> Anm:
+    def build_anm(self, context):  # -> Anm:
         obj = context.active_object
         arm = obj.data
         
@@ -984,6 +981,8 @@ class AnmBuilder:
         return bones
     
     def get_track_data(self, anm_data_raw):
+        from CM3D2.Serialization.Files import Anm  # type: ignore
+
         track_data: dict[str, dict[Anm.ChannelIdType, dict[float, tuple[float, float, float]]]]
         track_data = {}
         for bone_name, channels in anm_data_raw.items():
@@ -1033,6 +1032,9 @@ class AnmBuilder:
     #@staticmethod
     def assemble_anm(self, bone_parents, bones, track_data, time_step, version=1000, auto_smooth=False) -> Anm:
         ''' Build Anm class from data'''
+        from CM3D2.Serialization.Files import Anm  # type: ignore
+        from CM3D2.Serialization.Performance import PerformanceExtensions  # type: ignore
+        from System import Array  # type: ignore
 
         anm = Anm()
         # anm.signature = 'CM3D2_ANIM'

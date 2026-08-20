@@ -6,8 +6,6 @@ import struct
 from typing import Literal
 import bpy
 import mathutils
-from CM3D2.Serialization.Files import Anm  # type: ignore
-from System import FormatException  # type: ignore
 from . import common, compat
 from .common import CM3D2ImportError
 from .fileutil import deserialize_from_file
@@ -571,6 +569,7 @@ class AnmImporter:
         bpy.context.view_layer.update()
 
     def get_bone_keyframe_data(self, found_unknown, bone_data):
+        from CM3D2.Serialization.Files import Anm  # type: ignore
         locs = {}
         loc_tangents = {}
         quats = {}
@@ -727,6 +726,8 @@ class AnmImporter:
         return anm_data
 
     def read_anm_data(self, filepath: str, only_first_frame: bool = False):
+        from CM3D2.Serialization.Files import Anm  # type: ignore
+        from System import FormatException  # type: ignore
         anm_data = {}
         
         try:

@@ -3,9 +3,6 @@ import os
 import tempfile
 from typing import TYPE_CHECKING, overload
 import bpy
-from CM3D2.Serialization import CM3D2Serializer  # type: ignore
-from COM3D2.LiveLink import *  # type: ignore
-from System.IO import MemoryStream  # type: ignore
 from . import compat
 from .anm_export import AnmBuilder
 
@@ -91,7 +88,7 @@ def _get_active_core() -> LiveLinkCore:
 def _set_active_core(value: LiveLinkCore):
     _set_active_core.core = value
 
-_set_active_core.core: LiveLinkCore = None
+_set_active_core.core = None
 
 
 @compat.BlRegister()
@@ -167,6 +164,7 @@ class COM3D2LIVELINK_OT_start_server(bpy.types.Operator):
         return not core.IsServer
 
     def execute(self, context):
+        from COM3D2.LiveLink import LiveLinkCore  # type: ignore
         core = _get_active_core()
         
         if core and core.IsServer:
@@ -275,7 +273,9 @@ class COM3D2LIVELINK_OT_send_animation(bpy.types.Operator):
         builder.is_remove_unkeyed_bone = self.is_remove_unkeyed_bone
         
         anm = builder.build_anm(context)
-        
+
+        from CM3D2.Serialization import CM3D2Serializer  # type: ignore
+        from System.IO import MemoryStream  # type: ignore
         serializer = CM3D2Serializer()
         memory_stream = MemoryStream()
         serializer.Serialize(memory_stream, anm)
@@ -344,7 +344,9 @@ class COM3D2LIVELINK_OT_link_pose(bpy.types.Operator):
         builder.is_remove_unkeyed_bone = wm.com3d2_livelink_settings.anm_is_remove_unkeyed_bone
         
         anm = builder.build_anm(context)
-        
+
+        from CM3D2.Serialization import CM3D2Serializer  # type: ignore
+        from System.IO import MemoryStream  # type: ignore
         serializer = CM3D2Serializer()
         memory_stream = MemoryStream()
         serializer.Serialize(memory_stream, anm)

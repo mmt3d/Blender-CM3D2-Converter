@@ -3,9 +3,6 @@ import io
 import os
 import shutil
 import tempfile
-from typing import TypeVar
-from CM3D2.Serialization import CM3D2Serializer, ICM3D2Serializable  # type: ignore
-from System.IO import MemoryStream  # type: ignore
 
 
 class TemporaryFileWriter(io.BufferedWriter):
@@ -78,14 +75,17 @@ class TemporaryFileWriter(io.BufferedWriter):
         os.remove(self.temppath)
 
 
-def serialize_to_file(data: ICM3D2Serializable, file: io.BufferedWriter):
+def serialize_to_file(data, file: io.BufferedWriter):
+    from CM3D2.Serialization import CM3D2Serializer  # type: ignore
+    from System.IO import MemoryStream  # type: ignore
     serializer = CM3D2Serializer()
     memory_stream = MemoryStream()
     serializer.Serialize(memory_stream, data)
     file.write(bytes(memory_stream.GetBuffer())[:memory_stream.Length])
 
-TCM3D2Serializable = TypeVar('TCM3D2Serializable', bound=ICM3D2Serializable)
-def deserialize_from_file(file_type: type[TCM3D2Serializable], file: io.BufferedReader) -> TCM3D2Serializable:
+def deserialize_from_file(file_type, file: io.BufferedReader):
+    from CM3D2.Serialization import CM3D2Serializer  # type: ignore
+    from System.IO import MemoryStream  # type: ignore
     serializer = CM3D2Serializer()
     memory_stream = MemoryStream(file.read())
     return serializer.Deserialize[file_type](memory_stream)
