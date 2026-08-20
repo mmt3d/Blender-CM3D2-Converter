@@ -2,7 +2,6 @@
     and that assembly references have been added.
 """
 
-import sys as _sys
 from pathlib import Path as _Path
 from typing import TYPE_CHECKING
 
@@ -50,18 +49,20 @@ def _add_references():
         import clr
     from System.IO import FileLoadException  # type: ignore
     from System.Reflection import Assembly  # type: ignore
-    
-    _sys.path.append(str(_MANAGED_DIR))
-    
+
     try:
-        clr.AddReference('CM3D2.Serialization')
-        clr.AddReference('COM3D2.LiveLink')
+        _add_reference("CM3D2.Serialization.dll", clr)
+        _add_reference("COM3D2.LiveLink.dll", clr)
     except FileLoadException:  # type: ignore
         _copy_unsafe_dll('CM3D2.Serialization.dll')
         _copy_unsafe_dll('COM3D2.LiveLink.dll')
         _copy_unsafe_dll('System.Threading.dll')
-        clr.AddReference('CM3D2.Serialization')
-        clr.AddReference('COM3D2.LiveLink')
+        _add_reference("CM3D2.Serialization.dll", clr)
+        _add_reference("COM3D2.LiveLink.dll", clr)
+
+def _add_reference(filename: str, clr):
+    dll_path = str((_MANAGED_DIR / filename).absolute())
+    clr.AddReference(dll_path)
 
 def _copy_unsafe_dll(filename: str):
     """If the addon is unzipped and placed directly in the addons folder,

@@ -14,19 +14,36 @@ bl_info = {
     'category': 'Import-Export'
 }
 
+# extension起動だとbl_infoは参照できなくなるため退避する
+package_name = str(bl_info['name'])
+package_version = ".".join(map(str, bl_info["version"]))
+
 DEBUG = False
 
-# 同梱のpythonモジュールパスを追加
-import sys
-import os
-addon_dir = os.path.dirname(__file__)
-vendor_path = os.path.join(addon_dir, 'vendor')
-if vendor_path not in sys.path:
-    sys.path.insert(0, vendor_path)
+is_reload = 'bpy' in locals()
 
+import os
+import bpy
+
+# extensions ではなく addon 起動の場合、wheels内の同梱モジュールを展開してpythonモジュールパスに追加
+if not os.path.abspath(__file__).startswith(bpy.utils.user_resource('EXTENSIONS')):
+    import sys
+    import zipfile
+    addon_dir = os.path.dirname(os.path.abspath(__file__))
+    wheels_dir = os.path.join(addon_dir, 'wheels')
+    cache_dir = os.path.join(bpy.utils.user_resource('DATAFILES', create=True), package_name, 'lib', package_version)
+    if not os.path.exists(cache_dir):
+        os.makedirs(cache_dir, exist_ok=True)
+        for filename in os.listdir(wheels_dir):
+            if filename.endswith('.whl'):
+                whl_path = os.path.join(wheels_dir, filename)
+                with zipfile.ZipFile(whl_path) as zf:
+                    zf.extractall(cache_dir)
+    if cache_dir not in sys.path:
+        sys.path.insert(0, cache_dir)
 
 from . import Managed
-if 'bpy' in locals():
+if is_reload:
     if not hasattr(Managed, '_LOADED') or not Managed._LOADED:
         import importlib
         importlib.reload(Managed)
@@ -92,7 +109,7 @@ for key, module in locals().copy().items():
     if key not in _pre_locals:
         _SUB_MODULES.append(module)
             
-if 'bpy' in locals():
+if is_reload:
     import importlib
     for module in _SUB_MODULES:
         try:
@@ -103,8 +120,7 @@ if 'bpy' in locals():
     if DEBUG:
         cm3d2_shader.invalidate_cache()
 
-import bpy, os.path, bpy.utils.previews  # type: ignore
-
+import bpy.utils.previews  # type: ignore
 
 # アドオン設定
 @compat.BlRegister()
@@ -309,9 +325,9 @@ class AddonPreferences(bpy.types.AddonPreferences):
             import platform
             if platform.system() == 'Windows':
                 os.system('chcp 65001 > nul')
-                print(f"[{bl_info['name']}] Console code page set to UTF-8.")
+                print(f"[{package_name}] Console code page set to UTF-8.")
         else:
-            print(f"[{bl_info['name']}] Console code page set to default. (requires restart blender)")
+            print(f"[{package_name}] Console code page set to default. (requires restart blender)")
 
 
 @compat.BlRegister()
@@ -342,7 +358,6 @@ def register():
     dir = os.path.dirname(__file__)
     pcoll.load('KISS', os.path.join(dir, 'kiss.png'), 'IMAGE')
     common.preview_collections['main'] = pcoll
-    common.bl_info = bl_info
 
     compat.BlRegister.register()
 

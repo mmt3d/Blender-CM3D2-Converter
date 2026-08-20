@@ -9,7 +9,7 @@ from typing import Any
 import bmesh
 import bpy
 import mathutils
-from . import compat, fileutil
+from . import compat, fileutil, package_name
 from .cm3d2_data import ArcHandler, Handler
 from .cm3d2_shader import alpha_mixer_node_tree, bind_light_switch, com3d2_shader_node_tree, toon_vector_node_tree
 
@@ -23,8 +23,8 @@ texpath_dict = {}
 texpath_default_dict = {}
 COM3D2_SHADER_REV = 1
 
-POSE_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), __package__, 'pose')
-TOON_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), __package__, 'toon')
+POSE_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), package_name, 'pose')
+TOON_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), package_name, 'toon')
 
 re_png = re.compile(r'\.[Pp][Nn][Gg](\.\d{3})?$')
 re_serial = re.compile(r'(\.\d{3})$')
@@ -586,7 +586,7 @@ def load_cm3d2tex(path, skip_data=False):
     def _dds_to_png(data: bytes, width: int, height: int) -> bytes:
         import tempfile
         import zlib
-        from py_dds import DDSImage
+        from .py_dds import DDSImage
         dds_header = _create_dds_header_dxt5(width, height, len(data))
         full_dds_data = dds_header + data
         tmp = tempfile.NamedTemporaryFile(suffix='.dss', delete=False)
