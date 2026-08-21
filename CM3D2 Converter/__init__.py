@@ -26,7 +26,7 @@ import os
 import bpy
 
 # extensions ではなく addon 起動の場合、wheels内の同梱モジュールを展開してpythonモジュールパスに追加
-if not os.path.abspath(__file__).startswith(bpy.utils.user_resource('EXTENSIONS')):
+if os.path.abspath(__file__).startswith(bpy.utils.user_resource('SCRIPTS')):
     import sys
     import zipfile
     addon_dir = os.path.dirname(os.path.abspath(__file__))
