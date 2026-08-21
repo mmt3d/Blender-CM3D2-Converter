@@ -34,12 +34,13 @@ jobs:
 
       - name: Zip extension folder
         run: |
+          zip -r ${{ steps.build_meta.outputs.addon_zip_name }} "${{ env.ADDON_DIR }}"
           cd "${{ env.ADDON_DIR }}"
-          zip -r ../${{ steps.build_meta.outputs.zip_name }} ./*
+          zip -r ../${{ steps.build_meta.outputs.extension_zip_name }} ./*
 
       - name: Create Metadata
         env:
-          ZIP_NAME: ${{ steps.build_meta.outputs.zip_name }}
+          ZIP_NAME: ${{ steps.build_meta.outputs.extension_zip_name }}
           TAG_NAME: v${{ steps.build_meta.outputs.version }}
         run: python .github/scripts/create_metadata.py
 
@@ -47,7 +48,7 @@ jobs:
         id: create_release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: ${{ steps.build_meta.outputs.zip_name }}
+          artifacts: "${{ steps.build_meta.outputs.extension_zip_name }},${{ steps.build_meta.outputs.addon_zip_name }}"
           tag: v${{ steps.build_meta.outputs.version }}
           name: v${{ steps.build_meta.outputs.version }}
           draft: true

@@ -35,9 +35,11 @@ def main():
     version = ".".join(map(str, bl_info.get("version")))
     bl_version = ".".join(map(str, bl_info.get("blender")))
 
-    zip_name = f"{addon_id}-{version}.zip"
+    extension_zip_name = f"{addon_id}-{version}-extension.zip"
+    addon_zip_name = f"{addon_id}-{version}-addon.zip"
     with open(os.environ['GITHUB_OUTPUT'], "a") as fh:
-        print(f"zip_name={zip_name}", file=fh)
+        print(f"extension_zip_name={extension_zip_name}", file=fh)
+        print(f"addon_zip_name={addon_zip_name}", file=fh)
         print(f"version={version}", file=fh)
 
     # merge
