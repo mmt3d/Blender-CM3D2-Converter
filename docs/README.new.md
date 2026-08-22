@@ -11,6 +11,10 @@
 * 機能のうちいくつかはBlenderバージョン制約により使用できない場合があります。
 * Blender-2.7x上で旧Blender-CM3D2-Converterを用いて取り込み・作成したデータをそのまま新しいBlenderバージョンで開いても正常に移行されません。  
 
+**変更点ダイジェスト**
+
+https://github.com/user-attachments/assets/f36620f8-447e-470b-8334-394dc85ae7b4
+
 ## 目次
 * [インストール](#インストール)
   * [Blender4.2以降](#blender42以降)
