@@ -447,8 +447,6 @@ class CNV_OT_quick_shape_key_transfer(shape_key_transfer_op):
     bl_description = "アクティブなメッシュに他の選択メッシュのシェイプキーを高速で転送します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    step_size: bpy.props.IntProperty(name="Step Size (low = quality, high = speed)", default=1, min=1, max=100, soft_min=1, soft_max=10, step=1)
-
     near_vert_indexs = []
     my_iter = None
 
@@ -469,7 +467,6 @@ class CNV_OT_quick_shape_key_transfer(shape_key_transfer_op):
 
     def draw(self, context):
         shape_key_transfer_op.draw(self, context)
-        self.layout.prop(self, 'step_size')
 
     def prepare(self, context):
         super().prepare(context)
@@ -494,31 +491,13 @@ class CNV_OT_quick_shape_key_transfer(shape_key_transfer_op):
             context.window_manager.progress_end()
             return True
 
-        def check(index):
-            near_vert_index = self.near_vert_indexs[index]
-            near_shape_co = source_shape_key_data[near_vert_index].co - binded_shape_key_data[near_vert_index].co
-            if abs(near_shape_co.length) > 2e-126: # 2e-126 is the smallest float != 0
-                target_shape_key_data[index].co += near_shape_co
-                return True
-
         is_changed = False
-        just_changed = False
-        found_more = False
-        for i in range(0, len(target_shape_key_data), self.step_size):
-            
-            if check(i) or found_more:
+        for i in range(len(target_shape_key_data)):
+            near_vert_index = self.near_vert_indexs[i]
+            near_shape_co = source_shape_key_data[near_vert_index].co - binded_shape_key_data[near_vert_index].co
+            if abs(near_shape_co.length) > 2e-126:  # 2e-126 is the smallest float != 0
+                target_shape_key_data[i].co += near_shape_co
                 is_changed = True
-                found_more = False
-                if not just_changed:
-                    for j in range(i-self.step_size+1, i):
-                        if j < len(target_shape_key_data) and j > 0:
-                            found_more = check(j) or found_more
-                for k in range(i+1, i+self.step_size):
-                    if k < len(target_shape_key_data) and k > 0:
-                        found_more = check(k) or found_more
-                just_changed = True
-            else:
-                just_changed = False
 
         context.window_manager.progress_update(self.my_iter.index + 1)
 
@@ -541,7 +520,6 @@ class CNV_OT_precision_shape_key_transfer(shape_key_transfer_op):
     bl_description = "アクティブなメッシュに他の選択メッシュのシェイプキーを遠いほどぼかして転送します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    step_size: bpy.props.IntProperty(name="Step Size (low = quality, high = speed)", default=1, min=1, max=100, soft_min=1, soft_max=10, step=1)
     extend_range: bpy.props.FloatProperty(name="範囲倍率", default=1.1, min=1.0001, max=5.0, soft_min=1.0001, soft_max=5.0, step=10, precision=2)
 
     
@@ -570,7 +548,6 @@ class CNV_OT_precision_shape_key_transfer(shape_key_transfer_op):
 
     def draw(self, context):
         shape_key_transfer_op.draw(self, context)
-        self.layout.prop(self, 'step_size')
         self.layout.prop(self, 'extend_range', icon='PROP_ON')
 
     # todo: 不要なはず、意図的に名称変更されている
@@ -719,59 +696,27 @@ class CNV_OT_precision_shape_key_transfer(shape_key_transfer_op):
 
         diff_data = [None] * len(source_shape_key_data)
         near_diff_co = mathutils.Vector.Fill(3, 0) # Creates a vector of length 3 filled with 0's
-        def check(index, near_diff_co=near_diff_co):
-            near_diff_co.zero() # This should be faster than creating a new vector every time
-
-            if self.near_vert_multi_total[index] > 0:
-                for near_index, near_multi in self.near_vert_data[index]:
-                    diff_data[near_index] = diff_data[near_index] or source_shape_key_data[near_index].co - binded_shape_key_data[near_index].co
-                    near_diff_co += diff_data[near_index] * near_multi
-
-                near_diff_co /= self.near_vert_multi_total[index]
-
-            if near_diff_co.length > 2e-126: # 2e-126 is the smallest float != 0
-                target_shape_key_data[index].co += near_diff_co
-                return True
-
         is_changed = False
         just_changed = False
-        if self.step_size > 1:
-            found_more = False
-            for i in range(0, len(target_shape_key_data), self.step_size):
-                
-                if check(i) or found_more:
+
+        for index, binded_vert, source_vert in zip(range(len(diff_data)), binded_shape_key_data, source_shape_key_data):
+            diff_data[index] = source_vert.co - binded_vert.co
+            if diff_data[index].length > 2e-126:
+                just_changed = True
+
+        if just_changed:
+            for target_vert, near_indices, near_total in zip(target_shape_key_data, self.near_vert_data, self.near_vert_multi_total):
+                near_diff_co.zero() # This should be faster than creating a new vector every time
+
+                if near_total > 0:
+                    for near_index, near_multi in near_indices:
+                        near_diff_co += diff_data[near_index] * near_multi
+
+                    near_diff_co /= near_total
+
+                if near_diff_co.length > 2e-126:  # 2e-126 is the smallest float != 0
+                    target_vert.co += near_diff_co
                     is_changed = True
-                    found_more = False
-                    if not just_changed:
-                        for j in range(i-self.step_size+1, i):
-                            if j < len(target_shape_key_data) and j > 0:
-                                found_more = check(j) or found_more
-                    for k in range(i+1, i+self.step_size):
-                        if k < len(target_shape_key_data) and k > 0:
-                            found_more = check(k) or found_more
-                    just_changed = True
-                else:
-                    just_changed = False
-        
-        else: # if self.step_size == 1:
-            for index, binded_vert, source_vert in zip(range(len(diff_data)), binded_shape_key_data, source_shape_key_data):
-                diff_data[index] = source_vert.co - binded_vert.co
-                if diff_data[index].length > 2e-126:
-                    just_changed = True
-            
-            if just_changed:
-                for target_vert, near_indices, near_total in zip(target_shape_key_data, self.near_vert_data, self.near_vert_multi_total):
-                    near_diff_co.zero() # This should be faster than creating a new vector every time
-
-                    if near_total > 0:
-                        for near_index, near_multi in near_indices:
-                            near_diff_co += diff_data[near_index] * near_multi
-
-                        near_diff_co /= near_total
-
-                    if near_diff_co.length > 2e-126: # 2e-126 is the smallest float != 0
-                        target_vert.co += near_diff_co
-                        is_changed = True
 
         context.window_manager.progress_update(self.my_iter.index + 1)
 
@@ -871,7 +816,6 @@ class CNV_OT_weighted_shape_key_transfer(shape_key_transfer_op):
     bl_description = "Transfers the shape keys of other selected mesh to the active mesh, using matching vertex groups as masks"
     bl_options = {'REGISTER', 'UNDO'}
 
-    step_size: bpy.props.IntProperty(name="Step Size (low = quality, high = speed)", default=1, min=1, max=100, soft_min=1, soft_max=10, step=1)
     extend_range: bpy.props.FloatProperty(name="Range magnification", default=1.1, min=1.0001, max=5.0, soft_min=1.0001, soft_max=5.0, step=10, precision=2)
 
     near_vert_data = []
