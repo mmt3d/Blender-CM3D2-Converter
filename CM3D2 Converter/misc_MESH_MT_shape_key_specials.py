@@ -31,6 +31,7 @@ def menu_func(self, context):
 
 class transfer_shape_key_iter:
     index = -1
+    total_count = 0
 
     target_ob = None
     source_ob = None
@@ -51,6 +52,7 @@ class transfer_shape_key_iter:
         self.source_ob = source_ob
         self.binded_shape_key = binded_shape_key or self.source_ob.data.shape_keys.key_blocks[0]
         self.only_selected = only_selected
+        self.total_count = 0
 
     def __iter__(self):
         self.index = -1
@@ -67,9 +69,11 @@ class transfer_shape_key_iter:
             #self.binded_shape_key_data.verts.ensure_lookup_table()
             self.binded_shape_key_data = self.binded_shape_key.data
             if self.only_selected and not compat.IS_LT51:
-                self.source_iter = iter(filter(lambda x: x.select, self.source_ob.data.shape_keys.key_blocks))
+                keys = [x for x in self.source_ob.data.shape_keys.key_blocks if x.select]
             else:
-                self.source_iter = iter(self.source_ob.data.shape_keys.key_blocks)
+                keys = list(self.source_ob.data.shape_keys.key_blocks)
+            self.total_count = len(keys)
+            self.source_iter = iter(keys)
         return self
 
     def __next__(self):
@@ -480,8 +484,8 @@ class CNV_OT_quick_shape_key_transfer(shape_key_transfer_op):
             self.near_vert_indexs[v.index] = self.kd.find(near_co)[1]
         
         self.my_iter = iter( transfer_shape_key_iter(self.target_ob, self.source_ob, self.binded_shape_key, self.only_selected) )
-        context.window_manager.progress_begin( 0, len(source_me.shape_keys.key_blocks) * len(target_me.vertices) )
-        context.window_manager.progress_update( 0 )
+        context.window_manager.progress_begin(0, max(1, self.my_iter.total_count))
+        context.window_manager.progress_update(0)
     
     def loop(self, context):
         source_shape_key_index, target_shape_key, binded_shape_key_data, source_shape_key_data, target_shape_key_data = next(self.my_iter, (-1, None, None, None, None))
@@ -490,14 +494,9 @@ class CNV_OT_quick_shape_key_transfer(shape_key_transfer_op):
             context.window_manager.progress_end()
             return True
 
-        progress = source_shape_key_index * len(self.target_ob.data.vertices)
-
         def check(index):
             near_vert_index = self.near_vert_indexs[index]
             near_shape_co = source_shape_key_data[near_vert_index].co - binded_shape_key_data[near_vert_index].co
-
-            context.window_manager.progress_update( progress + index )
-            
             if abs(near_shape_co.length) > 2e-126: # 2e-126 is the smallest float != 0
                 target_shape_key_data[index].co += near_shape_co
                 return True
@@ -520,7 +519,9 @@ class CNV_OT_quick_shape_key_transfer(shape_key_transfer_op):
                 just_changed = True
             else:
                 just_changed = False
-        
+
+        context.window_manager.progress_update(self.my_iter.index + 1)
+
         if not self.is_shapeds.get(target_shape_key.name):
             self.is_shapeds[target_shape_key.name] = is_changed
         self.my_iter.update() # only call this when done with current iteration.
@@ -704,7 +705,7 @@ class CNV_OT_precision_shape_key_transfer(shape_key_transfer_op):
         #self.source_bind_data.foreach_get('co', self.binded_raw_data)
         #self.binded_raw_data.resize(self.binded_raw_data.size//3, 3)
 
-        context.window_manager.progress_begin(0, len(source_me.shape_keys.key_blocks) * len(target_me.vertices))
+        context.window_manager.progress_begin(0, max(1, self.my_iter.total_count))
         context.window_manager.progress_update(0)
 
     def loop(self, context):
@@ -715,10 +716,6 @@ class CNV_OT_precision_shape_key_transfer(shape_key_transfer_op):
             return True
         
         #print("Loop for " + target_shape_key.name)
-
-        #context.window_manager.progress_begin( 0, len(self.source_ob.shape_keys.key_blocks) * len(target_ob.data.vertices) )
-        progress = source_shape_key_index * len(self.target_ob.data.vertices)
-        #context.window_manager.progress_update( progress )
 
         diff_data = [None] * len(source_shape_key_data)
         near_diff_co = mathutils.Vector.Fill(3, 0) # Creates a vector of length 3 filled with 0's
@@ -731,8 +728,6 @@ class CNV_OT_precision_shape_key_transfer(shape_key_transfer_op):
                     near_diff_co += diff_data[near_index] * near_multi
 
                 near_diff_co /= self.near_vert_multi_total[index]
-            
-            context.window_manager.progress_update( progress + index )
 
             if near_diff_co.length > 2e-126: # 2e-126 is the smallest float != 0
                 target_shape_key_data[index].co += near_diff_co
@@ -777,11 +772,8 @@ class CNV_OT_precision_shape_key_transfer(shape_key_transfer_op):
                     if near_diff_co.length > 2e-126: # 2e-126 is the smallest float != 0
                         target_vert.co += near_diff_co
                         is_changed = True
-                    
-                    progress += 1
-                    context.window_manager.progress_update( progress )
-            else:
-                context.window_manager.progress_update( progress + len(target_shape_key_data) )
+
+        context.window_manager.progress_update(self.my_iter.index + 1)
 
         self.is_shapeds[target_shape_key.name] = self.is_shapeds.get(target_shape_key.name) or is_changed
         self.my_iter.update() # only call this when done with current iteration.
@@ -1008,8 +1000,8 @@ class CNV_OT_weighted_shape_key_transfer(shape_key_transfer_op):
         #self.source_bind_data.foreach_get('co', self.binded_raw_data)
         #self.binded_raw_data.resize(self.binded_raw_data.size//3, 3)
 
-        context.window_manager.progress_begin(0, len(source_me.shape_keys.key_blocks) * len(target_me.vertices))
-        context.window_manager.progress_update(0)       
+        context.window_manager.progress_begin(0, self.my_iter.total_count)
+        context.window_manager.progress_update(0)
       
     loop = CNV_OT_precision_shape_key_transfer.loop
     cleanup = CNV_OT_precision_shape_key_transfer.cleanup
