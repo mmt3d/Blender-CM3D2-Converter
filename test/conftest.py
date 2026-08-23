@@ -83,8 +83,9 @@ def _mock_user_resource(resource_type: str, path: str = '', create: bool = False
     """
     bpy.utils.user_resource の返すパスをテスト用に変更するパッチ
     """
-    if resource_type not in {'DATAFILES', 'EXTENSIONS'}:
-        return bpy.utils.user_resource(resource_type, path, create)
+    if resource_type == 'SCRIPTS':
+        # プロジェクトルートをscriptsディレクトリとする
+        return str(Path(__file__).parent.parent)
     resource_path = os.path.join(Path(__file__).parent / 'resources', resource_type.lower(), path)
     if create and not os.path.exists(resource_path):
         os.makedirs(resource_path, exist_ok=True)
