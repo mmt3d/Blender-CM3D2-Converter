@@ -217,6 +217,7 @@ class new_mate_opr():
         _HiTex = ('_HiTex', ob_name + '_s', base_path + ob_name + '_s.png')
         _OutlineTex = ('_OutlineTex', ob_name + '_line', base_path + ob_name + '_line.png')
         _OutlineToonRamp = ('_OutlineToonRamp', prefs.new_mate_linetoonramp_name, prefs.new_mate_linetoonramp_path)
+        _RenderTex = ('_RenderTex', ob_name, base_path + ob_name + '.png')
 
         _Color = ('_Color', prefs.new_mate_color)
         _ShadowColor = ('_ShadowColor', prefs.new_mate_shadowcolor)
@@ -286,7 +287,7 @@ class new_mate_opr():
         elif self.shader_type == 'CM3D2/Mosaic':
             mate['shader1'] = 'CM3D2/Mosaic'
             mate['shader2'] = 'CM3D2__Mosaic'
-            tex_list.append(('_RenderTex', ''))
+            tex_list.append(_RenderTex)
             f_list.append(('_FloatValue1', 30))
         elif self.shader_type == 'Unlit/Texture':
             mate['shader1'] = 'Unlit/Texture'
