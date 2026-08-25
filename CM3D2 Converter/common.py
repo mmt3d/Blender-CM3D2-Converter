@@ -1375,7 +1375,7 @@ def get_outliner_selection(context: bpy.types.Context, object_type: str = '') ->
         active = active_in_view or active_in_outliner
         selected.add(active)
         if object_type:
-            selected = [x for x in selected if x.type == object_type]
+            selected = [x for x in selected if x and x.type == object_type]
             if active and active.type != object_type:
                 active = None
         return list(selected), active
