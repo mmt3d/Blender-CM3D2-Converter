@@ -910,7 +910,7 @@ class CNV_OT_multiply_shape_key(bpy.types.Operator):
             for index, key_block in enumerate(shape_keys.key_blocks):
                 if index <= ob.active_shape_key_index:
                     target_shapes.append(key_block)
-        elif self.mode == 'UP':
+        elif self.mode == 'DOWN':
             for index, key_block in enumerate(shape_keys.key_blocks):
                 if ob.active_shape_key_index <= index:
                     target_shapes.append(key_block)
