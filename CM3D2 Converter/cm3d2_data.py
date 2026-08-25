@@ -212,7 +212,17 @@ PROPS = {
         # 'default': 0, 'step': 1, 'precision': 2,
         # 'min': -100, 'soft_min': -100,
         # 'max': 100, 'soft_max': 100,
-    }
+    },
+    '_HiPow': {
+        'type': 'f',
+        'desc': "ハイライトの強さを指定。",
+        'presets': [0, 25, 50],
+    },
+    '_HiRate': {
+        'type': 'f',
+        'desc': "ハイライトの係数を指定。",
+        'presets': [0, 0.25, 0.5, 0.75, 1],
+    },
 }
 
 
