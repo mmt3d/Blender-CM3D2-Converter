@@ -244,7 +244,7 @@ class DataHandler:
     def __init__(self):
         diffuse = {
             'type_name': "リアル",
-            'icon': 'BRUSH_CLAY_STRIPS',
+            'icon': 'SHADING_TEXTURE',
             'shader2': 'Legacy Shaders__Diffuse',
             'tex_list': ['_MainTex'],
             'col_list': ['_Color'],
@@ -459,12 +459,22 @@ class DataHandler:
 
     @classmethod
     def get_shader_prop(cls, name):
+        name = cls.get_normalized_shader_type(name)
         _inst = cls.instance()
         shader_prop = _inst.shader_dict.get(name)
         if shader_prop:
             return shader_prop
 
         return {'type_name': "不明", 'icon': 'NONE'}
+
+    @classmethod
+    def get_normalized_shader_type(cls, shader_type):
+        if shader_type == 'Legacy Shaders/Diffuse':
+            return 'Diffuse'
+        elif shader_type == 'Legacy Shaders/Transparent/Diffuse':
+            return 'Transparent/Diffuse'
+        else:
+            return shader_type
 
 Handler = DataHandler.instance()
 
@@ -710,7 +720,8 @@ class MaterialHandler:
     @classmethod
     def get_shader_prop_dynamic(cls, mate, ):
         lists = { 'VALUE':'f_list', 'RGB':'col_list', 'TEX_IMAGE':'tex_list' }
-        shader_prop = copy.deepcopy( DataHandler.get_shader_prop(mate.get('shader1')) )
+        shader_type = DataHandler.get_normalized_shader_type(mate.get('shader1'))
+        shader_prop = copy.deepcopy(DataHandler.get_shader_prop(shader_type))
         for node in mate.node_tree.nodes:
             if node.name[0] != '_':
                 continue

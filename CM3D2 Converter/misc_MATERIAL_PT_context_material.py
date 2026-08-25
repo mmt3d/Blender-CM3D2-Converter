@@ -531,7 +531,7 @@ class CNV_OT_change_shader(bpy.types.Operator, new_mate_opr):
     def invoke(self, context, event):
         ob = context.active_object
         mate = ob.active_material
-        self.shader_type = mate.get('shader1')
+        self.shader_type = cm3d2_data.Handler.get_normalized_shader_type(mate.get('shader1'))
         return context.window_manager.invoke_props_dialog(self, width=self.width)
 
     def draw(self, context):

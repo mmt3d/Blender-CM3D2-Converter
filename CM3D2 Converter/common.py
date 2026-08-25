@@ -138,7 +138,7 @@ def decorate_material(mate, enable=True):
     if not enable or 'shader1' not in mate:
         return
 
-    shader = mate['shader1']
+    shader = Handler.get_normalized_shader_type(mate['shader1'])
     mate.preview_render_type  = 'FLAT'
     mate.use_backface_culling = 'Outline' not in shader
     mate.use_nodes = True
@@ -177,7 +177,7 @@ def decorate_material(mate, enable=True):
         mate.node_tree.links.new(mate_out.inputs.get('Surface'), com3d2_shader_ng.outputs.get('Shader'))
 
     # インポートされたマテリアル内各要素ノードからの接続
-    shader_prop = Handler.get_shader_prop(mate.get('shader1'))
+    shader_prop = Handler.get_shader_prop(shader)
     names = shader_prop['tex_list'] + shader_prop['col_list'] + shader_prop['f_list']
     for key, node in mate.node_tree.nodes.items():
         if not key.startswith('_'):
