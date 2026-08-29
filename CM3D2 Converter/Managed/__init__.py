@@ -50,19 +50,9 @@ def _add_references():
                 """Reference the specified dll"""
     else:
         import clr
-    from System.IO import FileLoadException  # type: ignore
-    from System.Reflection import Assembly  # type: ignore
 
-    try:
-        _add_reference("CM3D2.Serialization.dll", clr)
-        _add_reference("COM3D2.LiveLink.dll", clr)
-    except FileLoadException:  # type: ignore
-        _copy_unsafe_dll('CM3D2.Serialization.dll')
-        _copy_unsafe_dll('COM3D2.LiveLink.dll')
-        _copy_unsafe_dll('System.Threading.dll')
-        _prepare_runtime_dlls()
-        _add_reference("CM3D2.Serialization.dll", clr)
-        _add_reference("COM3D2.LiveLink.dll", clr)
+    _add_reference("CM3D2.Serialization.dll", clr)
+    _add_reference("COM3D2.LiveLink.dll", clr)
 
 def _add_reference(filename: str, clr):
     base_dir = _RUNTIME_DLL_DIR or _MANAGED_DIR
@@ -160,24 +150,3 @@ def _is_process_alive(pid: int) -> bool:
         return exit_code.value == 259  # STILL_ACTIVE
     finally:
         kernel32.CloseHandle(handle)
-
-
-def _copy_unsafe_dll(filename: str):
-    """If the addon is unzipped and placed directly in the addons folder,
-    the dlls will be marked as originating from a remote source.
-    Windows will refuse to load these dlls.
-    Try working around this by copying it.
-    """
-    import os
-    import shutil
-    dll_path = str((_MANAGED_DIR / filename).absolute())
-    bak_path = dll_path + '.bak'
-    if os.path.exists(bak_path):
-        os.remove(bak_path)
-    shutil.move(dll_path, bak_path)
-    shutil.copy(bak_path, dll_path)
-    try:
-        os.remove(bak_path)
-    except OSError as ex:
-        import warnings
-        warnings.warn(str(ex), RuntimeWarning)
