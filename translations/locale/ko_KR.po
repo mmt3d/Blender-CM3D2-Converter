@@ -3746,11 +3746,11 @@ msgstr "버텍스 수 확인"
 #, python-format, fuzzy
 msgctxt "*"
 msgid ""
-"○ 出力可能な頂点数です、あと約{remaining}頂点ほど余裕があります (頂点数:{vertices}(+{uv_split_incl}) "
+"○ 出力可能な頂点数です、あと約{remaining}頂点ほど余裕があります (頂点数:{vertices}(+{uv_split_incr}) "
 "UV分割で増加:+{uv_split_ratio}％)"
 msgstr ""
 "○ 내보낼 수 있는 버텍스 수입니다. 약 {remaining}개의 버텍스 여유가 있습니다 (버텍스 수: "
-"{vertices}(+{uv_split_incl}) UV 분할로 증가: +{uv_split_ratio}%)"
+"{vertices}(+{uv_split_incr}) UV 분할로 증가: +{uv_split_ratio}%)"
 
 #. mt:gemini
 #: misc_INFO_HT_header.py:54

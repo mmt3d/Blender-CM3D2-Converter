@@ -3032,11 +3032,11 @@ msgstr "Check Vertice Count"
 #, python-format
 msgctxt "*"
 msgid ""
-"○ 出力可能な頂点数です、あと約{remaining}頂点ほど余裕があります (頂点数:{vertices}(+{uv_split_incl}) "
+"○ 出力可能な頂点数です、あと約{remaining}頂点ほど余裕があります (頂点数:{vertices}(+{uv_split_incr}) "
 "UV分割で増加:+{uv_split_ratio}％)"
 msgstr ""
 "✓ There is space for more vertices, you may add {remaining} more vertices. "
-"(Verts:{vertices}(+{uv_split_incl}) UV Splitting:+{uv_split_ratio}％)"
+"(Verts:{vertices}(+{uv_split_incr}) UV Splitting:+{uv_split_ratio}％)"
 
 #: misc_INFO_HT_header.py:54
 #, python-format
@@ -3046,7 +3046,7 @@ msgid ""
 "UV分割で増加:+{uv_split_ratio}％)"
 msgstr ""
 "✗ Too many vertices; please remove {remaining} vertices. "
-"(Verts:{vertices}(+{uv_split_incl}) UV Splitting:+{uv_split_ratio}％)"
+"(Verts:{vertices}(+{uv_split_incr}) UV Splitting:+{uv_split_ratio}％)"
 
 #: misc_INFO_HT_header.py:17
 msgctxt "*"

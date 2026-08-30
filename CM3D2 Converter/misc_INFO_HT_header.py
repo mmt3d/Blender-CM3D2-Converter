@@ -44,7 +44,7 @@ class CNV_OT_vertices_count_checker(bpy.types.Operator):
         real_count = len(me.vertices)
         if inner_count <= 65535:
             self.report(type={'INFO'},
-                        message=f_tip_("○ 出力可能な頂点数です、あと約{remaining}頂点ほど余裕があります (頂点数:{vertices}(+{uv_split_incl}) UV分割で増加:+{uv_split_ratio}％)",
+                        message=f_tip_("○ 出力可能な頂点数です、あと約{remaining}頂点ほど余裕があります (頂点数:{vertices}(+{uv_split_incr}) UV分割で増加:+{uv_split_ratio}％)",
                                        remaining=65535 - inner_count,
                                        vertices=real_count,
                                        uv_split_incr=inner_count - real_count,

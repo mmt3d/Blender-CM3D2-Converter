@@ -3738,10 +3738,10 @@ msgstr "检查顶点数"
 #, python-format, fuzzy
 msgctxt "*"
 msgid ""
-"○ 出力可能な頂点数です、あと約{remaining}頂点ほど余裕があります (頂点数:{vertices}(+{uv_split_incl}) "
+"○ 出力可能な頂点数です、あと約{remaining}頂点ほど余裕があります (頂点数:{vertices}(+{uv_split_incr}) "
 "UV分割で増加:+{uv_split_ratio}％)"
 msgstr ""
-"○ 可导出的顶点数，还剩约{remaining}个顶点空间 (顶点数:{vertices}(+{uv_split_incl}) "
+"○ 可导出的顶点数，还剩约{remaining}个顶点空间 (顶点数:{vertices}(+{uv_split_incr}) "
 "UV分割增加:+{uv_split_ratio}％)"
 
 #. mt:gemini
