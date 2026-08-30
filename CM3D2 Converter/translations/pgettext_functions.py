@@ -1,3 +1,4 @@
+import warnings
 import bpy
 
 # Translation functions
@@ -12,14 +13,21 @@ def __format_with_translation_function(func):
     def _format(msgid: str, *args, msgctxt=None, **kwargs) -> str:
         f_msg  = func(msgid=msgid, msgctxt=msgctxt)
         f_args = [
-            func(msgid=arg, msgctxt=msgctxt) if type(arg) == str else arg 
-            for arg in args 
+            func(msgid=arg, msgctxt=msgctxt) if type(arg) == str else arg
+            for arg in args
         ]
         f_kwargs = {
             key: func(msgid=arg, msgctxt=msgctxt) if type(arg) == str else arg
-            for key, arg in kwargs.items() 
+            for key, arg in kwargs.items()
         }
-        return f_msg.format(*f_args, **f_kwargs)
+        try:
+            return f_msg.format(*f_args, **f_kwargs)
+        except KeyError as ex:
+            missing_key = ex.args[0] if ex.args else '<unknown>'
+            warnings.warn(
+                f"Translation format KeyError: missing='{missing_key}', kwargs={sorted(f_kwargs.keys())}",
+                category=RuntimeWarning, stacklevel=2)
+            return f_msg
 
     return _format
 
