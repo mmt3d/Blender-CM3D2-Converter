@@ -216,7 +216,7 @@ PROPS = {
     '_HiPow': {
         'type': 'f',
         'desc': "ハイライトの強さを指定。",
-        'presets': [0, 25, 50],
+        'presets': [0.001, 25, 50],
     },
     '_HiRate': {
         'type': 'f',
