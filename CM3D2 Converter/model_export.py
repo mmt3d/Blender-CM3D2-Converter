@@ -281,7 +281,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
                         if selected == ob_source:
                             ob_main = ob_created
                         arm_ob = selected.find_armature()
-                        if arm_ob.data.get('isPrimedPose'):
+                        if arm_ob and arm_ob.data.get('isPrimedPose'):
                             # 所属アーマチュアが素体レストポーズ変更されている場合、元ポーズを復元するコピーを複製してモディファイア強制適用する
                             temp_arm_ob = temp_armatures.get(arm_ob.name)
                             if temp_arm_ob is None:
