@@ -152,6 +152,24 @@ class ModelTest(BlenderTestCase):
         last_armature = bpy.data.armatures.get(f'body001.armature.{repeats+2:03}')
         self.assertArmatureEqual(first_armature, last_armature)
 
+    def test_model_export_from_armature(self):
+        bpy.ops.import_mesh.import_cm3d2_model(filepath=f'{self.resources_dir}/body001.model')
+
+        in_file = f'{self.resources_dir}/body001.model'
+        out_file = f'{self.output_dir}/{self._testMethodName}_0_{self.pid}.model'
+        bpy.ops.import_mesh.import_cm3d2_model(filepath=in_file)
+        bpy.ops.export_mesh.export_cm3d2_model(filepath=out_file, bone_info_mode='ARMATURE')
+        bpy.ops.import_mesh.import_cm3d2_model(filepath=out_file)
+
+        # Check the loss
+        first_mesh = bpy.data.meshes.get('body001')
+        last_mesh = bpy.data.meshes.get(f'body001.001')
+        self.assertMeshEqual(first_mesh, last_mesh)
+
+        first_armature = bpy.data.armatures.get('body001.armature')
+        last_armature = bpy.data.armatures.get(f'body001.armature.001')
+        self.assertArmatureEqual(first_armature, last_armature)
+
     def test_normalize_weights(self):
         mesh_object = bpy.data.objects.get('body001_standard')
         self.activate_object(mesh_object)
