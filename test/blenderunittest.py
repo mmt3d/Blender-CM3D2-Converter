@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING, Any, Literal, cast
 from unittest import TestCase
 import numpy as np
 
@@ -95,8 +95,7 @@ class BlenderTestCase(TestCase):
             throw = True
 
         if throw:
-            msg = f" : {msg}" if not msg is None else ""
-            self.fail(f"{first} != {second}" + msg)
+            self.fail(f"{msg or ''}\n{self.to_exp_float(first)}\n!=\n{self.to_exp_float(second)}")
 
     def assertVectorAlmostEqual(self, first: 'Vector', second: 'Vector', *,
                                 rtol=1.e-5, atol=1.e-8, equal_nan=False, msg=None):
@@ -113,7 +112,15 @@ class BlenderTestCase(TestCase):
         """Fail if the two quaternions are not element-wise equal within a tolerance."""
         self.assertArrayAlmostEqual(first, second, rtol=rtol, atol=atol, equal_nan=equal_nan, msg=msg)
 
-    
+    @staticmethod
+    def to_exp_float(value) -> str:
+        try:
+            array = np.asarray(value, dtype=np.float64)
+        except (TypeError, ValueError):
+            array = np.asarray(value)
+        return np.array2string(array, formatter=cast(Any, {'float_kind': lambda x: f"{x:.2e}"}), separator=', ')
+
+
 class BlenderTest(BlenderTestCase):
     
     def test_register(self):
