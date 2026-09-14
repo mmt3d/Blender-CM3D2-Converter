@@ -1087,8 +1087,8 @@ class CNV_OT_change_base_shape_key(bpy.types.Operator):
     bl_description = "アクティブなシェイプキーを他のシェイプキーのベースにします"
     bl_options = {'REGISTER', 'UNDO'}
 
-    is_deform_mesh: bpy.props.BoolProperty(name="素メッシュを調整", default=True)
-    is_deform_other_shape: bpy.props.BoolProperty(name="他シェイプを調整", default=True)
+    # TODO: Falseにするメリットがないので、なくしたほうがいい
+    is_deform_other_shape: bpy.props.BoolProperty(name="他シェイプを調整", default=True, description="無効にするのは非推奨")
 
     @classmethod
     def poll(cls, context):
@@ -1096,10 +1096,10 @@ class CNV_OT_change_base_shape_key(bpy.types.Operator):
         return ob and ob.type == 'MESH' and 1 <= ob.active_shape_key_index
 
     def invoke(self, context, event):
+        self.is_deform_other_shape = True  # False 非推奨
         return context.window_manager.invoke_props_dialog(self)
 
     def draw(self, context):
-        self.layout.prop(self, 'is_deform_mesh', icon='MESH_DATA')
         self.layout.prop(self, 'is_deform_other_shape', icon='SHAPEKEY_DATA')
 
     def execute(self, context):
@@ -1112,17 +1112,7 @@ class CNV_OT_change_base_shape_key(bpy.types.Operator):
         target_shape_key = ob.active_shape_key
         old_shape_key = me.shape_keys.key_blocks[0]
 
-        # TOP指定でindex=1になるケースは、さらにもう一度UP
-        bpy.ops.object.shape_key_move(type='TOP')
-        if ob.active_shape_key_index == 1:
-            bpy.ops.object.shape_key_move(type='UP')
-
-        target_shape_key.relative_key = target_shape_key
-        old_shape_key.relative_key = target_shape_key
-
-        if self.is_deform_mesh:
-            for vert in me.vertices:
-                vert.co = target_shape_key.data[vert.index].co.copy()
+        compat.shape_key_make_basis(ob, target_shape_key, old_shape_key)
 
         if self.is_deform_other_shape:
             for shape_key in me.shape_keys.key_blocks:

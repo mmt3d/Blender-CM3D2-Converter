@@ -463,3 +463,26 @@ def set_select_pose_bones(bones: list[bpy.types.PoseBone], select: bool = True):
             bone.bone.select = select
         else:
             bone.select = select
+
+
+def shape_key_make_basis(ob: bpy.types.Object, target_shape_key: bpy.types.ShapeKey, old_shape_key: bpy.types.ShapeKey):
+    """シェイプキーベース変更の互換性サポート"""
+    me = ob.data
+    if not IS_LT50:
+        # 5.0以上では shape_key_make_basis を使う
+        bpy.ops.object.shape_key_make_basis()
+        if len(me.shape_keys.key_blocks) > 1:
+            # 旧basisが1.0となるため、0.0に変更
+            me.shape_keys.key_blocks[1].value = 0.0
+    else:
+        # TOP指定でindex=1になるケースは、さらにもう一度UP
+        bpy.ops.object.shape_key_move(type='TOP')
+        if ob.active_shape_key_index == 1:
+            bpy.ops.object.shape_key_move(type='UP')
+
+        target_shape_key.relative_key = target_shape_key
+        old_shape_key.relative_key = target_shape_key
+
+        # 遅延反映対象を即時反映させる(素メッシュを調整オプションは廃止)
+        for vert in me.vertices:
+            vert.co = target_shape_key.data[vert.index].co.copy()
