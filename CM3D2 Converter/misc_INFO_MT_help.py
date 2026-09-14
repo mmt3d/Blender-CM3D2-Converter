@@ -24,11 +24,13 @@ def fetch_release_entries():
     global RELEASES
     RELEASES = {'entries': [], 'error': None}
 
-    def html2text(html):
+    def extract_changelog(html):
         """HTMLタグ除去"""
         if not html:
-            return []
-        li_html = re.sub(r'<li>', '・', html)
+            return ''
+        m = re.search(r'<h\d[^>]*>\s*Change\s*Log\s*</h\d>(.*?)(?=<h\d\b|$)', html,
+                      flags=re.IGNORECASE | re.DOTALL)
+        li_html = re.sub(r'<li>', '・', m.group(1) if m else html)
         raw_text = re.sub(r'<[^>]+>', '', li_html)
         return '\n'.join([line.strip() for line in raw_text.splitlines() if line.strip()])
 
@@ -46,7 +48,7 @@ def fetch_release_entries():
                 title = title_node.text.strip() if title_node.text else ''
                 url = link_node.attrib.get('href', '')
                 raw_content = content_node.text if content_node is not None else ''
-                RELEASES['entries'].append((title, url, html2text(raw_content)))
+                RELEASES['entries'].append((title, url, extract_changelog(raw_content)))
     except (OSError, SyntaxError, AttributeError, ValueError) as e:
         RELEASES['error'] = str(e)
 
