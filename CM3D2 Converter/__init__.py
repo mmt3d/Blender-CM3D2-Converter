@@ -163,6 +163,8 @@ class AddonPreferences(bpy.types.AddonPreferences):
     default_tex_path1: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=common.clear_texpath_default_dict)
     default_tex_path2: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=common.clear_texpath_default_dict)
     default_tex_path3: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=common.clear_texpath_default_dict)
+    # 自動フィルするのは初回のみとする管理フラグ
+    default_tex_paths_autofilled: bpy.props.BoolProperty(default=False, options={'HIDDEN'})
 
     custom_normal_blend: bpy.props.FloatProperty(name="CM3D2用法線のブレンド率", default=0.5, min=0, max=1, soft_min=0, soft_max=1, step=3, precision=3)
     skip_shapekey: bpy.props.BoolProperty(name="無変更シェイプキーをスキップ", default=True, description="ベースと同じシェイプキーを出力しない")

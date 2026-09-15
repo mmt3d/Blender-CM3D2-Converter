@@ -356,28 +356,26 @@ def get_default_tex_paths():
     prefs = preferences()
     default_paths = [prefs.default_tex_path0, prefs.default_tex_path1, prefs.default_tex_path2, prefs.default_tex_path3]
     if not any(default_paths):
-        target_dirs = []
-        cm3d2_dir = get_pref_cm3d2_dir()
+        # 探索パス未設定の場合、初回のみ自動フィル試行する
+        if not getattr(prefs, 'default_tex_paths_autofilled', False):
+            target_dirs = []
+            cm3d2_dir = get_pref_cm3d2_dir()
+            if cm3d2_dir:
+                target_dirs.append(os.path.join(cm3d2_dir, 'GameData', 'texture'))
+                target_dirs.append(os.path.join(cm3d2_dir, 'GameData', 'texture2'))
+                target_dirs.append(os.path.join(cm3d2_dir, 'Sybaris', 'GameData'))
+                target_dirs.append(os.path.join(cm3d2_dir, 'Mod'))
 
-        if cm3d2_dir:
-            target_dirs.append(os.path.join(cm3d2_dir, 'GameData', 'texture'))
-            target_dirs.append(os.path.join(cm3d2_dir, 'GameData', 'texture2'))
-            target_dirs.append(os.path.join(cm3d2_dir, 'Sybaris', 'GameData'))
-            target_dirs.append(os.path.join(cm3d2_dir, 'Mod'))
+            tex_dirs = [path for path in target_dirs if os.path.isdir(path)]
 
-        # com3d2_dir = prefs.com3d2_path
-        # if not com3d2_dir:
-        #     com3d2_dir = get_cm3d2_dir()
-        # if com3d2_dir:
-        #     target_dirs.append(os.path.join(com3d2_dir, 'GameData', 'parts'))
-        #     target_dirs.append(os.path.join(com3d2_dir, 'GameData', 'parts2'))
-        #     target_dirs.append(os.path.join(com3d2_dir, 'MOD'))
-
-        tex_dirs = [path for path in target_dirs if os.path.isdir(path)]
-
-        for index, path in enumerate(tex_dirs):
-            setattr(prefs, 'default_tex_path' + str(index), path)
+            for index, path in enumerate(tex_dirs):
+                setattr(prefs, 'default_tex_path' + str(index), path)
+            if tex_dirs:
+                prefs.default_tex_paths_autofilled = True
+        else:
+            tex_dirs = []
     else:
+        prefs.default_tex_paths_autofilled = True
         tex_dirs = [getattr(prefs, 'default_tex_path' + str(i)) for i in range(4) if getattr(prefs, 'default_tex_path' + str(i))]
 
     # toon画像フォルダを追加
@@ -495,6 +493,9 @@ def clear_texpath_default_dict(self, context):
     設定で探索パスを変更した際に呼ぶキャッシュクリア処理
     """
     global texpath_default_dict
+    # ユーザーが手動で変更した後は空欄状態も維持する
+    if hasattr(self, 'default_tex_paths_autofilled'):
+        self.default_tex_paths_autofilled = True
     texpath_default_dict.clear()
 
 
