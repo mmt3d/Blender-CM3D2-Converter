@@ -72,18 +72,6 @@ class CNV_OT_FCURVE_convert_to_cm3d2_interpolation(bpy.types.Operator):
                 slope_vec.x /= 3
             else:
                 slope_vec = mathutils.Vector( (1, 0) )
-        elif interpolation == 'CONSTANT':
-            if backwards:
-                slope_vec = mathutils.Vector(to_keyframe.co) - mathutils.Vector(from_keyframe.co)
-                slope_vec.x /= 3
-            else:
-                slope_vec = mathutils.Vector( (1, 0) )
-        elif interpolation == 'CONSTANT':
-            if backwards:
-                slope_vec = mathutils.Vector(to_keyframe.co) - mathutils.Vector(from_keyframe.co)
-                slope_vec.x /= 3
-            else:
-                slope_vec = mathutils.Vector( (1, 0) )
         elif interpolation in {'SINE', 'QUAD', 'CUBIC', 'QUART', 'QUINT'}:#, 'EXPO', 'CIRC'}: # Easing by strength
             easing = 'EASE_IN' if master_keyframe.easing == 'AUTO' else master_keyframe.easing
             if (   (                  easing == 'EASE_IN_OUT' )

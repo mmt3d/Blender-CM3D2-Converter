@@ -245,7 +245,7 @@ class shape_key_transfer_op(bpy.types.Operator):
             
     def modal(self, context, event):
         if event.type == 'ESC':
-            self.is_canceled = 'WARNING'
+            self.is_canceled = True
         if not event.type == 'TIMER':
             return {'PASS_THROUGH'}
         
@@ -258,8 +258,7 @@ class shape_key_transfer_op(bpy.types.Operator):
             except:
                 traceback.print_exc()
                 self.report(type={'ERROR'}, message="Error while canceling shapekey transfer.")
-            finally:
-                return {'FINISHED'}
+            return {'FINISHED'}
 
         if not self.is_canceled and not self.is_finished:
             #print("Loop")
@@ -269,8 +268,7 @@ class shape_key_transfer_op(bpy.types.Operator):
                 self.is_canceled = True
                 traceback.print_exc()
                 self.report(type={'ERROR'}, message="Error while performing shapekey transfer.")
-            finally:
-                return {'PASS_THROUGH'}
+            return {'PASS_THROUGH'}
 
         else:
             #print("Finish")
@@ -280,12 +278,16 @@ class shape_key_transfer_op(bpy.types.Operator):
                 self.is_canceled = True
                 traceback.print_exc()
                 self.report(type={'ERROR'}, message="Error while finishing shapekey transfer.")
-                return {'PASS_THROUGH'}
+                return {'CANCELLED'}  # finally で cleanup はする
             finally:
-                self.cleanup(context)
-                diff_time = time.time() - self._start_time
-                self.report(type={'INFO'}, message=f_tip_("{:.2f} Seconds", diff_time))
-                return {'FINISHED'}
+                try:
+                    self.cleanup(context)
+                except:
+                    # cleanup失敗でもエラーログだけ出力で済ませる
+                    traceback.print_exc()
+            diff_time = time.time() - self._start_time
+            self.report(type={'INFO'}, message=f_tip_("{:.2f} Seconds", diff_time))
+            return {'FINISHED'}
 
     def prepare(self, context):
         target_ob = self.target_ob

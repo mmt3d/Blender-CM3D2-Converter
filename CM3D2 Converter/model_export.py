@@ -721,7 +721,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
 
             elif self.mate_info_mode == 'TEXT':
                 text = context.blend_data.texts['Material:' + str(slot_index)].as_string()
-                mat_data = cm3d2_data.MaterialHandler.parse_text(slot.material, self.is_arrange_name)
+                mat_data = cm3d2_data.MaterialHandler.parse_text(text)
                 mat_data.write(writer, write_header=False)
 
         context.window_manager.progress_update(9)

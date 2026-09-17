@@ -129,7 +129,7 @@ class CNV_OT_export_cm3d2_tex(bpy.types.Operator):
             width, height = img.size
             file.write(struct.pack('<i', width))
             file.write(struct.pack('<i', height))
-            file.write(struct.pack('<i', 5))  # tex_format TODO ダイアログで指定
+            file.write(struct.pack('<i', 5))
         file.write(struct.pack('<i', len(temp_data)))
         file.write(temp_data)
 
