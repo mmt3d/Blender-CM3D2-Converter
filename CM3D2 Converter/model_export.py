@@ -8,7 +8,8 @@ import mathutils
 import numpy as np
 from . import cm3d2_data, common, compat
 from .misc_VIEW3D_MT_pose_apply import copy_pose_from_property
-from .translations.pgettext_functions import *
+from .bone_data import merge_bone_data, merge_local_bone_data, DEFAULT_THRESHOLD
+from .translations import *
 
 
 # メインオペレーター
@@ -45,6 +46,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         ('ARMATURE_PROPERTY', "アーマチュア内プロパティ", "", 'ARMATURE_DATA', 4),
     ]
     bone_info_mode: bpy.props.EnumProperty(items=items, name="ボーン情報元", default='OBJECT_PROPERTY', description="modelファイルに必要なボーン情報をどこから引っ張ってくるか選びます")
+    float_threshold: bpy.props.FloatProperty(name="誤差無視しきい値", default=DEFAULT_THRESHOLD, precision=6, step=0.01, description="アーマチュア計算での誤差は更新に含めないしきい値です. 詳しくはアーマチュアプロパティのボーン情報取り込みを参照")
     revert_primed_pose: bpy.props.BoolProperty(name="元の素体ポーズに一時的に戻す", default=True, description="素体化処理によって素体ポーズが変更されている場合、一時的に元の素体ポーズに戻してからエクスポートします")
     is_preserve_shape_key_values: bpy.props.BoolProperty(name="Preserve Shape Key Values", default=True , description="Ensure shape key values of child mesh objects are not changed")
     is_deform_preserve_volume: bpy.props.BoolProperty(name="アーマチュア適用は体積を維持", default=True)
@@ -74,6 +76,8 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
     use_shapekey_colors: bpy.props.BoolProperty(name="Use Shape Key Colors", default=True, description="Use the shape key normals stored in the vertex colors instead of calculating the normals on export. (Recommend disabling if geometry was customized)")
 
     force_mode = None
+    is_armature_changed = False
+    is_parent_armature = True
 
     @classmethod
     def poll(cls, context):
@@ -124,12 +128,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         self.base_bone_name = ob_names[1] if 2 <= len(ob_names) else 'Auto'
 
         # ボーン情報元のデフォルトオプションを取得
-        arm_ob = ob.parent
-        for mod in ob.modifiers:
-            if mod.type == 'ARMATURE' and mod.object:
-                arm_ob = mod.object
-        if arm_ob and not arm_ob.type == 'ARMATURE':
-            arm_ob = None
+        arm_ob = ob.find_armature()
 
         info_mode_was_armature = (self.bone_info_mode == 'ARMATURE')
         if 'BoneData' in context.blend_data.texts:
@@ -146,6 +145,12 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
                 self.bone_info_mode = 'ARMATURE'
             else:
                 self.bone_info_mode = 'ARMATURE_PROPERTY'
+            # アーマチュアとBoneData情報の状態確認(警告表示用)
+            new_bone_data = self.armature_bone_data_parser(context, arm_ob, self.scale, self.is_convert_bone_weight_names)
+            old_bone_data = self.bone_data_parser(self.indexed_data_generator(arm_ob.data, prefix='BoneData:'))
+            bone_data = merge_bone_data(old_bone_data, new_bone_data, DEFAULT_THRESHOLD)
+            self.is_armature_changed = bone_data != old_bone_data
+            self.is_parent_armature = ob.parent == arm_ob
 
         # エクスポート時のデフォルトパスを取得
         #if not self.filepath[-6:] == '.model':
@@ -196,6 +201,20 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         col = box.column(align=True)
         col.label(text="ボーン情報元", icon='BONE_DATA')
         col.prop(self, 'bone_info_mode', icon='BONE_DATA', expand=True)
+        if self.bone_info_mode == 'ARMATURE':
+            sub_box = box.box()
+            row = sub_box.row(align=True)
+            row.label(text="誤差無視しきい値", icon='FILTER')
+            row.prop(self, 'float_threshold', text='')
+            if not self.is_parent_armature:
+                col = sub_box.column(align=True)
+                msg = _("注意: 対象アーマチュアが親アーマチュアではありません。モディファイアにより別アーマチュアが指定されています。")
+                common.wrap_label(col, msg, icon='ERROR')
+        if self.bone_info_mode == 'ARMATURE_PROPERTY' and self.is_armature_changed:
+            sub_box = box.box()
+            col = sub_box.column(align=True)
+            msg = _("注意: アーマチュアに変更があるようです。編集ボーンを反映させるには「アーマチュア」にするか、アーマチュアプロパティにてボーン情報取り込みする必要があります。")
+            common.wrap_label(col, msg, icon='ERROR')
         col = box.column(align=True)
         col.label(text="マテリアル情報元", icon='MATERIAL')
         col.prop(self, 'mate_info_mode', icon='MATERIAL', expand=True)
@@ -422,7 +441,10 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         base_bone_candidate = None
         bone_data = []
         if self.bone_info_mode == 'ARMATURE':
-            bone_data = self.armature_bone_data_parser(context, arm_ob)
+            bone_data = self.armature_bone_data_parser(context, arm_ob, self.scale, self.is_convert_bone_weight_names)
+            if self.float_threshold > 0.0:
+                old_bone_data = self.bone_data_parser(self.indexed_data_generator(arm_ob.data, prefix='BoneData:'))
+                bone_data = merge_bone_data(old_bone_data, bone_data, self.float_threshold)
             base_bone_candidate = arm_ob.data['BaseBone']
         elif self.bone_info_mode == 'TEXT':
             bone_data_text = context.blend_data.texts['BoneData']
@@ -457,7 +479,10 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         # LocalBoneData情報読み込み
         local_bone_data = []
         if self.bone_info_mode == 'ARMATURE':
-            local_bone_data = self.armature_local_bone_data_parser(arm_ob)
+            local_bone_data = self.armature_local_bone_data_parser(arm_ob, self.scale, self.is_convert_bone_weight_names)
+            if self.float_threshold > 0.0:
+                old_local_bone_data = self.local_bone_data_parser(self.indexed_data_generator(arm_ob.data, prefix='LocalBoneData:'))
+                local_bone_data = merge_local_bone_data(old_local_bone_data, local_bone_data, self.float_threshold)
         elif self.bone_info_mode == 'TEXT':
             local_bone_data_text = context.blend_data.texts['LocalBoneData']
             local_bone_data = self.local_bone_data_parser(l.body for l in local_bone_data_text.lines)

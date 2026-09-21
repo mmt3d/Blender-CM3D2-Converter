@@ -1489,6 +1489,9 @@ def get_region_size(width: int|None = None) -> int:
     elif context.area.type == 'VIEW_3D':
         margin = 50
         width = getattr(context.region, 'width', 400)
+    elif context.area.type == 'FILE_BROWSER':
+        margin = 36
+        width = getattr(context.region, 'width', 400)
     else:
         width = 600
     ui_scale = context.preferences.view.ui_scale
