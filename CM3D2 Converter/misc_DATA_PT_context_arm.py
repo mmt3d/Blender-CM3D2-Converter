@@ -3,6 +3,8 @@ import os
 import bpy
 import mathutils
 from . import common, compat
+from .bone_data import (calc_bone_data_diff, calc_local_bone_data_diff,
+                        merge_bone_data_with_parent_names, merge_local_bone_data, parent_name_map, DEFAULT_THRESHOLD)
 from .translations import *
 
 
@@ -14,7 +16,6 @@ def menu_func(self, context):
         return
 
     arm = ob.data
-    is_boxed = False
 
     bone_data_count = 0
     if 'BoneData:0' in arm and 'LocalBoneData:0' in arm:
@@ -25,12 +26,9 @@ def menu_func(self, context):
     clipboard = context.window_manager.clipboard
     if 'BoneData:' in clipboard and 'LocalBoneData:' in clipboard:
         enabled_clipboard = True
+    box = self.layout.box()
+    box.label(text="CM3D2用", icon_value=common.kiss_icon())
     if bone_data_count or enabled_clipboard:
-        if not is_boxed:
-            box = self.layout.box()
-            box.label(text="CM3D2用", icon_value=common.kiss_icon())
-            is_boxed = True
-
         col = box.column(align=True)
         row = col.row(align=True)
         row.label(text="ボーン情報", icon='CONSTRAINT_BONE')
@@ -53,11 +51,6 @@ def menu_func(self, context):
             if re.search(r'\.([rRlL])$', bone.name):
                 flag = True
         if flag:
-            if not is_boxed:
-                box = self.layout.box()
-                box.label(text="CM3D2用", icon_value=common.kiss_icon())
-                is_boxed = True
-
             col = box.column(align=True)
             col.label(text="ボーン名変換", icon='SORTALPHA')
             row = col.row(align=True)
@@ -65,6 +58,12 @@ def menu_func(self, context):
             row.operator('armature.encode_cm3d2_bone_names', text="Blender → CM3D2", icon_value=common.kiss_icon())
             break
         
+    col = box.column(align=True)
+    col.label(text="ボーン情報更新", icon='FILE_REFRESH')
+    row = col.row(align=True)
+    row.operator('armature.update_bone_data', icon='ARMATURE_DATA')
+    row.operator('armature.rename_base_bone', icon='BONE_DATA')
+
     if bone_data_count:
         col = box.column(align=True)
         col.label(text="Armature Operators", icon='OUTLINER_OB_ARMATURE')
@@ -72,10 +71,6 @@ def menu_func(self, context):
         col.operator('object.cleanup_scale_bones', text="Cleanup Scale Bones", icon='X')
         
     if 'isPrimedPose' in arm:
-        if not is_boxed:
-            box = self.layout.box()
-            box.label(text="CM3D2用", icon_value=common.kiss_icon())
-
         col = box.column(align=True)
         if arm['isPrimedPose']:
             pose_text = "Armature State: Primed"
@@ -322,9 +317,402 @@ class CNV_OT_remove_armature_bone_data_property(bpy.types.Operator):
         self.report(type={'INFO'}, message="ボーン情報を削除しました")
         return {'FINISHED'}
 
+@compat.BlRegister()
+class CNV_PG_bone_data_diff_item(bpy.types.PropertyGroup):
+    bl_idname = 'CNV_PG_bone_data_diff_item'
+
+    bone_name: bpy.props.StringProperty()
+    parent_name: bpy.props.StringProperty(options={'HIDDEN'})
+    upd_parent: bpy.props.BoolProperty(default=False)
+    diff_parent: bpy.props.BoolProperty(default=False, options={'HIDDEN'})
+
+    # BoneData 用
+    upd_loc: bpy.props.BoolProperty(default=False)
+    diff_loc: bpy.props.FloatProperty(precision=5, options={'HIDDEN'})
+
+    upd_rot: bpy.props.BoolProperty(default=False)
+    diff_rot: bpy.props.FloatProperty(precision=5, options={'HIDDEN'})
+
+    upd_scl: bpy.props.BoolProperty(default=False)
+    diff_scl: bpy.props.FloatProperty(precision=5, options={'HIDDEN'})
+
+    # LocalBoneData 用
+    upd_local: bpy.props.BoolProperty(default=False)
+    diff_local: bpy.props.FloatProperty(precision=5, options={'HIDDEN'})
+
+    mode: bpy.props.EnumProperty(items=[('INSERT', '', ''), ('UPDATE', '', ''), ('DELETE', '', '')], default='UPDATE')
+    approved: bpy.props.BoolProperty(default=True)
 
 
+@compat.BlRegister()
+class CNV_UL_bone_data_diff_list(bpy.types.UIList):
+    bl_idname = 'CNV_UL_bone_data_diff_list'
 
+    def draw_item(self, context, layout, data, item, icon, active_data, active_property, index=0):
+
+        split = layout.split(factor=0.48, align=True)
+        col1 = split.column()
+        row = col1.row(align=True)
+
+        # ボーン名
+        row.label(text=item.bone_name)
+
+        if item.diff_parent:
+            row.prop(item, 'upd_parent', text=item.parent_name)
+        elif item.mode != 'UPDATE':
+            row.label(text=item.parent_name)
+        else:
+            row.label(text=item.parent_name)
+
+        col2 = split.column()
+        row = col2.row(align=True)
+        if item.mode != 'UPDATE':
+            if item.mode == 'INSERT':
+                row.prop(item, 'approved', text='➕ ' + _("New"))
+            else:
+                row.prop(item, 'approved', text='🗑 ' + _("Delete"))
+            for i in range(3):
+                row.label(text='')
+            return
+
+        row.prop(item, 'upd_loc', text=f'{item.diff_loc:.6f}')
+        row.prop(item, 'upd_rot', text=f'{item.diff_rot:.6f}')
+        row.prop(item, 'upd_scl', text=f'{item.diff_scl:.6f}')
+        row.prop(item, 'upd_local', text=f'{item.diff_local:.6f}')
+
+
+@compat.BlRegister()
+class CNV_OT_armature_update_bone_data(bpy.types.Operator):
+    bl_idname = 'armature.update_bone_data'
+    bl_label = "ボーン情報取り込み"
+    bl_description = "アーマチュアを解析してBoneData/LocalBoneDataを更新します"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    base_bone: bpy.props.StringProperty(name="ベースボーン")
+    scale: bpy.props.FloatProperty(name="倍率", default=5.0, min=0.1, max=100.0, soft_min=0.1, soft_max=100.0, precision=1, step=10)
+    items1 = [('1000', '1000', ''),
+              ('2000', '2000', ''),
+              ('2001', '2001', '')]
+    model_version: bpy.props.EnumProperty(name="ファイルバージョン", items=items1, default='1000')
+    show_diff: bpy.props.BoolProperty(name="差分のみ表示", default=True, description="差分のあるボーンのみ表示します")
+    threshold: bpy.props.FloatProperty(name="差分しきい値", default=DEFAULT_THRESHOLD, min=0.0, max=1.0, soft_max=1.0, precision=6, description="この値を超える要素を自動でチェックします")
+    show_threshold_details: bpy.props.BoolProperty(name="差分しきい値の詳細", default=False, options={'HIDDEN'})
+    items2 = [('0.001', '0.001', ''),
+              ('0.0001', '0.0001', ''),
+              ('0.00001', '0.00001', ''),
+              ('0.000001', '0.000001', ''),
+              ('0.0', '0.0', '')]
+    threshold_preset: bpy.props.EnumProperty(items=items2, description="差分しきい値のプリセット値を選択します", default=str(DEFAULT_THRESHOLD))
+    diff_items: bpy.props.CollectionProperty(type=CNV_PG_bone_data_diff_item)
+    diff_items_all: bpy.props.CollectionProperty(type=CNV_PG_bone_data_diff_item, options={'HIDDEN'})
+    active_diff_index: bpy.props.IntProperty(name="", default=-1, options={'HIDDEN'})
+    single_bones: bpy.props.CollectionProperty(type=bpy.types.PropertyGroup, options={'HIDDEN'})
+
+    # 一時保持用データ
+    _prev_show_diff = None
+    _prev_scale = None
+    _prev_threshold = None
+    _prev_threshold_preset = None
+    _new_bone_data_list = []
+    _new_local_bone_data_list = []
+    MAX_ROW = 10
+
+    @classmethod
+    def poll(cls, context):
+        ob = context.active_object
+        return ob and ob.type == 'ARMATURE'
+
+    def invoke(self, context, event):
+        arm_ob = context.active_object
+        self.base_bone = arm_ob.data.get('BaseBone', '')
+        self.model_version = str(arm_ob.data.get('ModelVersion', '1000'))
+        self.scale = 1.0 / arm_ob.data.get('ImportScale', common.preferences().scale)
+        self.single_bones.clear()
+        for bone in arm_ob.data.bones:
+            if bone.parent is None and len(bone.children) == 0:
+                item = self.single_bones.add()
+                item.name = bone.name
+        # 初回差分計算を実行
+        self._prev_scale = self.scale
+        self._prev_threshold = self.threshold
+        self._prev_threshold_preset = self.threshold_preset
+        pre_mode = arm_ob.mode
+        if pre_mode != 'OBJECT':
+            bpy.ops.object.mode_set(mode='OBJECT')
+            self.recalculate_diff(context)
+            bpy.ops.object.mode_set(mode=pre_mode)
+        else:
+            self.recalculate_diff(context)
+        self.filter_diff()
+        return context.window_manager.invoke_props_dialog(self, width=650)
+
+    def draw(self, context):
+        # UI 上で scale や threshold を変更したら再計算
+        if self._prev_threshold_preset != self.threshold_preset:
+            self._prev_threshold_preset = self.threshold_preset
+            self.threshold = float(self.threshold_preset)
+        if self._prev_scale != self.scale:
+            self._prev_scale = self.scale
+            self.recalculate_diff(context)
+            self.filter_diff()
+        if  (self._prev_threshold != self.threshold) or (self._prev_show_diff != self.show_diff):
+            self._prev_threshold = self.threshold
+            self._prev_show_diff = self.show_diff
+            self.filter_diff()
+
+        layout = self.layout
+
+        # 設定エリア
+        layout.prop_search(self, 'base_bone', self, 'single_bones', icon='BONE_DATA')
+        layout.prop(self, 'model_version')
+        layout.prop(self, 'scale')
+        row = layout.row(align=True)
+        row.prop(self, 'show_diff', icon='FILTER', toggle=True)
+        row.prop(self, 'threshold')
+
+        icon = 'TRIA_DOWN' if self.show_threshold_details else 'TRIA_LEFT'
+        row.prop(self, 'show_threshold_details', text="", icon=icon, emboss=False)
+        if self.show_threshold_details:
+            box = layout.box()
+            row = box.row(align=True)
+            split = row.split(factor=0.25, align=True)
+            col = split.column(align=True)
+            col.label(text="差分しきい値プリセット")
+            col = split.column(align=True)
+            row = col.row(align=True)
+            row.prop(self, 'threshold_preset', text="プリセット値", expand=True)
+            col = box.column(align=True)
+            desc = _("ボーン再計算では浮動小数ドリフトによる誤差が生じ、回転などは経路が多いほど末端ボーンに誤差が蓄積します。"
+                     "これは誤差と見做す範囲を調整して更新不要なものを見定めるしきい値です。\n"
+                     "0.0 にすると全て更新しますが実用上はそれでも問題ありません。この取り込み操作を何度も行う想定なら、"
+                     "誤差が拡大しないよう最小限の更新にしておくとよいです。おすすめは 0.0001 です。")
+            common.wrap_label(col, icon='LIGHT_DATA', width=640, text=desc)
+
+        layout.separator()
+        layout.label(text="更新差分確認テーブル (チェックを入れた要素のみ更新)")
+
+        if len(self.diff_items) > self.MAX_ROW:
+            split_factor1 = 0.465
+            split_factor2 = 0.93
+        else:
+            split_factor1 = 0.48
+            split_factor2 = 0.98
+        # テーブルヘッダー
+        box = layout.box()
+        split = box.split(factor=split_factor1, align=True)
+        col1 = split.column()
+        row = col1.row(align=True)
+        row.label(text="Bone")
+        row.label(text="Parent Bone")
+        col2 = split.column()
+        split = col2.split(factor=split_factor2, align=True)
+        col3 = split.column()
+        row = col3.row(align=True)
+        row.label(text=_("Location") + ' (BD)')
+        row.label(text=_("Rotation") + ' (BD)')
+        row.label(text=_("Scale") + ' (BD)')
+        row.label(text=_("Matrix") + ' (LBD)')
+
+        if len(self.diff_items) == 0:
+            box.label(text="差分はありません", icon='INFO')
+        else:
+            layout.template_list('CNV_UL_bone_data_diff_list', '', self, 'diff_items', self, 'active_diff_index', rows=self.MAX_ROW)
+
+    def execute(self, context):
+        if len(self.diff_items) == 0:
+            self.report({'INFO'}, "差分がないので更新しませんでした")
+            return {'FINISHED'}
+        is_update = False
+        for item in self.diff_items:
+            if item.mode == 'UPDATE' and (item.upd_loc or item.upd_rot or item.upd_scl or item.upd_parent or item.upd_local):
+                is_update = True
+            elif item.mode in ['INSERT', 'DELETE'] and item.approved:
+                is_update = True
+        if not is_update:
+            self.report({'INFO'}, "更新対象がないので更新しませんでした")
+            return {'FINISHED'}
+
+        arm_ob = context.active_object
+
+        # 既存プロパティデータを取得
+        from .model_export import CNV_OT_export_cm3d2_model as export_model
+        old_bone_data = export_model.bone_data_parser(export_model.indexed_data_generator(arm_ob.data, prefix='BoneData:'))
+        old_local_bone_data = export_model.local_bone_data_parser(export_model.indexed_data_generator(arm_ob.data, prefix='LocalBoneData:'))
+
+        # チェック状態のマップを作成
+        diff_map = {item.bone_name: item for item in self.diff_items}
+
+        update_map = {}
+        for name, item in diff_map.items():
+            if item.mode != 'UPDATE':
+                continue
+            fields = set()
+            if item.upd_loc:
+                fields.add('co')
+            if item.upd_rot:
+                fields.add('rot')
+            if item.upd_scl:
+                fields.add('scl')
+            if item.upd_parent:
+                fields.add('parent_name')
+            update_map[name] = fields
+        deleted_names = {name for name, item in diff_map.items() if item.mode == 'DELETE' and item.approved}
+        inserted_names = {name for name, item in diff_map.items() if item.mode == 'INSERT' and item.approved}
+
+        final_bone_data = merge_bone_data_with_parent_names(
+            old_bone_data, self._new_bone_data_list,
+            update_map=update_map, deleted_names=deleted_names,
+            inserted_names=inserted_names)
+        final_local_bone_data = merge_local_bone_data(
+            old_local_bone_data, self._new_local_bone_data_list, self.threshold,
+            update_names={name for name, item in diff_map.items() if item.mode == 'UPDATE' and item.upd_local},
+            deleted_names=deleted_names, inserted_names=inserted_names)
+
+        # 最終データをカスタムプロパティに書き戻し
+        self.update_armature_bone_data_properties(arm_ob.data, final_bone_data, final_local_bone_data)
+
+        self.report({'INFO'}, "BoneDataを更新しました")
+        return {'FINISHED'}
+
+    def recalculate_diff(self, context):
+        """既存データと新解析データの差分を計算"""
+        from .model_export import CNV_OT_export_cm3d2_model as export_model
+
+        arm_ob = context.active_object
+        if not arm_ob:
+            return
+
+        old_bd = export_model.bone_data_parser(export_model.indexed_data_generator(arm_ob.data, prefix='BoneData:'))
+        old_lbd = export_model.local_bone_data_parser(export_model.indexed_data_generator(arm_ob.data, prefix='LocalBoneData:'))
+
+        old_bd_by_name = {d['name']: d for d in old_bd}
+        old_lbd_by_name = {d['name']: d for d in old_lbd}
+        old_parents = parent_name_map(old_bd)
+
+        self._new_bone_data_list = export_model.armature_bone_data_parser(context, arm_ob, self.scale, True)
+        self._new_local_bone_data_list = export_model.armature_local_bone_data_parser(arm_ob, self.scale, True)
+
+        new_bd_by_name = {d['name']: d for d in self._new_bone_data_list}
+        new_lbd_by_name = {d['name']: d for d in self._new_local_bone_data_list}
+        new_parents = parent_name_map(self._new_bone_data_list)
+
+        all_bone_names = list(dict.fromkeys(
+            list(old_bd_by_name.keys()) +
+            list(old_lbd_by_name.keys()) +
+            [d['name'] for d in self._new_bone_data_list] +
+            [d['name'] for d in self._new_local_bone_data_list]
+        ))
+
+        # しきい値関係なく全差分アイテムを記録
+        self.diff_items_all.clear()
+        for name in all_bone_names:
+            item = self.diff_items_all.add()
+            item.bone_name = name
+
+            # BoneData 差分
+            if name in new_bd_by_name:
+                item.parent_name = new_parents.get(name, '')
+                if name in old_bd_by_name:
+                    item.diff_loc, item.diff_rot, item.diff_scl = calc_bone_data_diff(old_bd_by_name[name], new_bd_by_name[name])
+                    item.diff_parent = item.parent_name != old_parents.get(name, '')
+                else:
+                    item.mode = 'INSERT'
+            else:
+                item.parent_name = old_parents.get(name, '')
+                item.mode = 'DELETE'
+
+            # LocalBoneData 差分
+            if name in new_lbd_by_name:
+                if name in old_lbd_by_name:
+                    item.diff_local = calc_local_bone_data_diff(old_lbd_by_name[name], new_lbd_by_name[name])
+
+    def filter_diff(self):
+        """しきい値判定した結果アイテムリストを作る"""
+        self.diff_items.clear()
+        for item in self.diff_items_all[:]:
+            item.upd_loc = item.diff_loc >= self.threshold
+            item.upd_rot = item.diff_rot >= self.threshold
+            item.upd_scl = item.diff_scl >= self.threshold
+            item.upd_local = item.diff_local >= self.threshold
+            item.upd_parent = item.diff_parent
+            has_update = any((item.upd_loc, item.upd_rot, item.upd_scl, item.upd_local, item.upd_parent))
+            if not self.show_diff or item.mode != 'UPDATE' or has_update:
+                add_item = self.diff_items.add()
+                for k, v in item.items():
+                    add_item[k] = v
+
+    def update_armature_bone_data_properties(self, arm_data, bone_data, local_bone_data) -> None:
+        """アーマチュアプロパティに反映"""
+        for key in list(arm_data.keys()):
+            if key.startswith('BoneData:') or key.startswith('LocalBoneData:'):
+                del arm_data[key]
+
+        for i, data in enumerate(bone_data):
+            row = ','.join([data['name'], str(data['scl']), data['parent_name']])
+            row += ',' + ' '.join(map(str, data['co']))
+            row += ',' + ' '.join(map(str, data['rot']))
+            if int(self.model_version) >= 2001:
+                if 'scale' in data:
+                    row += ',1,' + ' '.join(map(str, data['scale']))
+                else:
+                    row += ',0'
+            arm_data['BoneData:' + str(i)] = row
+
+        for i, data in enumerate(local_bone_data):
+            arm_data['LocalBoneData:' + str(i)] = data['name'] + ',' + ' '.join(map(str, data['matrix']))
+
+        arm_data['BaseBone'] = self.base_bone
+        arm_data['ModelVersion'] = self.model_version
+        arm_data['ImportScale'] = 1.0 / self.scale
+
+
+@compat.BlRegister()
+class CNV_OT_armature_rename_base_bone(bpy.types.Operator):
+    bl_idname = 'armature.rename_base_bone'
+    bl_label = "ベースボーン名変更"
+    bl_description = "BoneDataとアーマチュアのベースボーン名を変更します"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    base_bone: bpy.props.StringProperty(name="ベースボーン名", default="")
+
+    @classmethod
+    def poll(cls, context):
+        ob = context.active_object
+        return ob and ob.type == 'ARMATURE'
+
+    def invoke(self, context, event):
+        arm_ob = context.active_object
+        self.base_bone = arm_ob.data.get('BaseBone', '')
+        return context.window_manager.invoke_props_dialog(self, width=400)
+
+    def draw(self, context):
+        self.layout.prop(self, 'base_bone')
+
+    def execute(self, context):
+        arm_ob = context.active_object
+        old_base_bone = arm_ob.data.get('BaseBone')
+        arm_bone = arm_ob.data.bones.get(old_base_bone)
+        arm_bone.name = self.base_bone
+        arm_ob.data['BaseBone'] = self.base_bone
+        for prop, value in arm_ob.data.items():
+            if prop.startswith('BoneData:'):
+                bone_data = value.split(',')
+                is_dirty = False
+                if len(bone_data) > 0 and bone_data[0] == old_base_bone:
+                    bone_data[0] = self.base_bone
+                    is_dirty = True
+                elif len(bone_data) > 2 and bone_data[2] == old_base_bone:
+                    bone_data[2] = self.base_bone
+                    is_dirty = True
+                if is_dirty:
+                    arm_ob.data[prop] = ','.join(bone_data)
+            elif prop.startswith('LocalBoneData:'):
+                local_bone_data = value.split(',')
+                if len(local_bone_data) > 0 and local_bone_data[0] == old_base_bone:
+                    local_bone_data[0] = self.base_bone
+                    arm_ob.data[prop] = ','.join(local_bone_data)
+        self.report({'INFO'}, "ベースボーン名を変更しました")
+        return {'FINISHED'}
 
 
 """

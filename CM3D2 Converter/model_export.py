@@ -1046,22 +1046,15 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
 
             bpy.ops.object.mode_set(mode='OBJECT')
 
-    def armature_bone_data_parser(self, context, ob):
+    @staticmethod
+    def armature_bone_data_parser(context, ob, scale, is_convert_bone_weight_names: bool = True):
         """アーマチュアを解析してBoneDataを返す"""
         arm = ob.data
-        
-        pre_active = compat.get_active(context)
-        pre_mode = ob.mode
-        pre_hide = ob.hide_get()
-        ob.hide_set(False)
-
-        compat.set_active(context, ob)
-        bpy.ops.object.mode_set(mode='EDIT')
 
         bones = []
         bone_name_indices = {}
         already_bone_names = []
-        bones_queue = arm.edit_bones[:]
+        bones_queue = arm.bones[:]
         while len(bones_queue):
             bone = bones_queue.pop(0)
 
@@ -1087,17 +1080,18 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
                      else 0 
             parent_index = bone_name_indices[bone.parent.name] if bone.parent else -1
 
-            mat = bone.matrix.copy()
-            
+            # エディットモードに入らずに参照するのに、レストポーズのボーン行列を使用する (EditBone.matrix = Bone.matrix_local)
+            mat = bone.matrix_local.copy()
+
             if bone.parent:
                 mat = compat.convert_bl_to_cm_bone_rotation(mat)
-                mat = compat.mul(bone.parent.matrix.inverted(), mat)
+                mat = compat.mul(bone.parent.matrix_local.inverted(), mat)
                 mat = compat.convert_bl_to_cm_bone_space(mat)
             else:
                 mat = compat.convert_bl_to_cm_bone_rotation(mat)
                 mat = compat.convert_bl_to_cm_space(mat)
             
-            co = mat.to_translation() * self.scale
+            co = mat.to_translation() * scale
             rot = mat.to_quaternion()
             
             #if bone.parent:
@@ -1132,20 +1126,17 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
             #rot = opengl_mat.to_quaternion()
 
             data = {
-                'name': common.encode_bone_name(bone.name, self.is_convert_bone_weight_names),
+                'name': common.encode_bone_name(bone.name, is_convert_bone_weight_names),
                 'scl': is_scl_bone,
                 'parent_index': parent_index,
                 'co': co.copy(),
                 'rot': rot.copy(),
             }
-            scale = arm.edit_bones[bone.name].get('cm3d2_bone_scale')
-            if scale:
-                data['scale'] = scale
+            bone_scale = bone.get('cm3d2_bone_scale')
+            if bone_scale:
+                data['scale'] = bone_scale
             bone_data.append(data)
-        
-        bpy.ops.object.mode_set(mode=pre_mode)
-        ob.hide_set(pre_hide)
-        compat.set_active(context, pre_active)
+
         return bone_data
 
     @staticmethod
@@ -1180,7 +1171,8 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
             bone_name_indices[data[0]] = len(bone_name_indices)
         return bone_data
 
-    def armature_local_bone_data_parser(self, ob):
+    @staticmethod
+    def armature_local_bone_data_parser(ob, scale, is_convert_bone_weight_names):
         """アーマチュアを解析してBoneDataを返す"""
         arm = ob.data
 
@@ -1216,7 +1208,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
             mat.transpose()
             mat.row[3] = (0.0, 0.0, 0.0, 1.0)
             pos = compat.mul(mat.to_3x3(), pos)
-            pos *= -self.scale
+            pos *= -scale
             mat.translation = pos
             mat.transpose()
             
@@ -1245,7 +1237,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
                 mat_array.extend(vec[:])
             
             local_bone_data.append({
-                'name': common.encode_bone_name(bone.name, self.is_convert_bone_weight_names),
+                'name': common.encode_bone_name(bone.name, is_convert_bone_weight_names),
                 'matrix': mat_array,
             })
         return local_bone_data
