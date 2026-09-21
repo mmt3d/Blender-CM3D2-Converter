@@ -1,437 +1,437 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: CM3D2 Converter (2026, 7, 19)\n"
-"POT-Creation-Date: 2026-07-19 20:30:57\n"
+"Project-Id-Version: CM3D2 Converter (2026, 9, 21)\n"
+"POT-Creation-Date: 2026-09-21 12:25:43\n"
 "Language: ja_JP\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: __init__.py:320
+#: __init__.py:338
 msgctxt "Operator"
 msgid "CM3D2リソースデータを抽出"
 msgstr "CM3D2リソースデータを抽出"
 
-#: __init__.py:114
+#: __init__.py:130
 msgctxt "*"
 msgid "CM3D2インストールフォルダ"
 msgstr "CM3D2インストールフォルダ"
 
-#: __init__.py:114
+#: __init__.py:130
 msgctxt "*"
 msgid "変更している場合は設定しておくと役立つかもしれません"
 msgstr "変更している場合は設定しておくと役立つかもしれません"
 
-#: __init__.py:115
+#: __init__.py:131
 msgctxt "*"
 msgid "バックアップの拡張子 (空欄で無効)"
 msgstr "バックアップの拡張子 (空欄で無効)"
 
-#: __init__.py:115
+#: __init__.py:131
 msgctxt "*"
 msgid "エクスポート時にバックアップを作成時この拡張子で複製します、空欄でバックアップを無効"
 msgstr "エクスポート時にバックアップを作成時この拡張子で複製します、空欄でバックアップを無効"
 
-#: __init__.py:117 anm_export.py:28 anm_import.py:29
-#: misc_MESH_MT_shape_key_specials.py:1026
-#: misc_MESH_MT_vertex_group_specials.py:584 model_export.py:26
+#: __init__.py:133 anm_export.py:25 anm_import.py:27
+#: misc_DATA_PT_context_arm.py:392 misc_MESH_MT_shape_key_specials.py:877
+#: misc_MESH_MT_vertex_group_specials.py:584 model_export.py:27
 #: model_import.py:31
 msgctxt "*"
 msgid "倍率"
 msgstr "倍率"
 
-#: __init__.py:117
+#: __init__.py:133
 msgctxt "*"
 msgid "Blenderでモデルを扱うときの拡大率"
 msgstr "Blenderでモデルを扱うときの拡大率"
 
-#: __init__.py:118
+#: __init__.py:134
 msgctxt "*"
 msgid "基本的にボーン名/ウェイト名をBlender用に変換"
 msgstr "基本的にボーン名/ウェイト名をBlender用に変換"
 
-#: __init__.py:118
+#: __init__.py:134
 msgctxt "*"
 msgid "modelインポート時にボーン名/ウェイト名を変換するかどうかのオプションのデフォルトを設定します"
 msgstr "modelインポート時にボーン名/ウェイト名を変換するかどうかのオプションのデフォルトを設定します"
 
-#: __init__.py:119
+#: __init__.py:135
 msgctxt "*"
 msgid "modelファイル置き場"
 msgstr "modelファイル置き場"
 
-#: __init__.py:119
+#: __init__.py:135
 msgctxt "*"
 msgid "設定すれば、modelを扱う時は必ずここからファイル選択を始めます"
 msgstr "設定すれば、modelを扱う時は必ずここからファイル選択を始めます"
 
-#: __init__.py:120
+#: __init__.py:136
 msgctxt "*"
 msgid "modelインポート時のデフォルトパス"
 msgstr "modelインポート時のデフォルトパス"
 
-#: __init__.py:120
+#: __init__.py:136
 msgctxt "*"
 msgid "modelインポート時に最初はここが表示されます、インポート毎に保存されます"
 msgstr "modelインポート時に最初はここが表示されます、インポート毎に保存されます"
 
-#: __init__.py:121
+#: __init__.py:137
 msgctxt "*"
 msgid "modelエクスポート時のデフォルトパス"
 msgstr "modelエクスポート時のデフォルトパス"
 
-#: __init__.py:121
+#: __init__.py:137
 msgctxt "*"
 msgid "modelエクスポート時に最初はここが表示されます、エクスポート毎に保存されます"
 msgstr "modelエクスポート時に最初はここが表示されます、エクスポート毎に保存されます"
 
-#: __init__.py:122
+#: __init__.py:138
 msgctxt "*"
 msgid "インポート後のアーマチュアを非表示"
 msgstr "インポート後のアーマチュアを非表示"
 
-#: __init__.py:122 model_import.py:52
+#: __init__.py:138 model_import.py:52
 msgctxt "*"
 msgid "インポート後のアーマチュアを非表示にします"
 msgstr "インポート後のアーマチュアを非表示にします"
 
-#: __init__.py:123
+#: __init__.py:139
 msgctxt "*"
 msgid "ポーズ変更していても編集時のメッシュを追従させる"
 msgstr "ポーズ変更していても編集時のメッシュを追従させる"
 
-#: __init__.py:123
+#: __init__.py:139
 msgctxt "*"
 msgid "インポート時のアーマチュアモディファイア追加で編集時のメッシュ追従オプションをONにします"
 msgstr "インポート時のアーマチュアモディファイア追加で編集時のメッシュ追従オプションをONにします"
 
-#: __init__.py:124 misc_VIEW3D_MT_pose_apply.py:136 model_export.py:50
+#: __init__.py:140 misc_VIEW3D_MT_pose_apply.py:136 model_export.py:52
 msgctxt "*"
 msgid "アーマチュア適用は体積を維持"
 msgstr "アーマチュア適用は体積を維持"
 
-#: __init__.py:124
+#: __init__.py:140
 msgctxt "*"
 msgid "インポート時のアーマチュアモディファイア追加で体積を維持するオプションをONにします"
 msgstr "インポート時のアーマチュアモディファイア追加で体積を維持するオプションをONにします"
 
-#: __init__.py:126
+#: __init__.py:142
 msgctxt "*"
 msgid "anmファイル置き場"
 msgstr "anmファイル置き場"
 
-#: __init__.py:126
+#: __init__.py:142
 msgctxt "*"
 msgid "設定すれば、anmを扱う時は必ずここからファイル選択を始めます"
 msgstr "設定すれば、anmを扱う時は必ずここからファイル選択を始めます"
 
-#: __init__.py:127
+#: __init__.py:143
 msgctxt "*"
 msgid "anmインポート時のデフォルトパス"
 msgstr "anmインポート時のデフォルトパス"
 
-#: __init__.py:127
+#: __init__.py:143
 msgctxt "*"
 msgid "anmインポート時に最初はここが表示されます、インポート毎に保存されます"
 msgstr "anmインポート時に最初はここが表示されます、インポート毎に保存されます"
 
-#: __init__.py:128
+#: __init__.py:144
 msgctxt "*"
 msgid "anmエクスポート時のデフォルトパス"
 msgstr "anmエクスポート時のデフォルトパス"
 
-#: __init__.py:128
+#: __init__.py:144
 msgctxt "*"
 msgid "anmエクスポート時に最初はここが表示されます、エクスポート毎に保存されます"
 msgstr "anmエクスポート時に最初はここが表示されます、エクスポート毎に保存されます"
 
-#: __init__.py:129 __init__.py:224
+#: __init__.py:145 __init__.py:242
 msgctxt "*"
 msgid "MyPoseフォルダ"
 msgstr "MyPoseフォルダ"
 
-#: __init__.py:129
+#: __init__.py:145
 msgctxt "*"
 msgid "ポーズライブラリのMyPoseからポーズ選択できるようになります"
 msgstr "ポーズライブラリのMyPoseからポーズ選択できるようになります"
 
-#: __init__.py:131 __init__.py:146 __init__.py:147 __init__.py:148
-#: __init__.py:149
+#: __init__.py:147 __init__.py:162 __init__.py:163 __init__.py:164
+#: __init__.py:165
 msgctxt "*"
 msgid "texファイル置き場"
 msgstr "texファイル置き場"
 
-#: __init__.py:131
+#: __init__.py:147
 msgctxt "*"
 msgid "設定すれば、texを扱う時は必ずここからファイル選択を始めます"
 msgstr "設定すれば、texを扱う時は必ずここからファイル選択を始めます"
 
-#: __init__.py:132
+#: __init__.py:148
 msgctxt "*"
 msgid "texインポート時のデフォルトパス"
 msgstr "texインポート時のデフォルトパス"
 
-#: __init__.py:132
+#: __init__.py:148
 msgctxt "*"
 msgid "texインポート時に最初はここが表示されます、インポート毎に保存されます"
 msgstr "texインポート時に最初はここが表示されます、インポート毎に保存されます"
 
-#: __init__.py:133
+#: __init__.py:149
 msgctxt "*"
 msgid "texエクスポート時のデフォルトパス"
 msgstr "texエクスポート時のデフォルトパス"
 
-#: __init__.py:133
+#: __init__.py:149
 msgctxt "*"
 msgid "texエクスポート時に最初はここが表示されます、エクスポート毎に保存されます"
 msgstr "texエクスポート時に最初はここが表示されます、エクスポート毎に保存されます"
 
-#: __init__.py:135
+#: __init__.py:151
 msgctxt "*"
 msgid "mateファイル置き場"
 msgstr "mateファイル置き場"
 
-#: __init__.py:135
+#: __init__.py:151
 msgctxt "*"
 msgid "設定すれば、mateを扱う時は必ずここからファイル選択を始めます"
 msgstr "設定すれば、mateを扱う時は必ずここからファイル選択を始めます"
 
-#: __init__.py:136
+#: __init__.py:152
 msgctxt "*"
 msgid "同じ設定値が2つ以上ある場合削除"
 msgstr "同じ設定値が2つ以上ある場合削除"
 
-#: __init__.py:136
+#: __init__.py:152
 msgctxt "*"
 msgid "_ShadowColor など"
 msgstr "_ShadowColor など"
 
-#: __init__.py:137
+#: __init__.py:153
 msgctxt "*"
 msgid "mateインポート時のデフォルトパス"
 msgstr "mateインポート時のデフォルトパス"
 
-#: __init__.py:137
+#: __init__.py:153
 msgctxt "*"
 msgid "mateインポート時に最初はここが表示されます、インポート毎に保存されます"
 msgstr "mateインポート時に最初はここが表示されます、インポート毎に保存されます"
 
-#: __init__.py:138
+#: __init__.py:154
 msgctxt "*"
 msgid "mateエクスポート時のデフォルトパス"
 msgstr "mateエクスポート時のデフォルトパス"
 
-#: __init__.py:138
+#: __init__.py:154
 msgctxt "*"
 msgid "mateエクスポート時に最初はここが表示されます、エクスポート毎に保存されます"
 msgstr "mateエクスポート時に最初はここが表示されます、エクスポート毎に保存されます"
 
-#: __init__.py:140
+#: __init__.py:156
 msgctxt "*"
 msgid ".menu Default Path"
 msgstr "menuファイル置き場"
 
-#: __init__.py:140
+#: __init__.py:156
 msgctxt "*"
 msgid "If set. The file selection will open here."
 msgstr "設定すれば、menuを扱う時は必ずここからファイル選択を始めます"
 
-#: __init__.py:141
+#: __init__.py:157
 msgctxt "*"
 msgid ".menu Default Import Path"
 msgstr "menuインポート時のデフォルトパス"
 
-#: __init__.py:141
+#: __init__.py:157
 msgctxt "*"
 msgid ""
 "When importing a .menu file. The file selection prompt will begin here."
 msgstr "menuインポート時に最初はここが表示されます、インポート毎に保存されます"
 
-#: __init__.py:142
+#: __init__.py:158
 msgctxt "*"
 msgid ".menu Default Export Path"
 msgstr "menuエクスポート時のデフォルトパス"
 
-#: __init__.py:142
+#: __init__.py:158
 msgctxt "*"
 msgid ""
 "When exporting a .menu file. The file selection prompt will begin here."
 msgstr "menuエクスポート時に最初はここが表示されます、エクスポート毎に保存されます"
 
-#: __init__.py:144
+#: __init__.py:160
 msgctxt "*"
 msgid "基本的にtexファイルを探す"
 msgstr "基本的にtexファイルを探す"
 
-#: __init__.py:144
+#: __init__.py:160
 msgctxt "*"
 msgid "texファイルを探すかどうかのオプションのデフォルト値を設定します"
 msgstr "texファイルを探すかどうかのオプションのデフォルト値を設定します"
 
-#: __init__.py:145 __init__.py:243
+#: __init__.py:161 __init__.py:261
 msgctxt "*"
 msgid "相対探索範囲"
 msgstr "相対探索範囲"
 
-#: __init__.py:145
+#: __init__.py:161
 msgctxt "*"
 msgid "インポート対象からの相対ディレクトリ以下を探索対象に加えます"
 msgstr "インポート対象からの相対ディレクトリ以下を探索対象に加えます"
 
-#: __init__.py:146 __init__.py:147 __init__.py:148 __init__.py:149
+#: __init__.py:162 __init__.py:163 __init__.py:164 __init__.py:165
 msgctxt "*"
 msgid "texファイルを探す時はここから探します"
 msgstr "texファイルを探す時はここから探します"
 
-#: __init__.py:151
+#: __init__.py:169
 msgctxt "*"
 msgid "CM3D2用法線のブレンド率"
 msgstr "CM3D2用法線のブレンド率"
 
-#: __init__.py:152
+#: __init__.py:170
 msgctxt "*"
 msgid "無変更シェイプキーをスキップ"
 msgstr "無変更シェイプキーをスキップ"
 
-#: __init__.py:152
+#: __init__.py:170
 msgctxt "*"
 msgid "ベースと同じシェイプキーを出力しない"
 msgstr "ベースと同じシェイプキーを出力しない"
 
-#: __init__.py:153
+#: __init__.py:171
 msgctxt "*"
 msgid "モディファイアを適用"
 msgstr "モディファイアを適用"
 
-#: __init__.py:155
+#: __init__.py:173
 msgctxt "*"
 msgid "テクスチャのオフセット"
 msgstr "テクスチャのオフセット"
 
-#: __init__.py:156
+#: __init__.py:174
 msgctxt "*"
 msgid "テクスチャのスケール"
 msgstr "テクスチャのスケール"
 
-#: __init__.py:158
+#: __init__.py:176
 msgctxt "*"
 msgid "_ToonRamp 名前"
 msgstr "_ToonRamp 名前"
 
-#: __init__.py:159
+#: __init__.py:177
 msgctxt "*"
 msgid "_ToonRamp パス"
 msgstr "_ToonRamp パス"
 
-#: __init__.py:161
+#: __init__.py:179
 msgctxt "*"
 msgid "_ShadowRateToon 名前"
 msgstr "_ShadowRateToon 名前"
 
-#: __init__.py:162
+#: __init__.py:180
 msgctxt "*"
 msgid "_ShadowRateToon パス"
 msgstr "_ShadowRateToon パス"
 
-#: __init__.py:164
+#: __init__.py:182
 msgctxt "*"
 msgid "_OutlineToonRamp 名前"
 msgstr "_OutlineToonRamp 名前"
 
-#: __init__.py:165
+#: __init__.py:183
 msgctxt "*"
 msgid "_OutlineToonRamp パス"
 msgstr "_OutlineToonRamp パス"
 
-#: __init__.py:209
+#: __init__.py:227
 msgctxt "*"
 msgid "modelファイル"
 msgstr "modelファイル"
 
-#: __init__.py:219 __init__.py:223 __init__.py:228 __init__.py:233
+#: __init__.py:237 __init__.py:241 __init__.py:246 __init__.py:251
 msgctxt "*"
 msgid "ファイル選択時の初期フォルダ"
 msgstr "ファイル選択時の初期フォルダ"
 
-#: __init__.py:222
+#: __init__.py:240
 msgctxt "*"
 msgid "anmファイル"
 msgstr "anmファイル"
 
-#: __init__.py:227
+#: __init__.py:245
 msgctxt "*"
 msgid "texファイル"
 msgstr "texファイル"
 
-#: __init__.py:231
+#: __init__.py:249
 msgctxt "*"
 msgid "mateファイル"
 msgstr "mateファイル"
 
-#: __init__.py:236
+#: __init__.py:254
 msgctxt "*"
 msgid ".menu File"
 msgstr "menuファイル"
 
-#: __init__.py:237
+#: __init__.py:255
 msgctxt "*"
 msgid "Initial folder when selecting files"
 msgstr "ファイル選択時の初期フォルダ"
 
-#: __init__.py:240
+#: __init__.py:258
 msgctxt "*"
 msgid "texファイル検索"
 msgstr "texファイル検索"
 
-#: __init__.py:245
+#: __init__.py:263
 msgctxt "*"
 msgid "探索パス1"
 msgstr "探索パス1"
 
-#: __init__.py:246
+#: __init__.py:264
 msgctxt "*"
 msgid "探索パス2"
 msgstr "探索パス2"
 
-#: __init__.py:247
+#: __init__.py:265
 msgctxt "*"
 msgid "探索パス3"
 msgstr "探索パス3"
 
-#: __init__.py:248
+#: __init__.py:266
 msgctxt "*"
 msgid "探索パス4"
 msgstr "探索パス4"
 
-#: __init__.py:251
+#: __init__.py:269
 msgctxt "*"
 msgid "CM3D2用マテリアル新規作成時の初期値"
 msgstr "CM3D2用マテリアル新規作成時の初期値"
 
 #. mt:gemini
-#: __init__.py:275
+#: __init__.py:293
 #, fuzzy
 msgctxt "*"
 msgid "Default Armature Settings"
 msgstr "デフォルトのアーマチュア設定"
 
-#: __init__.py:285
+#: __init__.py:303
 msgctxt "*"
 msgid "各操作の初期パラメータ"
 msgstr "各操作の初期パラメータ"
 
-#: __init__.py:292
+#: __init__.py:310
 msgctxt "*"
 msgid "コンソール"
 msgstr "コンソール"
 
-#: __init__.py:294
+#: __init__.py:312
 msgctxt "*"
 msgid "コンソール文字コードをUTF8にする (日本語文字化け対策)"
 msgstr "コンソール文字コードをUTF8にする (日本語文字化け対策)"
 
-#: __init__.py:297
+#: __init__.py:315
 msgctxt "*"
 msgid ""
 "このアドオン以外のコンソール出力にも影響を及ぼす可能性があります。\n"
@@ -455,156 +455,163 @@ msgctxt "*"
 msgid "カスタムメイド3D2/カスタムオーダーメイド3D2専用ファイルのインポート/エクスポートを行います"
 msgstr "カスタムメイド3D2/カスタムオーダーメイド3D2専用ファイルのインポート/エクスポートを行います"
 
-#: __init__.py:321
+#: __init__.py:339
 msgctxt "*"
 msgid "上記インストールフォルダよりリソースデータ(toon画像・ポーズanm)を抽出してBlender datafilesフォルダに保存します"
 msgstr "上記インストールフォルダよりリソースデータ(toon画像・ポーズanm)を抽出してBlender datafilesフォルダに保存します"
 
-#: __init__.py:145
+#. mt:gemini
+#: __init__.py:19
+#, fuzzy
+msgctxt "*"
+msgid "version"
+msgstr "バージョン"
+
+#: __init__.py:161
 msgctxt "*"
 msgid "指定なし"
 msgstr "指定なし"
 
-#: __init__.py:145
+#: __init__.py:161
 msgctxt "*"
 msgid "同ディレクトリ以下"
 msgstr "同ディレクトリ以下"
 
-#: __init__.py:145
+#: __init__.py:161
 msgctxt "*"
 msgid "親ディレクトリ以下"
 msgstr "親ディレクトリ以下"
 
-#: anm_export.py:20 anm_import.py:21
+#: anm_export.py:17 anm_import.py:19
 msgctxt "Operator"
 msgid "CM3D2モーション (.anm)"
 msgstr "CM3D2モーション (.anm)"
 
-#: anm_export.py:28 model_export.py:26
+#: anm_export.py:25 model_export.py:27
 msgctxt "*"
 msgid "エクスポート時のメッシュ等の拡大率です"
 msgstr "エクスポート時のメッシュ等の拡大率です"
 
-#: anm_export.py:29 mate_export.py:17 mate_export.py:91 model_export.py:28
+#: anm_export.py:26 mate_export.py:17 mate_export.py:91 model_export.py:29
 #: tex_export.py:19
 msgctxt "*"
 msgid "ファイルをバックアップ"
 msgstr "ファイルをバックアップ"
 
-#: anm_export.py:29 mate_export.py:17 mate_export.py:91 model_export.py:28
+#: anm_export.py:26 mate_export.py:17 mate_export.py:91 model_export.py:29
 #: tex_export.py:19
 msgctxt "*"
 msgid "ファイルに上書きする場合にバックアップファイルを複製します"
 msgstr "ファイルに上書きする場合にバックアップファイルを複製します"
 
-#: anm_export.py:30 mate_export.py:19 mate_export.py:93 model_export.py:30
-#: tex_export.py:21
+#: anm_export.py:27 mate_export.py:19 mate_export.py:93
+#: misc_DATA_PT_context_arm.py:396 model_export.py:31 tex_export.py:21
 msgctxt "*"
 msgid "ファイルバージョン"
 msgstr "ファイルバージョン"
 
-#: anm_export.py:41
+#: anm_export.py:38
 msgctxt "*"
 msgid "開始フレーム"
 msgstr "開始フレーム"
 
-#: anm_export.py:42
+#: anm_export.py:39
 msgctxt "*"
 msgid "最終フレーム"
 msgstr "最終フレーム"
 
-#: anm_export.py:43
+#: anm_export.py:40
 msgctxt "*"
 msgid "キーフレーム数"
 msgstr "キーフレーム数"
 
-#: anm_export.py:44
+#: anm_export.py:41
 msgctxt "*"
 msgid "再生速度"
 msgstr "再生速度"
 
-#: anm_export.py:45
+#: anm_export.py:42
 msgctxt "*"
 msgid "同じ変形のキーフレームを掃除"
 msgstr "同じ変形のキーフレームを掃除"
 
 #. mt:gemini
-#: anm_export.py:46
+#: anm_export.py:43
 #, fuzzy
 msgctxt "*"
 msgid "Use Visual Transforms"
 msgstr "ビジュアルトランスフォームを使用"
 
-#: anm_export.py:47
+#: anm_export.py:44
 msgctxt "*"
 msgid "キーフレーム間の変形をスムーズに"
 msgstr "キーフレーム間の変形をスムーズに"
 
-#: anm_export.py:53 anm_export.py:124
+#: anm_export.py:50 anm_export.py:121
 msgctxt "*"
 msgid "ボーン親情報の参照先"
 msgstr "ボーン親情報の参照先"
 
 #. mt:gemini
-#: anm_export.py:55
+#: anm_export.py:52
 #, fuzzy
 msgctxt "*"
 msgid "Export Location"
 msgstr "位置をエクスポート"
 
 #. mt:gemini
-#: anm_export.py:56
+#: anm_export.py:53
 #, fuzzy
 msgctxt "*"
 msgid "Export Rotation"
 msgstr "回転をエクスポート"
 
 #. mt:gemini
-#: anm_export.py:57
+#: anm_export.py:54
 #, fuzzy
 msgctxt "*"
 msgid "Export Scale (Ex)"
 msgstr "スケールをエクスポート (Ex)"
 
 #. mt:gemini
-#: anm_export.py:59 livelink.py:61 livelink.py:251
+#: anm_export.py:56 livelink.py:58 livelink.py:249
 #, fuzzy
 msgctxt "*"
 msgid "Remove Unkeyed Bones"
 msgstr "キーフレームのないボーンを削除"
 
-#: anm_export.py:60
+#: anm_export.py:57
 msgctxt "*"
 msgid "親も子も存在しない"
 msgstr "親も子も存在しない"
 
-#: anm_export.py:61
+#: anm_export.py:58
 msgctxt "*"
 msgid "名前がIK/Nubっぽい"
 msgstr "名前がIK/Nubっぽい"
 
-#: anm_export.py:62
+#: anm_export.py:59
 msgctxt "*"
 msgid "名前が連番付き"
 msgstr "名前が連番付き"
 
-#: anm_export.py:63
+#: anm_export.py:60
 msgctxt "*"
 msgid "名前に日本語が含まれる"
 msgstr "名前に日本語が含まれる"
 
-#: anm_export.py:128
+#: anm_export.py:125
 msgctxt "*"
 msgid "輸出アニメーション情報"
 msgstr "輸出アニメーション情報"
 
-#: anm_export.py:135
+#: anm_export.py:132
 msgctxt "*"
 msgid "除外するボーン"
 msgstr "除外するボーン"
 
 #. mt:gemini
-#: anm_export.py:171
+#: anm_export.py:168
 #, fuzzy
 msgctxt "*"
 msgid ""
@@ -613,7 +620,7 @@ msgid ""
 msgstr "拡張アニメーションを'.anm'としてエクスポートしようとしました。代わりに'.ex.anm'を使用してください。"
 
 #. mt:gemini
-#: anm_export.py:1143
+#: anm_export.py:1145
 #, python-format, fuzzy
 msgctxt "*"
 msgid ""
@@ -623,133 +630,133 @@ msgstr ""
 "ボーン'{bone}'はアニメーションのフレーム{frame_from}～{frame_to}で無効なマトリックスを持っていました:\n"
 "{matrix}"
 
-#: anm_export.py:182 anm_import.py:87 mate_export.py:59 mate_export.py:151
-#: mate_import.py:49 mate_import.py:123 model_export.py:571
+#: anm_export.py:179 anm_import.py:85 mate_export.py:59 mate_export.py:151
+#: mate_import.py:49 mate_import.py:123 model_export.py:596
 #: model_import.py:162 tex_import.py:72
 #, python-format
 msgctxt "*"
 msgid "ファイルを開くのに失敗しました、アクセス不可かファイルが存在しません。file={}"
 msgstr "ファイルを開くのに失敗しました、アクセス不可かファイルが存在しません。file={}"
 
-#: anm_export.py:784
+#: anm_export.py:781
 #, python-format
 msgctxt "*"
 msgid "Creating missing FCurve for {path}[{index}]"
 msgstr "{path} [{index}]の欠落しているFCurveを作成しています"
 
-#: anm_export.py:816
+#: anm_export.py:813
 #, python-format
 msgctxt "*"
 msgid "Creating missing keyframe @ frame {frame} for {path}[{index}]"
 msgstr "{path} [{index}]の欠落しているキーフレーム@フレーム{frame}を作成しています"
 
-#: anm_export.py:21
+#: anm_export.py:18
 msgctxt "*"
 msgid "カスタムメイド3D2のanmファイルを保存します"
 msgstr "カスタムメイド3D2のanmファイルを保存します"
 
 #. mt:gemini
-#: anm_export.py:34
+#: anm_export.py:31
 #, fuzzy
 msgctxt "*"
 msgid "Bake All Frames"
 msgstr "全フレームをベイク"
 
 #. mt:gemini
-#: anm_export.py:34
+#: anm_export.py:31
 #, fuzzy
 msgctxt "*"
 msgid "Export every frame as a keyframe (legacy behavior, large file sizes)"
 msgstr "すべてのフレームをキーフレームとしてエクスポート (レガシー動作、ファイルサイズ大)"
 
 #. mt:gemini
-#: anm_export.py:35
+#: anm_export.py:32
 #, fuzzy
 msgctxt "*"
 msgid "Only Export Keyframes"
 msgstr "キーフレームのみエクスポート"
 
 #. mt:gemini
-#: anm_export.py:35
+#: anm_export.py:32
 #, fuzzy
 msgctxt "*"
 msgid "Only export keyframes and their tangents (for more advance users)"
 msgstr "キーフレームとその接線のみをエクスポート (上級者向け)"
 
 #. mt:gemini
-#: anm_export.py:36
+#: anm_export.py:33
 #, fuzzy
 msgctxt "*"
 msgid "From Anm Text JSON"
 msgstr "AnmテキストJSONから"
 
 #. mt:gemini
-#: anm_export.py:36
+#: anm_export.py:33
 #, fuzzy
 msgctxt "*"
 msgid "Export data from the JSON in the 'AnmData' text file"
 msgstr "'AnmData'テキストファイルのJSONからデータをエクスポート"
 
-#: anm_export.py:50 model_export.py:42 model_import.py:114
+#: anm_export.py:47 model_export.py:43 model_import.py:114
 msgctxt "*"
 msgid "アーマチュア"
 msgstr "アーマチュア"
 
-#: anm_export.py:51 model_export.py:45
+#: anm_export.py:48 model_export.py:46
 msgctxt "*"
 msgid "アーマチュア内プロパティ"
 msgstr "アーマチュア内プロパティ"
 
-#: anm_import.py:29 model_import.py:31
+#: anm_import.py:27 model_import.py:31
 msgctxt "*"
 msgid "インポート時のメッシュ等の拡大率です"
 msgstr "インポート時のメッシュ等の拡大率です"
 
 #. mt:gemini
-#: anm_import.py:30
+#: anm_import.py:28
 #, fuzzy
 msgctxt "*"
 msgid "Set Framerate"
 msgstr "フレームレートを設定"
 
 #. mt:gemini
-#: anm_import.py:30
+#: anm_import.py:28
 #, fuzzy
 msgctxt "*"
 msgid "Change the scene's render settings to 60 fps"
 msgstr "シーンのレンダー設定を60fpsに変更"
 
 #. mt:gemini
-#: anm_import.py:33
+#: anm_import.py:31
 #, fuzzy
 msgctxt "*"
 msgid "Anm Text (SLOW)"
 msgstr "Anmテキスト (低速)"
 
 #. mt:gemini
-#: anm_import.py:33
+#: anm_import.py:31
 #, fuzzy
 msgctxt "*"
 msgid "Output Data to a JSON file"
 msgstr "データをJSONファイルに出力"
 
-#: anm_import.py:35
+#: anm_import.py:33
 msgctxt "*"
 msgid "フレーム開始・終了位置を調整"
 msgstr "フレーム開始・終了位置を調整"
 
-#: anm_import.py:36
+#: anm_import.py:34
 msgctxt "*"
 msgid "Twisterボーンを除外"
 msgstr "Twisterボーンを除外"
 
-#: anm_import.py:71
+#: anm_import.py:69
 msgctxt "*"
 msgid "読み込むアニメーション情報"
 msgstr "読み込むアニメーション情報"
 
 #. mt:gemini
-#: anm_import.py:562
+#: anm_import.py:556
 #, fuzzy, python-format
 msgctxt "*"
 msgid ""
@@ -759,7 +766,7 @@ msgstr ""
 "{count}個の大きな接線が見つかりました。Blenderのアニメーションが正しく補間されない可能性があります。詳細はログを参照してください。"
 
 #. mt:gemini
-#: anm_import.py:568
+#: anm_import.py:562
 #, fuzzy, python-format
 msgctxt "*"
 msgid ""
@@ -769,40 +776,40 @@ msgstr ""
 "{count}個の不明なチャンネルIDが見つかりました。Blenderのアニメーションで一部のキーフレームが欠落している可能性があります。詳細はログを参照してください。"
 
 #. mt:gemini
-#: anm_import.py:673
+#: anm_import.py:668
 #, fuzzy, python-format
 msgctxt "*"
 msgid "Unknown channel id {num}"
 msgstr "不明なチャンネルID {num}"
 
-#: anm_import.py:22
+#: anm_import.py:20
 msgctxt "*"
 msgid "カスタムメイド3D2のanmファイルを読み込みます"
 msgstr "カスタムメイド3D2のanmファイルを読み込みます"
 
 #. mt:gemini
-#: anm_import.py:558
+#: anm_import.py:552
 #, fuzzy
 msgctxt "*"
 msgid "Found the following tangent values:"
 msgstr "以下の接線値が見つかりました:"
 
 #. mt:gemini
-#: anm_import.py:561
+#: anm_import.py:555
 #, fuzzy
 msgctxt "*"
 msgid "Found the above tangent values."
 msgstr "上記の接線値が見つかりました。"
 
 #. mt:gemini
-#: anm_import.py:564
+#: anm_import.py:558
 #, fuzzy
 msgctxt "*"
 msgid "Found the following unknown channel IDs:"
 msgstr "以下の不明なチャンネルIDが見つかりました:"
 
 #. mt:gemini
-#: anm_import.py:567
+#: anm_import.py:561
 #, fuzzy
 msgctxt "*"
 msgid "Found the above unknown channel IDs."
@@ -907,17 +914,27 @@ msgctxt "*"
 msgid "深度テストの実行方法を指定する。"
 msgstr "深度テストの実行方法を指定する。"
 
-#: cm3d2_data.py:236
+#: cm3d2_data.py:218
+msgctxt "*"
+msgid "ハイライトの強さを指定。"
+msgstr "ハイライトの強さを指定。"
+
+#: cm3d2_data.py:223
+msgctxt "*"
+msgid "ハイライトの係数を指定。"
+msgstr "ハイライトの係数を指定。"
+
+#: cm3d2_data.py:246
 msgctxt "*"
 msgid "リアル"
 msgstr "リアル"
 
-#: cm3d2_data.py:244
+#: cm3d2_data.py:254
 msgctxt "*"
 msgid "リアル 透過"
 msgstr "リアル 透過"
 
-#: cm3d2_data.py:457
+#: cm3d2_data.py:468
 msgctxt "*"
 msgid "不明"
 msgstr "不明"
@@ -967,98 +984,98 @@ msgctxt "*"
 msgid "奥行きを無視して、常に描画する"
 msgstr "奥行きを無視して、常に描画する"
 
-#: cm3d2_data.py:254
+#: cm3d2_data.py:264
 msgctxt "*"
 msgid "トゥーン"
 msgstr "トゥーン"
 
-#: cm3d2_data.py:262
+#: cm3d2_data.py:272
 msgctxt "*"
 msgid "トゥーン 髪"
 msgstr "トゥーン 髪"
 
-#: cm3d2_data.py:270
+#: cm3d2_data.py:280
 msgctxt "*"
 msgid "トゥーン 透過"
 msgstr "トゥーン 透過"
 
-#: cm3d2_data.py:278
+#: cm3d2_data.py:288
 msgctxt "*"
 msgid "トゥーン 透過 NoZ"
 msgstr "トゥーン 透過 NoZ"
 
-#: cm3d2_data.py:286
+#: cm3d2_data.py:296
 msgctxt "*"
 msgid "トゥーン 透過 NoZTest"
 msgstr "トゥーン 透過 NoZTest"
 
-#: cm3d2_data.py:294
+#: cm3d2_data.py:304
 msgctxt "*"
 msgid "トゥーン 輪郭線"
 msgstr "トゥーン 輪郭線"
 
-#: cm3d2_data.py:302
+#: cm3d2_data.py:312
 msgctxt "*"
 msgid "トゥーン 輪郭線 Tex"
 msgstr "トゥーン 輪郭線 Tex"
 
-#: cm3d2_data.py:310
+#: cm3d2_data.py:320
 msgctxt "*"
 msgid "トゥーン 輪郭線 髪"
 msgstr "トゥーン 輪郭線 髪"
 
-#: cm3d2_data.py:326
+#: cm3d2_data.py:336
 msgctxt "*"
 msgid "トゥーン 輪郭線 透過"
 msgstr "トゥーン 輪郭線 透過"
 
-#: cm3d2_data.py:334
+#: cm3d2_data.py:344
 msgctxt "*"
 msgid "トゥーン Cutout"
 msgstr "トゥーン Cutout"
 
-#: cm3d2_data.py:342
+#: cm3d2_data.py:352
 msgctxt "*"
 msgid "トゥーン無し 透過"
 msgstr "トゥーン無し 透過"
 
-#: cm3d2_data.py:350
+#: cm3d2_data.py:360
 msgctxt "*"
 msgid "トゥーン無し"
 msgstr "トゥーン無し"
 
-#: cm3d2_data.py:358
+#: cm3d2_data.py:368
 msgctxt "*"
 msgid "トゥーン無し Cutout"
 msgstr "トゥーン無し Cutout"
 
-#: cm3d2_data.py:366
+#: cm3d2_data.py:376
 msgctxt "*"
 msgid "発光"
 msgstr "発光"
 
-#: cm3d2_data.py:374
+#: cm3d2_data.py:384
 msgctxt "*"
 msgid "発光 透過"
 msgstr "発光 透過"
 
-#: cm3d2_data.py:382
+#: cm3d2_data.py:392
 msgctxt "*"
 msgid "モザイク"
 msgstr "モザイク"
 
-#: cm3d2_data.py:390
+#: cm3d2_data.py:400
 msgctxt "*"
 msgid "ご主人様"
 msgstr "ご主人様"
 
-#: cm3d2_data.py:402
+#: cm3d2_data.py:412
 msgctxt "*"
 msgid "法線"
 msgstr "法線"
 
 #. mt:gemini
-#: cm3d2_data.py:445
+#: cm3d2_data.py:455
 #, fuzzy
 msgctxt "*"
 msgid " (COM3D2 only)"
@@ -1072,144 +1089,144 @@ msgid "COM3D2 Light"
 msgstr "COM3D2ライト"
 
 #. mt:gemini
-#: common.py:1028 misc_DATA_PT_modifiers.py:75
-#: misc_MESH_MT_shape_key_specials.py:803
+#: common.py:1029 misc_DATA_PT_modifiers.py:75
+#: misc_MESH_MT_shape_key_specials.py:655
 #, fuzzy
 msgctxt "*"
 msgid "Reverse Name"
 msgstr "名前を反転"
 
 #. mt:gemini
-#: common.py:1028 misc_DATA_PT_modifiers.py:75
-#: misc_MESH_MT_shape_key_specials.py:803
+#: common.py:1029 misc_DATA_PT_modifiers.py:75
+#: misc_MESH_MT_shape_key_specials.py:655
 #, fuzzy
 msgctxt "*"
 msgid "Reverse name filtering"
 msgstr "名前フィルタリングを反転"
 
 #. mt:gemini
-#: common.py:1065 misc_DATA_PT_modifiers.py:87
+#: common.py:1066 misc_DATA_PT_modifiers.py:87
 #, fuzzy
 msgctxt "*"
 msgid "Sort groups by their name (case-insensitive)"
 msgstr "グループを名前でソート (大文字小文字を区別しない)"
 
 #. mt:gemini
-#: common.py:1070 misc_DATA_PT_modifiers.py:92
-#: misc_MESH_MT_shape_key_specials.py:809
+#: common.py:1071 misc_DATA_PT_modifiers.py:92
+#: misc_MESH_MT_shape_key_specials.py:661
 #, fuzzy
 msgctxt "*"
 msgid "Order by Invert"
 msgstr "順序を反転"
 
 #. mt:gemini
-#: common.py:1070 misc_DATA_PT_modifiers.py:92
-#: misc_MESH_MT_shape_key_specials.py:809
+#: common.py:1071 misc_DATA_PT_modifiers.py:92
+#: misc_MESH_MT_shape_key_specials.py:661
 #, fuzzy
 msgctxt "*"
 msgid "Invert the sort by order"
 msgstr "ソート順を反転"
 
 #. mt:gemini
-#: common.py:1240
+#: common.py:1241
 #, fuzzy
 msgctxt "*"
 msgid "Prefered"
 msgstr "優先"
 
 #. mt:gemini
-#: common.py:1243
+#: common.py:1244
 #, fuzzy
 msgctxt "*"
 msgid "Filter 0"
 msgstr "フィルター 0"
 
 #. mt:gemini
-#: common.py:1244
+#: common.py:1245
 #, fuzzy
 msgctxt "*"
 msgid "Filter 1"
 msgstr "フィルター 1"
 
 #. mt:gemini
-#: common.py:1245
+#: common.py:1246
 #, fuzzy
 msgctxt "*"
 msgid "Filter 2"
 msgstr "フィルター 2"
 
 #. mt:gemini
-#: common.py:1246
+#: common.py:1247
 #, fuzzy
 msgctxt "*"
 msgid "Filter 3"
 msgstr "フィルター 3"
 
 #. mt:gemini
-#: common.py:1248
+#: common.py:1249
 #, fuzzy
 msgctxt "*"
 msgid "Sort 0"
 msgstr "ソート 0"
 
 #. mt:gemini
-#: common.py:1249
+#: common.py:1250
 #, fuzzy
 msgctxt "*"
 msgid "Sort 1"
 msgstr "ソート 1"
 
 #. mt:gemini
-#: common.py:1250
+#: common.py:1251
 #, fuzzy
 msgctxt "*"
 msgid "Sort 2"
 msgstr "ソート 2"
 
 #. mt:gemini
-#: common.py:1251
+#: common.py:1252
 #, fuzzy
 msgctxt "*"
 msgid "Sort 3"
 msgstr "ソート 3"
 
 #. mt:gemini
-#: common.py:1150
+#: common.py:1151
 #, fuzzy
 msgctxt "*"
 msgid "Order by:"
 msgstr "順序:"
 
 #. mt:gemini
-#: livelink.py:103
+#: livelink.py:100
 #, fuzzy
 msgctxt "*"
 msgid "LiveLink"
 msgstr "LiveLink"
 
 #. mt:gemini
-#: livelink.py:155
+#: livelink.py:152
 #, fuzzy
 msgctxt "Operator"
 msgid "Start LiveLink"
 msgstr "LiveLinkを開始"
 
 #. mt:gemini
-#: livelink.py:189
+#: livelink.py:187
 #, fuzzy
 msgctxt "Operator"
 msgid "Stop LiveLink"
 msgstr "LiveLinkを停止"
 
 #. mt:gemini
-#: livelink.py:225
+#: livelink.py:223
 #, fuzzy
 msgctxt "Operator"
 msgid "Wait for Connection"
 msgstr "接続を待機"
 
 #. mt:gemini
-#: livelink.py:247
+#: livelink.py:245
 #, fuzzy
 msgctxt "Operator"
 msgid "Send Animation"
@@ -1223,119 +1240,119 @@ msgid "Link Pose"
 msgstr "ポーズをリンク"
 
 #. mt:gemini
-#: livelink.py:365
+#: livelink.py:367
 #, fuzzy
 msgctxt "Operator"
 msgid "Unlink Pose"
 msgstr "ポーズのリンクを解除"
 
 #. mt:gemini
-#: livelink.py:389
+#: livelink.py:391
 #, fuzzy
 msgctxt "Operator"
 msgid "Send Model"
 msgstr "モデルを送信"
 
 #. mt:gemini
-#: livelink.py:60
+#: livelink.py:57
 #, fuzzy
 msgctxt "*"
 msgid "Max Frames to Send"
 msgstr "送信する最大フレーム数"
 
 #. mt:gemini
-#: livelink.py:250
+#: livelink.py:248
 #, fuzzy
 msgctxt "*"
 msgid "Maximum Frames to Send"
 msgstr "送信する最大フレーム数"
 
 #. mt:gemini
-#: livelink.py:119
+#: livelink.py:116
 #, fuzzy
 msgctxt "*"
 msgid "Server not running"
 msgstr "サーバーは実行されていません"
 
 #. mt:gemini
-#: livelink.py:207
+#: livelink.py:205
 #, fuzzy
 msgctxt "*"
 msgid "⚠ WARNING ⚠"
 msgstr "⚠ 警告 ⚠"
 
 #. mt:gemini
-#: livelink.py:208
+#: livelink.py:206
 #, fuzzy
 msgctxt "*"
 msgid "Stopping the server may crash Blender, the client, or both."
 msgstr "サーバーを停止すると、Blender、クライアント、またはその両方がクラッシュする可能性があります。"
 
 #. mt:gemini
-#: livelink.py:209
+#: livelink.py:207
 #, fuzzy
 msgctxt "*"
 msgid "This action is only safe if the client is already disconnected."
 msgstr "この操作は、クライアントがすでに切断されている場合にのみ安全です。"
 
 #. mt:gemini
-#: livelink.py:210
+#: livelink.py:208
 #, fuzzy
 msgctxt "*"
 msgid "Are you sure you want to try disconnecting?"
 msgstr "切断を試みますか？"
 
 #. mt:gemini
-#: livelink.py:212
+#: livelink.py:210
 #, fuzzy
 msgctxt "*"
 msgid "Shutdown LiveLink server?"
 msgstr "LiveLinkサーバーをシャットダウンしますか？"
 
 #. mt:gemini
-#: livelink.py:102
+#: livelink.py:99
 #, fuzzy
 msgctxt "*"
 msgid "COM3D2"
 msgstr "COM3D2"
 
 #. mt:gemini
-#: livelink.py:65
+#: livelink.py:62
 #, fuzzy
 msgctxt "*"
 msgid "Link Pose is Active"
 msgstr "ポーズリンクがアクティブ"
 
 #. mt:gemini
-#: livelink.py:158
+#: livelink.py:155
 #, fuzzy
 msgctxt "*"
 msgid "Address"
 msgstr "アドレス"
 
 #. mt:gemini
-#: livelink.py:159
+#: livelink.py:156
 #, fuzzy
 msgctxt "*"
 msgid "Wait For Connection"
 msgstr "接続を待機"
 
 #. mt:gemini
-#: livelink.py:166
+#: livelink.py:163
 #, fuzzy
 msgctxt "*"
 msgid "The LiveLink server is already running"
 msgstr "LiveLinkサーバーはすでに実行中です"
 
 #. mt:gemini
-#: livelink.py:196
+#: livelink.py:194
 #, fuzzy
 msgctxt "*"
 msgid "LiveLink core is not initialized."
 msgstr "LiveLinkコアが初期化されていません。"
 
 #. mt:gemini
-#: livelink.py:126
+#: livelink.py:123
 #, fuzzy
 msgctxt "*"
 msgid "Not connected"
@@ -1382,17 +1399,17 @@ msgid "mateを開く"
 msgstr "mateを開く"
 
 #: mate_import.py:18 misc_MATERIAL_PT_context_material.py:172
-#: misc_MATERIAL_PT_context_material.py:580 model_import.py:45
+#: misc_MATERIAL_PT_context_material.py:581 model_import.py:45
 msgctxt "*"
 msgid "種類に合わせてマテリアルを装飾"
 msgstr "種類に合わせてマテリアルを装飾"
 
-#: mate_import.py:19 misc_MATERIAL_PT_context_material.py:581
+#: mate_import.py:19 misc_MATERIAL_PT_context_material.py:582
 msgctxt "*"
 msgid "テクスチャを探す"
 msgstr "テクスチャを探す"
 
-#: mate_import.py:19 misc_MATERIAL_PT_context_material.py:581
+#: mate_import.py:19 misc_MATERIAL_PT_context_material.py:582
 #: misc_TEXTURE_PT_context_texture.py:114
 msgctxt "*"
 msgid "CM3D2本体のインストールフォルダからtexファイルを探して開きます"
@@ -1510,9 +1527,9 @@ msgstr "上書きされるファイルをバックアップします。"
 
 #. mt:gemini
 #: menu_OBJECT_PT_cm3d2_menu.py:288 menu_OBJECT_PT_cm3d2_menu.py:365
-#: misc_DATA_PT_context_arm.py:340 misc_DATA_PT_context_arm.py:700
-#: misc_DATA_PT_context_arm.py:1104 misc_DATA_PT_context_arm.py:1335
-#: misc_DATA_PT_context_arm.py:1794 misc_OBJECT_PT_transform.py:57
+#: misc_DATA_PT_context_arm.py:728 misc_DATA_PT_context_arm.py:1088
+#: misc_DATA_PT_context_arm.py:1492 misc_DATA_PT_context_arm.py:1723
+#: misc_DATA_PT_context_arm.py:2182 misc_OBJECT_PT_transform.py:57
 #, fuzzy
 msgctxt "*"
 msgid ""
@@ -2109,671 +2126,92 @@ msgctxt "*"
 msgid "prop name"
 msgstr "プロパティ名"
 
-#: misc_DATA_PT_context_arm.py:104
+#: misc_DATA_PT_context_arm.py:99
 msgctxt "Operator"
 msgid "ボーン名をCM3D2用→Blender用に変換"
 msgstr "ボーン名をCM3D2用→Blender用に変換"
 
-#: misc_DATA_PT_context_arm.py:139
+#: misc_DATA_PT_context_arm.py:134
 msgctxt "Operator"
 msgid "ボーン名をBlender用→CM3D2用に変換"
 msgstr "ボーン名をBlender用→CM3D2用に変換"
 
-#: misc_DATA_PT_context_arm.py:174 misc_OBJECT_PT_context_object.py:45
+#: misc_DATA_PT_context_arm.py:169 misc_OBJECT_PT_context_object.py:45
 msgctxt "Operator"
 msgid "ボーン情報をコピー"
 msgstr "ボーン情報をコピー"
 
-#: misc_DATA_PT_context_arm.py:219 misc_OBJECT_PT_context_object.py:88
+#: misc_DATA_PT_context_arm.py:214 misc_OBJECT_PT_context_object.py:88
 msgctxt "Operator"
 msgid "ボーン情報を貼付け"
 msgstr "ボーン情報を貼付け"
 
-#: misc_DATA_PT_context_arm.py:280 misc_OBJECT_PT_context_object.py:147
+#: misc_DATA_PT_context_arm.py:275 misc_OBJECT_PT_context_object.py:147
 msgctxt "Operator"
 msgid "ボーン情報を削除"
 msgstr "ボーン情報を削除"
 
+#: misc_DATA_PT_context_arm.py:387
+msgctxt "Operator"
+msgid "ボーン情報取り込み"
+msgstr "ボーン情報取り込み"
+
+#: misc_DATA_PT_context_arm.py:672
+msgctxt "Operator"
+msgid "ベースボーン名変更"
+msgstr "ベースボーン名変更"
+
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:336
+#: misc_DATA_PT_context_arm.py:724
 #, fuzzy
 msgctxt "Operator"
 msgid "Add CM3D2 Twist Bones"
 msgstr "CM3D2ツイストボーンを追加"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1331
+#: misc_DATA_PT_context_arm.py:1719
 #, fuzzy
 msgctxt "Operator"
 msgid "Add CM3D2 Body Sliders"
 msgstr "CM3D2ボディスライダーを追加"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1597
+#: misc_DATA_PT_context_arm.py:1985
 #, fuzzy
 msgctxt "*"
 msgid "CM3D2 Sliders"
 msgstr "CM3D2スライダー"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1650
+#: misc_DATA_PT_context_arm.py:2038
 #, fuzzy
 msgctxt "*"
 msgid "Body Sliders"
 msgstr "体型スライダー"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1690
+#: misc_DATA_PT_context_arm.py:2078
 #, fuzzy
 msgctxt "*"
 msgid "Wide Sliders"
 msgstr "ワイドスライダー"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1790 misc_DATA_PT_context_arm.py:72
-#: misc_DATA_PT_context_arm.py:1640
+#: misc_DATA_PT_context_arm.py:2178 misc_DATA_PT_context_arm.py:71
+#: misc_DATA_PT_context_arm.py:2028
 #, fuzzy
 msgctxt "Operator"
 msgid "Cleanup Scale Bones"
 msgstr "スケールボーンをクリーンアップ"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1851
+#: misc_DATA_PT_context_arm.py:2239
 #, fuzzy
 msgctxt "Operator"
 msgid "Save CM3D2 Body Sliders to Menu"
 msgstr "CM3D2体型スライダーをメニューに保存"
 
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:758
-#, fuzzy
-msgctxt "*"
-msgid "Size of face (left to right)"
-msgstr "顔の幅（左右）"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:759
-#, fuzzy
-msgctxt "*"
-msgid "Size of face (up and down)"
-msgstr "顔の長さ（上下）"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:760
-#, fuzzy
-msgctxt "*"
-msgid "Leg length"
-msgstr "脚の長さ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:762
-#, fuzzy
-msgctxt "*"
-msgid "Breast size"
-msgstr "胸のサイズ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:763
-#, fuzzy
-msgctxt "*"
-msgid "Breast sagging level"
-msgstr "胸の垂れ具合"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:764
-#, fuzzy
-msgctxt "*"
-msgid "Position of the nipple"
-msgstr "乳首の位置"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:765
-#, fuzzy
-msgctxt "*"
-msgid "Direction of breast"
-msgstr "胸の向き"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:766 misc_DATA_PT_context_arm.py:804
-#: misc_DATA_PT_context_arm.py:1631 misc_DATA_PT_context_arm.py:1674
-#, fuzzy
-msgctxt "*"
-msgid "Waist"
-msgstr "ウエスト"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:767 misc_DATA_PT_context_arm.py:1675
-#, fuzzy
-msgctxt "*"
-msgid "Belly"
-msgstr "お腹"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:768
-#, fuzzy
-msgctxt "*"
-msgid "Shoulder width"
-msgstr "肩幅"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:769
-#, fuzzy
-msgctxt "*"
-msgid "Size of arms"
-msgstr "腕の太さ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:770
-#, fuzzy
-msgctxt "*"
-msgid "Length of arms"
-msgstr "腕の長さ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:771
-#, fuzzy
-msgctxt "*"
-msgid "Length of neck"
-msgstr "首の長さ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:772 misc_DATA_PT_context_arm.py:805
-#: misc_DATA_PT_context_arm.py:1632 misc_DATA_PT_context_arm.py:1680
-#, fuzzy
-msgctxt "*"
-msgid "Hip"
-msgstr "ヒップ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:773
-#, fuzzy
-msgctxt "*"
-msgid "Leg thickness"
-msgstr "脚の太さ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:774
-#, fuzzy
-msgctxt "*"
-msgid "Leg definition"
-msgstr "脚のメリハリ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:775
-#, fuzzy
-msgctxt "*"
-msgid "munel shapekey value"
-msgstr "munelシェイプキー値"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:776
-#, fuzzy
-msgctxt "*"
-msgid "munes shapekey value"
-msgstr "munesシェイプキー値"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:803 misc_DATA_PT_context_arm.py:1629
-#, fuzzy
-msgctxt "*"
-msgid "Bust"
-msgstr "バスト"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:806 misc_DATA_PT_context_arm.py:1630
-#, fuzzy
-msgctxt "*"
-msgid "Cup"
-msgstr "カップ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1106
-#, fuzzy
-msgctxt "*"
-msgid "This property never has a value"
-msgstr "このプロパティには値がありません"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1108
-#, fuzzy
-msgctxt "*"
-msgid "Enable All"
-msgstr "全て有効化"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1108
-#, fuzzy
-msgctxt "*"
-msgid "Enable all sliders, even ones without a GUI in-game"
-msgstr "ゲーム内GUIにないスライダーも全て有効化します"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1110
-#, fuzzy
-msgctxt "*"
-msgid "Hips Position"
-msgstr "ヒップ位置"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1111
-#, fuzzy
-msgctxt "*"
-msgid "Legs Position"
-msgstr "脚位置"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1112
-#, fuzzy
-msgctxt "*"
-msgid "Thigh Position"
-msgstr "太もも位置"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1113
-#, fuzzy
-msgctxt "*"
-msgid "Rear Thigh Position"
-msgstr "裏太もも位置"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1114
-#, fuzzy
-msgctxt "*"
-msgid "Knee Position"
-msgstr "膝位置"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1115
-#, fuzzy
-msgctxt "*"
-msgid "Skirt Position"
-msgstr "スカート位置"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1116
-#, fuzzy
-msgctxt "*"
-msgid "Lower Abdomen Position"
-msgstr "下腹部位置"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1117
-#, fuzzy
-msgctxt "*"
-msgid "Upper Abdomen Position"
-msgstr "上腹部位置"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1118
-#, fuzzy
-msgctxt "*"
-msgid "Lower Chest Position"
-msgstr "下胸位置"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1119
-#, fuzzy
-msgctxt "*"
-msgid "Upper Chest Position"
-msgstr "上胸位置"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1120
-#, fuzzy
-msgctxt "*"
-msgid "Breasts Position"
-msgstr "胸位置"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1121
-#, fuzzy
-msgctxt "*"
-msgid "Breasts Sub-Position"
-msgstr "胸サブ位置"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1123
-#, fuzzy
-msgctxt "*"
-msgid "Clavicle Position"
-msgstr "鎖骨位置"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1125
-#, fuzzy
-msgctxt "*"
-msgid "Pelvis Scale"
-msgstr "骨盤スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1126
-#, fuzzy
-msgctxt "*"
-msgid "Hips Scale"
-msgstr "腰スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1127
-#, fuzzy
-msgctxt "*"
-msgid "Legs Scale"
-msgstr "脚スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1128
-#, fuzzy
-msgctxt "*"
-msgid "Thigh Scale"
-msgstr "太ももスケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1129
-#, fuzzy
-msgctxt "*"
-msgid "Rear Thigh Scale"
-msgstr "裏太ももスケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1130
-#, fuzzy
-msgctxt "*"
-msgid "Knee Scale"
-msgstr "膝スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1131
-#, fuzzy
-msgctxt "*"
-msgid "Calf Scale"
-msgstr "ふくらはぎスケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1132
-#, fuzzy
-msgctxt "*"
-msgid "Foot Scale"
-msgstr "足スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1133
-#, fuzzy
-msgctxt "*"
-msgid "Skirt Scale"
-msgstr "スカートスケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1134
-#, fuzzy
-msgctxt "*"
-msgid "Lower Abdomen Scale"
-msgstr "下腹部スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1135
-#, fuzzy
-msgctxt "*"
-msgid "Upper Abdomen Scale"
-msgstr "上腹部スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1136
-#, fuzzy
-msgctxt "*"
-msgid "Lower Chest Scale"
-msgstr "下胸部スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1137
-#, fuzzy
-msgctxt "*"
-msgid "Upper Chest Scale"
-msgstr "上胸部スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1138
-#, fuzzy
-msgctxt "*"
-msgid "Upper Torso Scale"
-msgstr "上半身スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1139
-#, fuzzy
-msgctxt "*"
-msgid "Breasts Scale"
-msgstr "胸スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1140
-#, fuzzy
-msgctxt "*"
-msgid "Breasts Sub-Scale"
-msgstr "胸サブスケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1141
-#, fuzzy
-msgctxt "*"
-msgid "Neck Scale"
-msgstr "首スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1142
-#, fuzzy
-msgctxt "*"
-msgid "Clavicle Scale"
-msgstr "鎖骨スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1143
-#, fuzzy
-msgctxt "*"
-msgid "Shoulders Scale"
-msgstr "肩スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1144
-#, fuzzy
-msgctxt "*"
-msgid "Upper Arm Scale"
-msgstr "上腕スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1145
-#, fuzzy
-msgctxt "*"
-msgid "Forearm Scale"
-msgstr "前腕スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1146
-#, fuzzy
-msgctxt "*"
-msgid "Hand Scale"
-msgstr "手スケール"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1337
-#, fuzzy
-msgctxt "*"
-msgid "Fix Thigh"
-msgstr "太ももを修正"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1337
-#, fuzzy
-msgctxt "*"
-msgid "Fix twist bone values for the thighs in motor-cycle pose"
-msgstr "バイクポーズ時の太もものツイストボーン値を修正します"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1338
-#, fuzzy
-msgctxt "*"
-msgid "Drive Shape Keys"
-msgstr "シェイプキーを連動"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1338
-#, fuzzy
-msgctxt "*"
-msgid "Connect sliders to mesh children's shape keys"
-msgstr "スライダーをメッシュの子のシェイプキーに接続します"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1796
-#, fuzzy
-msgctxt "*"
-msgid "Keep bones with children"
-msgstr "子を持つボーンを保持"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1796
-#, fuzzy
-msgctxt "*"
-msgid ""
-"Will not remove scale bones that have children (for custom scale bones)"
-msgstr "子を持つスケールボーンは削除しません（カスタムスケールボーン用）"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1855
-#, fuzzy
-msgctxt "*"
-msgid "Overwrite Existing"
-msgstr "既存を上書き"
-
-#: misc_DATA_PT_context_arm.py:36
-msgctxt "*"
-msgid "ボーン情報"
-msgstr "ボーン情報"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:70
-#, fuzzy
-msgctxt "*"
-msgid "Armature Operators"
-msgstr "アーマチュア操作"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:71
-#, fuzzy
-msgctxt "Operator"
-msgid "Connect Twist Bones"
-msgstr "ツイストボーンを接続"
-
-#: misc_DATA_PT_context_arm.py:298 misc_DATA_PT_context_arm.py:281
-#: misc_OBJECT_PT_context_object.py:163 misc_OBJECT_PT_context_object.py:148
-msgctxt "*"
-msgid "カスタムプロパティのボーン情報を全て削除します"
-msgstr "カスタムプロパティのボーン情報を全て削除します"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1636
-#, fuzzy
-msgctxt "Operator"
-msgid "Connect Sliders"
-msgstr "スライダーを接続"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1666
-#, fuzzy
-msgctxt "*"
-msgid "Face Width"
-msgstr "顔幅"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1667
-#, fuzzy
-msgctxt "*"
-msgid "Face Height"
-msgstr "顔高さ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1668
-#, fuzzy
-msgctxt "*"
-msgid "Leg Length"
-msgstr "脚長"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1670
-#, fuzzy
-msgctxt "*"
-msgid "Breast Size"
-msgstr "胸サイズ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1671
-#, fuzzy
-msgctxt "*"
-msgid "Breast Sag"
-msgstr "胸垂れ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1672
-#, fuzzy
-msgctxt "*"
-msgid "Breast Pitch"
-msgstr "胸の傾き"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1673
-#, fuzzy
-msgctxt "*"
-msgid "Breast Yaw"
-msgstr "胸の向き"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1676 misc_DATA_PT_context_arm.py:1779
-#, fuzzy
-msgctxt "*"
-msgid "Shoulders"
-msgstr "肩"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1677
-#, fuzzy
-msgctxt "*"
-msgid "Arm Size"
-msgstr "腕の太さ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1678
-#, fuzzy
-msgctxt "*"
-msgid "Arm Length"
-msgstr "腕の長さ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1679
-#, fuzzy
-msgctxt "*"
-msgid "Neck Length"
-msgstr "首の長さ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1681
-#, fuzzy
-msgctxt "*"
-msgid "Leg Fat"
-msgstr "脚の太さ"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1682
-#, fuzzy
-msgctxt "*"
-msgid "Leg Meat"
-msgstr "脚の肉付き"
-
-#. mt:gemini
-#: misc_DATA_PT_context_arm.py:1706
-#, fuzzy
-msgctxt "*"
-msgid "Enable All Sliders"
-msgstr "全スライダーを有効化"
-
-#: misc_DATA_PT_context_arm.py:31 misc_DATA_PT_context_arm.py:77
-#: misc_DATA_PT_context_arm.py:58 misc_IMAGE_PT_image_properties.py:10
+#: misc_DATA_PT_context_arm.py:30 misc_IMAGE_PT_image_properties.py:10
 #: misc_MATERIAL_PT_context_material.py:45
 msgctxt "*"
 msgid "CM3D2用"
@@ -2781,261 +2219,944 @@ msgstr "CM3D2用"
 
 #: misc_DATA_PT_context_arm.py:62
 msgctxt "*"
+msgid "ボーン情報更新"
+msgstr "ボーン情報更新"
+
+#: misc_DATA_PT_context_arm.py:391
+msgctxt "*"
+msgid "ベースボーン"
+msgstr "ベースボーン"
+
+#: misc_DATA_PT_context_arm.py:397
+msgctxt "*"
+msgid "差分のみ表示"
+msgstr "差分のみ表示"
+
+#: misc_DATA_PT_context_arm.py:397
+msgctxt "*"
+msgid "差分のあるボーンのみ表示します"
+msgstr "差分のあるボーンのみ表示します"
+
+#: misc_DATA_PT_context_arm.py:398
+msgctxt "*"
+msgid "差分しきい値"
+msgstr "差分しきい値"
+
+#: misc_DATA_PT_context_arm.py:398
+msgctxt "*"
+msgid "この値を超える要素を自動でチェックします"
+msgstr "この値を超える要素を自動でチェックします"
+
+#: misc_DATA_PT_context_arm.py:399
+msgctxt "*"
+msgid "差分しきい値の詳細"
+msgstr "差分しきい値の詳細"
+
+#: misc_DATA_PT_context_arm.py:405
+msgctxt "*"
+msgid "差分しきい値のプリセット値を選択します"
+msgstr "差分しきい値のプリセット値を選択します"
+
+#: misc_DATA_PT_context_arm.py:676
+msgctxt "*"
+msgid "ベースボーン名"
+msgstr "ベースボーン名"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1146
+#, fuzzy
+msgctxt "*"
+msgid "Size of face (left to right)"
+msgstr "顔の幅（左右）"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1147
+#, fuzzy
+msgctxt "*"
+msgid "Size of face (up and down)"
+msgstr "顔の長さ（上下）"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1148
+#, fuzzy
+msgctxt "*"
+msgid "Leg length"
+msgstr "脚の長さ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1150
+#, fuzzy
+msgctxt "*"
+msgid "Breast size"
+msgstr "胸のサイズ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1151
+#, fuzzy
+msgctxt "*"
+msgid "Breast sagging level"
+msgstr "胸の垂れ具合"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1152
+#, fuzzy
+msgctxt "*"
+msgid "Position of the nipple"
+msgstr "乳首の位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1153
+#, fuzzy
+msgctxt "*"
+msgid "Direction of breast"
+msgstr "胸の向き"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1154 misc_DATA_PT_context_arm.py:1192
+#: misc_DATA_PT_context_arm.py:2019 misc_DATA_PT_context_arm.py:2062
+#, fuzzy
+msgctxt "*"
+msgid "Waist"
+msgstr "ウエスト"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1155 misc_DATA_PT_context_arm.py:2063
+#, fuzzy
+msgctxt "*"
+msgid "Belly"
+msgstr "お腹"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1156
+#, fuzzy
+msgctxt "*"
+msgid "Shoulder width"
+msgstr "肩幅"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1157
+#, fuzzy
+msgctxt "*"
+msgid "Size of arms"
+msgstr "腕の太さ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1158
+#, fuzzy
+msgctxt "*"
+msgid "Length of arms"
+msgstr "腕の長さ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1159
+#, fuzzy
+msgctxt "*"
+msgid "Length of neck"
+msgstr "首の長さ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1160 misc_DATA_PT_context_arm.py:1193
+#: misc_DATA_PT_context_arm.py:2020 misc_DATA_PT_context_arm.py:2068
+#, fuzzy
+msgctxt "*"
+msgid "Hip"
+msgstr "ヒップ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1161
+#, fuzzy
+msgctxt "*"
+msgid "Leg thickness"
+msgstr "脚の太さ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1162
+#, fuzzy
+msgctxt "*"
+msgid "Leg definition"
+msgstr "脚のメリハリ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1163
+#, fuzzy
+msgctxt "*"
+msgid "munel shapekey value"
+msgstr "munelシェイプキー値"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1164
+#, fuzzy
+msgctxt "*"
+msgid "munes shapekey value"
+msgstr "munesシェイプキー値"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1191 misc_DATA_PT_context_arm.py:2017
+#, fuzzy
+msgctxt "*"
+msgid "Bust"
+msgstr "バスト"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1194 misc_DATA_PT_context_arm.py:2018
+#, fuzzy
+msgctxt "*"
+msgid "Cup"
+msgstr "カップ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1494
+#, fuzzy
+msgctxt "*"
+msgid "This property never has a value"
+msgstr "このプロパティには値がありません"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1496
+#, fuzzy
+msgctxt "*"
+msgid "Enable All"
+msgstr "全て有効化"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1496
+#, fuzzy
+msgctxt "*"
+msgid "Enable all sliders, even ones without a GUI in-game"
+msgstr "ゲーム内GUIにないスライダーも全て有効化します"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1498
+#, fuzzy
+msgctxt "*"
+msgid "Hips Position"
+msgstr "ヒップ位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1499
+#, fuzzy
+msgctxt "*"
+msgid "Legs Position"
+msgstr "脚位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1500
+#, fuzzy
+msgctxt "*"
+msgid "Thigh Position"
+msgstr "太もも位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1501
+#, fuzzy
+msgctxt "*"
+msgid "Rear Thigh Position"
+msgstr "裏太もも位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1502
+#, fuzzy
+msgctxt "*"
+msgid "Knee Position"
+msgstr "膝位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1503
+#, fuzzy
+msgctxt "*"
+msgid "Skirt Position"
+msgstr "スカート位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1504
+#, fuzzy
+msgctxt "*"
+msgid "Lower Abdomen Position"
+msgstr "下腹部位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1505
+#, fuzzy
+msgctxt "*"
+msgid "Upper Abdomen Position"
+msgstr "上腹部位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1506
+#, fuzzy
+msgctxt "*"
+msgid "Lower Chest Position"
+msgstr "下胸位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1507
+#, fuzzy
+msgctxt "*"
+msgid "Upper Chest Position"
+msgstr "上胸位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1508
+#, fuzzy
+msgctxt "*"
+msgid "Breasts Position"
+msgstr "胸位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1509
+#, fuzzy
+msgctxt "*"
+msgid "Breasts Sub-Position"
+msgstr "胸サブ位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1511
+#, fuzzy
+msgctxt "*"
+msgid "Clavicle Position"
+msgstr "鎖骨位置"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1513
+#, fuzzy
+msgctxt "*"
+msgid "Pelvis Scale"
+msgstr "骨盤スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1514
+#, fuzzy
+msgctxt "*"
+msgid "Hips Scale"
+msgstr "腰スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1515
+#, fuzzy
+msgctxt "*"
+msgid "Legs Scale"
+msgstr "脚スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1516
+#, fuzzy
+msgctxt "*"
+msgid "Thigh Scale"
+msgstr "太ももスケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1517
+#, fuzzy
+msgctxt "*"
+msgid "Rear Thigh Scale"
+msgstr "裏太ももスケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1518
+#, fuzzy
+msgctxt "*"
+msgid "Knee Scale"
+msgstr "膝スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1519
+#, fuzzy
+msgctxt "*"
+msgid "Calf Scale"
+msgstr "ふくらはぎスケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1520
+#, fuzzy
+msgctxt "*"
+msgid "Foot Scale"
+msgstr "足スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1521
+#, fuzzy
+msgctxt "*"
+msgid "Skirt Scale"
+msgstr "スカートスケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1522
+#, fuzzy
+msgctxt "*"
+msgid "Lower Abdomen Scale"
+msgstr "下腹部スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1523
+#, fuzzy
+msgctxt "*"
+msgid "Upper Abdomen Scale"
+msgstr "上腹部スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1524
+#, fuzzy
+msgctxt "*"
+msgid "Lower Chest Scale"
+msgstr "下胸部スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1525
+#, fuzzy
+msgctxt "*"
+msgid "Upper Chest Scale"
+msgstr "上胸部スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1526
+#, fuzzy
+msgctxt "*"
+msgid "Upper Torso Scale"
+msgstr "上半身スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1527
+#, fuzzy
+msgctxt "*"
+msgid "Breasts Scale"
+msgstr "胸スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1528
+#, fuzzy
+msgctxt "*"
+msgid "Breasts Sub-Scale"
+msgstr "胸サブスケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1529
+#, fuzzy
+msgctxt "*"
+msgid "Neck Scale"
+msgstr "首スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1530
+#, fuzzy
+msgctxt "*"
+msgid "Clavicle Scale"
+msgstr "鎖骨スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1531
+#, fuzzy
+msgctxt "*"
+msgid "Shoulders Scale"
+msgstr "肩スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1532
+#, fuzzy
+msgctxt "*"
+msgid "Upper Arm Scale"
+msgstr "上腕スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1533
+#, fuzzy
+msgctxt "*"
+msgid "Forearm Scale"
+msgstr "前腕スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1534
+#, fuzzy
+msgctxt "*"
+msgid "Hand Scale"
+msgstr "手スケール"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1725
+#, fuzzy
+msgctxt "*"
+msgid "Fix Thigh"
+msgstr "太ももを修正"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1725
+#, fuzzy
+msgctxt "*"
+msgid "Fix twist bone values for the thighs in motor-cycle pose"
+msgstr "バイクポーズ時の太もものツイストボーン値を修正します"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1726
+#, fuzzy
+msgctxt "*"
+msgid "Drive Shape Keys"
+msgstr "シェイプキーを連動"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:1726
+#, fuzzy
+msgctxt "*"
+msgid "Connect sliders to mesh children's shape keys"
+msgstr "スライダーをメッシュの子のシェイプキーに接続します"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2184
+#, fuzzy
+msgctxt "*"
+msgid "Keep bones with children"
+msgstr "子を持つボーンを保持"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2184
+#, fuzzy
+msgctxt "*"
+msgid ""
+"Will not remove scale bones that have children (for custom scale bones)"
+msgstr "子を持つスケールボーンは削除しません（カスタムスケールボーン用）"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2243
+#, fuzzy
+msgctxt "*"
+msgid "Overwrite Existing"
+msgstr "既存を上書き"
+
+#: misc_DATA_PT_context_arm.py:34
+msgctxt "*"
+msgid "ボーン情報"
+msgstr "ボーン情報"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:69
+#, fuzzy
+msgctxt "*"
+msgid "Armature Operators"
+msgstr "アーマチュア操作"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:70
+#, fuzzy
+msgctxt "Operator"
+msgid "Connect Twist Bones"
+msgstr "ツイストボーンを接続"
+
+#: misc_DATA_PT_context_arm.py:293 misc_DATA_PT_context_arm.py:276
+#: misc_OBJECT_PT_context_object.py:163 misc_OBJECT_PT_context_object.py:148
+msgctxt "*"
+msgid "カスタムプロパティのボーン情報を全て削除します"
+msgstr "カスタムプロパティのボーン情報を全て削除します"
+
+#: misc_DATA_PT_context_arm.py:492
+msgctxt "*"
+msgid "更新差分確認テーブル (チェックを入れた要素のみ更新)"
+msgstr "更新差分確認テーブル (チェックを入れた要素のみ更新)"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2024
+#, fuzzy
+msgctxt "Operator"
+msgid "Connect Sliders"
+msgstr "スライダーを接続"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2054
+#, fuzzy
+msgctxt "*"
+msgid "Face Width"
+msgstr "顔幅"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2055
+#, fuzzy
+msgctxt "*"
+msgid "Face Height"
+msgstr "顔高さ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2056
+#, fuzzy
+msgctxt "*"
+msgid "Leg Length"
+msgstr "脚長"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2058
+#, fuzzy
+msgctxt "*"
+msgid "Breast Size"
+msgstr "胸サイズ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2059
+#, fuzzy
+msgctxt "*"
+msgid "Breast Sag"
+msgstr "胸垂れ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2060
+#, fuzzy
+msgctxt "*"
+msgid "Breast Pitch"
+msgstr "胸の傾き"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2061
+#, fuzzy
+msgctxt "*"
+msgid "Breast Yaw"
+msgstr "胸の向き"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2064 misc_DATA_PT_context_arm.py:2167
+#, fuzzy
+msgctxt "*"
+msgid "Shoulders"
+msgstr "肩"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2065
+#, fuzzy
+msgctxt "*"
+msgid "Arm Size"
+msgstr "腕の太さ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2066
+#, fuzzy
+msgctxt "*"
+msgid "Arm Length"
+msgstr "腕の長さ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2067
+#, fuzzy
+msgctxt "*"
+msgid "Neck Length"
+msgstr "首の長さ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2069
+#, fuzzy
+msgctxt "*"
+msgid "Leg Fat"
+msgstr "脚の太さ"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2070
+#, fuzzy
+msgctxt "*"
+msgid "Leg Meat"
+msgstr "脚の肉付き"
+
+#. mt:gemini
+#: misc_DATA_PT_context_arm.py:2094
+#, fuzzy
+msgctxt "*"
+msgid "Enable All Sliders"
+msgstr "全スライダーを有効化"
+
+#: misc_DATA_PT_context_arm.py:55
+msgctxt "*"
 msgid "ボーン名変換"
 msgstr "ボーン名変換"
 
-#: misc_DATA_PT_context_arm.py:64 misc_DATA_PT_vertex_groups.py:24
+#: misc_DATA_PT_context_arm.py:57 misc_DATA_PT_vertex_groups.py:24
 msgctxt "Operator"
 msgid "CM3D2 → Blender"
 msgstr "CM3D2→Blender"
 
-#: misc_DATA_PT_context_arm.py:65 misc_DATA_PT_vertex_groups.py:25
+#: misc_DATA_PT_context_arm.py:58 misc_DATA_PT_vertex_groups.py:25
 msgctxt "Operator"
 msgid "Blender → CM3D2"
 msgstr "Blender → CM3D2"
 
+#: misc_DATA_PT_context_arm.py:480
+msgctxt "*"
+msgid "差分しきい値プリセット"
+msgstr "差分しきい値プリセット"
+
+#: misc_DATA_PT_context_arm.py:483
+msgctxt "*"
+msgid "プリセット値"
+msgstr "プリセット値"
+
+#: misc_DATA_PT_context_arm.py:517
+msgctxt "*"
+msgid "差分はありません"
+msgstr "差分はありません"
+
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1873
+#: misc_DATA_PT_context_arm.py:2261
 #, fuzzy
 msgctxt "*"
 msgid "Any existing data will be overwritten"
 msgstr "既存のデータは上書きされます"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1895 misc_DATA_PT_context_arm.py:1903
+#: misc_DATA_PT_context_arm.py:2283 misc_DATA_PT_context_arm.py:2291
 #, fuzzy
 msgctxt "*"
 msgid "Generated in blender using body sliders"
 msgstr "Blenderのボディスライダーで生成"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1893
+#: misc_DATA_PT_context_arm.py:2281
 #, fuzzy
 msgctxt "*"
 msgid "Body"
 msgstr "体"
 
-#: misc_DATA_PT_context_arm.py:105
+#: misc_DATA_PT_context_arm.py:100
 msgctxt "*"
 msgid "CM3D2で使われてるボーン名をBlenderで左右対称編集できるように変換します"
 msgstr "CM3D2で使われてるボーン名をBlenderで左右対称編集できるように変換します"
 
-#: misc_DATA_PT_context_arm.py:140
+#: misc_DATA_PT_context_arm.py:135
 msgctxt "*"
 msgid "CM3D2で使われてるボーン名に元に戻します"
 msgstr "CM3D2で使われてるボーン名に元に戻します"
 
-#: misc_DATA_PT_context_arm.py:175 misc_OBJECT_PT_context_object.py:46
+#: misc_DATA_PT_context_arm.py:170 misc_OBJECT_PT_context_object.py:46
 msgctxt "*"
 msgid "カスタムプロパティのボーン情報をクリップボードにコピーします"
 msgstr "カスタムプロパティのボーン情報をクリップボードにコピーします"
 
-#: misc_DATA_PT_context_arm.py:220 misc_OBJECT_PT_context_object.py:89
+#: misc_DATA_PT_context_arm.py:215 misc_OBJECT_PT_context_object.py:89
 msgctxt "*"
 msgid "カスタムプロパティのボーン情報をクリップボードから貼付けます"
 msgstr "カスタムプロパティのボーン情報をクリップボードから貼付けます"
 
+#: misc_DATA_PT_context_arm.py:388
+msgctxt "*"
+msgid "アーマチュアを解析してBoneData/LocalBoneDataを更新します"
+msgstr "アーマチュアを解析してBoneData/LocalBoneDataを更新します"
+
+#: misc_DATA_PT_context_arm.py:673
+msgctxt "*"
+msgid "BoneDataとアーマチュアのベースボーン名を変更します"
+msgstr "BoneDataとアーマチュアのベースボーン名を変更します"
+
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:337
+#: misc_DATA_PT_context_arm.py:725
 #, fuzzy
 msgctxt "*"
 msgid "Adds drivers to armature to automatically set twist-bone positions."
 msgstr "アーマチュアにドライバーを追加し、ツイストボーンの位置を自動設定します。"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1332
+#: misc_DATA_PT_context_arm.py:1720
 #, fuzzy
 msgctxt "*"
 msgid "Adds drivers to armature to enable body sliders."
 msgstr "アーマチュアにドライバーを追加し、ボディスライダーを有効にします。"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1791 misc_DATA_PT_context_arm.py:1852
+#: misc_DATA_PT_context_arm.py:2179 misc_DATA_PT_context_arm.py:2240
 #, fuzzy
 msgctxt "*"
 msgid "Remove scale bones from the active armature object"
 msgstr "アクティブなアーマチュアオブジェクトからスケールボーンを削除します"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:81
+#: misc_DATA_PT_context_arm.py:76
 #, fuzzy
 msgctxt "*"
 msgid "Armature State: Primed"
 msgstr "アーマチュア状態: 素体化済み"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:83
+#: misc_DATA_PT_context_arm.py:78
 #, fuzzy
 msgctxt "*"
 msgid "Armature State: Normal"
 msgstr "アーマチュア状態: 通常"
 
+#: misc_DATA_PT_context_arm.py:574
+msgctxt "*"
+msgid "BoneDataを更新しました"
+msgstr "BoneDataを更新しました"
+
+#: misc_DATA_PT_context_arm.py:714
+msgctxt "*"
+msgid "ベースボーン名を変更しました"
+msgstr "ベースボーン名を変更しました"
+
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1761
+#: misc_DATA_PT_context_arm.py:2149
 #, fuzzy
 msgctxt "*"
 msgid "Pelvis"
 msgstr "骨盤"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1762
+#: misc_DATA_PT_context_arm.py:2150
 #, fuzzy
 msgctxt "*"
 msgid "Hips"
 msgstr "ヒップ"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1763
+#: misc_DATA_PT_context_arm.py:2151
 #, fuzzy
 msgctxt "*"
 msgid "Legs"
 msgstr "脚"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1764
+#: misc_DATA_PT_context_arm.py:2152
 #, fuzzy
 msgctxt "*"
 msgid "Thigh"
 msgstr "太もも"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1765
+#: misc_DATA_PT_context_arm.py:2153
 #, fuzzy
 msgctxt "*"
 msgid "Rear Thigh"
 msgstr "太もも裏"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1766
+#: misc_DATA_PT_context_arm.py:2154
 #, fuzzy
 msgctxt "*"
 msgid "Knee"
 msgstr "膝"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1767
+#: misc_DATA_PT_context_arm.py:2155
 #, fuzzy
 msgctxt "*"
 msgid "Calf"
 msgstr "ふくらはぎ"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1768
+#: misc_DATA_PT_context_arm.py:2156
 #, fuzzy
 msgctxt "*"
 msgid "Foot"
 msgstr "足"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1769
+#: misc_DATA_PT_context_arm.py:2157
 #, fuzzy
 msgctxt "*"
 msgid "Skirt"
 msgstr "スカート"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1770
+#: misc_DATA_PT_context_arm.py:2158
 #, fuzzy
 msgctxt "*"
 msgid "Lower Abdomen"
 msgstr "下腹部"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1771
+#: misc_DATA_PT_context_arm.py:2159
 #, fuzzy
 msgctxt "*"
 msgid "Upper Abdomen"
 msgstr "上腹部"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1772
+#: misc_DATA_PT_context_arm.py:2160
 #, fuzzy
 msgctxt "*"
 msgid "Lower Chest"
 msgstr "下胸部"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1773
+#: misc_DATA_PT_context_arm.py:2161
 #, fuzzy
 msgctxt "*"
 msgid "Upper Chest"
 msgstr "上胸部"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1774
+#: misc_DATA_PT_context_arm.py:2162
 #, fuzzy
 msgctxt "*"
 msgid "Upper Torso"
 msgstr "上半身"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1775
+#: misc_DATA_PT_context_arm.py:2163
 #, fuzzy
 msgctxt "*"
 msgid "Breasts"
 msgstr "胸"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1776
+#: misc_DATA_PT_context_arm.py:2164
 #, fuzzy
 msgctxt "*"
 msgid "Breasts Sub"
 msgstr "胸サブ"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1777
+#: misc_DATA_PT_context_arm.py:2165
 #, fuzzy
 msgctxt "*"
 msgid "Neck"
 msgstr "首"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1778
+#: misc_DATA_PT_context_arm.py:2166
 #, fuzzy
 msgctxt "*"
 msgid "Clavicle"
 msgstr "鎖骨"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1780
+#: misc_DATA_PT_context_arm.py:2168
 #, fuzzy
 msgctxt "*"
 msgid "Upper Arm"
 msgstr "上腕"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1781
+#: misc_DATA_PT_context_arm.py:2169
 #, fuzzy
 msgctxt "*"
 msgid "Forearm"
 msgstr "前腕"
 
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1782
+#: misc_DATA_PT_context_arm.py:2170
 #, fuzzy
 msgctxt "*"
 msgid "Hand"
 msgstr "手"
 
-#: misc_DATA_PT_context_arm.py:212 misc_OBJECT_PT_context_object.py:81
+#: misc_DATA_PT_context_arm.py:207 misc_OBJECT_PT_context_object.py:81
 #: misc_TEXT_HT_header.py:95
 msgctxt "*"
 msgid "ボーン情報をクリップボードにコピーしました"
 msgstr "ボーン情報をクリップボードにコピーしました"
 
-#: misc_DATA_PT_context_arm.py:273 misc_OBJECT_PT_context_object.py:140
+#: misc_DATA_PT_context_arm.py:268 misc_OBJECT_PT_context_object.py:140
 #: misc_TEXT_HT_header.py:139
 msgctxt "*"
 msgid "ボーン情報をクリップボードから貼付けました"
 msgstr "ボーン情報をクリップボードから貼付けました"
 
-#: misc_DATA_PT_context_arm.py:322 misc_OBJECT_PT_context_object.py:187
+#: misc_DATA_PT_context_arm.py:317 misc_OBJECT_PT_context_object.py:187
 msgctxt "*"
 msgid "ボーン情報を削除しました"
 msgstr "ボーン情報を削除しました"
 
+#: misc_DATA_PT_context_arm.py:523
+msgctxt "*"
+msgid "差分がないので更新しませんでした"
+msgstr "差分がないので更新しませんでした"
+
+#: misc_DATA_PT_context_arm.py:532
+msgctxt "*"
+msgid "更新対象がないので更新しませんでした"
+msgstr "更新対象がないので更新しませんでした"
+
 #. mt:gemini
-#: misc_DATA_PT_context_arm.py:1923
+#: misc_DATA_PT_context_arm.py:2311
 #, fuzzy
 msgctxt "*"
 msgid ""
@@ -3043,21 +3164,30 @@ msgid ""
 " CM3D2 Menu File"
 msgstr "プロパティがメニューファイルデータに正常に保存されました (プロパティ > オブジェクトタブ > CM3D2メニューファイル)"
 
-#: misc_DATA_PT_context_arm.py:130 misc_DATA_PT_context_arm.py:165
+#: misc_DATA_PT_context_arm.py:125 misc_DATA_PT_context_arm.py:160
 #: misc_DATA_PT_vertex_groups.py:74 misc_DATA_PT_vertex_groups.py:125
 msgctxt "*"
 msgid "変換できる名前が見つかりませんでした"
 msgstr "変換できる名前が見つかりませんでした"
 
-#: misc_DATA_PT_context_arm.py:132
+#: misc_DATA_PT_context_arm.py:127
 msgctxt "*"
 msgid "ボーン名をBlender用に変換しました"
 msgstr "ボーン名をBlender用に変換しました"
 
-#: misc_DATA_PT_context_arm.py:167
+#: misc_DATA_PT_context_arm.py:162
 msgctxt "*"
 msgid "ボーン名をCM3D2用に戻しました"
 msgstr "ボーン名をCM3D2用に戻しました"
+
+#: misc_DATA_PT_context_arm.py:486
+msgctxt "*"
+msgid ""
+"ボーン再計算では浮動小数ドリフトによる誤差が生じ、回転などは経路が多いほど末端ボーンに誤差が蓄積します。これは誤差と見做す範囲を調整して更新不要なものを見定めるしきい値です。\n"
+"0.0 にすると全て更新しますが実用上はそれでも問題ありません。この取り込み操作を何度も行う想定なら、誤差が拡大しないよう最小限の更新にしておくとよいです。おすすめは 0.0001 です。"
+msgstr ""
+"ボーン再計算では浮動小数ドリフトによる誤差が生じ、回転などは経路が多いほど末端ボーンに誤差が蓄積します。これは誤差と見做す範囲を調整して更新不要なものを見定めるしきい値です。\n"
+"0.0 にすると全て更新しますが実用上はそれでも問題ありません。この取り込み操作を何度も行う想定なら、誤差が拡大しないよう最小限の更新にしておくとよいです。おすすめは 0.0001 です。"
 
 #: misc_DATA_PT_modifiers.py:152
 msgctxt "Operator"
@@ -3101,7 +3231,7 @@ msgstr "選択した表示フィルタを反転します"
 
 #. mt:gemini
 #: misc_DATA_PT_modifiers.py:156 misc_VIEW3D_MT_pose_apply.py:135
-#: model_export.py:49
+#: model_export.py:51
 #, fuzzy
 msgctxt "*"
 msgid "Preserve Shape Key Values"
@@ -3141,7 +3271,7 @@ msgid "適用するモディファイア"
 msgstr "適用するモディファイア"
 
 #. mt:gemini
-#: misc_DATA_PT_modifiers.py:223 misc_MESH_MT_shape_key_specials.py:942
+#: misc_DATA_PT_modifiers.py:223 misc_MESH_MT_shape_key_specials.py:793
 #, fuzzy
 msgctxt "*"
 msgid "Show filters"
@@ -3228,7 +3358,7 @@ msgid "頂点グループ名をCM3D2用に戻しました"
 msgstr "頂点グループ名をCM3D2用に戻しました"
 
 #. mt:gemini
-#: misc_DOPESHEET_MT_editor_menus.py:25 misc_DOPESHEET_MT_editor_menus.py:238
+#: misc_DOPESHEET_MT_editor_menus.py:25 misc_DOPESHEET_MT_editor_menus.py:226
 #, fuzzy
 msgctxt "Operator"
 msgid "Convert to CM3D2 Interpolation"
@@ -3242,35 +3372,35 @@ msgid "Keep Reports"
 msgstr "レポートを保持"
 
 #. mt:gemini
-#: misc_DOPESHEET_MT_editor_menus.py:225
+#: misc_DOPESHEET_MT_editor_menus.py:213
 #, python-format, fuzzy
 msgctxt "*"
 msgid "'{interpolation}' interpolation not convertable"
 msgstr "'{interpolation}' 補間は変換できません"
 
 #. mt:gemini
-#: misc_DOPESHEET_MT_editor_menus.py:26 misc_DOPESHEET_MT_editor_menus.py:239
+#: misc_DOPESHEET_MT_editor_menus.py:26 misc_DOPESHEET_MT_editor_menus.py:227
 #, fuzzy
 msgctxt "*"
 msgid "Convert keyframes to be compatible with CM3D2 Interpolation"
 msgstr "CM3D2補間と互換性のあるキーフレームに変換します"
 
 #. mt:gemini
-#: misc_DOPESHEET_MT_editor_menus.py:244
+#: misc_DOPESHEET_MT_editor_menus.py:232
 #, fuzzy
 msgctxt "*"
 msgid "FCurves"
 msgstr "Fカーブ"
 
 #. mt:gemini
-#: misc_DOPESHEET_MT_editor_menus.py:245
+#: misc_DOPESHEET_MT_editor_menus.py:233
 #, fuzzy
 msgctxt "*"
 msgid "KeyFrames"
 msgstr "キーフレーム"
 
 #. mt:gemini
-#: misc_DOPESHEET_MT_editor_menus.py:226
+#: misc_DOPESHEET_MT_editor_menus.py:214
 #, python-format, fuzzy
 msgctxt "*"
 msgid ""
@@ -3457,182 +3587,182 @@ msgctxt "*"
 msgid "オブジェクトモードで実行してください"
 msgstr "オブジェクトモードで実行してください"
 
-#: misc_INFO_MT_help.py:57
+#: misc_INFO_MT_help.py:59
 msgctxt "Operator"
 msgid "CM3D2 Converterの最新版チェック"
 msgstr "CM3D2 Converterの最新版チェック"
 
-#: misc_INFO_MT_help.py:91
+#: misc_INFO_MT_help.py:93
 msgctxt "Operator"
 msgid "CM3D2 Converterのリリース履歴"
 msgstr "CM3D2 Converterのリリース履歴"
 
-#: misc_INFO_MT_help.py:103
+#: misc_INFO_MT_help.py:105
 msgctxt "*"
 msgid "CM3D2 Converterのリリース履歴"
 msgstr "CM3D2 Converterのリリース履歴"
 
-#: misc_INFO_MT_help.py:120
+#: misc_INFO_MT_help.py:122
 msgctxt "Operator"
 msgid "CM3D2 Converterの設定画面を開く"
 msgstr "CM3D2 Converterの設定画面を開く"
 
-#: misc_INFO_MT_help.py:138
+#: misc_INFO_MT_help.py:140
 msgctxt "Operator"
 msgid "CM3D2 Converterのエクステンション管理を表示"
 msgstr "CM3D2 Converterのエクステンション管理を表示"
 
-#: misc_INFO_MT_help.py:107
+#: misc_INFO_MT_help.py:109
 msgctxt "*"
 msgid "リリース情報取得エラー"
 msgstr "リリース情報取得エラー"
 
-#: misc_INFO_MT_help.py:77
+#: misc_INFO_MT_help.py:79
 #, python-format
 msgctxt "*"
 msgid "更新があります: {} → {}"
 msgstr "更新があります: {} → {}"
 
-#: misc_INFO_MT_help.py:79
+#: misc_INFO_MT_help.py:81
 #, python-format
 msgctxt "*"
 msgid "最新版がインストールされています: {}"
 msgstr "最新版がインストールされています: {}"
 
-#: misc_INFO_MT_help.py:121
+#: misc_INFO_MT_help.py:123
 msgctxt "*"
 msgid "CM3D2 Converterアドオンの設定画面を表示します"
 msgstr "CM3D2 Converterアドオンの設定画面を表示します"
 
-#: misc_INFO_MT_help.py:139
+#: misc_INFO_MT_help.py:141
 msgctxt "*"
 msgid "CM3D2 Converterエクステンションの管理画面を表示します"
 msgstr "CM3D2 Converterエクステンションの管理画面を表示します"
 
-#: misc_INFO_MT_help.py:130 misc_INFO_MT_help.py:150
+#: misc_INFO_MT_help.py:132 misc_INFO_MT_help.py:152
 msgctxt "*"
 msgid "表示できるエリアが見つかりませんでした"
 msgstr "表示できるエリアが見つかりませんでした"
 
-#: misc_MATERIAL_PT_context_material.py:497
+#: misc_MATERIAL_PT_context_material.py:498
 msgctxt "Operator"
 msgid "CM3D2用マテリアルを新規作成"
 msgstr "CM3D2用マテリアルを新規作成"
 
-#: misc_MATERIAL_PT_context_material.py:507
+#: misc_MATERIAL_PT_context_material.py:508
 msgctxt "Operator"
 msgid "COM3D2用マテリアルを新規作成"
 msgstr "COM3D2用マテリアルを新規作成"
 
-#: misc_MATERIAL_PT_context_material.py:517
+#: misc_MATERIAL_PT_context_material.py:518
 msgctxt "Operator"
 msgid "CM3D2/COM3D2用シェーダーを変更"
 msgstr "CM3D2/COM3D2用シェーダーを変更"
 
-#: misc_MATERIAL_PT_context_material.py:576
+#: misc_MATERIAL_PT_context_material.py:577
 msgctxt "Operator"
 msgid "クリップボードからマテリアルを貼付け"
 msgstr "クリップボードからマテリアルを貼付け"
 
-#: misc_MATERIAL_PT_context_material.py:650
+#: misc_MATERIAL_PT_context_material.py:651
 msgctxt "Operator"
 msgid "マテリアルをクリップボードにコピー"
 msgstr "マテリアルをクリップボードにコピー"
 
-#: misc_MATERIAL_PT_context_material.py:721
+#: misc_MATERIAL_PT_context_material.py:722
 msgctxt "Operator"
 msgid "全マテリアルを再構築"
 msgstr "全マテリアルを再構築"
 
-#: misc_MATERIAL_PT_context_material.py:748
+#: misc_MATERIAL_PT_context_material.py:749
 msgctxt "Operator"
 msgid "マテリアルを再構築"
 msgstr "マテリアルを再構築"
 
-#: misc_MATERIAL_PT_context_material.py:771
+#: misc_MATERIAL_PT_context_material.py:772
 msgctxt "Operator"
 msgid "マテリアルを装飾"
 msgstr "マテリアルを装飾"
 
-#: misc_MATERIAL_PT_context_material.py:801
+#: misc_MATERIAL_PT_context_material.py:802
 msgctxt "Operator"
 msgid "このテクスチャを見る"
 msgstr "このテクスチャを見る"
 
-#: misc_MATERIAL_PT_context_material.py:835
+#: misc_MATERIAL_PT_context_material.py:836
 msgctxt "Operator"
 msgid "マテリアルのセットアップ"
 msgstr "マテリアルのセットアップ"
 
-#: misc_MATERIAL_PT_context_material.py:857
+#: misc_MATERIAL_PT_context_material.py:858
 msgctxt "Operator"
 msgid "マテリアルプロパティの詳細情報"
 msgstr "マテリアルプロパティの詳細情報"
 
 #: misc_MATERIAL_PT_context_material.py:174
-#: misc_MATERIAL_PT_context_material.py:523
+#: misc_MATERIAL_PT_context_material.py:524
 msgctxt "*"
 msgid "存在するノードはパラメータそのままにする"
 msgstr "存在するノードはパラメータそのままにする"
 
-#: misc_MATERIAL_PT_context_material.py:501
-#: misc_MATERIAL_PT_context_material.py:511
-#: misc_MATERIAL_PT_context_material.py:521
+#: misc_MATERIAL_PT_context_material.py:502
+#: misc_MATERIAL_PT_context_material.py:512
+#: misc_MATERIAL_PT_context_material.py:522
 msgctxt "*"
 msgid "種類"
 msgstr "種類"
 
-#: misc_MATERIAL_PT_context_material.py:522
+#: misc_MATERIAL_PT_context_material.py:523
 msgctxt "*"
 msgid "不使用ノードを削除"
 msgstr "不使用ノードを削除"
 
-#: misc_MATERIAL_PT_context_material.py:522
+#: misc_MATERIAL_PT_context_material.py:523
 msgctxt "*"
 msgid "変更前のシェーダーで使用していたノードのうち、変更後のシェーダーで使用しないものを削除します"
 msgstr "変更前のシェーダーで使用していたノードのうち、変更後のシェーダーで使用しないものを削除します"
 
-#: misc_MATERIAL_PT_context_material.py:582
+#: misc_MATERIAL_PT_context_material.py:583
 msgctxt "*"
 msgid "マテリアルの新規作成"
 msgstr "マテリアルの新規作成"
 
-#: misc_MATERIAL_PT_context_material.py:583
+#: misc_MATERIAL_PT_context_material.py:584
 msgctxt "*"
 msgid "マテリアル名を上書きする"
 msgstr "マテリアル名を上書きする"
 
-#: misc_MATERIAL_PT_context_material.py:584
+#: misc_MATERIAL_PT_context_material.py:585
 msgctxt "*"
 msgid "上書き設定"
 msgstr "上書き設定"
 
-#: misc_MATERIAL_PT_context_material.py:805
+#: misc_MATERIAL_PT_context_material.py:806
 #: misc_TEXTURE_PT_context_texture.py:174
 #: misc_TEXTURE_PT_context_texture.py:222
 msgctxt "*"
 msgid "テクスチャ名"
 msgstr "テクスチャ名"
 
-#: misc_MATERIAL_PT_context_material.py:888
-#: misc_MATERIAL_PT_context_material.py:973
-#: misc_MATERIAL_PT_context_material.py:1023
+#: misc_MATERIAL_PT_context_material.py:889
+#: misc_MATERIAL_PT_context_material.py:974
+#: misc_MATERIAL_PT_context_material.py:1024
 msgctxt "*"
 msgid "プロパティ タイプ:"
 msgstr "プロパティ タイプ:"
 
-#: misc_MATERIAL_PT_context_material.py:890
+#: misc_MATERIAL_PT_context_material.py:891
 msgctxt "*"
 msgid "テクスチャ"
 msgstr "テクスチャ"
 
-#: misc_MATERIAL_PT_context_material.py:975 misc_RENDER_PT_bake.py:752
+#: misc_MATERIAL_PT_context_material.py:976 misc_RENDER_PT_bake.py:752
 #: misc_TEXTURE_PT_context_texture.py:412
 msgctxt "*"
 msgid "色"
 msgstr "色"
 
-#: misc_MATERIAL_PT_context_material.py:1025
+#: misc_MATERIAL_PT_context_material.py:1026
 #: misc_MATERIAL_PT_context_material.py:139
 #: misc_VIEW3D_PT_tools_weightpaint.py:274
 #: misc_VIEW3D_PT_tools_weightpaint.py:292
@@ -3640,55 +3770,55 @@ msgctxt "*"
 msgid "値"
 msgstr "値"
 
-#: misc_MATERIAL_PT_context_material.py:551
+#: misc_MATERIAL_PT_context_material.py:552
 msgctxt "*"
 msgid "ご注意"
 msgstr "ご注意"
 
-#: misc_MATERIAL_PT_context_material.py:919
+#: misc_MATERIAL_PT_context_material.py:920
 msgctxt "*"
 msgid "実ファイルパス:"
 msgstr "実ファイルパス:"
 
-#: misc_MATERIAL_PT_context_material.py:929
+#: misc_MATERIAL_PT_context_material.py:930
 msgctxt "*"
 msgid "オフセット:"
 msgstr "オフセット:"
-
-#. mt:gemini
-#: misc_MATERIAL_PT_context_material.py:931
-#: misc_MATERIAL_PT_context_material.py:938
-#, fuzzy
-msgctxt "*"
-msgid "x"
-msgstr "X"
 
 #. mt:gemini
 #: misc_MATERIAL_PT_context_material.py:932
 #: misc_MATERIAL_PT_context_material.py:939
 #, fuzzy
 msgctxt "*"
+msgid "x"
+msgstr "X"
+
+#. mt:gemini
+#: misc_MATERIAL_PT_context_material.py:933
+#: misc_MATERIAL_PT_context_material.py:940
+#, fuzzy
+msgctxt "*"
 msgid "y"
 msgstr "Y"
 
-#: misc_MATERIAL_PT_context_material.py:936
+#: misc_MATERIAL_PT_context_material.py:937
 msgctxt "*"
 msgid "スケール:"
 msgstr "スケール:"
 
-#: misc_MATERIAL_PT_context_material.py:960
-#: misc_MATERIAL_PT_context_material.py:1009
-#: misc_MATERIAL_PT_context_material.py:1074
+#: misc_MATERIAL_PT_context_material.py:961
+#: misc_MATERIAL_PT_context_material.py:1010
+#: misc_MATERIAL_PT_context_material.py:1075
 msgctxt "*"
 msgid "解説"
 msgstr "解説"
 
-#: misc_MATERIAL_PT_context_material.py:1000
+#: misc_MATERIAL_PT_context_material.py:1001
 msgctxt "*"
 msgid "色の透明度"
 msgstr "色の透明度"
 
-#: misc_MATERIAL_PT_context_material.py:1067
+#: misc_MATERIAL_PT_context_material.py:1068
 msgctxt "*"
 msgid "正確な値: "
 msgstr "正確な値: "
@@ -3703,23 +3833,23 @@ msgctxt "Operator"
 msgid "クリップボードから"
 msgstr "クリップボードから"
 
-#: misc_MATERIAL_PT_context_material.py:905
+#: misc_MATERIAL_PT_context_material.py:906
 msgctxt "Operator"
 msgid "拡張子を省略"
 msgstr "拡張子を省略"
 
-#: misc_MATERIAL_PT_context_material.py:913
+#: misc_MATERIAL_PT_context_material.py:914
 msgctxt "*"
 msgid "テクスチャパス:"
 msgstr "テクスチャパス:"
 
-#: misc_MATERIAL_PT_context_material.py:946
+#: misc_MATERIAL_PT_context_material.py:947
 #: misc_TEXTURE_PT_context_texture.py:88
 msgctxt "Operator"
 msgid "画像を表示"
 msgstr "画像を表示"
 
-#: misc_MATERIAL_PT_context_material.py:988
+#: misc_MATERIAL_PT_context_material.py:989
 msgctxt "Operator"
 msgid "自動設定"
 msgstr "自動設定"
@@ -3754,12 +3884,12 @@ msgctxt "*"
 msgid "シェーダー2"
 msgstr "シェーダー2"
 
-#: misc_MATERIAL_PT_context_material.py:916
+#: misc_MATERIAL_PT_context_material.py:917
 msgctxt "Operator"
 msgid "テクスチャパスを生成"
 msgstr "テクスチャパスを生成"
 
-#: misc_MATERIAL_PT_context_material.py:952
+#: misc_MATERIAL_PT_context_material.py:953
 #: misc_TEXTURE_PT_context_texture.py:370
 msgctxt "Operator"
 msgid "texで保存"
@@ -3788,7 +3918,7 @@ msgctxt "Operator"
 msgid "CM3D2用に変更"
 msgstr "CM3D2用に変更"
 
-#: misc_MATERIAL_PT_context_material.py:552
+#: misc_MATERIAL_PT_context_material.py:553
 msgctxt "*"
 msgid ""
 "『不使用ノードを削除』は変更後のシェーダーで使用しなくなるノードを削除します。\n"
@@ -3799,69 +3929,69 @@ msgstr ""
 "削除されると元のシェーダーに戻しても以前の調整値は失われデフォルト値になります。\n"
 "また、不使用ノードを残していても mate や model のエクスポート時には除外されます。"
 
-#: misc_MATERIAL_PT_context_material.py:546
+#: misc_MATERIAL_PT_context_material.py:547
 #, python-format
 msgctxt "*"
 msgid "この種類はmodelバージョン({})に不適格です"
 msgstr "この種類はmodelバージョン({})に不適格です"
 
-#: misc_MATERIAL_PT_context_material.py:498
-#: misc_MATERIAL_PT_context_material.py:508
+#: misc_MATERIAL_PT_context_material.py:499
+#: misc_MATERIAL_PT_context_material.py:509
 msgctxt "*"
 msgid "Blender-CM3D2-Converterで使用できるマテリアルを新規で作成します"
 msgstr "Blender-CM3D2-Converterで使用できるマテリアルを新規で作成します"
 
-#: misc_MATERIAL_PT_context_material.py:518
+#: misc_MATERIAL_PT_context_material.py:519
 msgctxt "*"
 msgid "Blender-CM3D2-Converterで使用できるマテリアルのシェーダーを変更します"
 msgstr "Blender-CM3D2-Converterで使用できるマテリアルのシェーダーを変更します"
 
-#: misc_MATERIAL_PT_context_material.py:577
+#: misc_MATERIAL_PT_context_material.py:578
 msgctxt "*"
 msgid "クリップボード内のテキストからマテリアル情報を上書きします"
 msgstr "クリップボード内のテキストからマテリアル情報を上書きします"
 
-#: misc_MATERIAL_PT_context_material.py:651
+#: misc_MATERIAL_PT_context_material.py:652
 msgctxt "*"
 msgid "表示しているマテリアルをテキスト形式でクリップボードにコピーします"
 msgstr "表示しているマテリアルをテキスト形式でクリップボードにコピーします"
 
-#: misc_MATERIAL_PT_context_material.py:722
+#: misc_MATERIAL_PT_context_material.py:723
 msgctxt "*"
 msgid "全マテリアルのシェーダー構成を再構築します"
 msgstr "全マテリアルのシェーダー構成を再構築します"
 
-#: misc_MATERIAL_PT_context_material.py:749
+#: misc_MATERIAL_PT_context_material.py:750
 msgctxt "*"
 msgid "マテリアルのシェーダー構成を再構築します"
 msgstr "マテリアルのシェーダー構成を再構築します"
 
-#: misc_MATERIAL_PT_context_material.py:772
+#: misc_MATERIAL_PT_context_material.py:773
 msgctxt "*"
 msgid "スロット内のマテリアルを全て設定に合わせて装飾します"
 msgstr "スロット内のマテリアルを全て設定に合わせて装飾します"
 
-#: misc_MATERIAL_PT_context_material.py:836
+#: misc_MATERIAL_PT_context_material.py:837
 msgctxt "*"
 msgid "マテリアルの各種フラグを初期化する"
 msgstr "マテリアルの各種フラグを初期化する"
 
-#: misc_MATERIAL_PT_context_material.py:858
+#: misc_MATERIAL_PT_context_material.py:859
 msgctxt "*"
 msgid "マテリアルプロパティの詳細情報の表示状態を切り替える"
 msgstr "マテリアルプロパティの詳細情報の表示状態を切り替える"
 
-#: misc_MATERIAL_PT_context_material.py:643
+#: misc_MATERIAL_PT_context_material.py:644
 msgctxt "*"
 msgid "クリップボードからマテリアルを貼付けました"
 msgstr "クリップボードからマテリアルを貼付けました"
 
-#: misc_MATERIAL_PT_context_material.py:670
+#: misc_MATERIAL_PT_context_material.py:671
 msgctxt "*"
 msgid "マテリアルテキストをクリップボードにコピーしました"
 msgstr "マテリアルテキストをクリップボードにコピーしました"
 
-#: misc_MATERIAL_PT_context_material.py:666
+#: misc_MATERIAL_PT_context_material.py:667
 msgctxt "*"
 msgid "クリップボードへのコピーを中止します。:"
 msgstr "クリップボードへのコピーを中止します。:"
@@ -3918,84 +4048,75 @@ msgctxt "*"
 msgid "RGBA color with 8-bit precision"
 msgstr "8ビット精度を持つRGBAカラー"
 
-#: misc_MESH_MT_shape_key_specials.py:442
+#: misc_MESH_MT_shape_key_specials.py:448
 msgctxt "Operator"
 msgid "クイック・シェイプキー転送"
 msgstr "クイック・シェイプキー転送"
 
-#: misc_MESH_MT_shape_key_specials.py:539
+#: misc_MESH_MT_shape_key_specials.py:521
 msgctxt "Operator"
 msgid "空間ぼかし・シェイプキー転送"
 msgstr "空間ぼかし・シェイプキー転送"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:878
+#: misc_MESH_MT_shape_key_specials.py:730
 #, fuzzy
 msgctxt "Operator"
 msgid "Weighted shape key transfer"
 msgstr "ウェイト付きシェイプキー転送"
 
-#: misc_MESH_MT_shape_key_specials.py:1022
+#: misc_MESH_MT_shape_key_specials.py:873
 msgctxt "Operator"
 msgid "シェイプキーの変形に乗算"
 msgstr "シェイプキーの変形に乗算"
 
-#: misc_MESH_MT_shape_key_specials.py:1086
+#: misc_MESH_MT_shape_key_specials.py:937
 msgctxt "Operator"
 msgid "シェイプキーぼかし"
 msgstr "シェイプキーぼかし"
 
-#: misc_MESH_MT_shape_key_specials.py:1237
+#: misc_MESH_MT_shape_key_specials.py:1088
 msgctxt "Operator"
 msgid "このシェイプキーをベースに"
 msgstr "このシェイプキーをベースに"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:1296
+#: misc_MESH_MT_shape_key_specials.py:1137
 #, fuzzy
 msgctxt "Operator"
 msgid "Copy shape key values"
 msgstr "シェイプキー値をコピー"
 
-#: misc_MESH_MT_shape_key_specials.py:160
+#: misc_MESH_MT_shape_key_specials.py:164
 msgctxt "*"
 msgid "最初に全シェイプキーを削除"
 msgstr "最初に全シェイプキーを削除"
 
-#: misc_MESH_MT_shape_key_specials.py:161
+#: misc_MESH_MT_shape_key_specials.py:165
 msgctxt "*"
 msgid "変形のないシェイプキーを削除"
 msgstr "変形のないシェイプキーを削除"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:162
+#: misc_MESH_MT_shape_key_specials.py:166
 #, fuzzy
 msgctxt "*"
 msgid "Bind to current source mix"
 msgstr "現在のソースミックスにバインド"
 
-#: misc_MESH_MT_shape_key_specials.py:163
+#: misc_MESH_MT_shape_key_specials.py:167
 #: misc_MESH_MT_vertex_group_specials.py:200
 msgctxt "*"
 msgid "参照元の分割"
 msgstr "参照元の分割"
 
-#: misc_MESH_MT_shape_key_specials.py:164
+#: misc_MESH_MT_shape_key_specials.py:168
 msgctxt "*"
 msgid "選択したシェイプキーのみ転送"
 msgstr "選択したシェイプキーのみ転送"
 
-#. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:446
-#: misc_MESH_MT_shape_key_specials.py:543
-#: misc_MESH_MT_shape_key_specials.py:882
-#, fuzzy
-msgctxt "*"
-msgid "Step Size (low = quality, high = speed)"
-msgstr "ステップサイズ (低 = 品質, 高 = 速度)"
-
-#: misc_MESH_MT_shape_key_specials.py:544
-#: misc_MESH_MT_shape_key_specials.py:1097
+#: misc_MESH_MT_shape_key_specials.py:525
+#: misc_MESH_MT_shape_key_specials.py:948
 #: misc_MESH_MT_vertex_group_specials.py:201
 #: misc_MESH_MT_vertex_group_specials.py:419
 msgctxt "*"
@@ -4003,75 +4124,75 @@ msgid "範囲倍率"
 msgstr "範囲倍率"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:804
+#: misc_MESH_MT_shape_key_specials.py:656
 #, fuzzy
 msgctxt "*"
 msgid "Only Deform"
 msgstr "変形のみ"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:804
+#: misc_MESH_MT_shape_key_specials.py:656
 #, fuzzy
 msgctxt "*"
 msgid "Only show deforming vertex groups"
 msgstr "変形する頂点グループのみ表示"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:805
+#: misc_MESH_MT_shape_key_specials.py:657
 #, fuzzy
 msgctxt "*"
 msgid "Only show non-deforming vertex groups"
 msgstr "変形しない頂点グループのみ表示"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:806
+#: misc_MESH_MT_shape_key_specials.py:658
 #, fuzzy
 msgctxt "*"
 msgid "Filter Empty"
 msgstr "空のものをフィルタ"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:806
+#: misc_MESH_MT_shape_key_specials.py:658
 #, fuzzy
 msgctxt "*"
 msgid "Whether to filter empty vertex groups"
 msgstr "空の頂点グループをフィルタするかどうか"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:807
+#: misc_MESH_MT_shape_key_specials.py:659
 #, fuzzy
 msgctxt "*"
 msgid "Reverse Empty"
 msgstr "空のフィルタを反転"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:807
+#: misc_MESH_MT_shape_key_specials.py:659
 #, fuzzy
 msgctxt "*"
 msgid "Reverse empty filtering"
 msgstr "空のフィルタリングを反転"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:808
+#: misc_MESH_MT_shape_key_specials.py:660
 #, fuzzy
 msgctxt "*"
 msgid "Order by"
 msgstr "並べ替え"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:883
+#: misc_MESH_MT_shape_key_specials.py:734
 #, fuzzy
 msgctxt "*"
 msgid "Range magnification"
 msgstr "範囲倍率"
 
-#: misc_MESH_MT_shape_key_specials.py:1026
+#: misc_MESH_MT_shape_key_specials.py:877
 msgctxt "*"
 msgid "シェイプキーの拡大率です"
 msgstr "シェイプキーの拡大率です"
 
-#: misc_MESH_MT_shape_key_specials.py:1033
-#: misc_MESH_MT_shape_key_specials.py:1096
+#: misc_MESH_MT_shape_key_specials.py:884
+#: misc_MESH_MT_shape_key_specials.py:947
 #: misc_MESH_MT_vertex_group_specials.py:364
 #: misc_MESH_MT_vertex_group_specials.py:418
 #: misc_MESH_MT_vertex_group_specials.py:583
@@ -4079,64 +4200,63 @@ msgctxt "*"
 msgid "対象"
 msgstr "対象"
 
-#: misc_MESH_MT_shape_key_specials.py:1098
+#: misc_MESH_MT_shape_key_specials.py:949
 #: misc_MESH_MT_vertex_group_specials.py:365
 #: misc_MESH_MT_vertex_group_specials.py:420
 msgctxt "*"
 msgid "強さ"
 msgstr "強さ"
 
-#: misc_MESH_MT_shape_key_specials.py:1104
+#: misc_MESH_MT_shape_key_specials.py:955
 #: misc_MESH_MT_vertex_group_specials.py:426
 msgctxt "*"
 msgid "ぼかし効果"
 msgstr "ぼかし効果"
 
-#: misc_MESH_MT_shape_key_specials.py:1110
+#: misc_MESH_MT_shape_key_specials.py:961
 #: misc_VIEW3D_PT_tools_weightpaint.py:29
 #: misc_VIEW3D_PT_tools_weightpaint.py:258
 msgctxt "*"
 msgid "減衰タイプ"
 msgstr "減衰タイプ"
 
-#: misc_MESH_MT_shape_key_specials.py:1241
-msgctxt "*"
-msgid "素メッシュを調整"
-msgstr "素メッシュを調整"
-
-#: misc_MESH_MT_shape_key_specials.py:1242
+#: misc_MESH_MT_shape_key_specials.py:1093
 msgctxt "*"
 msgid "他シェイプを調整"
 msgstr "他シェイプを調整"
 
+#: misc_MESH_MT_shape_key_specials.py:1093
+msgctxt "*"
+msgid "無効にするのは非推奨"
+msgstr "無効にするのは非推奨"
+
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:1300
+#: misc_MESH_MT_shape_key_specials.py:1141
 #, fuzzy
 msgctxt "*"
 msgid "Apply as drivers"
 msgstr "ドライバーとして適用"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:659
-#: misc_MESH_MT_shape_key_specials.py:283
+#: misc_MESH_MT_shape_key_specials.py:289
 #: misc_MESH_MT_vertex_group_specials.py:349
 #, python-format, fuzzy
 msgctxt "*"
 msgid "{:.2f} Seconds"
 msgstr "{:.2f} 秒"
 
-#: misc_MESH_MT_shape_key_specials.py:443
+#: misc_MESH_MT_shape_key_specials.py:449
 msgctxt "*"
 msgid "アクティブなメッシュに他の選択メッシュのシェイプキーを高速で転送します"
 msgstr "アクティブなメッシュに他の選択メッシュのシェイプキーを高速で転送します"
 
-#: misc_MESH_MT_shape_key_specials.py:540
+#: misc_MESH_MT_shape_key_specials.py:522
 msgctxt "*"
 msgid "アクティブなメッシュに他の選択メッシュのシェイプキーを遠いほどぼかして転送します"
 msgstr "アクティブなメッシュに他の選択メッシュのシェイプキーを遠いほどぼかして転送します"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:879
+#: misc_MESH_MT_shape_key_specials.py:731
 #, fuzzy
 msgctxt "*"
 msgid ""
@@ -4144,30 +4264,30 @@ msgid ""
 "matching vertex groups as masks"
 msgstr "他の選択メッシュのシェイプキーを、一致する頂点グループをマスクとして使用してアクティブメッシュに転送します"
 
-#: misc_MESH_MT_shape_key_specials.py:1023
+#: misc_MESH_MT_shape_key_specials.py:874
 msgctxt "*"
 msgid "シェイプキーの変形に数値を乗算し、変形の強度を増減させます"
 msgstr "シェイプキーの変形に数値を乗算し、変形の強度を増減させます"
 
-#: misc_MESH_MT_shape_key_specials.py:1087
+#: misc_MESH_MT_shape_key_specials.py:938
 msgctxt "*"
 msgid "アクティブ、もしくは全てのシェイプキーをぼかします"
 msgstr "アクティブ、もしくは全てのシェイプキーをぼかします"
 
-#: misc_MESH_MT_shape_key_specials.py:1238
+#: misc_MESH_MT_shape_key_specials.py:1089
 msgctxt "*"
 msgid "アクティブなシェイプキーを他のシェイプキーのベースにします"
 msgstr "アクティブなシェイプキーを他のシェイプキーのベースにします"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:1297
+#: misc_MESH_MT_shape_key_specials.py:1138
 #, fuzzy
 msgctxt "*"
 msgid "Copy the shape key values from the other selected mesh"
 msgstr "他の選択メッシュからシェイプキー値をコピーします"
 
-#: misc_MESH_MT_shape_key_specials.py:1028
-#: misc_MESH_MT_shape_key_specials.py:1091
+#: misc_MESH_MT_shape_key_specials.py:879
+#: misc_MESH_MT_shape_key_specials.py:942
 #: misc_MESH_MT_vertex_group_specials.py:361
 #: misc_MESH_MT_vertex_group_specials.py:413
 #: misc_MESH_MT_vertex_group_specials.py:578
@@ -4177,24 +4297,24 @@ msgctxt "*"
 msgid "アクティブのみ"
 msgstr "アクティブのみ"
 
-#: misc_MESH_MT_shape_key_specials.py:1029
-#: misc_MESH_MT_shape_key_specials.py:1092
+#: misc_MESH_MT_shape_key_specials.py:880
+#: misc_MESH_MT_shape_key_specials.py:943
 #: misc_MESH_MT_vertex_group_specials.py:414
 #: misc_MESH_MT_vertex_group_specials.py:579
 msgctxt "*"
 msgid "アクティブより上"
 msgstr "アクティブより上"
 
-#: misc_MESH_MT_shape_key_specials.py:1030
-#: misc_MESH_MT_shape_key_specials.py:1093
+#: misc_MESH_MT_shape_key_specials.py:881
+#: misc_MESH_MT_shape_key_specials.py:944
 #: misc_MESH_MT_vertex_group_specials.py:415
 #: misc_MESH_MT_vertex_group_specials.py:580
 msgctxt "*"
 msgid "アクティブより下"
 msgstr "アクティブより下"
 
-#: misc_MESH_MT_shape_key_specials.py:1031
-#: misc_MESH_MT_shape_key_specials.py:1094
+#: misc_MESH_MT_shape_key_specials.py:882
+#: misc_MESH_MT_shape_key_specials.py:945
 #: misc_MESH_MT_vertex_group_specials.py:362
 #: misc_MESH_MT_vertex_group_specials.py:416
 #: misc_MESH_MT_vertex_group_specials.py:581 misc_RENDER_PT_bake.py:1291
@@ -4203,41 +4323,41 @@ msgctxt "*"
 msgid "全て"
 msgstr "全て"
 
-#: misc_MESH_MT_shape_key_specials.py:1100
+#: misc_MESH_MT_shape_key_specials.py:951
 #: misc_MESH_MT_vertex_group_specials.py:422
 msgctxt "*"
 msgid "増減両方"
 msgstr "増減両方"
 
-#: misc_MESH_MT_shape_key_specials.py:1101
+#: misc_MESH_MT_shape_key_specials.py:952
 #: misc_MESH_MT_vertex_group_specials.py:423
 msgctxt "*"
 msgid "増加のみ"
 msgstr "増加のみ"
 
-#: misc_MESH_MT_shape_key_specials.py:1102
+#: misc_MESH_MT_shape_key_specials.py:953
 #: misc_MESH_MT_vertex_group_specials.py:424
 msgctxt "*"
 msgid "減少のみ"
 msgstr "減少のみ"
 
-#: misc_MESH_MT_shape_key_specials.py:1106
+#: misc_MESH_MT_shape_key_specials.py:957
 msgctxt "*"
 msgid "ライナー"
 msgstr "ライナー"
 
-#: misc_MESH_MT_shape_key_specials.py:1107
+#: misc_MESH_MT_shape_key_specials.py:958
 msgctxt "*"
 msgid "スムーズ1"
 msgstr "スムーズ1"
 
-#: misc_MESH_MT_shape_key_specials.py:1108
+#: misc_MESH_MT_shape_key_specials.py:959
 msgctxt "*"
 msgid "スムーズ2"
 msgstr "スムーズ2"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:397
+#: misc_MESH_MT_shape_key_specials.py:403
 #, fuzzy
 msgctxt "*"
 msgid ""
@@ -4247,66 +4367,56 @@ msgstr ""
 "シェイプキー転送がキャンセルされました。結果が期待どおりでない可能性があります。変更を元に戻すには、元に戻す / Ctrl+Z を使用してください"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:228
+#: misc_MESH_MT_shape_key_specials.py:232
 #, fuzzy
 msgctxt "*"
 msgid "Press ESC to cancel shape key transfer"
 msgstr "シェイプキー転送をキャンセルするにはESCを押してください"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:808
+#: misc_MESH_MT_shape_key_specials.py:660
 #, fuzzy
 msgctxt "*"
 msgid "Sort groups by name (case-insensitive)"
 msgstr "グループを名前でソート (大文字小文字を区別しない)"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:808
+#: misc_MESH_MT_shape_key_specials.py:660
 #, fuzzy
 msgctxt "*"
 msgid "Importance"
 msgstr "重要度"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:808
+#: misc_MESH_MT_shape_key_specials.py:660
 #, fuzzy
 msgctxt "*"
 msgid "Sort groups by average weight"
 msgstr "グループを平均ウェイトでソート"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:217
+#: misc_MESH_MT_shape_key_specials.py:221
 #, fuzzy
 msgctxt "*"
 msgid "Error while preparing shapekey transfer."
 msgstr "シェイプキー転送の準備中にエラーが発生しました。"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:653
-#, fuzzy
-msgctxt "*"
-msgid ""
-"Error while transfering shapekeys. Results may not be as expected. Use Undo "
-"/ Ctrl Z to revert changes"
-msgstr ""
-"シェイプキー転送中にエラーが発生しました。結果が期待どおりでない可能性があります。変更を元に戻すには、元に戻す / Ctrl+Z を使用してください"
-
-#. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:256
+#: misc_MESH_MT_shape_key_specials.py:260
 #, fuzzy
 msgctxt "*"
 msgid "Error while canceling shapekey transfer."
 msgstr "シェイプキー転送のキャンセル中にエラーが発生しました。"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:267
+#: misc_MESH_MT_shape_key_specials.py:270
 #, fuzzy
 msgctxt "*"
 msgid "Error while performing shapekey transfer."
 msgstr "シェイプキー転送の実行中にエラーが発生しました。"
 
 #. mt:gemini
-#: misc_MESH_MT_shape_key_specials.py:278
+#: misc_MESH_MT_shape_key_specials.py:280
 #, fuzzy
 msgctxt "*"
 msgid "Error while finishing shapekey transfer."
@@ -5596,7 +5706,7 @@ msgid "関係するメッシュのアーマチュアを適用"
 msgstr "関係するメッシュのアーマチュアを適用"
 
 #. mt:gemini
-#: misc_VIEW3D_MT_pose_apply.py:135 model_export.py:49
+#: misc_VIEW3D_MT_pose_apply.py:135 model_export.py:51
 #, fuzzy
 msgctxt "*"
 msgid "Ensure shape key values of child mesh objects are not changed"
@@ -5917,150 +6027,160 @@ msgctxt "*"
 msgid "0で除算することはできません、中止します"
 msgstr "0で除算することはできません、中止します"
 
-#: model_export.py:18 model_import.py:19
+#: model_export.py:19 model_import.py:19
 msgctxt "Operator"
 msgid "CM3D2モデル (.model)"
 msgstr "CM3D2モデル (.model)"
 
-#: model_export.py:38
+#: model_export.py:39
 msgctxt "*"
 msgid "model名"
 msgstr "model名"
 
-#: model_export.py:39
+#: model_export.py:40
 msgctxt "*"
 msgid "基点ボーン名"
 msgstr "基点ボーン名"
 
-#: model_export.py:47 model_export.py:197
+#: model_export.py:48 model_export.py:202
 msgctxt "*"
 msgid "ボーン情報元"
 msgstr "ボーン情報元"
 
-#: model_export.py:47
+#: model_export.py:48
 msgctxt "*"
 msgid "modelファイルに必要なボーン情報をどこから引っ張ってくるか選びます"
 msgstr "modelファイルに必要なボーン情報をどこから引っ張ってくるか選びます"
 
-#: model_export.py:48
+#: model_export.py:49 model_export.py:207
+msgctxt "*"
+msgid "誤差無視しきい値"
+msgstr "誤差無視しきい値"
+
+#: model_export.py:49
+msgctxt "*"
+msgid "アーマチュア計算での誤差は更新に含めないしきい値です. 詳しくはアーマチュアプロパティのボーン情報取り込みを参照"
+msgstr "アーマチュア計算での誤差は更新に含めないしきい値です. 詳しくはアーマチュアプロパティのボーン情報取り込みを参照"
+
+#: model_export.py:50
 msgctxt "*"
 msgid "元の素体ポーズに一時的に戻す"
 msgstr "元の素体ポーズに一時的に戻す"
 
-#: model_export.py:48
+#: model_export.py:50
 msgctxt "*"
 msgid "素体化処理によって素体ポーズが変更されている場合、一時的に元の素体ポーズに戻してからエクスポートします"
 msgstr "素体化処理によって素体ポーズが変更されている場合、一時的に元の素体ポーズに戻してからエクスポートします"
 
-#: model_export.py:56 model_export.py:200
+#: model_export.py:58 model_export.py:219
 msgctxt "*"
 msgid "マテリアル情報元"
 msgstr "マテリアル情報元"
 
-#: model_export.py:56
+#: model_export.py:58
 msgctxt "*"
 msgid "modelファイルに必要なマテリアル情報をどこから引っ張ってくるか選びます"
 msgstr "modelファイルに必要なマテリアル情報をどこから引っ張ってくるか選びます"
 
-#: model_export.py:58
+#: model_export.py:60
 msgctxt "*"
 msgid "データ名の連番を削除"
 msgstr "データ名の連番を削除"
 
-#: model_export.py:58
+#: model_export.py:60
 msgctxt "*"
 msgid "「○○.001」のような連番が付属したデータ名からこれらを削除します"
 msgstr "「○○.001」のような連番が付属したデータ名からこれらを削除します"
 
-#: model_export.py:60
+#: model_export.py:62
 msgctxt "*"
 msgid "Align to Base Bone"
 msgstr "Align to Base Bone"
 
-#: model_export.py:60
+#: model_export.py:62
 msgctxt "*"
 msgid "Align the object to it's base bone"
 msgstr "Align the object to it's base bone"
 
-#: model_export.py:61
+#: model_export.py:63
 msgctxt "*"
 msgid "四角面を三角面に"
 msgstr "四角面を三角面に"
 
-#: model_export.py:61
+#: model_export.py:63
 msgctxt "*"
 msgid "四角ポリゴンを三角ポリゴンに変換してから出力します、元のメッシュには影響ありません"
 msgstr "四角ポリゴンを三角ポリゴンに変換してから出力します、元のメッシュには影響ありません"
 
-#: model_export.py:62
+#: model_export.py:64
 msgctxt "*"
 msgid "Split Sharp Edges"
 msgstr "Split Sharp Edges"
 
-#: model_export.py:62
+#: model_export.py:64
 msgctxt "*"
 msgid "Split all edges marked as sharp."
 msgstr "Split all edges marked as sharp."
 
-#: model_export.py:63
+#: model_export.py:65
 msgctxt "*"
 msgid "ウェイトの合計を1.0に"
 msgstr "ウェイトの合計を1.0に"
 
-#: model_export.py:63
+#: model_export.py:65
 msgctxt "*"
 msgid "4つのウェイトの合計値が1.0になるように正規化します"
 msgstr "4つのウェイトの合計値が1.0になるように正規化します"
 
-#: model_export.py:64
+#: model_export.py:66
 msgctxt "*"
 msgid "頂点グループ名をCM3D2用に変換"
 msgstr "頂点グループ名をCM3D2用に変換"
 
-#: model_export.py:64
+#: model_export.py:66
 msgctxt "*"
 msgid "全ての頂点グループ名をCM3D2で使える名前にしてからエクスポートします"
 msgstr "全ての頂点グループ名をCM3D2で使える名前にしてからエクスポートします"
 
-#: model_export.py:65
+#: model_export.py:67
 msgctxt "*"
 msgid "クリーンな頂点グループ"
 msgstr "クリーンな頂点グループ"
 
-#: model_export.py:65
+#: model_export.py:67
 msgctxt "*"
 msgid "重みがゼロの場合、頂点グループから頂点を削除します"
 msgstr "重みがゼロの場合、頂点グループから頂点を削除します"
 
-#: model_export.py:67
+#: model_export.py:69
 msgctxt "*"
 msgid "バッチモード"
 msgstr "バッチモード"
 
-#: model_export.py:67
+#: model_export.py:69
 msgctxt "*"
 msgid "モードの切替やエラー個所の選択を行いません"
 msgstr "モードの切替やエラー個所の選択を行いません"
 
-#: model_export.py:69
+#: model_export.py:71
 msgctxt "*"
 msgid "接空間情報出力"
 msgstr "接空間情報出力"
 
-#: model_export.py:69
+#: model_export.py:71
 msgctxt "*"
 msgid "接空間情報(binormals, tangents)を出力する"
 msgstr "接空間情報(binormals, tangents)を出力する"
 
 #. mt:gemini
-#: model_export.py:71
+#: model_export.py:73
 #, fuzzy
 msgctxt "*"
 msgid "Shape Key Threshold"
 msgstr "シェイプキーのしきい値"
 
 #. mt:gemini
-#: model_export.py:71
+#: model_export.py:73
 #, fuzzy
 msgctxt "*"
 msgid ""
@@ -6069,42 +6189,42 @@ msgid ""
 msgstr "値が低いほど精度とファイルサイズが増加します。値が高いほど小さな変更が切り捨てられ、ファイルサイズが減少します。"
 
 #. mt:gemini
-#: model_export.py:72
+#: model_export.py:74
 #, fuzzy
 msgctxt "*"
 msgid "Export Shape Key Normals"
 msgstr "シェイプキー法線をエクスポート"
 
 #. mt:gemini
-#: model_export.py:72
+#: model_export.py:74
 #, fuzzy
 msgctxt "*"
 msgid "Export custom normals for each shape key on export."
 msgstr "エクスポート時に各シェイプキーのカスタム法線をエクスポートします。"
 
 #. mt:gemini
-#: model_export.py:73
+#: model_export.py:75
 #, fuzzy
 msgctxt "*"
 msgid "Shape Key Normals Blend"
 msgstr "シェイプキー法線のブレンド"
 
 #. mt:gemini
-#: model_export.py:73
+#: model_export.py:75
 #, fuzzy
 msgctxt "*"
 msgid "Adjust the influence of shape keys on custom normals"
 msgstr "カスタム法線に対するシェイプキーの影響を調整します"
 
 #. mt:gemini
-#: model_export.py:74
+#: model_export.py:76
 #, fuzzy
 msgctxt "*"
 msgid "Use Shape Key Colors"
 msgstr "シェイプキーカラーを使用"
 
 #. mt:gemini
-#: model_export.py:74
+#: model_export.py:76
 #, fuzzy
 msgctxt "*"
 msgid ""
@@ -6113,54 +6233,68 @@ msgid ""
 msgstr ""
 "エクスポート時に法線を計算する代わりに、頂点カラーに保存されているシェイプキー法線を使用します。(ジオメトリがカスタマイズされている場合は無効にすることをお勧めします)"
 
-#: model_export.py:186
+#: model_export.py:191
 msgctxt "*"
 msgid "素体ポーズ変更対応"
 msgstr "素体ポーズ変更対応"
 
-#: model_export.py:204
+#: model_export.py:223
 msgctxt "*"
 msgid "メッシュオプション"
 msgstr "メッシュオプション"
 
-#: model_export.py:322
+#: model_export.py:216
+msgctxt "*"
+msgid ""
+"注意: "
+"アーマチュアに変更があるようです。編集ボーンを反映させるには「アーマチュア」にするか、アーマチュアプロパティにてボーン情報取り込みする必要があります。"
+msgstr ""
+"注意: "
+"アーマチュアに変更があるようです。編集ボーンを反映させるには「アーマチュア」にするか、アーマチュアプロパティにてボーン情報取り込みする必要があります。"
+
+#: model_export.py:211
+msgctxt "*"
+msgid "注意: 対象アーマチュアが親アーマチュアではありません。モディファイアにより別アーマチュアが指定されています。"
+msgstr "注意: 対象アーマチュアが親アーマチュアではありません。モディファイアにより別アーマチュアが指定されています。"
+
+#: model_export.py:341
 #, python-format
 msgctxt "*"
 msgid "modelのエクスポートが完了しました。{:.2f} 秒 file={}"
 msgstr "modelのエクスポートが完了しました。{:.2f} 秒 file={}"
 
-#: model_export.py:540
+#: model_export.py:565
 #, python-format
 msgctxt "*"
 msgid "ウェイトの合計が1.0を超えている頂点が見つかりました。正規化してください。超過している頂点の数:{}"
 msgstr "ウェイトの合計が1.0を超えている頂点が見つかりました。正規化してください。超過している頂点の数:{}"
 
-#: model_export.py:542
+#: model_export.py:567
 #, python-format
 msgctxt "*"
 msgid "ウェイトの合計が1.0未満の頂点が見つかりました。正規化してください。不足している頂点の数:{}"
 msgstr "ウェイトの合計が1.0未満の頂点が見つかりました。正規化してください。不足している頂点の数:{}"
 
-#: model_export.py:546
+#: model_export.py:571
 #, python-format
 msgctxt "*"
 msgid "4つを超える頂点グループにある頂点が見つかりました。頂点グループをクリーンアップしてください。不足している頂点の数:{}"
 msgstr "4つを超える頂点グループにある頂点が見つかりました。頂点グループをクリーンアップしてください。不足している頂点の数:{}"
 
-#: model_export.py:562
+#: model_export.py:587
 #, python-format
 msgctxt "*"
 msgid "頂点が割り当てられていない{num}つのローカルボーンが見つかりました。 詳細については、ログを参照してください。"
 msgstr "頂点が割り当てられていない{num}つのローカルボーンが見つかりました。 詳細については、ログを参照してください。"
 
-#: model_export.py:309
+#: model_export.py:328
 #, python-format
 msgctxt "*"
 msgid "{}個のオブジェクトをマージしました"
 msgstr "{}個のオブジェクトをマージしました"
 
 #. mt:gemini
-#: model_export.py:560
+#: model_export.py:585
 #, fuzzy, python-format
 msgctxt "*"
 msgid ""
@@ -6168,150 +6302,150 @@ msgid ""
 "more info."
 msgstr "インデックス {index} のボーンが使用されたかどうかを確認できませんでした。詳細についてはコンソールを参照してください。"
 
-#: model_export.py:19
+#: model_export.py:20
 msgctxt "*"
 msgid "カスタムメイド3D2のmodelファイルを書き出します"
 msgstr "カスタムメイド3D2のmodelファイルを書き出します"
 
 #. mt:gemini
-#: model_export.py:550
+#: model_export.py:575
 #, fuzzy
 msgctxt "*"
 msgid "The game will delete these local bones"
 msgstr "ゲームはこれらのローカルボーンを削除します"
 
-#: model_export.py:43 model_export.py:53 model_import.py:54
+#: model_export.py:44 model_export.py:55 model_import.py:54
 msgctxt "*"
 msgid "テキスト"
 msgstr "テキスト"
 
-#: model_export.py:44
+#: model_export.py:45
 msgctxt "*"
 msgid "オブジェクト内プロパティ"
 msgstr "オブジェクト内プロパティ"
 
-#: model_export.py:54 model_import.py:104
+#: model_export.py:56 model_import.py:104
 msgctxt "*"
 msgid "マテリアル"
 msgstr "マテリアル"
 
-#: model_export.py:95
+#: model_export.py:99
 msgctxt "*"
 msgid "アクティブオブジェクトがありません"
 msgstr "アクティブオブジェクトがありません"
 
-#: model_export.py:97
+#: model_export.py:101
 msgctxt "*"
 msgid "メッシュオブジェクトを選択した状態で実行してください"
 msgstr "メッシュオブジェクトを選択した状態で実行してください"
 
-#: model_export.py:99
+#: model_export.py:103
 msgctxt "*"
 msgid "マテリアルがありません"
 msgstr "マテリアルがありません"
 
-#: model_export.py:110
+#: model_export.py:114
 msgctxt "*"
 msgid "UVがありません"
 msgstr "UVがありません"
 
-#: model_export.py:112
+#: model_export.py:116
 msgctxt "*"
 msgid "エクスポート可能な頂点数を大幅に超えています、最低でも65535未満には削減してください"
 msgstr "エクスポート可能な頂点数を大幅に超えています、最低でも65535未満には削減してください"
 
-#: model_export.py:438
+#: model_export.py:460
 msgctxt "*"
 msgid "テキスト「BoneData」に有効なデータがありません"
 msgstr "テキスト「BoneData」に有効なデータがありません"
 
-#: model_export.py:468
+#: model_export.py:493
 msgctxt "*"
 msgid "テキスト「LocalBoneData」に有効なデータがありません"
 msgstr "テキスト「LocalBoneData」に有効なデータがありません"
 
 #. mt:gemini
-#: model_export.py:33
+#: model_export.py:34
 #, fuzzy
 msgctxt "*"
 msgid "determine model version from object properties"
 msgstr "オブジェクトプロパティからモデルバージョンを決定"
 
 #. mt:gemini
-#: model_export.py:34
+#: model_export.py:35
 #, fuzzy
 msgctxt "*"
 msgid "model version 1000 (available for cm3d2/com3d2)"
 msgstr "モデルバージョン1000 (CM3D2/COM3D2で利用可能)"
 
 #. mt:gemini
-#: model_export.py:35
+#: model_export.py:36
 msgctxt "*"
 msgid "model version 2000 (com3d2 version)"
 msgstr "model version 2000 (com3d2 version)"
 
 #. mt:gemini
-#: model_export.py:36
+#: model_export.py:37
 msgctxt "*"
 msgid "model version 2001 (available only for com3d2)"
 msgstr "model version 2001 (COM3D2のみ)"
 
-#: model_export.py:102
+#: model_export.py:106
 msgctxt "*"
 msgid "空のマテリアルスロットを削除してください"
 msgstr "空のマテリアルスロットを削除してください"
 
-#: model_export.py:374 model_export.py:394
+#: model_export.py:393 model_export.py:413
 msgctxt "*"
 msgid "メッシュオブジェクトの親がアーマチュアではありません"
 msgstr "メッシュオブジェクトの親がアーマチュアではありません"
 
-#: model_export.py:444
+#: model_export.py:466
 msgctxt "*"
 msgid "基点ボーンが存在しません"
 msgstr "基点ボーンが存在しません"
 
-#: model_export.py:502
+#: model_export.py:527
 msgctxt "*"
 msgid "ウェイトが割り当てられていない頂点が見つかりました、中止します"
 msgstr "ウェイトが割り当てられていない頂点が見つかりました、中止します"
 
-#: model_export.py:107
+#: model_export.py:111
 msgctxt "*"
 msgid "マテリアルに「shader1」と「shader2」という名前のカスタムプロパティを用意してください"
 msgstr "マテリアルに「shader1」と「shader2」という名前のカスタムプロパティを用意してください"
 
-#: model_export.py:383
+#: model_export.py:402
 msgctxt "*"
 msgid "テキスト「BoneData」が見つかりません、中止します"
 msgstr "テキスト「BoneData」が見つかりません、中止します"
 
-#: model_export.py:385
+#: model_export.py:404
 msgctxt "*"
 msgid "テキスト「LocalBoneData」が見つかりません、中止します"
 msgstr "テキスト「LocalBoneData」が見つかりません、中止します"
 
-#: model_export.py:411
+#: model_export.py:430
 msgctxt "*"
 msgid "マテリアル情報元のテキストが足りません"
 msgstr "マテリアル情報元のテキストが足りません"
 
-#: model_export.py:379 model_export.py:399
+#: model_export.py:398 model_export.py:418
 msgctxt "*"
 msgid "アーマチュアが見つかりません、親にするかモディファイアにして下さい"
 msgstr "アーマチュアが見つかりません、親にするかモディファイアにして下さい"
 
-#: model_export.py:388 model_export.py:390
+#: model_export.py:407 model_export.py:409
 msgctxt "*"
 msgid "オブジェクトのカスタムプロパティにボーン情報がありません"
 msgstr "オブジェクトのカスタムプロパティにボーン情報がありません"
 
-#: model_export.py:406
+#: model_export.py:425
 msgctxt "*"
 msgid "ボーン情報元のモードがおかしいです"
 msgstr "ボーン情報元のモードがおかしいです"
 
-#: model_export.py:402 model_export.py:404
+#: model_export.py:421 model_export.py:423
 msgctxt "*"
 msgid "アーマチュアのカスタムプロパティにボーン情報がありません"
 msgstr "アーマチュアのカスタムプロパティにボーン情報がありません"
