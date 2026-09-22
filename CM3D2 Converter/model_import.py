@@ -1204,7 +1204,9 @@ if not compat.IS_LT41:
                 common.redraw_timer(type='DRAW_WIN_SWAP', iterations=1)
                 mode = props.model_import_last_mode
                 ctype = 'EXEC_DEFAULT' if mode == 'DIRECT' else 'INVOKE_DEFAULT'
-                bpy.ops.import_mesh.import_cm3d2_model(ctype, filepaths=filepaths)
+                result = bpy.ops.import_mesh.import_cm3d2_model(ctype, filepaths=filepaths)
+                if 'FINISHED' in result:
+                    bpy.ops.ed.undo_push(message=CNV_OT_import_cm3d2_model.bl_label)
                 return {'FINISHED'}
 
             CNV_OT_ModelDropManager.filepaths = filepaths
@@ -1230,7 +1232,9 @@ if not compat.IS_LT41:
         def execute(self, context):
             common.redraw_timer(type='DRAW_WIN_SWAP', iterations=1)
             ctype = 'EXEC_DEFAULT' if self.mode == 'DIRECT' else 'INVOKE_DEFAULT'
-            bpy.ops.import_mesh.import_cm3d2_model(ctype, filepaths=CNV_OT_ModelDropManager.filepaths)
+            result = bpy.ops.import_mesh.import_cm3d2_model(ctype, filepaths=CNV_OT_ModelDropManager.filepaths)
+            if 'FINISHED' in result:
+                bpy.ops.ed.undo_push(message=CNV_OT_import_cm3d2_model.bl_label)
             return {'FINISHED'}
 
 
