@@ -21,7 +21,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
     bl_options = {'REGISTER'}
 
     # 複数ファイル選択用
-    filepaths: bpy.props.CollectionProperty(type=common.CNV_FilePathItem)
+    filepaths: bpy.props.CollectionProperty(type=common.CNV_FilePathItem, options={'HIDDEN', 'SKIP_SAVE'})
 
     # 単一ファイル選択用
     filepath: bpy.props.StringProperty(subtype='FILE_PATH')
