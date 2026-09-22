@@ -43,7 +43,7 @@ class CNV_OT_import_cm3d2_tex(bpy.types.Operator):
             if tex_data is None:
                 # bpy.ops.image.open(filepath=self.filepath)
                 # img = context.edit_image
-                self.report(type={'ERROR'}, message="texファイルのヘッダが正しくありません。" + self.fielpath)
+                self.report(type={'ERROR'}, message="texファイルのヘッダが正しくありません。" + self.filepath)
                 return {'CANCELLED'}
 
             tex_format = tex_data[1]
