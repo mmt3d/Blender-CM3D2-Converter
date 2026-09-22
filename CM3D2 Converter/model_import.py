@@ -18,7 +18,7 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
     bl_idname = 'import_mesh.import_cm3d2_model'
     bl_label = "CM3D2モデル (.model)"
     bl_description = "カスタムメイド3D2のmodelファイルを読み込みます"
-    bl_options = {'REGISTER'}
+    bl_options = {'REGISTER', 'UNDO'}
 
     # 複数ファイル選択用
     filepaths: bpy.props.CollectionProperty(type=common.CNV_FilePathItem, options={'HIDDEN', 'SKIP_SAVE'})

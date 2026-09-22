@@ -9,7 +9,7 @@ class CNV_OT_import_cm3d2_tex(bpy.types.Operator):
     bl_idname = 'image.import_cm3d2_tex'
     bl_label = "texファイルを開く"
     bl_description = "CM3D2で使用されるテクスチャファイル(.tex)を読み込みます"
-    bl_options = {'REGISTER'}
+    bl_options = {'REGISTER', 'UNDO'}
 
     filepath: bpy.props.StringProperty(subtype='FILE_PATH')
     filename_ext = '.tex;.png'
