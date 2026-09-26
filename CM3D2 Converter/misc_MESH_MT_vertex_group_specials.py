@@ -5,6 +5,7 @@ import bpy
 import mathutils
 from . import common, compat
 from .translations import *
+from .bone_data import get_bones_suitable_for_vg
 
 
 # メニュー等に項目追加
@@ -20,6 +21,7 @@ def menu_func(self, context):
     self.layout.operator('object.multiply_vertex_group', icon_value=icon_id)
     self.layout.separator()
     self.layout.operator('object.remove_noassign_vertex_groups', icon_value=icon_id)
+    self.layout.operator('object.add_vertex_groups', icon_value=icon_id)
 
 
 @compat.BlRegister()
@@ -696,4 +698,164 @@ class CNV_OT_remove_noassign_vertex_groups(bpy.types.Operator):
             if not is_keeps[i] and not copy_vertex_groups[i].lock_weight:
                 ob.vertex_groups.remove(copy_vertex_groups[i])
 
+        return {'FINISHED'}
+
+
+@compat.BlRegister()
+class CNV_PG_bone_item(bpy.types.PropertyGroup):
+    bl_idname = 'CNV_PG_bone_item'
+
+    bone_name: bpy.props.StringProperty()
+    is_suitable_for_vg: bpy.props.BoolProperty()
+    add_bone: bpy.props.BoolProperty()
+    is_visible: bpy.props.BoolProperty(default=True, options={'HIDDEN'})
+
+
+@compat.BlRegister()
+class CNV_UL_bone_list(bpy.types.UIList):
+    bl_idname = 'CNV_UL_bone_list'
+
+    filter: bpy.props.EnumProperty(name="Filter", items=[('ALL', "全て", ''), ('SUITABLE', "非推奨を除く", '')], default="ALL")
+    use_filter_orderby_invert: bpy.props.BoolProperty(name="Order by Invert", default=False, options=set(), description="Invert the sort by order")
+
+    def draw_filter(self, context, layout):
+        split = layout.split(factor=0.3)
+        col = split.column(align=True)
+
+        row = col.row(align=True)
+        row.operator('object.bone_list_action', text="全選択").action = 'SELECT'
+        row.operator('object.bone_list_action', text="全解除").action = 'DESELECT'
+
+        col = split.column(align=True)
+        row = col.row(align=True)
+        row.prop(self, 'filter')
+
+        row = layout.row()
+
+        subrow = row.row(align=True)
+        subrow.prop(self, 'filter_name', text="")
+        subrow.prop(self, 'use_filter_invert', text="", icon='ARROW_LEFTRIGHT')
+
+        subrow = row.row(align=True)
+        subrow.prop(self, 'use_filter_sort_alpha', text="", icon='SORTALPHA')
+        icon = 'SORT_DESC' if self.use_filter_orderby_invert else 'SORT_ASC'
+        subrow.prop(self, 'use_filter_orderby_invert', text="", icon=icon)
+
+    def filter_items(self, context, data, propname):
+        self.use_filter_show = True
+        items = getattr(data, propname)
+        helper_funcs = bpy.types.UI_UL_list
+        flags = [self.bitflag_filter_item] * len(items)
+        neworder = []
+
+        if self.filter_name:
+            flags = helper_funcs.filter_items_by_name(
+                self.filter_name, self.bitflag_filter_item, items, 'bone_name', reverse=self.use_filter_invert)
+
+        if self.filter == 'SUITABLE':
+            for index, item in enumerate(items):
+                if not item.is_suitable_for_vg:
+                    flags[index] &= ~self.bitflag_filter_item
+
+        if self.use_filter_sort_alpha:
+            sort_data = [(i, it) for i, it in enumerate(items)]
+            key = lambda x: (getattr(x[1], 'bone_name', '') or '').casefold()
+            neworder = helper_funcs.sort_items_helper(sort_data, key=key, reverse=self.use_filter_orderby_invert)
+        else:
+            if self.use_filter_orderby_invert:
+                neworder = list(reversed(range(len(items))))
+
+        for index, item in enumerate(items):
+            item.is_visible = bool(flags[index] & self.bitflag_filter_item)
+
+        return flags, neworder
+
+    def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index):
+        split = layout.split(factor=0.70)
+        col = split.column(align=True)
+        col.prop(item, 'add_bone', text=item.bone_name, translate=False)
+        col = split.column(align=True)
+        col.label(text="" if item.is_suitable_for_vg else "非推奨", icon='CHECKMARK' if item.is_suitable_for_vg else 'ERROR')
+
+
+@compat.BlRegister()
+class CNV_OT_add_vertex_groups(bpy.types.Operator):
+    bl_idname = 'object.add_vertex_groups'
+    bl_label = "アーマチュアから頂点グループを追加"
+    bl_description = "アーマチュアのボーンに対応する頂点グループを追加します"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    bone_list: bpy.props.CollectionProperty(type=CNV_PG_bone_item)
+    active_index: bpy.props.IntProperty(name="", default=-1, options={'HIDDEN'})
+    active_instance = None
+
+    @classmethod
+    def poll(cls, context):
+        ob = context.active_object
+        return ob and ob.type == 'MESH'
+
+    def invoke(self, context, event):
+        ob = context.active_object
+        arm_ob = ob.find_armature()
+        suitable_bones =  get_bones_suitable_for_vg(arm_ob.data.bones)
+        vg_list = {vg.name for vg in ob.vertex_groups}
+        self.bone_list.clear()
+        for bone in arm_ob.data.bones:
+            if bone.name not in vg_list:
+                item = self.bone_list.add()
+                item.bone_name = bone.name
+                item.is_suitable_for_vg = bone.name in suitable_bones
+                item.add_bone = False
+        CNV_OT_add_vertex_groups.active_instance = self
+        return context.window_manager.invoke_props_dialog(self, width=400)
+
+    def draw(self, context):
+        ob = context.active_object
+        arm_ob = ob.find_armature()
+
+        layout = self.layout
+        layout.label(text="対象アーマチュア", icon='ARMATURE_DATA')
+        layout.label(text=arm_ob.name, translate=False)
+        if ob.parent != arm_ob:
+            msg = _("注意: 対象アーマチュアが親アーマチュアではありません。モディファイアにより別アーマチュアが指定されています。")
+            col = layout.column(align=True)
+            common.wrap_label(col, msg, icon='ERROR', width=280)
+
+        box = layout.box()
+        split = box.split(factor=0.7)
+        col = split.column(align=True)
+        col.label(text="ボーン名 (頂点グループ名)")
+        col = split.column(align=True)
+        col.label(text="非推奨")
+
+        layout.template_list('CNV_UL_bone_list', '', self, 'bone_list', self, 'active_index', rows=10)
+
+    def execute(self, context):
+        ob = context.active_object
+        for item in self.bone_list:
+            if item.add_bone and item.is_visible:
+                ob.vertex_groups.new(name=item.bone_name)
+        CNV_OT_add_vertex_groups.active_instance = None
+        return {'FINISHED'}
+
+    def cancel(self, context):
+        CNV_OT_add_vertex_groups.active_instance = None
+
+
+@compat.BlRegister()
+class CNV_OT_bone_list_action(bpy.types.Operator):
+    bl_idname = 'object.bone_list_action'
+    bl_label = "ボーンリスト一括操作"
+
+    action: bpy.props.EnumProperty(items=[('SELECT', '', ''), ('DESELECT', '', '')])
+
+    def execute(self, context):
+        operator = CNV_OT_add_vertex_groups.active_instance
+        if operator is None:
+            return {'CANCELLED'}
+
+        add_bone = self.action == 'SELECT'
+        for item in operator.bone_list:
+            if item.is_visible:
+                item.add_bone = add_bone
         return {'FINISHED'}
