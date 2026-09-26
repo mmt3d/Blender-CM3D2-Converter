@@ -353,6 +353,23 @@ class CNV_PG_bone_data_diff_item(bpy.types.PropertyGroup):
 class CNV_UL_bone_data_diff_list(bpy.types.UIList):
     bl_idname = 'CNV_UL_bone_data_diff_list'
 
+    def filter_items(self, context, data, propname):
+        items = getattr(data, propname)
+        helper_funcs = bpy.types.UI_UL_list
+        flags = [self.bitflag_filter_item] * len(items)
+        neworder = []
+
+        if self.filter_name:
+            flags = helper_funcs.filter_items_by_name(
+                self.filter_name, self.bitflag_filter_item, items, 'bone_name', reverse=self.use_filter_invert)
+
+        if self.use_filter_sort_alpha:
+            sort_data = [(i, it) for i, it in enumerate(items)]
+            key = lambda x: (getattr(x[1], 'bone_name', '') or '').casefold()
+            neworder = helper_funcs.sort_items_helper(sort_data, key=key, reverse=self.use_filter_invert)
+
+        return flags, neworder
+
     def draw_item(self, context, layout, data, item, icon, active_data, active_property, index=0):
 
         is_mesh = data.is_mesh
