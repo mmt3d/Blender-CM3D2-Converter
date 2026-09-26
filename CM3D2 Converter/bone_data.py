@@ -1,3 +1,4 @@
+import bpy
 import mathutils
 
 
@@ -142,3 +143,21 @@ def merge_local_bone_data(
             merged.append(new.copy())
 
     return merged
+
+
+def get_bones_suitable_for_vg(bone_list: list[bpy.types.Bone]) -> list[str]:
+    """
+    頂点グループを追加するのに適しているボーン名リストを返す
+    """
+    is_body_bone = 'Bip01' in [b.name for b in bone_list]
+    result = []
+    for bone in bone_list:
+        # ボディボーンの場合、親も子もないボーンは不適格とする
+        if is_body_bone and bone.parent is None and len(bone.children) == 0:
+            continue
+        # nubボーンやIKボーンは不適格とする
+        lower = bone.name.casefold()
+        if lower.endswith('_nub') or lower.endswith('nub') or '_ik_' in lower:
+            continue
+        result.append(bone.name)
+    return result

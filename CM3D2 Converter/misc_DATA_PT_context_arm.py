@@ -3,7 +3,7 @@ import os
 import bpy
 import mathutils
 from . import common, compat
-from .bone_data import (calc_bone_data_diff, calc_local_bone_data_diff,
+from .bone_data import (calc_bone_data_diff, calc_local_bone_data_diff, get_bones_suitable_for_vg,
                         merge_bone_data_with_parent_names, merge_local_bone_data, parent_name_map, DEFAULT_THRESHOLD)
 from .translations import *
 
@@ -317,6 +317,7 @@ class CNV_OT_remove_armature_bone_data_property(bpy.types.Operator):
         self.report(type={'INFO'}, message="ボーン情報を削除しました")
         return {'FINISHED'}
 
+
 @compat.BlRegister()
 class CNV_PG_bone_data_diff_item(bpy.types.PropertyGroup):
     bl_idname = 'CNV_PG_bone_data_diff_item'
@@ -325,6 +326,10 @@ class CNV_PG_bone_data_diff_item(bpy.types.PropertyGroup):
     parent_name: bpy.props.StringProperty(options={'HIDDEN'})
     upd_parent: bpy.props.BoolProperty(default=False)
     diff_parent: bpy.props.BoolProperty(default=False, options={'HIDDEN'})
+
+    # 頂点グループ用(meshオブジェクト用)
+    operate_vg: bpy.props.BoolProperty(default=False)
+    diff_vg: bpy.props.EnumProperty(items=[('NONE', '', ''), ('INSERT', '', ''), ('DELETE', '', '')], default='NONE', options={'HIDDEN'})
 
     # BoneData 用
     upd_loc: bpy.props.BoolProperty(default=False)
@@ -350,22 +355,27 @@ class CNV_UL_bone_data_diff_list(bpy.types.UIList):
 
     def draw_item(self, context, layout, data, item, icon, active_data, active_property, index=0):
 
-        split = layout.split(factor=0.48, align=True)
+        is_mesh = data.is_mesh
+        with_scroll = len(data.diff_items) > data.max_rows
+        split_factor1, split_factor2 = self.get_ui_sizes(is_mesh, with_scroll)
+        split = layout.split(factor=split_factor1, align=True)
         col1 = split.column()
         row = col1.row(align=True)
 
         # ボーン名
-        row.label(text=item.bone_name)
+        row.label(text=item.bone_name, translate=False)
 
         if item.diff_parent:
             row.prop(item, 'upd_parent', text=item.parent_name)
         elif item.mode != 'UPDATE':
-            row.label(text=item.parent_name)
+            row.label(text=item.parent_name, translate=False)
         else:
-            row.label(text=item.parent_name)
+            row.label(text=item.parent_name, translate=False)
 
         col2 = split.column()
-        row = col2.row(align=True)
+        split = col2.split(factor=split_factor2, align=True)
+        col3 = split.column()
+        row = col3.row(align=True)
         if item.mode != 'UPDATE':
             if item.mode == 'INSERT':
                 row.prop(item, 'approved', text='➕ ' + _("New"))
@@ -373,12 +383,28 @@ class CNV_UL_bone_data_diff_list(bpy.types.UIList):
                 row.prop(item, 'approved', text='🗑 ' + _("Delete"))
             for i in range(3):
                 row.label(text='')
-            return
+        else:
+            row.prop(item, 'upd_loc', text=f'{item.diff_loc:.6f}')
+            row.prop(item, 'upd_rot', text=f'{item.diff_rot:.6f}')
+            row.prop(item, 'upd_scl', text=f'{item.diff_scl:.6f}')
+            row.prop(item, 'upd_local', text=f'{item.diff_local:.6f}')
 
-        row.prop(item, 'upd_loc', text=f'{item.diff_loc:.6f}')
-        row.prop(item, 'upd_rot', text=f'{item.diff_rot:.6f}')
-        row.prop(item, 'upd_scl', text=f'{item.diff_scl:.6f}')
-        row.prop(item, 'upd_local', text=f'{item.diff_local:.6f}')
+        if is_mesh:
+            col4 = split.column()
+            if item.diff_vg == 'INSERT':
+                col4.prop(item, 'operate_vg', text="追加")
+            elif item.diff_vg == 'DELETE':
+                col4.prop(item, 'operate_vg', text="削除")
+            else:
+                col4.label(text='-')
+
+    @staticmethod
+    def get_ui_sizes(is_mesh: bool, with_scroll: bool = False):
+        factors = [[(0.48, 1.0),    # without scroll, armature
+                    (0.43, 0.83)],  # without scroll, mesh
+                   [(0.47, 1.0),    # with scroll, armature
+                    (0.44, 0.87)]]  # with scroll, mesh
+        return factors[int(with_scroll)][int(is_mesh)]
 
 
 @compat.BlRegister()
@@ -396,7 +422,7 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
     model_version: bpy.props.EnumProperty(name="ファイルバージョン", items=items1, default='1000')
     show_diff: bpy.props.BoolProperty(name="差分のみ表示", default=True, description="差分のあるボーンのみ表示します")
     threshold: bpy.props.FloatProperty(name="差分しきい値", default=DEFAULT_THRESHOLD, min=0.0, max=1.0, soft_max=1.0, precision=6, description="この値を超える要素を自動でチェックします")
-    show_threshold_details: bpy.props.BoolProperty(name="差分しきい値の詳細", default=False, options={'HIDDEN'})
+    show_threshold_details: bpy.props.BoolProperty(name="差分しきい値の詳細", default=False, options={'HIDDEN', 'SKIP_SAVE'})
     items2 = [('0.001', '0.001', ''),
               ('0.0001', '0.0001', ''),
               ('0.00001', '0.00001', ''),
@@ -404,31 +430,53 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
               ('0.0', '0.0', '')]
     threshold_preset: bpy.props.EnumProperty(items=items2, description="差分しきい値のプリセット値を選択します", default=str(DEFAULT_THRESHOLD))
     diff_items: bpy.props.CollectionProperty(type=CNV_PG_bone_data_diff_item)
-    diff_items_all: bpy.props.CollectionProperty(type=CNV_PG_bone_data_diff_item, options={'HIDDEN'})
-    active_diff_index: bpy.props.IntProperty(name="", default=-1, options={'HIDDEN'})
-    single_bones: bpy.props.CollectionProperty(type=bpy.types.PropertyGroup, options={'HIDDEN'})
+    diff_items_all: bpy.props.CollectionProperty(type=CNV_PG_bone_data_diff_item, options={'HIDDEN', 'SKIP_SAVE'})
+    max_rows: bpy.props.IntProperty(default=10, options={'HIDDEN', 'SKIP_SAVE'})
+    active_diff_index: bpy.props.IntProperty(name="", default=-1, options={'HIDDEN', 'SKIP_SAVE'})
+    single_bones: bpy.props.CollectionProperty(type=bpy.types.PropertyGroup, options={'HIDDEN', 'SKIP_SAVE'})
+    is_mesh: bpy.props.BoolProperty(default=False, options={'HIDDEN', 'SKIP_SAVE'})
 
     # 一時保持用データ
+    _arm = None
+    _prop = None
+    _mesh = None
     _prev_show_diff = None
     _prev_scale = None
     _prev_threshold = None
     _prev_threshold_preset = None
     _new_bone_data_list = []
     _new_local_bone_data_list = []
-    MAX_ROW = 10
+
+    @staticmethod
+    def get_ui_sizes(is_mesh: bool, with_scroll: bool = False):
+        factors = [[(650, 0.48, 0.98),    # without scroll, armature
+                    (720, 0.43, 0.82)],   # without scroll, mesh
+                   [(650, 0.455, 0.93),   # with scroll, armature
+                    (720, 0.425, 0.82)]]  # with scroll, mesh
+        return factors[int(with_scroll)][int(is_mesh)]
 
     @classmethod
     def poll(cls, context):
         ob = context.active_object
-        return ob and ob.type == 'ARMATURE'
+        return ob and (ob.type == 'ARMATURE' or ob.type == 'MESH')
 
     def invoke(self, context, event):
-        arm_ob = context.active_object
-        self.base_bone = arm_ob.data.get('BaseBone', '')
-        self.model_version = str(arm_ob.data.get('ModelVersion', '1000'))
-        self.scale = 1.0 / arm_ob.data.get('ImportScale', common.preferences().scale)
+        ob = context.active_object
+        if ob.type == 'ARMATURE':
+            self._arm = ob
+            self._prop = ob.data
+            self._mesh = None
+        else:
+            self._arm = ob.find_armature()
+            self._prop = ob
+            self._mesh = ob
+            self.is_mesh = True
+
+        self.base_bone = self._arm.data.get('BaseBone', '')
+        self.model_version = str(self._arm.data.get('ModelVersion', '1000'))
+        self.scale = 1.0 / self._arm.data.get('ImportScale', common.preferences().scale)
         self.single_bones.clear()
-        for bone in arm_ob.data.bones:
+        for bone in self._arm.data.bones:
             if bone.parent is None and len(bone.children) == 0:
                 item = self.single_bones.add()
                 item.name = bone.name
@@ -436,7 +484,7 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
         self._prev_scale = self.scale
         self._prev_threshold = self.threshold
         self._prev_threshold_preset = self.threshold_preset
-        pre_mode = arm_ob.mode
+        pre_mode = self._arm.mode
         if pre_mode != 'OBJECT':
             bpy.ops.object.mode_set(mode='OBJECT')
             self.recalculate_diff(context)
@@ -444,7 +492,8 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
         else:
             self.recalculate_diff(context)
         self.filter_diff()
-        return context.window_manager.invoke_props_dialog(self, width=650)
+        width, __, __ = self.get_ui_sizes(self.is_mesh)
+        return context.window_manager.invoke_props_dialog(self, width=width)
 
     def draw(self, context):
         # UI 上で scale や threshold を変更したら再計算
@@ -460,10 +509,21 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
             self._prev_show_diff = self.show_diff
             self.filter_diff()
 
+        width, split_factor1, split_factor2 = self.get_ui_sizes(self.is_mesh, len(self.diff_items) > self.max_rows)
         layout = self.layout
 
+        if self.is_mesh:
+            split = layout.split(factor=0.24, align=True)
+            col = split.column(align=True)
+            col.label(text="対象アーマチュア")
+            col = split.column(align=True)
+            col.label(text=self._arm.name, translate=False)
+            if self._mesh.parent != self._arm:
+                msg = _("注意: 対象アーマチュアが親アーマチュアではありません。モディファイアにより別アーマチュアが指定されています。")
+                common.wrap_label(layout, msg, icon='ERROR', width=width - 20)
+
         # 設定エリア
-        layout.prop_search(self, 'base_bone', self, 'single_bones', icon='BONE_DATA')
+        layout.prop_search(self, 'base_bone', self, 'single_bones', icon='BONE_DATA', translate=False)
         layout.prop(self, 'model_version')
         layout.prop(self, 'scale')
         row = layout.row(align=True)
@@ -486,17 +546,11 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
                      "これは誤差と見做す範囲を調整して更新不要なものを見定めるしきい値です。\n"
                      "0.0 にすると全て更新しますが実用上はそれでも問題ありません。この取り込み操作を何度も行う想定なら、"
                      "誤差が拡大しないよう最小限の更新にしておくとよいです。おすすめは 0.0001 です。")
-            common.wrap_label(col, icon='LIGHT_DATA', width=640, text=desc)
+            common.wrap_label(col, icon='LIGHT_DATA', width=width - 20, text=desc)
 
         layout.separator()
         layout.label(text="更新差分確認テーブル (チェックを入れた要素のみ更新)")
 
-        if len(self.diff_items) > self.MAX_ROW:
-            split_factor1 = 0.465
-            split_factor2 = 0.93
-        else:
-            split_factor1 = 0.48
-            split_factor2 = 0.98
         # テーブルヘッダー
         box = layout.box()
         split = box.split(factor=split_factor1, align=True)
@@ -512,11 +566,14 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
         row.label(text=_("Rotation") + ' (BD)')
         row.label(text=_("Scale") + ' (BD)')
         row.label(text=_("Matrix") + ' (LBD)')
+        if self.is_mesh:
+            col4 = split.column()
+            col4.label(text="Vertex Group")
 
         if len(self.diff_items) == 0:
             box.label(text="差分はありません", icon='INFO')
         else:
-            layout.template_list('CNV_UL_bone_data_diff_list', '', self, 'diff_items', self, 'active_diff_index', rows=self.MAX_ROW)
+            layout.template_list('CNV_UL_bone_data_diff_list', '', self, 'diff_items', self, 'active_diff_index', rows=self.max_rows)
 
     def execute(self, context):
         if len(self.diff_items) == 0:
@@ -532,12 +589,10 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
             self.report({'INFO'}, "更新対象がないので更新しませんでした")
             return {'FINISHED'}
 
-        arm_ob = context.active_object
-
         # 既存プロパティデータを取得
         from .model_export import CNV_OT_export_cm3d2_model as export_model
-        old_bone_data = export_model.bone_data_parser(export_model.indexed_data_generator(arm_ob.data, prefix='BoneData:'))
-        old_local_bone_data = export_model.local_bone_data_parser(export_model.indexed_data_generator(arm_ob.data, prefix='LocalBoneData:'))
+        old_bone_data = export_model.bone_data_parser(export_model.indexed_data_generator(self._prop, prefix='BoneData:'))
+        old_local_bone_data = export_model.local_bone_data_parser(export_model.indexed_data_generator(self._prop, prefix='LocalBoneData:'))
 
         # チェック状態のマップを作成
         diff_map = {item.bone_name: item for item in self.diff_items}
@@ -569,7 +624,18 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
             deleted_names=deleted_names, inserted_names=inserted_names)
 
         # 最終データをカスタムプロパティに書き戻し
-        self.update_armature_bone_data_properties(arm_ob.data, final_bone_data, final_local_bone_data)
+        self.update_armature_bone_data_properties(self._prop, final_bone_data, final_local_bone_data)
+
+        # 頂点グループの追加
+        if self.is_mesh:
+            for name, item in diff_map.items():
+                if item.operate_vg:
+                    if item.diff_vg == 'INSERT':
+                        self._mesh.vertex_groups.new(name=name)
+                    elif item.diff_vg == 'DELETE':
+                        vg = self._mesh.vertex_groups.get(name)
+                        if vg:
+                            self._mesh.vertex_groups.remove(vg)
 
         self.report({'INFO'}, "BoneDataを更新しました")
         return {'FINISHED'}
@@ -578,19 +644,19 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
         """既存データと新解析データの差分を計算"""
         from .model_export import CNV_OT_export_cm3d2_model as export_model
 
-        arm_ob = context.active_object
-        if not arm_ob:
-            return
+        vg_list = {}
+        if self.is_mesh:
+            vg_list = {vg.name for vg in self._mesh.vertex_groups}
 
-        old_bd = export_model.bone_data_parser(export_model.indexed_data_generator(arm_ob.data, prefix='BoneData:'))
-        old_lbd = export_model.local_bone_data_parser(export_model.indexed_data_generator(arm_ob.data, prefix='LocalBoneData:'))
+        old_bd = export_model.bone_data_parser(export_model.indexed_data_generator(self._prop, prefix='BoneData:'))
+        old_lbd = export_model.local_bone_data_parser(export_model.indexed_data_generator(self._prop, prefix='LocalBoneData:'))
 
         old_bd_by_name = {d['name']: d for d in old_bd}
         old_lbd_by_name = {d['name']: d for d in old_lbd}
         old_parents = parent_name_map(old_bd)
 
-        self._new_bone_data_list = export_model.armature_bone_data_parser(context, arm_ob, self.scale, True)
-        self._new_local_bone_data_list = export_model.armature_local_bone_data_parser(arm_ob, self.scale, True)
+        self._new_bone_data_list = export_model.armature_bone_data_parser(context, self._arm, self.scale, True)
+        self._new_local_bone_data_list = export_model.armature_local_bone_data_parser(self._arm, self.scale, True)
 
         new_bd_by_name = {d['name']: d for d in self._new_bone_data_list}
         new_lbd_by_name = {d['name']: d for d in self._new_local_bone_data_list}
@@ -626,8 +692,15 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
                 if name in old_lbd_by_name:
                     item.diff_local = calc_local_bone_data_diff(old_lbd_by_name[name], new_lbd_by_name[name])
 
+            # 頂点グループ差分
+            item.diff_vg = 'NONE'
+            if self.is_mesh:
+                if item.mode == 'INSERT' and name not in vg_list or item.mode == 'DELETE' and name in vg_list:
+                    item.diff_vg = item.mode
+
     def filter_diff(self):
         """しきい値判定した結果アイテムリストを作る"""
+        bones_suitable_for_vg = list(get_bones_suitable_for_vg(self._arm.data.bones))
         self.diff_items.clear()
         for item in self.diff_items_all[:]:
             item.upd_loc = item.diff_loc >= self.threshold
@@ -635,6 +708,8 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
             item.upd_scl = item.diff_scl >= self.threshold
             item.upd_local = item.diff_local >= self.threshold
             item.upd_parent = item.diff_parent
+            # 頂点グループ削除は敢えてチェックしない
+            item.operate_vg = item.diff_vg == 'INSERT' and item.bone_name in bones_suitable_for_vg
             has_update = any((item.upd_loc, item.upd_rot, item.upd_scl, item.upd_local, item.upd_parent))
             if not self.show_diff or item.mode != 'UPDATE' or has_update:
                 add_item = self.diff_items.add()
@@ -662,7 +737,7 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
             arm_data['LocalBoneData:' + str(i)] = data['name'] + ',' + ' '.join(map(str, data['matrix']))
 
         arm_data['BaseBone'] = self.base_bone
-        arm_data['ModelVersion'] = self.model_version
+        arm_data['ModelVersion'] = int(self.model_version)
         arm_data['ImportScale'] = 1.0 / self.scale
 
 

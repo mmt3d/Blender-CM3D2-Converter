@@ -39,6 +39,11 @@ def menu_func(self, context):
         row.operator('object.paste_object_bone_data_property', icon='PASTEDOWN', text="Paste")
         row.operator('object.remove_object_bone_data_property', icon='X', text="")
 
+    col = self.layout.column(align=True)
+    col.label(text="ボーン情報更新", icon='FILE_REFRESH')
+    row = col.row(align=True)
+    row.operator('armature.update_bone_data', icon='ARMATURE_DATA')
+
 @compat.BlRegister()
 class CNV_OT_copy_object_bone_data_property(bpy.types.Operator):
     bl_idname = 'object.copy_object_bone_data_property'
