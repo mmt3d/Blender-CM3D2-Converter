@@ -93,9 +93,8 @@ class AddonPOTExtractor:
         if key in self.blender_keys:
             return
 
-        rel_path = os.path.relpath(filepath, self.root_dir).replace("\\", "/")
-        location = f"{rel_path}:{lineno}"
-        
+        location = os.path.relpath(filepath, self.root_dir).replace("\\", "/")
+
         # フォーマット構文フラグの管理
         flags = set()
         if PYTHON_FORMAT_RE.search(msgid):
