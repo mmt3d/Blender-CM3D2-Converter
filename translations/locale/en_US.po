@@ -2116,7 +2116,7 @@ msgstr "Update Bone Data"
 #: misc_DATA_PT_context_arm.py:672
 #, fuzzy
 msgctxt "Operator"
-msgid "ベースボーン名変更"
+msgid "基点ボーン名変更"
 msgstr "Rename Base Bone"
 
 #: misc_DATA_PT_context_arm.py:724
@@ -2172,7 +2172,7 @@ msgstr "Update Bone Data"
 #: misc_DATA_PT_context_arm.py:391
 #, fuzzy
 msgctxt "*"
-msgid "ベースボーン"
+msgid "基点ボーン"
 msgstr "Base Bone"
 
 #. mt:gemini
@@ -2221,7 +2221,7 @@ msgstr "Select a preset value for the difference threshold."
 #: misc_DATA_PT_context_arm.py:676
 #, fuzzy
 msgctxt "*"
-msgid "ベースボーン名"
+msgid "基点ボーン名"
 msgstr "Base Bone Name"
 
 #: misc_DATA_PT_context_arm.py:1146
@@ -2738,7 +2738,7 @@ msgstr "Analyzes the armature and updates BoneData/LocalBoneData."
 #: misc_DATA_PT_context_arm.py:673
 #, fuzzy
 msgctxt "*"
-msgid "BoneDataとアーマチュアのベースボーン名を変更します"
+msgid "BoneDataとアーマチュアの基点ボーン名を変更します"
 msgstr "Renames the base bone in BoneData and the armature."
 
 #: misc_DATA_PT_context_arm.py:725
@@ -2781,7 +2781,7 @@ msgstr "BoneData updated."
 #: misc_DATA_PT_context_arm.py:714
 #, fuzzy
 msgctxt "*"
-msgid "ベースボーン名を変更しました"
+msgid "基点ボーン名を変更しました"
 msgstr "Base bone name changed."
 
 #. mt:gemini

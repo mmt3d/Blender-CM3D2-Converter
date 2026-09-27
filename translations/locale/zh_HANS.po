@@ -2535,7 +2535,7 @@ msgstr ""
 
 #: misc_DATA_PT_context_arm.py:672
 msgctxt "Operator"
-msgid "ベースボーン名変更"
+msgid "基点ボーン名変更"
 msgstr ""
 
 #. mt:gemini
@@ -2603,7 +2603,7 @@ msgstr ""
 
 #: misc_DATA_PT_context_arm.py:391
 msgctxt "*"
-msgid "ベースボーン"
+msgid "基点ボーン"
 msgstr ""
 
 #: misc_DATA_PT_context_arm.py:397
@@ -2638,7 +2638,7 @@ msgstr ""
 
 #: misc_DATA_PT_context_arm.py:676
 msgctxt "*"
-msgid "ベースボーン名"
+msgid "基点ボーン名"
 msgstr ""
 
 #. mt:gemini
@@ -3330,7 +3330,7 @@ msgstr ""
 
 #: misc_DATA_PT_context_arm.py:673
 msgctxt "*"
-msgid "BoneDataとアーマチュアのベースボーン名を変更します"
+msgid "BoneDataとアーマチュアの基点ボーン名を変更します"
 msgstr ""
 
 #. mt:gemini
@@ -3375,7 +3375,7 @@ msgstr ""
 
 #: misc_DATA_PT_context_arm.py:714
 msgctxt "*"
-msgid "ベースボーン名を変更しました"
+msgid "基点ボーン名を変更しました"
 msgstr ""
 
 #. mt:gemini

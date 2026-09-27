@@ -431,7 +431,7 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
     bl_description = "アーマチュアを解析してBoneData/LocalBoneDataを更新します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    base_bone: bpy.props.StringProperty(name="ベースボーン")
+    base_bone: bpy.props.StringProperty(name="基点ボーン")
     scale: bpy.props.FloatProperty(name="倍率", default=5.0, min=0.1, max=100.0, soft_min=0.1, soft_max=100.0, precision=1, step=10)
     items1 = [('1000', '1000', ''),
               ('2000', '2000', ''),
@@ -764,11 +764,11 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
 @compat.BlRegister()
 class CNV_OT_armature_rename_base_bone(bpy.types.Operator):
     bl_idname = 'armature.rename_base_bone'
-    bl_label = "ベースボーン名変更"
-    bl_description = "BoneDataとアーマチュアのベースボーン名を変更します"
+    bl_label = "基点ボーン名変更"
+    bl_description = "BoneDataとアーマチュアの基点ボーン名を変更します"
     bl_options = {'REGISTER', 'UNDO'}
 
-    base_bone: bpy.props.StringProperty(name="ベースボーン名", default="")
+    base_bone: bpy.props.StringProperty(name="基点ボーン名", default="")
 
     @classmethod
     def poll(cls, context):
@@ -806,7 +806,7 @@ class CNV_OT_armature_rename_base_bone(bpy.types.Operator):
                 if len(local_bone_data) > 0 and local_bone_data[0] == old_base_bone:
                     local_bone_data[0] = self.base_bone
                     arm_ob.data[prop] = ','.join(local_bone_data)
-        self.report({'INFO'}, "ベースボーン名を変更しました")
+        self.report({'INFO'}, "基点ボーン名を変更しました")
         return {'FINISHED'}
 
 

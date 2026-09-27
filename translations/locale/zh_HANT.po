@@ -2543,7 +2543,7 @@ msgstr "匯入骨骼資訊"
 #: misc_DATA_PT_context_arm.py:672
 #, fuzzy
 msgctxt "Operator"
-msgid "ベースボーン名変更"
+msgid "基点ボーン名変更"
 msgstr "變更基礎骨骼名稱"
 
 #. mt:gemini
@@ -2615,7 +2615,7 @@ msgstr "更新骨骼資訊"
 #: misc_DATA_PT_context_arm.py:391
 #, fuzzy
 msgctxt "*"
-msgid "ベースボーン"
+msgid "基点ボーン"
 msgstr "基礎骨骼"
 
 #. mt:gemini
@@ -2664,7 +2664,7 @@ msgstr "選擇差異閾值預設值"
 #: misc_DATA_PT_context_arm.py:676
 #, fuzzy
 msgctxt "*"
-msgid "ベースボーン名"
+msgid "基点ボーン名"
 msgstr "基礎骨骼名稱"
 
 #. mt:gemini
@@ -3368,7 +3368,7 @@ msgstr "解析骨架並更新 BoneData/LocalBoneData"
 #: misc_DATA_PT_context_arm.py:673
 #, fuzzy
 msgctxt "*"
-msgid "BoneDataとアーマチュアのベースボーン名を変更します"
+msgid "BoneDataとアーマチュアの基点ボーン名を変更します"
 msgstr "變更 BoneData 和骨架的基礎骨骼名稱"
 
 #. mt:gemini
@@ -3417,7 +3417,7 @@ msgstr "BoneData 已更新"
 #: misc_DATA_PT_context_arm.py:714
 #, fuzzy
 msgctxt "*"
-msgid "ベースボーン名を変更しました"
+msgid "基点ボーン名を変更しました"
 msgstr "基礎骨骼名稱已變更"
 
 #. mt:gemini

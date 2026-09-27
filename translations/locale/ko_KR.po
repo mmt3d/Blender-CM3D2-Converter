@@ -2550,7 +2550,7 @@ msgstr "본 정보 가져오기"
 #: misc_DATA_PT_context_arm.py:672
 #, fuzzy
 msgctxt "Operator"
-msgid "ベースボーン名変更"
+msgid "基点ボーン名変更"
 msgstr "베이스 본 이름 변경"
 
 #. mt:gemini
@@ -2622,7 +2622,7 @@ msgstr "본 정보 업데이트"
 #: misc_DATA_PT_context_arm.py:391
 #, fuzzy
 msgctxt "*"
-msgid "ベースボーン"
+msgid "基点ボーン"
 msgstr "베이스 본"
 
 #. mt:gemini
@@ -2667,7 +2667,7 @@ msgstr ""
 #: misc_DATA_PT_context_arm.py:676
 #, fuzzy
 msgctxt "*"
-msgid "ベースボーン名"
+msgid "基点ボーン名"
 msgstr "베이스 본 이름"
 
 #. mt:gemini
@@ -3367,7 +3367,7 @@ msgstr ""
 
 #: misc_DATA_PT_context_arm.py:673
 msgctxt "*"
-msgid "BoneDataとアーマチュアのベースボーン名を変更します"
+msgid "BoneDataとアーマチュアの基点ボーン名を変更します"
 msgstr ""
 
 #. mt:gemini
@@ -3412,7 +3412,7 @@ msgstr ""
 
 #: misc_DATA_PT_context_arm.py:714
 msgctxt "*"
-msgid "ベースボーン名を変更しました"
+msgid "基点ボーン名を変更しました"
 msgstr ""
 
 #. mt:gemini

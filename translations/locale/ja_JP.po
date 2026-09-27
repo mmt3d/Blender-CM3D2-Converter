@@ -2158,8 +2158,8 @@ msgstr "ボーン情報取り込み"
 
 #: misc_DATA_PT_context_arm.py:672
 msgctxt "Operator"
-msgid "ベースボーン名変更"
-msgstr "ベースボーン名変更"
+msgid "基点ボーン名変更"
+msgstr "基点ボーン名変更"
 
 #. mt:gemini
 #: misc_DATA_PT_context_arm.py:724
@@ -2224,8 +2224,8 @@ msgstr "ボーン情報更新"
 
 #: misc_DATA_PT_context_arm.py:391
 msgctxt "*"
-msgid "ベースボーン"
-msgstr "ベースボーン"
+msgid "基点ボーン"
+msgstr "基点ボーン"
 
 #: misc_DATA_PT_context_arm.py:397
 msgctxt "*"
@@ -2259,8 +2259,8 @@ msgstr "差分しきい値のプリセット値を選択します"
 
 #: misc_DATA_PT_context_arm.py:676
 msgctxt "*"
-msgid "ベースボーン名"
-msgstr "ベースボーン名"
+msgid "基点ボーン名"
+msgstr "基点ボーン名"
 
 #. mt:gemini
 #: misc_DATA_PT_context_arm.py:1146
@@ -2933,8 +2933,8 @@ msgstr "アーマチュアを解析してBoneData/LocalBoneDataを更新しま�
 
 #: misc_DATA_PT_context_arm.py:673
 msgctxt "*"
-msgid "BoneDataとアーマチュアのベースボーン名を変更します"
-msgstr "BoneDataとアーマチュアのベースボーン名を変更します"
+msgid "BoneDataとアーマチュアの基点ボーン名を変更します"
+msgstr "BoneDataとアーマチュアの基点ボーン名を変更します"
 
 #. mt:gemini
 #: misc_DATA_PT_context_arm.py:725
@@ -2978,8 +2978,8 @@ msgstr "BoneDataを更新しました"
 
 #: misc_DATA_PT_context_arm.py:714
 msgctxt "*"
-msgid "ベースボーン名を変更しました"
-msgstr "ベースボーン名を変更しました"
+msgid "基点ボーン名を変更しました"
+msgstr "基点ボーン名を変更しました"
 
 #. mt:gemini
 #: misc_DATA_PT_context_arm.py:2149
