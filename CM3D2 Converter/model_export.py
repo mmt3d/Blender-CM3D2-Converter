@@ -579,7 +579,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         is_deleted = 0
         deleted_names = "The game will delete these local bones"
         for index, is_used in used_local_bone.items():
-            print(index, is_used)
+            # print(index, is_used)
             if is_used == False:
                 is_deleted += 1
                 deleted_names = deleted_names + '\n' + local_bone_data[index]['name']
