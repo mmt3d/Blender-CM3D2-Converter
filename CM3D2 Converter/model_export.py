@@ -467,6 +467,11 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         bone_name_indices = {bone['name']: index for index, bone in enumerate(bone_data)}
         context.window_manager.progress_update(2)
 
+        # ARMATUREモードでは基点ボーン実在が必須
+        if self.bone_info_mode == 'ARMATURE':
+            if arm_ob.data.bones.get(self.base_bone_name) is None:
+                return self.report_cancel(f_("基点ボーン '{}' がアーマチュアに存在しません", self.base_bone_name))
+
         if self.is_align_to_base_bone:
             bpy.ops.object.align_to_cm3d2_base_bone(scale=1.0/self.scale, is_preserve_mesh=True, bone_info_mode=self.bone_info_mode)
             me.update()
@@ -479,7 +484,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         # LocalBoneData情報読み込み
         local_bone_data = []
         if self.bone_info_mode == 'ARMATURE':
-            local_bone_data = self.armature_local_bone_data_parser(arm_ob, self.scale, self.is_convert_bone_weight_names)
+            local_bone_data = self.armature_local_bone_data_parser(arm_ob, self.scale, self.is_convert_bone_weight_names, self.base_bone_name)
             if self.float_threshold > 0.0:
                 old_local_bone_data = self.local_bone_data_parser(self.indexed_data_generator(arm_ob.data, prefix='LocalBoneData:'))
                 local_bone_data = merge_local_bone_data(old_local_bone_data, local_bone_data, self.float_threshold)
@@ -1197,8 +1202,8 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
         return bone_data
 
     @staticmethod
-    def armature_local_bone_data_parser(ob, scale, is_convert_bone_weight_names):
-        """アーマチュアを解析してBoneDataを返す"""
+    def armature_local_bone_data_parser(ob, scale, is_convert_bone_weight_names, base_bone_name):
+        """アーマチュアを解析してLocalBoneDataを返す"""
         arm = ob.data
 
         # XXX Instead of just adding all bones, only bones / bones-with-decendants 
@@ -1223,11 +1228,17 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
 
             bones_queue.append(bone)
 
+        # 基点ボーンからの位置回転を相対化するための逆行列を計算
+        base_bone = arm.bones.get(base_bone_name)
+        bone_rotation_fix = mathutils.Matrix.Scale(-1, 4, (1, 0, 0))
+        base_bone_matrix = compat.convert_bl_to_cm_bone_rotation(bone_rotation_fix @ base_bone.matrix_local)
+        base_bone_matrix_inv = base_bone_matrix.inverted()
+
         local_bone_data = []
         for bone in bones:
-            mat = bone.matrix_local.copy()
-            mat = compat.mul(mathutils.Matrix.Scale(-1, 4, (1, 0, 0)), mat)
-            mat = compat.convert_bl_to_cm_bone_rotation(mat)
+            # 基点ボーンのローカル行列を基準にして、ボーンのローカル行列を相対化する
+            mat = compat.convert_bl_to_cm_bone_rotation(bone_rotation_fix @ bone.matrix_local)
+            mat = base_bone_matrix_inv @ mat
             pos = mat.translation.copy()
             
             mat.transpose()

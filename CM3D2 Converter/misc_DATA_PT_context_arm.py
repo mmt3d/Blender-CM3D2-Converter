@@ -490,6 +490,9 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
             self.is_mesh = True
 
         self.base_bone = self._arm.data.get('BaseBone', '')
+        if self._arm.data.bones.get(self.base_bone) is None:
+            self.report({'ERROR'}, f_("基点ボーン '{}' がアーマチュアに存在しません", self.base_bone))
+            return {'CANCELLED'}
         self.model_version = str(self._arm.data.get('ModelVersion', '1000'))
         self.scale = 1.0 / self._arm.data.get('ImportScale', common.preferences().scale)
         self.single_bones.clear()
@@ -673,7 +676,7 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
         old_parents = parent_name_map(old_bd)
 
         self._new_bone_data_list = export_model.armature_bone_data_parser(context, self._arm, self.scale, True)
-        self._new_local_bone_data_list = export_model.armature_local_bone_data_parser(self._arm, self.scale, True)
+        self._new_local_bone_data_list = export_model.armature_local_bone_data_parser(self._arm, self.scale, True, self.base_bone)
 
         new_bd_by_name = {d['name']: d for d in self._new_bone_data_list}
         new_lbd_by_name = {d['name']: d for d in self._new_local_bone_data_list}
