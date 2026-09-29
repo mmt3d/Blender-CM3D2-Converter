@@ -720,7 +720,7 @@ class CNV_OT_armature_update_bone_data(bpy.types.Operator):
 
     def filter_diff(self):
         """しきい値判定した結果アイテムリストを作る"""
-        bones_suitable_for_vg = list(get_bones_suitable_for_vg(self._arm.data.bones))
+        bones_suitable_for_vg = list(get_bones_suitable_for_vg(self._arm.data.bones, str(self.base_bone)))
         self.diff_items.clear()
         for item in self.diff_items_all[:]:
             item.upd_loc = item.diff_loc >= self.threshold

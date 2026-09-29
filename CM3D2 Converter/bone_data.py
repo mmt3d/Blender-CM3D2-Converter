@@ -145,13 +145,16 @@ def merge_local_bone_data(
     return merged
 
 
-def get_bones_suitable_for_vg(bone_list: list[bpy.types.Bone]) -> list[str]:
+def get_bones_suitable_for_vg(bone_list: list[bpy.types.Bone], base_bone: str) -> list[str]:
     """
     頂点グループを追加するのに適しているボーン名リストを返す
     """
     is_body_bone = 'Bip01' in [b.name for b in bone_list]
     result = []
     for bone in bone_list:
+        # 基点ボーンは不適格とする
+        if base_bone == bone.name:
+            continue
         # ボディボーンの場合、親も子もないボーンは不適格とする
         if is_body_bone and bone.parent is None and len(bone.children) == 0:
             continue

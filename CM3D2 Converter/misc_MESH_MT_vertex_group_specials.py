@@ -797,7 +797,8 @@ class CNV_OT_add_vertex_groups(bpy.types.Operator):
     def invoke(self, context, event):
         ob = context.active_object
         arm_ob = ob.find_armature()
-        suitable_bones =  get_bones_suitable_for_vg(arm_ob.data.bones)
+        base_bone = arm_ob.get('BaseBone', '')
+        suitable_bones =  get_bones_suitable_for_vg(arm_ob.data.bones, str(base_bone))
         vg_list = {vg.name for vg in ob.vertex_groups}
         self.bone_list.clear()
         for bone in arm_ob.data.bones:
