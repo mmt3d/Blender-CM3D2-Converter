@@ -719,7 +719,6 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                     face_seek += len(face_data[index])
 
                     # テクスチャ追加
-                    #self.create_mateprop(context, me, texes_set, mate, index, data)
                     cm3d2_data.MaterialHandler.apply_to(context, mate, data)
                     common.decorate_material(mate, self.is_decorate)
                     common.setup_material(mate)
@@ -1100,71 +1099,6 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
             normals_color = create_normals_color(f"{data['name']}_delta_normals")
             unknown_color = create_unknown_color(data)
             set_shape_key_data(shape_key, normals_color, unknown_color)
-
-    def create_mateprop(self, context: bpy.types.Context, me, tex_set, mate, mate_idx, data: list):
-        if mate.use_nodes is False:
-            mate.use_nodes = True
-
-        nodes = mate.node_tree.nodes
-        prefs = common.preferences()
-
-        for prop_data in data['data']:
-            if prefs.mate_unread_same_value:
-                if prop_data['name'] in tex_set:
-                    continue
-                tex_set.add(prop_data['name'])
-
-            if prop_data['type'] == 'tex':  # テクスチャ追加
-                prop_name = prop_data['name']
-                if prop_data['type2'] == 'tex2d':
-                    tex_name = prop_data['name2']
-                    cm3d2path = prop_data['path']
-                    tex_map = prop_data['tex_map']
-                    tex = common.create_tex(context, mate, prop_name, tex_name, cm3d2path, cm3d2path, tex_map)
-
-                    if prop_data['type2'] == 'tex2d':
-                        mapping = prop_data['tex_map']
-                        tex_map = tex.texture_mapping
-                        tex_map.translation[0] = mapping[0]
-                        tex_map.translation[1] = mapping[1]
-                        tex_map.scale[0] = mapping[2]
-                        tex_map.scale[1] = mapping[3]
-
-                else:
-                    common.create_tex(context, mate, prop_name)
-
-            elif prop_data['type'] == 'col':
-                col = nodes.new(type='ShaderNodeRGB')
-                col.name = col.label = prop_data['name']
-                # val.type = 'RGB'
-                col.outputs[0].default_value = prop_data['color'][:4]
-
-                # mate.node_tree.links.new(bsdf.inputs['xxx'], val.outputs['Color'])
-                # mate.node_tree.nodes.active = col
-
-                # slot = mate.texture_slots.create(tex_index)
-                # mate.use_textures[tex_index] = False
-                # slot.diffuse_color_factor = tex_data['color'][3]
-                # slot.use_rgb_to_intensity = True
-                # tex = context.blend_data.textures.new(tex_data['name'], 'BLEND')
-                # slot.texture = tex
-
-            elif prop_data['type'] == 'f':
-                val = nodes.new(type='ShaderNodeValue')
-                val.name = prop_data['name']
-                val.label = prop_data['name']
-                # val.type = 'VALUE'
-                # mate.node_tree.links.new(bsdf.inputs['xxx'], val.outputs['Value'])
-
-                val.outputs[0].default_value = prop_data['float']
-
-            self.progress(context)
-
-        cm3d2_data.align_nodes(mate)
-
-    def progress(self, context: bpy.types.Context):
-        self.progress_count += self.progress_plus_value
-        context.window_manager.progress_update(self.progress_count)
 
 
 # メニューを登録する関数

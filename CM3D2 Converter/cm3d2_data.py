@@ -939,18 +939,7 @@ def clear_nodes(nodes):
 
 def align_nodes(mate):
     nodes = mate.node_tree.nodes
-    # Principled BSDFがある前提での整列
-    bsdf = nodes.get('Principled BSDF')
     base_location = (10, 300)
-    if bsdf:
-        main_tex = nodes.get('_MainTex')
-        if main_tex:
-            mate.node_tree.links.new(bsdf.inputs['Base Color'], main_tex.outputs['Color'])
-            mate.node_tree.links.new(bsdf.inputs['Alpha'], main_tex.outputs['Alpha'])
-        shininess = nodes.get('_Shininess')
-        if shininess:
-            mate.node_tree.links.new(bsdf.inputs['Specular'], shininess.outputs[0])
-        base_location = bsdf.location
 
     shader_name = mate.get('shader1')
     if shader_name:
