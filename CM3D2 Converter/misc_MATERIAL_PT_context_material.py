@@ -189,19 +189,17 @@ class new_mate_opr():
 
     def execute(self, context):
         ob = context.active_object
-        me = ob.data
         ob_names = common.remove_serial_number(ob.name).split('.')
         ob_name = ob_names[0]
 
         if context.material:
             mate = context.material
-            if mate.use_nodes:
-                cm3d2_data.clear_nodes(mate.node_tree.nodes)
-
         else:
             if not context.material_slot:
                 bpy.ops.object.material_slot_add()
             mate = context.blend_data.materials.new(ob_name)
+        if mate.use_nodes:
+            cm3d2_data.clear_nodes(mate.node_tree.nodes)
         common.setup_material(mate)
 
         context.material_slot.material = mate
@@ -688,7 +686,7 @@ class rebuild_material_opr:
             shader_prop = cm3d2_data.MaterialHandler.get_shader_prop_dynamic(mate)
             for tex_name in shader_prop['tex_list']:
                 tex = mate.node_tree.nodes.get(tex_name)
-                if not len(tex.image.pixels):
+                if tex.image and not len(tex.image.pixels):
                     return True
         return False
 
