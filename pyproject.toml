@@ -3,12 +3,12 @@ name = "cm3d2-converter-dev"
 version = "0.1.0"
 description = "Development Envionment"
 readme = "README.md"
-requires-python = "==3.11.*"
+requires-python = "==3.13.*"
 publish = { gallery = false }
 
 dependencies = [
-    "bpy==5.0.1",
-    "blender-python-stubs==5.0.1.4",
+    "bpy==5.2.2",
+    "blender-python-stubs==5.2.1.1",
     "stubgen",
     "ruff",
     # -- test,profile
