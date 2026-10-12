@@ -1,8 +1,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: CM3D2 Converter (2026, 9, 27)\n"
-"POT-Creation-Date: 2026-09-27 20:09:38\n"
+"Project-Id-Version: CM3D2 Converter (2026, 10, 12)\n"
+"POT-Creation-Date: 2026-10-12 17:25:34\n"
 "Language: zh_HANS\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -373,6 +373,20 @@ msgstr "设置是否搜索tex文件的默认选项"
 #: __init__.py
 #, fuzzy
 msgctxt "*"
+msgid "Everythingと連携する"
+msgstr "与Everything联动"
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
+msgid "高速ファイル検索ツールEverythingが起動している場合、Everythingで検索します"
+msgstr "如果高速文件搜索工具Everything正在运行，则使用Everything进行搜索。"
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
 msgid "相対探索範囲"
 msgstr "相对搜索范围"
 
@@ -597,6 +611,20 @@ msgstr "将控制台字符编码设置为UTF8 (解决日文乱码问题)"
 #: __init__.py
 #, fuzzy
 msgctxt "*"
+msgid "Everything に接続できませんでした。"
+msgstr "无法连接到Everything。"
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
+msgid "Everything が起動しているか確認してください。"
+msgstr "请检查Everything是否正在运行。"
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
 msgid ""
 "このアドオン以外のコンソール出力にも影響を及ぼす可能性があります。\n"
 "一度ONにするとOFFに戻してもBlender再起動しないと戻りません。"
@@ -659,6 +687,13 @@ msgstr "同目录或子目录"
 msgctxt "*"
 msgid "親ディレクトリ以下"
 msgstr "父目录或子目录"
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
+msgid "Everything 接続確認"
+msgstr "Everything连接确认"
 
 #. mt:gemini
 #: anm_export.py anm_import.py
@@ -1522,6 +1557,17 @@ msgstr "排序 3"
 msgctxt "*"
 msgid "Order by:"
 msgstr "排序方式："
+
+#. mt:gemini
+#: common.py
+#, python-format, fuzzy
+msgctxt "*"
+msgid ""
+"相対パス指定対象の {tex_dir} のファイル数が多すぎます({count}個、処理時間:{elapsed:.2f} "
+"秒)。相対パスはキャッシュ対象外のためフォルダ構成を再考するか、Everything連携を推奨します。"
+msgstr ""
+"相对路径指定目标 {tex_dir} "
+"中的文件数量过多（{count}个文件，处理时间：{elapsed:.2f}秒）。相对路径不进行缓存，请重新考虑文件夹结构或建议与Everything联动。"
 
 #. mt:gemini
 #: livelink.py
@@ -8069,6 +8115,13 @@ msgstr "骨骼信息嵌入位置"
 msgctxt "*"
 msgid "Shift+クリックでこの選択を記憶"
 msgstr "Shift+点击记住此选择"
+
+#. mt:gemini
+#: model_import.py
+#, fuzzy
+msgctxt "*"
+msgid "Everything に接続できません"
+msgstr "无法连接Everything"
 
 #. mt:gemini
 #: model_import.py

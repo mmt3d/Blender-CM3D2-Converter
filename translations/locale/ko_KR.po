@@ -1,8 +1,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: CM3D2 Converter (2026, 9, 27)\n"
-"POT-Creation-Date: 2026-09-27 20:09:38\n"
+"Project-Id-Version: CM3D2 Converter (2026, 10, 12)\n"
+"POT-Creation-Date: 2026-10-12 17:25:34\n"
 "Language: ko_KR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -373,6 +373,20 @@ msgstr "tex 파일을 찾을지 여부 옵션의 기본값을 설정합니다"
 #: __init__.py
 #, fuzzy
 msgctxt "*"
+msgid "Everythingと連携する"
+msgstr "Everything과 연동"
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
+msgid "高速ファイル検索ツールEverythingが起動している場合、Everythingで検索します"
+msgstr "고속 파일 검색 도구 Everything이 실행 중인 경우, Everything으로 검색합니다."
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
 msgid "相対探索範囲"
 msgstr "상대 탐색 범위"
 
@@ -597,6 +611,20 @@ msgstr "콘솔 문자 인코딩을 UTF8로 설정 (일본어 깨짐 방지)"
 #: __init__.py
 #, fuzzy
 msgctxt "*"
+msgid "Everything に接続できませんでした。"
+msgstr "Everything에 연결할 수 없습니다."
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
+msgid "Everything が起動しているか確認してください。"
+msgstr "Everything이 실행 중인지 확인해 주세요."
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
 msgid ""
 "このアドオン以外のコンソール出力にも影響を及ぼす可能性があります。\n"
 "一度ONにするとOFFに戻してもBlender再起動しないと戻りません。"
@@ -659,6 +687,13 @@ msgstr "동일 디렉토리 이하"
 msgctxt "*"
 msgid "親ディレクトリ以下"
 msgstr "상위 디렉토리 이하"
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
+msgid "Everything 接続確認"
+msgstr "Everything 연결 확인"
 
 #. mt:gemini
 #: anm_export.py anm_import.py
@@ -1529,6 +1564,17 @@ msgstr "정렬 3"
 msgctxt "*"
 msgid "Order by:"
 msgstr "정렬 기준:"
+
+#. mt:gemini
+#: common.py
+#, python-format, fuzzy
+msgctxt "*"
+msgid ""
+"相対パス指定対象の {tex_dir} のファイル数が多すぎます({count}個、処理時間:{elapsed:.2f} "
+"秒)。相対パスはキャッシュ対象外のためフォルダ構成を再考するか、Everything連携を推奨します。"
+msgstr ""
+"상대 경로 지정 대상인 {tex_dir}의 파일 수가 너무 많습니다({count}개, 처리 시간: {elapsed:.2f}초). 상대 "
+"경로는 캐시 대상이 아니므로 폴더 구조를 재고하거나 Everything 연동을 권장합니다."
 
 #. mt:gemini
 #: livelink.py
@@ -3318,12 +3364,16 @@ msgctxt "*"
 msgid "削除"
 msgstr "삭제"
 
+#. mt:gemini
 #: misc_DATA_PT_context_arm.py
+#, fuzzy
 msgctxt "*"
 msgid ""
 "ボーン再計算では浮動小数ドリフトによる誤差が生じ、回転などは経路が多いほど末端ボーンに誤差が蓄積します。これは誤差と見做す範囲を調整して更新不要なものを見定めるしきい値です。\n"
 "0.0 にすると全て更新しますが実用上はそれでも問題ありません。この取り込み操作を何度も行う想定なら、誤差が拡大しないよう最小限の更新にしておくとよいです。おすすめは 0.0001 です。"
 msgstr ""
+"본 재계산 시 부동 소수점 드리프트로 인한 오차가 발생하며, 회전 등은 경로가 많을수록 말단 본에 오차가 누적됩니다. 이는 오차로 간주할 범위를 조정하여 업데이트가 불필요한 것을 판단하는 임계값입니다.\n"
+"0.0으로 설정하면 모두 업데이트되지만 실용적으로는 문제없습니다. 이 가져오기 작업을 여러 번 수행할 예정이라면, 오차가 확대되지 않도록 최소한의 업데이트를 유지하는 것이 좋습니다. 권장 값은 0.0001입니다."
 
 #. mt:gemini
 #: misc_DATA_PT_context_arm.py
@@ -8079,6 +8129,13 @@ msgstr "본 정보 포함 위치"
 msgctxt "*"
 msgid "Shift+クリックでこの選択を記憶"
 msgstr "Shift+클릭으로 이 선택 기억"
+
+#. mt:gemini
+#: model_import.py
+#, fuzzy
+msgctxt "*"
+msgid "Everything に接続できません"
+msgstr "Everything에 연결할 수 없습니다"
 
 #. mt:gemini
 #: model_import.py

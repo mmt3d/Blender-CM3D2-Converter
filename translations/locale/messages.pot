@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: CM3D2 Converter (2026, 9, 27)\n"
-"POT-Creation-Date: 2026-09-27 20:09:38\n"
+"Project-Id-Version: CM3D2 Converter (2026, 10, 12)\n"
+"POT-Creation-Date: 2026-10-12 17:25:34\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -273,6 +273,16 @@ msgstr ""
 
 #: __init__.py
 msgctxt "*"
+msgid "Everythingと連携する"
+msgstr ""
+
+#: __init__.py
+msgctxt "*"
+msgid "高速ファイル検索ツールEverythingが起動している場合、Everythingで検索します"
+msgstr ""
+
+#: __init__.py
+msgctxt "*"
 msgid "相対探索範囲"
 msgstr ""
 
@@ -433,6 +443,16 @@ msgstr ""
 
 #: __init__.py
 msgctxt "*"
+msgid "Everything に接続できませんでした。"
+msgstr ""
+
+#: __init__.py
+msgctxt "*"
+msgid "Everything が起動しているか確認してください。"
+msgstr ""
+
+#: __init__.py
+msgctxt "*"
 msgid "このアドオン以外のコンソール出力にも影響を及ぼす可能性があります。\n一度ONにするとOFFに戻してもBlender再起動しないと戻りません。"
 msgstr ""
 
@@ -475,6 +495,11 @@ msgstr ""
 #: __init__.py
 msgctxt "*"
 msgid "親ディレクトリ以下"
+msgstr ""
+
+#: __init__.py
+msgctxt "*"
+msgid "Everything 接続確認"
 msgstr ""
 
 #: anm_export.py
@@ -1121,6 +1146,12 @@ msgstr ""
 #: common.py
 msgctxt "*"
 msgid "Order by:"
+msgstr ""
+
+#: common.py
+#, python-format
+msgctxt "*"
+msgid "相対パス指定対象の {tex_dir} のファイル数が多すぎます({count}個、処理時間:{elapsed:.2f} 秒)。相対パスはキャッシュ対象外のためフォルダ構成を再考するか、Everything連携を推奨します。"
 msgstr ""
 
 #: livelink.py
@@ -5847,6 +5878,11 @@ msgstr ""
 #: model_import.py
 msgctxt "*"
 msgid "Shift+クリックでこの選択を記憶"
+msgstr ""
+
+#: model_import.py
+msgctxt "*"
+msgid "Everything に接続できません"
 msgstr ""
 
 #: model_import.py

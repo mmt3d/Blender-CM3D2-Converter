@@ -1,8 +1,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: CM3D2 Converter (2026, 9, 27)\n"
-"POT-Creation-Date: 2026-09-27 20:09:38\n"
+"Project-Id-Version: CM3D2 Converter (2026, 10, 12)\n"
+"POT-Creation-Date: 2026-10-12 17:25:34\n"
 "Language: zh_HANT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -373,6 +373,20 @@ msgstr "設定是否尋找 tex 檔案的預設選項"
 #: __init__.py
 #, fuzzy
 msgctxt "*"
+msgid "Everythingと連携する"
+msgstr "與 Everything 整合"
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
+msgid "高速ファイル検索ツールEverythingが起動している場合、Everythingで検索します"
+msgstr "若高速檔案搜尋工具 Everything 正在執行，則使用 Everything 搜尋"
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
 msgid "相対探索範囲"
 msgstr "相對搜尋範圍"
 
@@ -597,6 +611,20 @@ msgstr "將控制台字元編碼設為 UTF8 (解決日文亂碼問題)"
 #: __init__.py
 #, fuzzy
 msgctxt "*"
+msgid "Everything に接続できませんでした。"
+msgstr "無法連接到 Everything。"
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
+msgid "Everything が起動しているか確認してください。"
+msgstr "請檢查 Everything 是否正在執行。"
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
 msgid ""
 "このアドオン以外のコンソール出力にも影響を及ぼす可能性があります。\n"
 "一度ONにするとOFFに戻してもBlender再起動しないと戻りません。"
@@ -659,6 +687,13 @@ msgstr "相同目錄及其子目錄"
 msgctxt "*"
 msgid "親ディレクトリ以下"
 msgstr "父目錄及其子目錄"
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
+msgid "Everything 接続確認"
+msgstr "Everything 連接確認"
 
 #. mt:gemini
 #: anm_export.py anm_import.py
@@ -1522,6 +1557,17 @@ msgstr "排序 3"
 msgctxt "*"
 msgid "Order by:"
 msgstr "排序依據："
+
+#. mt:gemini
+#: common.py
+#, python-format, fuzzy
+msgctxt "*"
+msgid ""
+"相対パス指定対象の {tex_dir} のファイル数が多すぎます({count}個、処理時間:{elapsed:.2f} "
+"秒)。相対パスはキャッシュ対象外のためフォルダ構成を再考するか、Everything連携を推奨します。"
+msgstr ""
+"相對路徑指定目標 {tex_dir} 中的檔案數量過多 ({count} 個檔案，處理時間：{elapsed:.2f} "
+"秒)。相對路徑不支援快取，請重新考慮資料夾結構或建議使用 Everything 整合。"
 
 #. mt:gemini
 #: livelink.py
@@ -8069,6 +8115,13 @@ msgstr "骨骼資訊嵌入位置"
 msgctxt "*"
 msgid "Shift+クリックでこの選択を記憶"
 msgstr "Shift+點擊以記住此選擇"
+
+#. mt:gemini
+#: model_import.py
+#, fuzzy
+msgctxt "*"
+msgid "Everything に接続できません"
+msgstr "無法連接 Everything"
 
 #. mt:gemini
 #: model_import.py

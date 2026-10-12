@@ -1,8 +1,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: CM3D2 Converter (2026, 9, 27)\n"
-"POT-Creation-Date: 2026-09-27 20:09:38\n"
+"Project-Id-Version: CM3D2 Converter (2026, 10, 12)\n"
+"POT-Creation-Date: 2026-10-12 17:25:34\n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -300,6 +300,22 @@ msgstr "Sets the default of the option to search for tex files"
 #: __init__.py
 #, fuzzy
 msgctxt "*"
+msgid "Everythingと連携する"
+msgstr "Integrate with Everything"
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
+msgid "高速ファイル検索ツールEverythingが起動している場合、Everythingで検索します"
+msgstr ""
+"If the fast file search tool Everything is running, it will search using "
+"Everything."
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
 msgid "相対探索範囲"
 msgstr "Relative Search Scope"
 
@@ -488,6 +504,20 @@ msgstr "Set Console Character Encoding to UTF-8 (for Japanese display)"
 #: __init__.py
 #, fuzzy
 msgctxt "*"
+msgid "Everything に接続できませんでした。"
+msgstr "Could not connect to Everything."
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
+msgid "Everything が起動しているか確認してください。"
+msgstr "Please check if Everything is running."
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
 msgid ""
 "このアドオン以外のコンソール出力にも影響を及ぼす可能性があります。\n"
 "一度ONにするとOFFに戻してもBlender再起動しないと戻りません。"
@@ -549,6 +579,13 @@ msgstr "Same Directory and Subdirectories"
 msgctxt "*"
 msgid "親ディレクトリ以下"
 msgstr "Parent Directory and Subdirectories"
+
+#. mt:gemini
+#: __init__.py
+#, fuzzy
+msgctxt "*"
+msgid "Everything 接続確認"
+msgstr "Everything Connection Check"
 
 #: anm_export.py anm_import.py
 msgctxt "Operator"
@@ -1291,6 +1328,19 @@ msgstr "Sort 3"
 msgctxt "*"
 msgid "Order by:"
 msgstr "Order by:"
+
+#. mt:gemini
+#: common.py
+#, python-format, fuzzy
+msgctxt "*"
+msgid ""
+"相対パス指定対象の {tex_dir} のファイル数が多すぎます({count}個、処理時間:{elapsed:.2f} "
+"秒)。相対パスはキャッシュ対象外のためフォルダ構成を再考するか、Everything連携を推奨します。"
+msgstr ""
+"The number of files in the relative path target {tex_dir} is too large "
+"({count} files, processing time: {elapsed:.2f} seconds). Relative paths are "
+"not cached, so please reconsider the folder structure or consider using "
+"Everything integration."
 
 #. mt:gemini
 #: livelink.py
@@ -6551,6 +6601,13 @@ msgstr "Bone Data Destination"
 msgctxt "*"
 msgid "Shift+クリックでこの選択を記憶"
 msgstr "Shift+Click to Remember This Choice"
+
+#. mt:gemini
+#: model_import.py
+#, fuzzy
+msgctxt "*"
+msgid "Everything に接続できません"
+msgstr "Cannot connect to Everything"
 
 #. mt:gemini
 #: model_import.py

@@ -46,9 +46,9 @@ def _runtime_sdk():
     from . import Managed
 
     runtime_dir = Managed._RUNTIME_DLL_DIR
-    dll_path = runtime_dir / "Everything64.dll"
+    dll_path = runtime_dir / 'Everything64.dll'
     if not dll_path.is_file():
-        raise FileNotFoundError(f"Everything SDK DLL が見つかりません: {dll_path}")
+        raise FileNotFoundError(f"Everything SDK DLL not found: {dll_path}")
     return _load_sdk(str(dll_path))
 
 
@@ -58,11 +58,11 @@ def _result_path(dll, index: int) -> str:
     """
     length = dll.Everything_GetResultFullPathNameW(index, None, 0)
     if not length:
-        raise RuntimeError(f"Everything の検索結果を取得できません (エラー {dll.Everything_GetLastError()})")
+        raise RuntimeError(f"Unable to retrieve Everything search result (error {dll.Everything_GetLastError()})")
     buffer = ctypes.create_unicode_buffer(length + 1)
     copied = dll.Everything_GetResultFullPathNameW(index, buffer, len(buffer))
     if copied != length:
-        raise RuntimeError(f"Everything の検索結果を取得できません (エラー {dll.Everything_GetLastError()})")
+        raise RuntimeError(f"Unable to retrieve Everything search result (error {dll.Everything_GetLastError()})")
     return buffer.value
 
 
@@ -86,8 +86,8 @@ def _query(dll, search_text: str, max_results: int) -> None:
     if not dll.Everything_QueryW(1):
         error = dll.Everything_GetLastError()
         if error == _ERROR_IPC:
-            raise RuntimeError("Everything が起動していないため検索できません")
-        raise RuntimeError(f"Everything の検索に失敗しました (エラー {error})")
+            raise RuntimeError("Cannot search because Everything is not running")
+        raise RuntimeError(f"Everything search failed (error {error})")
 
 
 def check_connection() -> None:
