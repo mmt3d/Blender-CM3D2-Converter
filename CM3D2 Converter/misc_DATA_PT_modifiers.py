@@ -267,11 +267,8 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
         pre_selected_objects = context.selected_objects[:]
         pre_mode = ob.mode
 
-        arm_ob = None
-
         progress = 0
         progress_count = 1
-        progress_count += 2 if arm_ob else 0
         progress_count += len(me.shape_keys.key_blocks) * 3 if is_shaped else 0
 
         if is_shaped:
@@ -354,67 +351,6 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
                 mod_progress += 1
                 context.window_manager.progress_update( progress_start + (progress + mod_progress / mod_count) / progress_count )
 
-        # Calculate custom normals for armature modifiers in legacy blender
-        if arm_ob:
-            bpy.ops.object.mode_set(mode='EDIT')
-            bpy.ops.object.mode_set(mode='OBJECT')
-
-            arm = arm_ob.data
-            arm_pose = arm_ob.pose
-
-            pose_quats = {}
-            for bone in arm.bones:
-                pose_bone = arm_pose.bones[bone.name]
-
-                bone_quat = bone.matrix_local.to_quaternion()
-                pose_quat = pose_bone.matrix.to_quaternion()
-                result_quat = compat.mul(pose_quat, bone_quat.inverted())
-
-                pose_quats[bone.name] = result_quat.copy()
-
-            custom_normals = []
-            for loop in me.loops:
-                vert = me.vertices[loop.vertex_index]
-                no = vert.normal.copy()
-
-                total_weight = 0.0
-                for vge in vert.groups:
-                    vg = ob.vertex_groups[vge.group]
-                    try:
-                        pose_quats[vg.name]
-                    except KeyError:
-                        continue
-                    total_weight += vge.weight
-
-                total_quat = mathutils.Quaternion()
-                if total_weight != 0.0:
-                    for vge in vert.groups:
-                        vg = ob.vertex_groups[vge.group]
-                        try:
-                            total_quat = total_quat.slerp(pose_quats[vg.name], vge.weight / total_weight)
-                        except KeyError:
-                            pass
-                
-                no.rotate(total_quat)
-                custom_normals.append(no)
-
-            progress += 1
-            context.window_manager.progress_update(progress_start + progress / progress_count)
-
-        with context.temp_override(object=ob):
-            for index, mod in enumerate(copy_modifiers):
-                #if index >= 32: # luvoid : can only apply 32 modifiers at once.
-                #    break
-                if self.is_applies[index].value:
-                    try:
-                        bpy.ops.object.modifier_apply(modifier=mod.name)
-                    except Exception as e:
-                        #ob.modifiers.remove(mod)
-                        self.report(type={'ERROR', 'WARNING'}, message=f_tip_("Could not apply '{mod_type}' modifier \"{mod_name}\"", mod_type=mod.type, mod_name=mod.name) )
-                        print(f_("Could not apply '{mod_type}' modifier \"{mod_name}\":\n\t", mod_type=mod.type, mod_name=mod.name), e)
-
-                context.window_manager.progress_update( progress_start + (progress + mod_progress / mod_count) / progress_count )
-
         progress += 1
         context.window_manager.progress_update(progress_start + progress / progress_count)
 
@@ -451,28 +387,6 @@ class CNV_OT_forced_modifier_apply(bpy.types.Operator):
         for temp_ob in pre_selected_objects:
             compat.set_select(temp_ob, True)
         bpy.ops.object.mode_set(mode=pre_mode)
-
-        if arm_ob:
-            for i, loop in enumerate(me.loops):
-                vert = me.vertices[loop.vertex_index]
-                no = vert.normal.copy()
-
-                try:
-                    custom_rot = mathutils.Vector((0.0, 0.0, 1.0)).rotation_difference(custom_normals[i])
-                except:
-                    continue
-                original_rot = mathutils.Vector((0.0, 0.0, 1.0)).rotation_difference(no)
-                output_rot = original_rot.slerp(custom_rot, custom_normal_blend)
-
-                output_no = mathutils.Vector((0.0, 0.0, 1.0))
-                output_no.rotate(output_rot)
-
-                custom_normals[i] = output_no
-            me.use_auto_smooth = True
-            me.normals_split_custom_set(custom_normals)
-
-            progress += 1
-            context.window_manager.progress_update(progress_start + progress / progress_count)
 
         context.window_manager.progress_update(progress_start + 1)
         if did_start_progress:
