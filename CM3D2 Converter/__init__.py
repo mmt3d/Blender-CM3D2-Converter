@@ -159,10 +159,10 @@ class AddonPreferences(bpy.types.AddonPreferences):
     
     is_replace_cm3d2_tex: bpy.props.BoolProperty(name="基本的にtexファイルを探す", default=True, description="texファイルを探すかどうかのオプションのデフォルト値を設定します")
     search_tex_path_scope: bpy.props.EnumProperty(items=[('NONE', "指定なし", ""), ('SAME', "同ディレクトリ以下", ""), ('PARENT', "親ディレクトリ以下", "")], name="相対探索範囲", default='SAME', description="インポート対象からの相対ディレクトリ以下を探索対象に加えます")
-    default_tex_path0: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=common.clear_texpath_default_dict)
-    default_tex_path1: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=common.clear_texpath_default_dict)
-    default_tex_path2: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=common.clear_texpath_default_dict)
-    default_tex_path3: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=common.clear_texpath_default_dict)
+    default_tex_path0: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=lambda self, _: self.clear_texpath())
+    default_tex_path1: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=lambda self, _: self.clear_texpath())
+    default_tex_path2: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=lambda self, _: self.clear_texpath())
+    default_tex_path3: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=lambda self, _: self.clear_texpath())
     # 自動フィルするのは初回のみとする管理フラグ
     default_tex_paths_autofilled: bpy.props.BoolProperty(default=False, options={'HIDDEN'})
 
@@ -330,6 +330,13 @@ class AddonPreferences(bpy.types.AddonPreferences):
                 print(f"[{package_name}] Console code page set to UTF-8.")
         else:
             print(f"[{package_name}] Console code page set to default. (requires restart blender)")
+
+    def clear_texpath(self):
+        """設定で探索パスを変更した際に呼ぶキャッシュクリア処理"""
+        # ユーザーが手動で変更した後は空欄状態も維持する
+        if hasattr(self, 'default_tex_paths_autofilled'):
+            self.default_tex_paths_autofilled = True
+        common.clear_texpath_dict()
 
 
 @compat.BlRegister()

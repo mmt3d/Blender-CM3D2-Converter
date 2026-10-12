@@ -2,6 +2,7 @@ import os
 import struct
 import time
 import traceback
+import warnings
 from collections import Counter
 import bmesh
 import bpy
@@ -165,7 +166,8 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         with reader:
             common.add_extra_tex_path(self.filepath)
 
-            self.texpath_dict = common.get_texpath_dict(reload=self.reload_tex_cache)
+            if self.reload_tex_cache:
+                common.clear_texpath_dict()
 
             # ヘッダー
             ext = None
@@ -719,7 +721,11 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                     face_seek += len(face_data[index])
 
                     # テクスチャ追加
-                    cm3d2_data.MaterialHandler.apply_to(context, mate, data)
+                    with warnings.catch_warnings(record=True) as caught:
+                        warnings.simplefilter('always', UserWarning)
+                        cm3d2_data.MaterialHandler.apply_to(context, mate, data, prefs.is_replace_cm3d2_tex)
+                        for warning in caught if caught else []:
+                            self.report({'WARNING'}, str(warning.message))
                     common.decorate_material(mate, self.is_decorate)
                     common.setup_material(mate)
 

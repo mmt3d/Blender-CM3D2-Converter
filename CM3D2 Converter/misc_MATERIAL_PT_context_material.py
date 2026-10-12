@@ -463,8 +463,6 @@ class new_mate_opr():
             f_list.append(_RimPower)
             f_list.append(_RimShift)
         
-        texpath_dict = common.get_texpath_dict()
-
         for data in tex_list:
             key = data[0]
             tex_name = data[1]
@@ -476,7 +474,7 @@ class new_mate_opr():
 
             # tex探し
             if prefs.is_replace_cm3d2_tex:
-                common.replace_cm3d2_tex(tex.image, texpath_dict=texpath_dict, reload_path=False)
+                common.replace_cm3d2_tex(tex.image, reload_path=False)
 
         for data in col_list:
             common.create_col(context, mate, data[0], data[1][:4], asis_if_exists=self.asis_if_exists)
@@ -706,12 +704,11 @@ class rebuild_material_opr:
 
         if is_replace_cm3d2_tex:
             # 実TexPathを再捜索
-            texpath_dict = common.get_texpath_dict()
             nodes = mate.node_tree.nodes
             for tex_name in shader_prop['tex_list']:
                 tex = nodes.get(tex_name)
                 tex.extension = 'EXTEND'
-                common.replace_cm3d2_tex(tex.image, texpath_dict=texpath_dict, reload_path=False)
+                common.replace_cm3d2_tex(tex.image, reload_path=False)
 
 
 @compat.BlRegister()

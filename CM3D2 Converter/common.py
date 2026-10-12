@@ -4,7 +4,9 @@ import os
 import re
 import shutil
 import struct
+import time
 import unicodedata
+import warnings
 from typing import Any
 import bmesh
 import bpy
@@ -20,7 +22,7 @@ KISS_ICON = None
 PREFS = None
 preview_collections = {}
 texpath_dict = {}
-texpath_default_dict = {}
+texpath_extra_dict = {}
 COM3D2_SHADER_REV = 1
 
 POSE_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), package_name, 'pose')
@@ -429,45 +431,25 @@ def get_extra_tex_paths():
     return base_dirs
 
 
-# テクスチャ置き場の全ファイルを返す
-def get_tex_storage_files():
-    files = []
-    tex_dirs = get_default_tex_paths()
-    for tex_dir in tex_dirs:
-        tex_dir = bpy.path.abspath(tex_dir)
-        files.extend(find_tex_all_files(tex_dir))
-    return files
-
-
-def get_texpath_dict(reload=False):
-    """
-    利用可能な全tex/pngファイルdictを返却 (探索パス指定は永続キャッシュ、相対探索は一時キャッシュ扱い)
-    """
-    global texpath_default_dict, texpath_dict
-    if reload:
-        texpath_default_dict.clear()
-        texpath_dict.clear()
-    if texpath_dict:
-        return texpath_dict
-    if not texpath_default_dict:
-        texpath_default_dict = build_texpath_dict(get_default_tex_paths())
-    if not texpath_dict:
-        texpath_dict = texpath_default_dict | build_texpath_dict(get_extra_tex_paths())
-    return texpath_dict
-
-
-def build_texpath_dict(tex_dirs: list):
+def build_texpath_dict(tex_dirs: list, warn_if_too_many=False) -> dict:
     """
     指定ディレクトリパスリストから全tex/pngファイルdictを生成
     """
     path_dict: dict = {}
     for tex_dir in tex_dirs:
+        count = 0
+        start_time = time.time()
         for path in find_tex_all_files(tex_dir):
+            count += 1
             path = bpy.path.abspath(path)
             file_name = os.path.basename(path).lower()
             # 先に見つけたファイルを優先
             if file_name not in path_dict:
                 path_dict[file_name] = path
+        if warn_if_too_many and count > 500:
+            elapsed = time.time() - start_time
+            warnings.warn(f_("相対パス指定対象の {tex_dir} のファイル数が多すぎます({count}個、処理時間:{elapsed:.2f} 秒)。相対パスはキャッシュ対象外のためフォルダ構成を再考してください。",
+                             tex_dir=tex_dir, count=count, elapsed=elapsed))
     return path_dict
 
 
@@ -476,73 +458,76 @@ def use_texpath_cache(func):
     modelやmateなどインポート時にテクスチャ探索を必要とする処理メソッド用のデコレータ
     """
     def wrapper(self, context, *args, **kwargs):
-        global texpath_dict
-        texpath_dict.clear()
+        global texpath_extra_dict
+        texpath_extra_dict.clear()
         props = scene_properties()
         props.import_filepaths.clear()
         try:
             return func(self, context, *args, **kwargs)
         finally:
-            texpath_dict.clear()
+            texpath_extra_dict.clear()
             props.import_filepaths.clear()
     return wrapper
 
 
-def clear_texpath_default_dict(self, context):
+def clear_texpath_dict():
     """
-    設定で探索パスを変更した際に呼ぶキャッシュクリア処理
+    tex/pngファイルdictをキャッシュクリア
     """
-    global texpath_default_dict
-    # ユーザーが手動で変更した後は空欄状態も維持する
-    if hasattr(self, 'default_tex_paths_autofilled'):
-        self.default_tex_paths_autofilled = True
-    texpath_default_dict.clear()
+    global texpath_dict
+    texpath_dict.clear()
 
 
-def reload_png(img, texpath_dict, png_name):
-    png_path = texpath_dict.get(png_name)
+def find_file_path(file_name: str):
+    """
+    指定ファイル名のファイルパスを返す
+    """
+
+    global texpath_dict, texpath_extra_dict
+    # 相対パス探索を優先(一時キャッシュ化)
+    if not texpath_extra_dict:
+        texpath_extra_dict = build_texpath_dict(get_extra_tex_paths(), warn_if_too_many=True)
+    file_path = texpath_extra_dict.get(file_name)
+    if file_path:
+        return file_path
+    # デフォルト探索(キャッシュ化)
+    if not texpath_dict:
+        texpath_dict = build_texpath_dict(get_default_tex_paths())
+    return texpath_dict.get(file_name)
+
+
+def replace_cm3d2_tex(img, reload_path: bool=False) -> bool:
+    """
+    Imageノードの画像を、拡張子なしファイル名からpng、なければtexを探して置き換える
+    reload_path=Trueの場合、キャッシュをクリアして再探索する
+    """
+    global texpath_dict
+    is_exists = texpath_dict and len(texpath_dict) > 0
+
+    if __replace_cm3d2_tex(img):
+        return True
+    # 元々texpath_dictが存在かつリロード指定の場合のみキャッシュをクリアして再探索
+    if reload_path and is_exists:
+        texpath_dict.clear()
+        return __replace_cm3d2_tex(img)
+    return False
+
+
+def __replace_cm3d2_tex(img) -> bool:
+    """
+    拡張子なしファイル名からpng、なければtexを探してImageノードに読み込む
+    """
+    source_name = remove_serial_number(img.name).lower()
+
+    source_png_name = source_name + '.png'
+    png_path = find_file_path(source_png_name)
     if png_path:
         img.filepath = png_path
         img.reload()
         return True
-    return False
-
-
-def replace_cm3d2_tex(img, texpath_dict: dict=None, reload_path: bool=True) -> bool:
-    """replace tex file.
-    pngファイルを先に走査し、見つからなければtexファイルを探す.
-    texはpngに展開して読み込みを行う.
-    reload_path=Trueの場合、png,texファイルが見つからない場合にキャッシュを再構成し、
-    再度検索を行う.
-
-    Parameters:
-        img (Image): イメージオブジェクト
-        texpath_dict (dict): テクスチャパスのdict (キャッシュ)
-        reload_path (bool): 見つからない場合にキャッシュを再読込するか
-
-    Returns:
-        bool: tex load successful
-    """
-    if texpath_dict is None:
-        texpath_dict = get_texpath_dict()
-
-    if __replace_cm3d2_tex(img, texpath_dict):
-        return True
-    if reload_path:
-        texpath_dict = get_texpath_dict(True)
-        return __replace_cm3d2_tex(img, texpath_dict)
-    return False
-
-
-def __replace_cm3d2_tex(img, texpath_dict: dict) -> bool:
-    source_name = remove_serial_number(img.name).lower()
-
-    source_png_name = source_name + '.png'
-    if reload_png(img, texpath_dict, source_png_name):
-        return True
 
     source_tex_name = source_name + '.tex'
-    tex_path = texpath_dict.get(source_tex_name)
+    tex_path = find_file_path(source_tex_name)
     try:
         if tex_path is None:
             return False

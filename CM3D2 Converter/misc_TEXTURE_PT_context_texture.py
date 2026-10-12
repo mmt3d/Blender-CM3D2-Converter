@@ -189,8 +189,7 @@ class CNV_OT_set_default_toon_textures(bpy.types.Operator, common.NodeHandler):
             self.report(type={'ERROR'}, message=f_tip_("対象のノードが見つかりません={}", self.node_name))
             return {'CANCELLED'}
 
-        texpathes = common.get_texpath_dict()
-        texpath = texpathes.get(self.tex_name.lower())
+        texpath = common.find_file_path(self.tex_name.lower())
         if texpath is None:
             if node.image is None:
                 node.image = context.blend_data.images.new(self.tex_name, 128, 128)
