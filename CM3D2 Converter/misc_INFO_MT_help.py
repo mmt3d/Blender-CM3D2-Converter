@@ -3,7 +3,7 @@ import re
 import xml.etree.ElementTree as ET
 from urllib.request import urlopen
 import bpy
-from . import bl_info, common, compat
+from . import common, compat, package_name, package_version
 from .translations import *
 
 
@@ -62,7 +62,7 @@ class INFO_MT_help_CM3D2_Converter_CheckVersion(bpy.types.Operator):
     latest_ver: tuple = (0, 0, 0)
 
     def invoke(self, context, event):
-        self.current_ver = bl_info['version']
+        self.current_ver = tuple(map(int, package_version.split('.')))
         # github releses.atom を読み込みRELEASESに取り込む
         fetch_release_entries()
         latest_ver_str = RELEASES['entries'][0][0].replace('v', '')
@@ -146,7 +146,7 @@ class CNV_OT_show_cm3d2_converter_extension(bpy.types.Operator):
         area = common.get_request_area(context, 'PREFERENCES')
         if area:
             context.preferences.active_section = 'EXTENSIONS'
-            context.window_manager.extension_search = __package__
+            context.window_manager.extension_search = package_name
             context.window_manager.extension_type = 'ADDON'
         else:
             self.report(type={'ERROR'}, message="表示できるエリアが見つかりませんでした")
