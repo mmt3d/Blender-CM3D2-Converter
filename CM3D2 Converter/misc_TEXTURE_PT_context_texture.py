@@ -67,13 +67,13 @@ class TEXTURE_MT_context_texture_values_ZTest(bpy.types.Menu):
         if ob:
             mate = ob.active_material
             if mate:
-                return mate.use_nodes
+                return compat.get_material_use_nodes(mate)
         return False
 
     def draw(self, context):
         ob = context.active_object
         mate = ob.active_material
-        if mate.use_nodes:
+        if compat.get_material_use_nodes(mate):
             mate.node_tree.nodes.get()
         tex_slot = context.texture_slot
         for i in range(9):
@@ -117,12 +117,12 @@ class CNV_OT_replace_cm3d2_tex(bpy.types.Operator, common.NodeHandler):
     @classmethod
     def poll(cls, context):
         mate = context.material
-        return mate and mate.use_nodes
+        return mate and compat.get_material_use_nodes(mate)
         # ob = bpy.context.active_object
         # if ob:
         # 	mate = ob.active_material
         # 	if mate:
-        # 		return mate.use_nodes
+        # 		return compat.get_material_use_nodes(mate)
         # return False
 
     def execute(self, context):
@@ -178,7 +178,7 @@ class CNV_OT_set_default_toon_textures(bpy.types.Operator, common.NodeHandler):
         ob = context.active_object
         if ob:
             mate = ob.active_material
-            if mate and mate.use_nodes:
+            if mate and compat.get_material_use_nodes(mate):
                 return True
 
         return False
@@ -253,7 +253,7 @@ class CNV_OT_auto_set_color_value(bpy.types.Operator):
             return False
 
         mate = ob.active_material
-        if not mate or mate.use_nodes is False:
+        if not mate or not compat.get_material_use_nodes(mate):
             return False
 
         tex_node = mate.node_tree.nodes.get('_MainTex')
@@ -413,7 +413,7 @@ class CNV_OT_set_color_value(bpy.types.Operator, common.NodeHandler):
     @classmethod
     def poll(cls, context):
         mate = context.material
-        return mate and mate.use_nodes
+        return mate and compat.get_material_use_nodes(mate)
 
     def execute(self, context):
         node = self.get_node(context)
@@ -441,7 +441,7 @@ class CNV_OT_set_value(bpy.types.Operator, common.NodeHandler):
     @classmethod
     def poll(cls, context):
         mate = context.material
-        return mate and mate.use_nodes
+        return mate and compat.get_material_use_nodes(mate)
 
     def execute(self, context):
         node = self.get_node(context)

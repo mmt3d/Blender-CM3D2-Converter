@@ -852,8 +852,8 @@ class MaterialHandler:
         mate['shader1'] = mat_data.shader1
         mate['shader2'] = mat_data.shader2
 
-        if mate.use_nodes is False:
-            mate.use_nodes = True
+        if not common.compat.get_material_use_nodes(mate):
+            common.compat.set_material_use_nodes(mate, True)
 
         nodes = mate.node_tree.nodes
         nodes.clear()

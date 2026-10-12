@@ -327,7 +327,7 @@ def set_bone_matrix(bone, mat):
 
 def get_tex_image(context, node_name=None):
     mate = context.material
-    if mate and mate.use_nodes:
+    if mate and get_material_use_nodes(mate):
         node = mate.node_tree.nodes.get(node_name)
         if node and node.type == 'TEX_IMAGE':
             return node.image
@@ -486,3 +486,15 @@ def shape_key_make_basis(ob: bpy.types.Object, target_shape_key: bpy.types.Shape
         # 遅延反映対象を即時反映させる(素メッシュを調整オプションは廃止)
         for vert in me.vertices:
             vert.co = target_shape_key.data[vert.index].co.copy()
+
+def get_material_use_nodes(mate: bpy.types.Material) -> bool:
+    """マテリアルのノード使用状態取得の互換性サポート"""
+    if IS_LT50:
+        return mate.use_nodes
+    else:
+        return True
+
+def set_material_use_nodes(mate: bpy.types.Material, use_nodes: bool):
+    """マテリアルのノード使用状態設定の互換性サポート"""
+    if IS_LT50:
+        mate.use_nodes = use_nodes

@@ -69,7 +69,7 @@ class MATERIAL_PT_cm3d2_properties(bpy.types.Panel):
 
                 box = self.layout.box()
                 if mate['CM3D2 Texture Expand']:
-                    if mate.use_nodes is False:
+                    if not compat.get_material_use_nodes(mate):
                         box.operator('material.setup_mate_expand', text="フラグセットアップ")
                         return
 
@@ -198,7 +198,7 @@ class new_mate_opr():
             if not context.material_slot:
                 bpy.ops.object.material_slot_add()
             mate = context.blend_data.materials.new(ob_name)
-        if mate.use_nodes:
+        if compat.get_material_use_nodes(mate):
             cm3d2_data.clear_nodes(mate.node_tree.nodes)
         common.setup_material(mate)
 

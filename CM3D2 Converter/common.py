@@ -145,7 +145,7 @@ def decorate_material(mate, enable=True):
     shader = Handler.get_normalized_shader_type(mate['shader1'])
     mate.preview_render_type  = 'FLAT'
     mate.use_backface_culling = 'Outline' not in shader
-    mate.use_nodes = True
+    compat.set_material_use_nodes(mate, True)
     is_transparent = any(x in shader for x in ['Trans', 'Cutout'])
     compat.set_transparent(mate, is_transparent)
 
@@ -657,8 +657,6 @@ def load_cm3d2tex(path, skip_data=False):
 
 
 def create_tex(context, mate, node_name, tex_name=None, filepath=None, cm3d2path=None, tex_map_data=None, replace_tex=False, asis_if_exists=False):
-    # if mate.use_nodes is False:
-    # 	mate.use_nodes = True
     nodes = mate.node_tree.nodes
     tex = nodes.get(node_name)
     if tex is None:
@@ -736,7 +734,7 @@ def setup_material(mate):
             mate['CM3D2 Texture Expand'] = True
         mate['COM3D2 Shader Rev'] = COM3D2_SHADER_REV
 
-        mate.use_nodes = True
+        compat.set_material_use_nodes(mate, True)
 
 
 def setup_image_name(img):
@@ -988,7 +986,7 @@ class NodeHandler:
 
     def get_node(self, context):
         mate = context.material
-        if mate and mate.use_nodes:
+        if mate and compat.get_material_use_nodes(mate):
             return mate.node_tree.nodes.get(self.node_name)
 
             # if node is None:
