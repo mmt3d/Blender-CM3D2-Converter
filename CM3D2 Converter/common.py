@@ -14,6 +14,8 @@ import mathutils
 from . import compat, fileutil, package_name
 from .cm3d2_data import ArcHandler, Handler
 from .cm3d2_shader import alpha_mixer_node_tree, bind_light_switch, com3d2_shader_node_tree, toon_vector_node_tree
+from .everything_search import find_file_paths
+from .translations import *
 
 # アドオン情報
 BASE_PATH_TEX = 'Assets/texture/texture/'
@@ -448,7 +450,7 @@ def build_texpath_dict(tex_dirs: list, warn_if_too_many=False) -> dict:
                 path_dict[file_name] = path
         if warn_if_too_many and count > 500:
             elapsed = time.time() - start_time
-            warnings.warn(f_("相対パス指定対象の {tex_dir} のファイル数が多すぎます({count}個、処理時間:{elapsed:.2f} 秒)。相対パスはキャッシュ対象外のためフォルダ構成を再考してください。",
+            warnings.warn(f_("相対パス指定対象の {tex_dir} のファイル数が多すぎます({count}個、処理時間:{elapsed:.2f} 秒)。相対パスはキャッシュ対象外のためフォルダ構成を再考するか、Everything連携を推奨します。",
                              tex_dir=tex_dir, count=count, elapsed=elapsed))
     return path_dict
 
@@ -482,7 +484,13 @@ def find_file_path(file_name: str):
     """
     指定ファイル名のファイルパスを返す
     """
+    # everything連携が有効な場合
+    prefs = preferences()
+    if prefs.use_everything:
+        paths = get_extra_tex_paths() + get_default_tex_paths()
+        return find_file_paths(paths, file_name)
 
+    # レガシー検索
     global texpath_dict, texpath_extra_dict
     # 相対パス探索を優先(一時キャッシュ化)
     if not texpath_extra_dict:

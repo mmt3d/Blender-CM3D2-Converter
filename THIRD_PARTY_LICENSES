@@ -1,15 +1,17 @@
-This addon bundles the following third-party Python libraries under the MIT License:
+This addon bundles the following third-party libraries:
 
+-------------------------------------------------------------------------------
+1. Python Libraries (MIT License)
+-------------------------------------------------------------------------------
+The following Python libraries are redistributed in accordance with the MIT License terms:
 - pythonnet
 - cffi
 - clr_loader
 - pycparser
 - py_dds
 
-These libraries are redistributed in accordance with the MIT License terms.
-The original copyright notices for each project are listed below.
+The original copyright notices and license terms for these libraries are as follows:
 
--------------------------------------------------------------------------------
 MIT License
 
 Copyright (c)
@@ -36,4 +38,18 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+-------------------------------------------------------------------------------
+2. Everything SDK / Everything DLL (voidtools)
+-------------------------------------------------------------------------------
+This addon bundles components from the Everything SDK, developed by voidtools.
+
+Everything and the Everything SDK are provided free for personal and commercial
+use under the terms specified by voidtools.
+
+Copyright (c) voidtools. All rights reserved.
+
+For more details, please visit the official website:
+https://www.voidtools.com/
 -------------------------------------------------------------------------------

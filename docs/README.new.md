@@ -57,6 +57,20 @@ Blender4.2以降で利用可能な`Extensions`としてインストールする�
   - 「ヘルプ」→ 「最新版チェック」で最新版があるか確認
   - 上記インストール操作をしてください
 
+### Everything 連携 (高速テクスチャ検索用)
+
+大量のファイルがあるフォルダ(`C:\KISS\COM3D2\MOD`など)をテクスチャ探索パスに指定しているとモデルインポート時などにテクスチャ探索遅延によりインポート処理時間が異常にかかる場合があります。  
+高速ファイル検索ソフト`Everything`がインストールされている場合、これと連携することで常に高速化された検索が可能になります。  
+また、制作時などテクスチャファイルを追加する場合、従来必要だったテクスチャキャッシュ再構成の必要もなくなります。
+
+**導入方法**
+
+1. `Everything(64bit版)`をインストールし起動してください。(※1.4.1で動作確認済み)
+  - 公式: https://www.voidtools.com/
+  - 窓の社: https://forest.watch.impress.co.jp/library/software/everything/
+2. Everything本体設定では、テクスチャ探索パスを含むドライブのインデックスを作成するなどしておいてください。
+3. 「プリファレンス」→「アドオン」→「CM3D2 Converter」→「texファイル検索」→「Everythingと連携する」を有効にしてください。  
+  ![everything-settings](/docs/img/everything-settings.png)
 
 ## 規約
 
@@ -66,12 +80,13 @@ Blender4.2以降で利用可能な`Extensions`としてインストールする�
 ## ライセンス
 
 - 本ソフトウェアは`Apache License 2.0`です。
-- また、下記`MITライセンス`の外部モジュールをwheel同梱しています。
- 
+- また、下記に含まれる外部モジュールやSDKを同梱しています。
+
 ### Third-party Licenses
 
-This addon bundles the following third-party Python libraries:
+This addon bundles the following third-party libraries and components:
 
+**1. Python Libraries (MIT License)**
 - pythonnet
 - cffi
 - clr_loader
@@ -80,5 +95,11 @@ This addon bundles the following third-party Python libraries:
 
 These libraries are redistributed under the terms of the **MIT License**.  
 To ensure stable operation inside Blender’s embedded Python environment—where `pip install` is not always available or reliable—the addon includes pre-built wheels and Python modules directly.  
-The full MIT License text and copyright notices for these libraries are provided in:  
-`THIRD_PARTY_LICENSES`
+
+**2. Everything SDK / DLL (voidtools)**
+- Everything SDK components (for high-speed file search)
+
+Everything and the Everything SDK are provided free for personal and commercial use by voidtools.
+
+The full license texts and copyright notices for all of these third-party components are provided in:  
+`THIRD_PARTY_LICENSES` 

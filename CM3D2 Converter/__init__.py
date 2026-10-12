@@ -64,6 +64,7 @@ if True:
         cm3d2_shader,
         common,
         compat,
+        everything_search,
         livelink,
         mate_export,
         mate_import,
@@ -158,6 +159,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
     menu_export_path: bpy.props.StringProperty(name=".menu Default Export Path", subtype='FILE_PATH', description="When exporting a .menu file. The file selection prompt will begin here.")
     
     is_replace_cm3d2_tex: bpy.props.BoolProperty(name="基本的にtexファイルを探す", default=True, description="texファイルを探すかどうかのオプションのデフォルト値を設定します")
+    use_everything: bpy.props.BoolProperty(name="Everythingと連携する", default=False, description="高速ファイル検索ツールEverythingが起動している場合、Everythingで検索します", update=lambda self, context: self.update_use_everything(context))
     search_tex_path_scope: bpy.props.EnumProperty(items=[('NONE', "指定なし", ""), ('SAME', "同ディレクトリ以下", ""), ('PARENT', "親ディレクトリ以下", "")], name="相対探索範囲", default='SAME', description="インポート対象からの相対ディレクトリ以下を探索対象に加えます")
     default_tex_path0: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=lambda self, _: self.clear_texpath())
     default_tex_path1: bpy.props.StringProperty(name="texファイル置き場", subtype='DIR_PATH', description="texファイルを探す時はここから探します", update=lambda self, _: self.clear_texpath())
@@ -256,7 +258,9 @@ class AddonPreferences(bpy.types.AddonPreferences):
 
         box = self.layout.box()
         box.label(text="texファイル検索", icon='BORDERMOVE')
-        box.prop(self, 'is_replace_cm3d2_tex', icon='VIEWZOOM')
+        row = box.row()
+        row.prop(self, 'is_replace_cm3d2_tex', icon='VIEWZOOM')
+        row.prop(self, 'use_everything', icon='LINKED')
         row = box.row()
         row.label(text="相対探索範囲")
         row.prop(self, 'search_tex_path_scope', expand=True)
@@ -337,6 +341,23 @@ class AddonPreferences(bpy.types.AddonPreferences):
         if hasattr(self, 'default_tex_paths_autofilled'):
             self.default_tex_paths_autofilled = True
         common.clear_texpath_dict()
+
+    def update_use_everything(self, context):
+        """Everything連携の使用設定が有効になった場合、接続確認チェックを行う"""
+        if not self.use_everything:
+            return
+        try:
+            everything_search.check_connection()
+        except Exception as exc:
+            self.use_everything = False
+
+            def draw_error(self, _context):
+                self.layout.label(text="Everything に接続できませんでした。", icon='ERROR')
+                self.layout.label(text="Everything が起動しているか確認してください。")
+
+            window_manager = getattr(context, 'window_manager', None)
+            if window_manager is not None:
+                window_manager.popup_menu(draw_error, title="Everything 接続確認", icon='ERROR')
 
 
 @compat.BlRegister()

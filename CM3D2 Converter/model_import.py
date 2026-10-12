@@ -9,6 +9,7 @@ import bpy
 import bpy_extras
 import mathutils
 from . import cm3d2_data, common, compat
+from .everything_search import check_connection
 from .misc_OBJECT_PT_transform import CNV_OT_align_to_cm3d2_base_bone
 from .translations import *
 
@@ -55,7 +56,8 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
     is_bone_data_text: bpy.props.BoolProperty(name="テキスト", default=True, description="ボーン情報をテキストとして読み込みます")
     is_bone_data_obj_property: bpy.props.BoolProperty(name="オブジェクトのカスタムプロパティ", default=True, description="メッシュオブジェクトのカスタムプロパティにボーン情報を埋め込みます")
     is_bone_data_arm_property: bpy.props.BoolProperty(name="アーマチュアのカスタムプロパティ", default=True, description="アーマチュアデータのカスタムプロパティにボーン情報を埋め込みます")
-    texpath_dict = None
+
+    is_everything_ready = False
 
     @classmethod
     def poll(cls, context):
@@ -71,6 +73,14 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
                     prefs.model_default_path or prefs.model_import_path, None, 'model')
         self.scale = prefs.scale
         self.is_convert_bone_weight_names = prefs.is_convert_bone_weight_names
+
+        if prefs.use_everything:
+            try:
+                check_connection()
+                self.is_everything_ready = True
+            except Exception as exc:
+                pass
+
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
 
@@ -105,7 +115,10 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
         sub_box.label(text="マテリアル")
         sub_box.prop(prefs, 'is_replace_cm3d2_tex', icon='BORDERMOVE')
         sub_box.prop(prefs, 'search_tex_path_scope')
-        sub_box.prop(self, 'reload_tex_cache', icon='FILE_REFRESH')
+        if not prefs.use_everything:
+            sub_box.prop(self, 'reload_tex_cache', icon='FILE_REFRESH')
+        elif not self.is_everything_ready:
+            sub_box.label(text="Everything に接続できません", icon='ERROR')
         sub_box.prop(self, 'is_mate_data_text', icon='TEXT')
 
         box = self.layout.box()
@@ -130,6 +143,13 @@ class CNV_OT_import_cm3d2_model(bpy.types.Operator, bpy_extras.io_utils.ImportHe
 
     @common.use_texpath_cache
     def execute(self, context):
+        prefs = common.preferences()
+        if prefs.use_everything:
+            try:
+                check_connection()
+            except Exception as exc:
+                self.report(type={'ERROR'}, message=f"Everything に接続できませんでした: {exc}")
+                return {'CANCELLED'}
         if not os.path.exists(common.TOON_DATA_DIR):
             common.extract_toon_tex()
         if len(self.filepaths) > 0:
