@@ -818,7 +818,9 @@ def get_request_area(context, request_type, except_types=None):
 
     return_areas.sort(key=lambda i: i[1])
     return_area = return_areas[-1][0]
-    return_area.type = request_type
+    # 画像とUVなど同じタイプでモードが違う場合、同タイプを再代入するとデフォルトモードに戻ってしまうため
+    if return_area.type != request_type:
+        return_area.type = request_type
     return return_area
 
 
