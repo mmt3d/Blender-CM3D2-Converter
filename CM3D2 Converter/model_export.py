@@ -361,7 +361,7 @@ class CNV_OT_export_cm3d2_model(bpy.types.Operator):
                 compat.set_active(context, ob_source)
 
             if self.force_mode:
-                bpy.ops.object.mode_set(mode=self.force_mode)
+                bpy.ops.object.mode_set(mode='EDIT')
                 self.force_mode = None
             elif prev_mode:
                 bpy.ops.object.mode_set(mode=prev_mode)
