@@ -25,7 +25,7 @@ PREFS = None
 preview_collections = {}
 texpath_dict = {}
 texpath_extra_dict = {}
-COM3D2_SHADER_REV = 1
+COM3D2_SHADER_REV = 2
 
 POSE_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), package_name, 'pose')
 TOON_DATA_DIR = os.path.join(bpy.utils.user_resource('DATAFILES'), package_name, 'toon')

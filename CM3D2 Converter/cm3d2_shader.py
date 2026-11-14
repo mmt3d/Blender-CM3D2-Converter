@@ -1,5 +1,6 @@
 import bpy
 from .compat import map_shader_node, new_socket
+from . import common
 
 
 def toon_vector_node_tree():
@@ -117,7 +118,7 @@ def com3d2_shader_node_tree():
     rim_math_log = nt.node('Rim Math Logarithm', type='ShaderNodeMath', location=(-480.0, -660.0), operation='LOGARITHM', inputs={'Value': {1: 2.0}})
     rim_math_mul = nt.node('Rim Math Multiply', type='ShaderNodeMath', location=(-280.0, -660.0), operation='MULTIPLY')
     rim_math_max = nt.node('Rim Math Maximum', type='ShaderNodeMath', location=(-80.0, -660.0), operation='MAXIMUM', inputs={'Value': {1: -0.3}})
-    mix_rim_color = nt.node('Mix Rim Color', type='ShaderNodeMix', location=(120.0, -480.0), blend_type='MIX', data_type='RGBA', inputs={'Factor': 1.0})
+    mix_rim_color = nt.node('Mix Rim Color', type='ShaderNodeMix', location=(120.0, -480.0), blend_type='MULTIPLY', data_type='RGBA', inputs={'Factor': 1.0})
     mix_rim_shift = nt.node('Mix Rim Shift', type='ShaderNodeMix', location=(380.0, -480.0), blend_type='ADD', data_type='RGBA', inputs={'Factor': 1.0, 'B': (1.0, 1.0, 1.0, 1.0)})
 
     # Set links
@@ -230,6 +231,11 @@ class NodeTreeHelper:
 
     @classmethod
     def get_or_create(cls, name: str, type: str):
+        # 既存のノードツリーのリビジョンが異なる場合、名前を変更して退避（別マテリアル利用対策）
+        node_tree = bpy.data.node_groups.get(name)
+        if node_tree and node_tree.get('COM3D2 Shader Rev') != common.COM3D2_SHADER_REV:
+            node_tree.name = f'{name} (stale)'
+
         nt = bpy.data.node_groups.get(name)
         is_exists = True
         if nt is None:
@@ -238,6 +244,7 @@ class NodeTreeHelper:
 
         helper = cls(nt)
         helper.is_exists = is_exists
+        helper.node_tree['COM3D2 Shader Rev'] = common.COM3D2_SHADER_REV
         return helper
 
     def socket(self, name: str, in_out: str, socket_type: str, default = None):
