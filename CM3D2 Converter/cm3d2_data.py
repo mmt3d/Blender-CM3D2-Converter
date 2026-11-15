@@ -861,7 +861,7 @@ class MaterialHandler:
         #if len(nodes) > 2:
         #    clear_nodes(nodes)
 
-        for tex_item in mat_data.tex_list:
+        for tex_item in reversed(mat_data.tex_list):  # 逆順に読むことでMainTexがUV編集での表示に優先されるようにする
             prop_name = tex_item[0]
 
             if len(tex_item) < 2:
